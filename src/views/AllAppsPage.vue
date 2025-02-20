@@ -7,22 +7,13 @@
 					<v-card-text>
 						<v-row>
 							<v-col lg="4">
-								<v-text-field
-									v-model="search"
-									label="Search by app name"
-									density="comfortable"
-									@update:model-value="updateFilter"
-									clearable
-								/>
+								<v-text-field v-model="search" label="Search by app name" density="comfortable"
+									@update:model-value="updateFilter" clearable />
 							</v-col>
 						</v-row>
 						<v-row>
-							<v-col 
-								cols="6" 
-								md="3" 
-								lg="3"
-								v-for="app in filteredApps" :key="app.id">
-								<v-card :to="{name: app.defaultRoute}">
+							<v-col cols="6" md="3" lg="3" v-for="app in filteredApps" :key="app.id">
+								<v-card :to="{ name: app.defaultRoute }">
 									<v-card-title>
 										<v-icon :icon="app.icon" class="me-2" />
 										{{ app.getDisplayName() }}

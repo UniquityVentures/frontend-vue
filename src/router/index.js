@@ -8,7 +8,8 @@ import HomePage from "@/views/HomePage.vue";
 import LoginPage from "@/views/LoginPage.vue";
 import DashboardPage from "@/views/DashboardPage.vue";
 import AllAppsPage from "@/views/AllAppsPage.vue";
-import AccessDeniedPage from "@/views/AccessDeniedPage.vue"
+import AccessDeniedPage from "@/views/AccessDeniedPage.vue";
+import AccountsPage from "@/views/AccountsPage.vue";
 // Routes in Apps
 import appRoutes from "@/router/app";
 
@@ -52,6 +53,12 @@ const routes = [
             },
             ...appRoutes,
         ],
+    },
+    {
+        path: "/accounts",
+        name: "Accounts",
+        component: AccountsPage,
+        meta: { requiresAuth: true },
     },
 ];
 
