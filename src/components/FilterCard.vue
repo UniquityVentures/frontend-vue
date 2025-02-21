@@ -62,17 +62,28 @@
 				v-if="field.type === 'dates'"
 				color="primary"
 				:label="field.label" 
-				:multiple="field.key.length"
+				:multiple="Array.isArray(field.key) ? 'range' : false"
 				density="comfortable"
 				clearable
 				:disabled="field.disabled"
-				@update:modelValue="(value) => [...value].sort((a,b) => a - b).forEach((e, i) => {filters[field.key[i]] = e})"
-			></v-date-input>
+				@update:modelValue="(value) => updateDates(value, field)"
+			>
 				<!--- The above one-liner does the following
 				- Gets the dates in an array from datepicker
 				- Sorts them, treating them as a number
 				- Assigns the corresponding date to the corresponding field in filter
 				--->
+
+
+				</v-date-input>
+			</v-col>
+			<v-col cols="12" md="4" lg="3">
+				<v-btn
+					color="primary"
+					@click="clearFilters"
+				>
+					Clear
+				</v-btn>
 			</v-col>
 		</v-row>
 	</v-container>
@@ -137,6 +148,31 @@ const getFilterFetch = (field) => {
 		default:
 			return field.fetchOptions;
 	}
+};
+
+const clearFilters = () => {
+	console.log("Clearing filters");
+	for (const key of Object.keys(filters.value)) {
+		if (Array.isArray(filters.value[key])) {
+			filters.value[key] = [];
+		} else {
+			filters.value[key] = null;
+		}
+	}
+};
+
+const updateDates = (value, field) => {
+	if (!value) {
+		for (const key of field.key) {
+			filters.value[key] = null;
+		}
+		return;
+	}
+	const dates = [...value].sort((a, b) => a - b);
+	console.log(filters.value);
+	console.log(field);
+	filters.value[field.key[0]] = dates[0];
+	filters.value[field.key[field.key.length - 1]] = dates[dates.length - 1];
 };
 
 const getFilterInfo = (field) => {
