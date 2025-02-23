@@ -4,7 +4,8 @@
 
 - Home (All classrooms)
 - Create Classroom
-- Import/Export Classrooms
+- Import Classrooms
+- Export Classrooms
 
 ## Per Classroom
 
@@ -23,7 +24,7 @@
 
 - Announcements
 - Subjects
-- Students Stats
+- Stats
 - Upcoming Events
 - Schedule (today/tomorrow)
 - Upcoming Assessments
