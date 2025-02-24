@@ -77,12 +77,22 @@
 
 				</v-date-input>
 			</v-col>
-			<v-col cols="12" md="4" lg="3">
+			<v-col cols="12" md="4" lg="3" class="d-flex gap-2">
 				<v-btn
 					color="primary"
 					@click="clearFilters"
+					class="ma-2"
 				>
 					Clear
+				</v-btn>
+				<v-btn
+					v-if="exportFunction"
+					color="success"
+					:loading="isExporting"
+					@click="handleExport"
+					class="ma-2"
+				>
+					Export
 				</v-btn>
 			</v-col>
 		</v-row>
@@ -102,12 +112,12 @@ import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
 import { getStudentInfoFromObj, getStudents } from "@/apps/students/api";
 
 import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
+import { ref } from 'vue';
 
 const props = defineProps({
 	// Each element for this array will be an object with the following keys:
 	// - label: String
 	// - key: String & [String] for date range
-	// - type: String
 	//   - 'string'
 	//   - 'integer'
 	//   - 'number'
@@ -127,9 +137,14 @@ const props = defineProps({
 		type: Array,
 		required: true,
 	},
+	exportFunction: {
+		type: Function,
+		default: null,
+	},
 });
 
 const filters = defineModel();
+const isExporting = ref(false);
 
 const getFilterFetch = (field) => {
 	switch (field.type) {
@@ -191,6 +206,20 @@ const getFilterInfo = (field) => {
 			return getStudentInfoFromObj;
 		default:
 			return field.fetchOptionsInfo;
+	}
+};
+
+const handleExport = async () => {
+	if (!props.exportFunction) return;
+	
+	try {
+		isExporting.value = true;
+		await props.exportFunction(filters.value);
+	} catch (error) {
+		console.error('Export failed:', error);
+		// You might want to add error handling/notification here
+	} finally {
+		isExporting.value = false;
 	}
 };
 </script>

@@ -33,6 +33,23 @@ const getClassroomInfoFromObj = (item) => ({
 const createClassroom = async (classroom) =>
     await api.post("api/allocation/classrooms/create/", classroom);
 
+const exportClassrooms = async (filter) => {
+    const response = await api.get("api/allocation/classrooms/export/", {
+        params: { ...filter },
+        responseType: 'blob'  // Important for file downloads
+    });
+    
+    // Create and trigger download
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'classrooms.csv');
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.URL.revokeObjectURL(url);
+};
+
 export {
     getClassroom,
     getClassrooms,
@@ -40,4 +57,5 @@ export {
     getClassroomImage,
     getClassroomInfoFromObj,
     createClassroom,
+    exportClassrooms,
 };

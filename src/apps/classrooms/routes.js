@@ -6,6 +6,7 @@ import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.v
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import { api } from "@/services/api";
 import ClassroomAnnouncementsPage from "@/apps/classrooms/views/ClassroomAnnouncementsPage.vue";
+import ClassroomsExportPage from "@/apps/classrooms/views/ClassroomsExportPage.vue";
 
 export default [
     {
@@ -25,6 +26,10 @@ export default [
                     title: "Create Classrooms",
                     to: { name: "CreateClassroom" },
                 },
+                {
+                    title: "Export Classrooms",
+                    to: { name: "ClassroomsExport" },
+                },
             ],
             icon: 'mdi-google-classroom',
         },
@@ -42,6 +47,11 @@ export default [
                 path: "",
                 name: "Classrooms",
                 component: ClassroomsPage,
+            },
+            {
+                path: "export/",
+                name: "ClassroomsExport",
+                component: ClassroomsExportPage,
             },
             {
                 path: ":classroomId/",
