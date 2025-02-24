@@ -68,8 +68,4 @@ const headers = [
 	{ title: "Teacher Id", key: "identifier" },
 	{ title: "", key: "actions", align: "end", sortable: false },
 ];
-
-onMounted(async () => {
-	classrooms.value = (await getClassrooms()).results;
-});
 </script>
