@@ -12,7 +12,7 @@
 				:getToFunction="(item) => ({ name: 'Student', params: { studentId: item.id }})" 
 				:headers="headers" 
 				:fetch="getStudents" 
-				v-model="filters"
+				:filters="filters"
 				:forceMobile="forceMobile"
 			/>
 		</v-card>
@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { getStudents, studentViewset } from "@/apps/students/api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import FilterCard from "@/components/FilterCard.vue";
@@ -58,8 +58,19 @@ const fields = ref(defaultFields.map(defaultField => {
 	return override ? { ...defaultField, ...override } : defaultField;
 }));
 
-// Computed property to transform fields into filters object for ResponsiveDataTable
-const filters = ref({});
+// Replace the filters ref with computed property
+const filters = computed(() => {
+	return fields.value.reduce((acc, field) => {
+		if (Array.isArray(field.key)) {
+			field.key.forEach((k, i) => {
+				acc[k] = field.value?.[i] ?? null;
+			});
+		} else {
+			acc[field.key] = field.value;
+		}
+		return acc;
+	}, {});
+});
 
 const headers = [
 	{ title: "Name", key: "user_details", formatFunc: (item) => item.full_name },

@@ -172,27 +172,6 @@ const props = defineProps({
 	},
 });
 
-const emit = defineEmits(['update:filters']);
-
-// Computed property to transform fields into filters object
-const filters = computed(() => {
-	const filtersObj = props.fields.reduce((acc, field) => {
-		if (Array.isArray(field.key)) {
-			// Handle date ranges
-			field.key.forEach((k, i) => {
-				acc[k] = field.value?.[i] ?? null;
-			});
-		} else {
-			acc[field.key] = field.value;
-		}
-		return acc;
-	}, {});
-
-	// Emit the filters object whenever it changes
-	emit('update:filters', filtersObj);
-	return filtersObj;
-});
-
 const getFilterFetch = (field) => {
 	switch (field.type) {
 		case "classroom":

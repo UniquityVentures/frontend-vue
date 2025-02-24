@@ -1,19 +1,12 @@
-import { api } from "@/services/api";
+import { createViewset } from "@/services/viewset";
 
-const getAssignments = async (filter) =>
-    (
-        await api.get("api/assignments/all", {
-            params: { ...filter },
-        })
-    ).data;
+const assignmentsViewset = createViewset("api/assignments", "assignments");
 
-const getAssignment = async (id) =>
-    (await api.get(`api/assignments/${id}`)).data;
-
-const updateAssignment = async (assignment) =>
-    await api.put(`api/assignments/${assignment.id}/`, assignment);
-
-const createAssignment = async (data) =>
-    await api.post("api/assignments/create/", data);
-
-export { getAssignments, getAssignment, updateAssignment, createAssignment };
+export const {
+    list: getAssignments,
+    retrieve: getAssignment,
+    update: updateAssignment,
+    create: createAssignment,
+    export: exportAssignments,  
+    import: importAssignments
+} = assignmentsViewset;

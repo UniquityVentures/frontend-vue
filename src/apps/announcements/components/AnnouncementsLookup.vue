@@ -16,7 +16,7 @@
 </template>
 
 <script setup> 
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { getAnnouncements, exportAnnouncements } from "../api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import FilterCard from "@/components/FilterCard.vue";
@@ -97,7 +97,19 @@ const fields = ref(defaultFields.map(defaultField => {
 	return override ? { ...defaultField, ...override } : defaultField;
 }));
 
-const filters = ref({});
+const filters = computed(() => {
+	return fields.value.reduce((acc, field) => {
+		if (Array.isArray(field.key)) {
+			// Handle date ranges
+			field.key.forEach((k, i) => {
+				acc[k] = field.value?.[i] ?? null;
+			});
+		} else {
+			acc[field.key] = field.value;
+		}
+		return acc;
+	}, {});
+});
 
 const formatDate = (dateString) =>
 	Intl.DateTimeFormat("en-US", {

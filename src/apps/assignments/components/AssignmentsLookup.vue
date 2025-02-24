@@ -37,12 +37,6 @@ const defaultFields = [
 		defaultValue: "",
 	},
 	{
-		label: "Filter by classroom",
-		type: "classroom",
-		key: "classroom",
-		value: null,
-	},
-	{
 		label: "Filter by subject",
 		type: "subject",
 		key: "subject",
@@ -78,7 +72,18 @@ const fields = ref(defaultFields.map(defaultField => {
 	return override ? { ...defaultField, ...override } : defaultField;
 }));
 
-const filters = ref({});
+const filters = computed(() => {
+	return fields.value.reduce((acc, field) => {
+		if (Array.isArray(field.key)) {
+			field.key.forEach((k, i) => {
+				acc[k] = field.value?.[i] ?? null;
+			});
+		} else {
+			acc[field.key] = field.value;
+		}
+		return acc;
+	}, {});
+});
 
 // Headers
 const formatDate = (dateString) =>

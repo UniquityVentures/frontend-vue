@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { getClassrooms, exportClassrooms } from "../api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import FilterCard from "@/components/FilterCard.vue";
@@ -79,8 +79,19 @@ const fields = ref(defaultFields.map(defaultField => {
   return override ? { ...defaultField, ...override } : defaultField;
 }));
 
-// Computed property to transform fields into filters object for ResponsiveDataTable
-const filters = ref({});
+// Replace the filters ref with computed property
+const filters = computed(() => {
+  return fields.value.reduce((acc, field) => {
+    if (Array.isArray(field.key)) {
+      field.key.forEach((k, i) => {
+        acc[k] = field.value?.[i] ?? null;
+      });
+    } else {
+      acc[field.key] = field.value;
+    }
+    return acc;
+  }, {});
+});
 
 const headers = [
   { title: "Name", key: "name" },
