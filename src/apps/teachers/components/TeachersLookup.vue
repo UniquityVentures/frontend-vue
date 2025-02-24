@@ -4,7 +4,8 @@
 			<v-card-title>
 				<FilterCard 
 					v-model="filters"
-					:filtersInfo="filtersInfo" 
+					:filtersInfo="filtersInfo"
+					:exportFunction="teacherViewset.export"
 				/>
 			</v-card-title>
 			<ResponsiveDataTable
@@ -19,7 +20,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { getTeachers } from "@/apps/teachers/api";
+import { getTeachers, teacherViewset } from "@/apps/teachers/api";
 import { getClassrooms, getClassroomInfoFromObj } from "@/apps/classrooms/api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import FilterCard from "@/components/FilterCard.vue";

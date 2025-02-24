@@ -1,8 +1,10 @@
-import { api } from "@/services/api";
+import { createViewset } from "@/services/viewset";
 
-const getUser = async (id) => (await api.get(`api/users/${id}`)).data;
+const userViewset = createViewset('api/users');
 
-const updateUser = async (user) => await api.put(`api/users/${user.id}/`, user);
+// Get base methods
+const getUser = userViewset.retrieve;
+const updateUser = userViewset.update;
 
 export {
     getUser,

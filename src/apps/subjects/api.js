@@ -1,10 +1,11 @@
-import { api } from "@/services/api";
+import { createViewset } from "@/services/viewset";
 
-const getSubjects = async (filter) =>
-    (await api.get("api/allocation/subjects/all", { params: { page_size: 10000, ...filter } })).data;
+const subjectViewset = createViewset('api/allocation/subjects');
 
-const getSubject = async (id) =>
-    (await api.get(`api/allocation/subjects/${id}`)).data;
+// Get base methods
+const getSubjects = subjectViewset.list;
+const getSubject = subjectViewset.retrieve;
+const createSubject = subjectViewset.create;
 
 const getSubjectInfoFromObj = (item) => ({
     title: item.name,
@@ -14,20 +15,18 @@ const getSubjectInfoFromObj = (item) => ({
     value: item.id,
 });
 
+// Custom update method due to special data cleaning needs
 const updateSubject = async (subject) => {
     const { classroom, teacher, ...cleanSubject } = JSON.parse(
         JSON.stringify(subject),
     );
-    await api.put(`api/allocation/subjects/${subject.id}/`, cleanSubject);
+    await subjectViewset.update(cleanSubject);
 };
-
-const createSubject = async (subject) =>
-    await api.post("api/allocation/subjects/create/", subject);
 
 export {
     getSubjects,
     getSubject,
     getSubjectInfoFromObj,
     updateSubject,
-	createSubject,
+    createSubject,
 };

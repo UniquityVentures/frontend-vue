@@ -1,8 +1,7 @@
 <template>
   <v-container>
-    <h1>Import Classrooms</h1>
-    
     <v-card class="mt-4">
+      <v-card-title>Upload CSV file of classrooms here:</v-card-title>
       <v-card-text>
         <v-file-input
           v-model="file"

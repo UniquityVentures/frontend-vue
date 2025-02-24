@@ -3,7 +3,8 @@
     <v-card-title>
       <FilterCard 
         v-model="filters"
-        :filtersInfo="filtersInfo" 
+        :filtersInfo="filtersInfo"
+        :exportFunction="announcementViewset.export"
       /> 
     </v-card-title>
     <ResponsiveDataTable 
@@ -18,7 +19,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { getAnnouncements } from "../api";
+import { getAnnouncements, announcementViewset } from "../api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import FilterCard from "@/components/FilterCard.vue";
 

@@ -89,7 +89,7 @@
 					v-if="exportFunction"
 					color="success"
 					:loading="isExporting"
-					@click="handleExport"
+					@click="showExportDialog"
 					class="ma-2"
 				>
 					Export
@@ -97,6 +97,34 @@
 			</v-col>
 		</v-row>
 	</v-container>
+
+	<!-- Add dialog component -->
+	<v-dialog v-model="showDialog" max-width="400">
+		<v-card>
+			<v-card-title>Confirm Export</v-card-title>
+			<v-card-text>
+				Are you sure you want to export this data?
+			</v-card-text>
+			<v-card-actions>
+				<v-spacer></v-spacer>
+				<v-btn
+					color="grey-darken-1"
+					variant="text"
+					@click="showDialog = false"
+				>
+					Cancel
+				</v-btn>
+				<v-btn
+					color="success"
+					variant="text"
+					:loading="isExporting"
+					@click="handleExport"
+				>
+					Confirm Export
+				</v-btn>
+			</v-card-actions>
+		</v-card>
+	</v-dialog>
 </template>
 
 <script setup>
@@ -145,6 +173,7 @@ const props = defineProps({
 
 const filters = defineModel();
 const isExporting = ref(false);
+const showDialog = ref(false);
 
 const getFilterFetch = (field) => {
 	switch (field.type) {
@@ -209,12 +238,17 @@ const getFilterInfo = (field) => {
 	}
 };
 
+const showExportDialog = () => {
+	showDialog.value = true;
+};
+
 const handleExport = async () => {
 	if (!props.exportFunction) return;
 	
 	try {
 		isExporting.value = true;
 		await props.exportFunction(filters.value);
+		showDialog.value = false; // Close dialog after successful export
 	} catch (error) {
 		console.error('Export failed:', error);
 		// You might want to add error handling/notification here

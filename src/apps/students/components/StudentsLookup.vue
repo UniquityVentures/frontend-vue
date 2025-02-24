@@ -4,7 +4,8 @@
 			<v-card-title>
 				<FilterCard 
 					v-model="filters"
-					:filtersInfo="filtersInfo" 
+					:filtersInfo="filtersInfo"
+					:exportFunction="studentViewset.export"
 				/>
 			</v-card-title>
 
@@ -21,7 +22,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { getStudents } from "@/apps/students/api";
+import { getStudents, studentViewset } from "@/apps/students/api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import FilterCard from "@/components/FilterCard.vue";
 
