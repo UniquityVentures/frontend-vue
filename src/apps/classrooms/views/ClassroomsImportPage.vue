@@ -79,7 +79,7 @@ const handleDryRun = async () => {
     errorMessage.value = '';
     dryRunResult.value = null;
     
-    const result = await importClassroomsDryRun(file.value[0]);
+    const result = await importClassroomsDryRun(file.value);
     dryRunResult.value = result;
   } catch (error) {
     console.error('Dry run failed:', error);
@@ -96,7 +96,7 @@ const handleImport = async () => {
     isImporting.value = true;
     errorMessage.value = '';
     
-    await importClassroomsFinalize(file.value[0]);
+    await importClassroomsFinalize(file.value);
     successMessage.value = 'Classrooms imported successfully!';
     file.value = null;
     dryRunResult.value = null;
