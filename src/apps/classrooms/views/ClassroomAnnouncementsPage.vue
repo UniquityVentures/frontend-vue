@@ -6,15 +6,11 @@
             </v-card-title>
             <v-card-text>
                 <AnnouncementsLookup
-                    :initialFilters="{ classroom: Number(classroomId) }"
-                    :initialFiltersInfo="[
-                        {
-                            key: 'classroom',
-                            type: 'classroom',
-                            label: 'Classroom',
-                            disabled: true
-                        }
-                    ]"
+                    :initialFields="[{
+                        key: 'classroom',
+                        value: Number(classroomId),
+                        disabled: true
+                    }]"
                 />
             </v-card-text>
         </v-card>

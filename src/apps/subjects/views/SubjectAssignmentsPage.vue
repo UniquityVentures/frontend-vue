@@ -6,15 +6,12 @@
             </v-card-title>
             <v-card-text>
                 <AssignmentsLookup
-                    :initialFilters="{ subject: Number(subjectId) }"
-                    :initialFiltersInfo="[
-                        {
-                            key: 'subject',
-                            type: 'subject',
-                            label: 'Subject',
-                            disabled: true
-                        }
-                    ]"
+                    :initialFields="[{
+                        key: 'subject',
+                        value: Number(subjectId),
+                        disabled: true,
+                        label: 'Subject is preset'
+                    }]"
                 />
             </v-card-text>
         </v-card>

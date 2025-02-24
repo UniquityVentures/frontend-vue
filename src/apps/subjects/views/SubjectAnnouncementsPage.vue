@@ -6,15 +6,11 @@
             </v-card-title>
             <v-card-text>
                 <AnnouncementsLookup
-                    :initialFilters="{ subject: Number(subjectId) }"
-                    :initialFiltersInfo="[
-                        {
-                            key: 'subject',
-                            type: 'subject',
-                            label: 'Subject',
-                            disabled: true
-                        }
-                    ]"
+                    :initialFields="[{
+                        key: 'subject',
+                        value: Number(subjectId),
+                        disabled: true
+                    }]"
                 />
             </v-card-text>
         </v-card>

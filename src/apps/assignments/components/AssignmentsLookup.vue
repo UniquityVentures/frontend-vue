@@ -2,8 +2,7 @@
 	<v-card variant="flat">
 		<v-card-title>
 			<FilterCard 
-				v-model="filters"
-				:filtersInfo="filtersInfo" 
+				:fields="fields"
 			/>
 		</v-card-title>
 		<ResponsiveDataTable 
@@ -11,50 +10,49 @@
 			:headers="headers" 
 			:fetch="getAssignments" 
 			v-model="filters"
-      		:forceMobile="forceMobile"
-    	/>
+			:forceMobile="forceMobile"
+		/>
 	</v-card>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { getAssignments } from "@/apps/assignments/api.js";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import FilterCard from "@/components/FilterCard.vue";
 
-const defaultFilters = {
-	title: "",
-	description: "",
-	classroom: null,
-	subject: null,
-	is_active: null,
-};
-
-const defaultFiltersInfo = [
+const defaultFields = [
 	{
 		label: "Search by title",
 		type: "string",
 		key: "title",
+		value: "",
+		defaultValue: "",
 	},
 	{
 		label: "Search by description",
 		type: "string",
 		key: "description",
+		value: "",
+		defaultValue: "",
 	},
 	{
 		label: "Filter by classroom",
 		type: "classroom",
 		key: "classroom",
+		value: null,
 	},
 	{
 		label: "Filter by subject",
 		type: "subject",
 		key: "subject",
+		value: null,
 	},
 	{
 		label: "Filter by active",
 		type: "n_nary",
 		key: "is_active",
+		value: null,
 		fetchOptions: () => [
 			{ title: "Active", value: true },
 			{ title: "Inactive", value: false },
@@ -68,24 +66,21 @@ const props = defineProps({
 		type: Boolean,
 		default: false,
 	},
-	initialFilters: {
-		type: Object,
-		default: () => ({}),
-	},
-	initialFiltersInfo: {
+	initialFields: {
 		type: Array,
 		default: () => ([]),
 	},
 });
 
-const filters = ref({ ...defaultFilters, ...props.initialFilters });
-
-const filtersInfo = ref(defaultFiltersInfo.map(defaultFilter => {
-	const override = props.initialFiltersInfo.find(f => f.key === defaultFilter.key);
-	return override ? { ...defaultFilter, ...override } : defaultFilter;
+// Initialize fields with any overrides from props
+const fields = ref(defaultFields.map(defaultField => {
+	const override = props.initialFields.find(f => f.key === defaultField.key);
+	return override ? { ...defaultField, ...override } : defaultField;
 }));
 
-// Properly parses the date string, Date() constructor doesn't work well with ISO strings
+const filters = ref({});
+
+// Headers
 const formatDate = (dateString) =>
 	Intl.DateTimeFormat("en-US", {
 		year: "numeric",

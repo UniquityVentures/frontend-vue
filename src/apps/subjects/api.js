@@ -23,10 +23,19 @@ const updateSubject = async (subject) => {
     await subjectViewset.update(cleanSubject);
 };
 
+// Add export and import functionality
+const exportSubjects = subjectViewset.export;
+const importSubjects = {
+    dryRun: subjectViewset.import.dryRun,
+    finalize: subjectViewset.import.finalize
+};
+
 export {
     getSubjects,
     getSubject,
     getSubjectInfoFromObj,
     updateSubject,
     createSubject,
+    exportSubjects,
+    importSubjects,
 };

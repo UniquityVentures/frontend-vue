@@ -6,13 +6,13 @@ import RecordPage from "./views/RecordPage.vue";
 
 export default [
     {
-        path: "records/",
+        path: "finances/",
         component: AppSideBarBreadcrumbsLayout,
         meta: {
             requiresAuth: true,
-            getDisplayName: () => "Records",
+            getDisplayName: () => "Finances",
             defaultRoute: "Records",
-            description: "View and manage records",
+            description: "View and manage finances",
             getMenu: (props) => [
                 {
                     title: "View Records",

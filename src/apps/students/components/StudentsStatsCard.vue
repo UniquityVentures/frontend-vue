@@ -1,8 +1,7 @@
 <template>
-    <v-container>   
-        <v-card>
-            <v-card-item>
-                <template v-slot:prepend>
+  <v-card>
+    <v-card-item>
+      <template v-slot:prepend>
         <v-icon icon="mdi-account-school" size="large" color="primary"></v-icon>
       </template>
       <v-card-title>Students Overview</v-card-title>
@@ -39,7 +38,6 @@
       </v-row>
     </v-card-text>
   </v-card>
-  </v-container>
 </template>
 
 <script setup>

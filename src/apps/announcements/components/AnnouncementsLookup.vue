@@ -2,9 +2,8 @@
   <v-card variant="flat">
     <v-card-title>
       <FilterCard 
-        v-model="filters"
-        :filtersInfo="filtersInfo"
-        :exportFunction="announcementViewset.export"
+        :fields="fields"
+        :exportFunction="exportAnnouncements"
       /> 
     </v-card-title>
     <ResponsiveDataTable 
@@ -12,50 +11,47 @@
       :headers="headers" 
       :fetch="getAnnouncements" 
       v-model="filters"
-      :forceMobile="forceMobile"
     />
   </v-card>
 </template>
 
-<script setup>
+<script setup> 
 import { ref } from "vue";
-import { getAnnouncements, announcementViewset } from "../api";
+import { getAnnouncements, exportAnnouncements } from "../api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import FilterCard from "@/components/FilterCard.vue";
 
-const defaultFilters = {
-	title: "",
-	classroom: null,
-	subject: null,
-	signed_by: null,
-	is_school_wide: null,
-};
-
-const defaultFiltersInfo = [
+const defaultFields = [
 	{
 		label: "Search by title",
 		type: "string",
 		key: "title",
+		value: "",
+		defaultValue: "",
 	},
 	{
 		label: "Filter by classroom",
 		type: "classroom",
 		key: "classroom",
+		value: null,
 	},
 	{
 		label: "Filter by subject",
 		type: "subject",
 		key: "subject",
+		value: null,
 	},
 	{
 		label: "Filter by signer",
 		type: "teacher",
 		key: "signed_by",
+		value: null,
 	},
 	{
 		label: "Is School Wide",
 		type: "n_nary",
 		key: "is_school_wide",
+		value: null,
 		fetchOptions: () => [
 			{ title: "All Announcements", value: null },
 			{ title: "School Wide Only", value: "True" },
@@ -66,45 +62,42 @@ const defaultFiltersInfo = [
 		label: "Is Released",
 		type: "boolean",
 		key: "is_released",
+		value: null,
 	},
 	{
 		label: "Is Expired",
 		type: "boolean",
 		key: "is_expired",
+		value: null,
 	},
 	{
 		label: "Release Date Range",
 		type: "dates",
 		key: ["released_start", "released_end"],
+		value: null,
 	},
 	{
 		label: "Expiry Date Range",
 		type: "dates",
 		key: ["expired_start", "expired_end"],
-	}
+		value: null,
+	},
 ];
 
 const props = defineProps({
-	forceMobile: {
-		type: Boolean,
-		default: false,
-	},
-	initialFilters: {
-		type: Object,
-		default: () => ({}),
-	},
-	initialFiltersInfo: {
+	initialFields: {
 		type: Array,
 		default: () => ([]),
 	},
 });
 
-const filters = ref({ ...defaultFilters, ...props.initialFilters });
-
-const filtersInfo = ref(defaultFiltersInfo.map(defaultFilter => {
-  const override = props.initialFiltersInfo.find(f => f.key === defaultFilter.key);
-  return override ? { ...defaultFilter, ...override } : defaultFilter;
+// Initialize fields with any overrides from props
+const fields = ref(defaultFields.map(defaultField => {
+	const override = props.initialFields.find(f => f.key === defaultField.key);
+	return override ? { ...defaultField, ...override } : defaultField;
 }));
+
+const filters = ref({});
 
 const formatDate = (dateString) =>
 	Intl.DateTimeFormat("en-US", {

@@ -87,7 +87,6 @@ import { getSubject } from "@/apps/subjects/api";
 const announcement = ref({});
 const classroomDetails = ref([]);
 const subjectDetails = ref([]);
-const tabs = ref(null);
 const props = defineProps({
 	announcementId: Number,
 });

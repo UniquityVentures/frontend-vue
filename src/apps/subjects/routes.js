@@ -8,6 +8,8 @@ import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import SubjectAnnouncementsPage from "./views/SubjectAnnouncementsPage.vue";
 import { getSubject } from "./api";
 import SubjectAssignmentsPage from "./views/SubjectAssignmentsPage.vue";
+import SubjectsExportPage from "./views/SubjectsExportPage.vue";
+import SubjectsImportPage from "./views/SubjectsImportPage.vue";
 
 export default [
     {
@@ -26,6 +28,14 @@ export default [
                     title: "Create Subject",
                     to: { name: "CreateSubject" },
                 },
+                {
+                    title: "Export Subjects",
+                    to: { name: "SubjectsExport" },
+                },
+                {
+                    title: "Import Subjects",
+                    to: { name: "SubjectsImport" },
+                },
             ],
             icon: 'mdi-book-open-variant'
         },
@@ -43,6 +53,16 @@ export default [
                 path: "",
                 component: SubjectsPage,
                 name: "Subjects",
+            },
+            {
+                path: "export/",
+                component: SubjectsExportPage,
+                name: "SubjectsExport",
+            },
+            {
+                path: "import/",
+                component: SubjectsImportPage,
+                name: "SubjectsImport",
             },
             {
                 path: ":subjectId/",

@@ -3,13 +3,13 @@
     <v-card-title>
       <FilterCard 
         :fields="fields"
-        :exportFunction="exportClassrooms"
+        :exportFunction="exportSubjects"
       /> 
     </v-card-title>
     <ResponsiveDataTable 
-      :getToFunction="(item) => ({name: 'Classroom', params: {classroomId: item.id}})" 
+      :getToFunction="(item) => ({name: 'Subject', params: {subjectId: item.id}})" 
       :headers="headers" 
-      :fetch="getClassrooms" 
+      :fetch="getSubjects" 
       v-model="filters"
       :forceMobile="forceMobile"
     />
@@ -18,7 +18,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { getClassrooms, exportClassrooms } from "../api";
+import { getSubjects, exportSubjects } from "../api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import FilterCard from "@/components/FilterCard.vue";
 
@@ -31,34 +31,16 @@ const defaultFields = [
     defaultValue: "",
   },
   {
-    label: "Grade",
-    type: "n_nary",
-    key: "standard",
+    label: "Classroom",
+    type: "classroom",
+    key: "classroom",
     value: null,
-    fetchOptions: () => [
-      { title: "All Grades", value: null },
-      ...[...Array(10)].map((_, i) => ({
-        title: `Grade ${i + 1}`,
-        value: (i + 1).toString()
-      }))
-    ],
   },
   {
-    label: "Class Teacher",
+    label: "Teacher",
     type: "teacher",
-    key: "class_teacher",
+    key: "teacher",
     value: null,
-  },
-  {
-    label: "Status",
-    type: "n_nary",
-    key: "is_active",
-    value: null,
-    fetchOptions: () => [
-      { title: "All Classes", value: null },
-      { title: "Active Only", value: "True" },
-      { title: "Inactive Only", value: "False" },
-    ],
   },
 ];
 
@@ -84,22 +66,16 @@ const filters = ref({});
 
 const headers = [
   { title: "Name", key: "name" },
-  { title: "Grade", key: "standard" },
   { 
-    title: "Class Teacher", 
-    key: "class_teacher_details",
+    title: "Classroom", 
+    key: "classroom_details",
+    formatFunc: (classroom) => classroom?.name || '-'
+  },
+  { 
+    title: "Teacher", 
+    key: "teacher_details",
     formatFunc: (teacher) => teacher?.user_details?.full_name || '-'
-  },
-  { 
-    title: "Students Count", 
-    key: "students",
-    formatFunc: (students) => students?.length || 0
-  },
-  { 
-    title: "Status", 
-    key: "is_active",
-    formatFunc: (status) => status ? "Active" : "Inactive"
   },
   { title: "Actions", key: "actions", sortable: false },
 ];
-</script>
+</script> 

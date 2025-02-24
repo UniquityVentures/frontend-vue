@@ -4,12 +4,11 @@
 		rounded="lg"
 	>
 	<v-row>
-		<v-col cols="12" md="4" lg="3" v-for="field in filtersInfo">
+		<v-col cols="12" md="4" lg="3" v-for="field in fields">
 			<v-text-field 
 				v-if="field.type === 'string'"
 				:label="field.label" 
-				v-model="filters[field.key]"
-				:rules="[v => !!v || `${field.label} is required`]"
+				v-model="field.value"
 				density="comfortable"
 				hide-details
 				:disabled="field.disabled"
@@ -17,18 +16,17 @@
 			<v-number-input
 				v-if="field.type === 'integer'"
 				:label="field.label" 
-				v-model="filters[field.key]"
-				:rules="[v => !!v || `${field.label} is required`]"
+				v-model="field.value"
 				density="comfortable"
 				hide-details
 				:disabled="field.disabled"
 			></v-number-input>
 			<ServerAutocomplete
 				v-if="['number', 'classroom', 'subject', 'teacher', 'student', 'payment_purpose'].includes(field.type)"
-				v-model="filters[field.key]"
+				v-model="field.value"
 				:clearable="!field.disabled"
 				:fetch="getFilterFetch(field)"
-				:getInfo="getFilterInfo(field)"
+				:getInfo="getInstanceInfoFromObj(field)"
 				:searchField="field.searchField || 'name'"
 				:label="field.label"
 				density="comfortable"
@@ -37,14 +35,14 @@
 			<v-checkbox 
 				v-if="field.type === 'boolean'"
 				:label="field.label" 
-				v-model="filters[field.key]"
+				v-model="field.value"
 			></v-checkbox>
 			<ServerAutocomplete
 				v-if="field.type === 'array'"
-				v-model="filters[field.key]"
+				v-model="field.value"
 				clearable
 				:fetch="getFilterFetch(field)"
-				:getInfo="getFilterInfo(field)"
+				:getInfo="getInstanceInfoFromObj(field)"
 				:searchField="field.searchField || 'name'"
 				:label="field.label"
 				:multiple='true'
@@ -52,7 +50,7 @@
 			/>
 			<v-select
 				v-if="field.type === 'n_nary'"
-				v-model="filters[field.key]"
+				v-model="field.value"
 				:items="field.fetchOptions()"
 				:label="field.label"
 				hide-details
@@ -62,6 +60,7 @@
 				v-if="field.type === 'dates'"
 				color="primary"
 				:label="field.label" 
+				v-model="field.value"
 				:multiple="Array.isArray(field.key) ? 'range' : false"
 				density="comfortable"
 				clearable
@@ -140,12 +139,12 @@ import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
 import { getStudentInfoFromObj, getStudents } from "@/apps/students/api";
 
 import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 const props = defineProps({
-	// Each element for this array will be an object with the following keys:
-	// - label: String
-	// - key: String & [String] for date range
+	// Array of field objects, each containing:
+	// - label: String (display label for the field)
+	// - type: String - One of:
 	//   - 'string'
 	//   - 'integer'
 	//   - 'number'
@@ -158,10 +157,12 @@ const props = defineProps({
 	//   - 'student'
 	//   - 'payment_purpose'
 	//   - 'dates'
-	// - fetchOptions: Function? (only for custom number/array types)
-	// - fetchOptionsInfo: Function? (only for custom number/array types)
-	// - searchField: String? (defaults to 'name')
-	filtersInfo: {
+	// - value: any (current value of the field)
+	// - defaultValue?: any (value to reset to when clearing)
+	// - disabled?: boolean
+	// - fetchOptions?: Function (for custom number/array types)
+	// - searchField?: String (defaults to 'name')
+	fields: {
 		type: Array,
 		required: true,
 	},
@@ -171,9 +172,26 @@ const props = defineProps({
 	},
 });
 
-const filters = defineModel();
-const isExporting = ref(false);
-const showDialog = ref(false);
+const emit = defineEmits(['update:filters']);
+
+// Computed property to transform fields into filters object
+const filters = computed(() => {
+	const filtersObj = props.fields.reduce((acc, field) => {
+		if (Array.isArray(field.key)) {
+			// Handle date ranges
+			field.key.forEach((k, i) => {
+				acc[k] = field.value?.[i] ?? null;
+			});
+		} else {
+			acc[field.key] = field.value;
+		}
+		return acc;
+	}, {});
+
+	// Emit the filters object whenever it changes
+	emit('update:filters', filtersObj);
+	return filtersObj;
+});
 
 const getFilterFetch = (field) => {
 	switch (field.type) {
@@ -196,30 +214,35 @@ const getFilterFetch = (field) => {
 
 const clearFilters = () => {
 	console.log("Clearing filters");
-	for (const key of Object.keys(filters.value)) {
-		if (Array.isArray(filters.value[key])) {
-			filters.value[key] = [];
+	for (const field of props.fields) {
+		if ('defaultValue' in field) {
+			field.value = field.defaultValue;
+		} else if (Array.isArray(field.value)) {
+			field.value = [];
+		} else if (field.type === 'string') {
+			field.value = '';
 		} else {
-			filters.value[key] = null;
+			field.value = null;
 		}
 	}
 };
 
 const updateDates = (value, field) => {
 	if (!value) {
-		for (const key of field.key) {
-			filters.value[key] = null;
-		}
+		field.value = null;
 		return;
 	}
-	const dates = [...value].sort((a, b) => a - b);
-	console.log(filters.value);
-	console.log(field);
-	filters.value[field.key[0]] = dates[0];
-	filters.value[field.key[field.key.length - 1]] = dates[dates.length - 1];
+	// If it's a date range (array of dates)
+	if (Array.isArray(field.key)) {
+		const dates = [...value].sort((a, b) => a - b);
+		field.value = dates;  // Store the sorted array directly in field.value
+	} else {
+		// Single date
+		field.value = value;
+	}
 };
 
-const getFilterInfo = (field) => {
+const getInstanceInfoFromObj = (field) => {
 	switch (field.type) {
 		case "classroom":
 			return getClassroomInfoFromObj;
@@ -238,6 +261,10 @@ const getFilterInfo = (field) => {
 	}
 };
 
+// Exporting Logic Here
+const isExporting = ref(false);
+const showDialog = ref(false);
+
 const showExportDialog = () => {
 	showDialog.value = true;
 };
@@ -248,10 +275,9 @@ const handleExport = async () => {
 	try {
 		isExporting.value = true;
 		await props.exportFunction(filters.value);
-		showDialog.value = false; // Close dialog after successful export
+		showDialog.value = false;
 	} catch (error) {
 		console.error('Export failed:', error);
-		// You might want to add error handling/notification here
 	} finally {
 		isExporting.value = false;
 	}
