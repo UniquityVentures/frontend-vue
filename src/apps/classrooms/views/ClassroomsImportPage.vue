@@ -27,6 +27,7 @@
             :loading="isDryRunning"
             :disabled="!file || isImporting"
             @click="handleDryRun"
+            class="ma-2"
           >
             Analyze File
           </v-btn>
@@ -36,6 +37,7 @@
             :loading="isImporting"
             :disabled="!dryRunResult || isDryRunning"
             @click="handleImport"
+            class="ma-2"
           >
             Import
           </v-btn>
