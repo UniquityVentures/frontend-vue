@@ -7,6 +7,7 @@ import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import { api } from "@/services/api";
 import ClassroomAnnouncementsPage from "@/apps/classrooms/views/ClassroomAnnouncementsPage.vue";
 import ClassroomsExportPage from "@/apps/classrooms/views/ClassroomsExportPage.vue";
+import ClassroomsImportPage from "@/apps/classrooms/views/ClassroomsImportPage.vue";
 
 export default [
     {
@@ -30,6 +31,10 @@ export default [
                     title: "Export Classrooms",
                     to: { name: "ClassroomsExport" },
                 },
+                {
+                    title: "Import Classrooms",
+                    to: { name: "ClassroomsImport" },
+                },
             ],
             icon: 'mdi-google-classroom',
         },
@@ -52,6 +57,11 @@ export default [
                 path: "export/",
                 name: "ClassroomsExport",
                 component: ClassroomsExportPage,
+            },
+            {
+                path: "import/",
+                name: "ClassroomsImport",
+                component: ClassroomsImportPage,
             },
             {
                 path: ":classroomId/",

@@ -50,6 +50,30 @@ const exportClassrooms = async (filter) => {
     window.URL.revokeObjectURL(url);
 };
 
+const importClassroomsDryRun = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    const response = await api.post("api/allocation/classrooms/import/dry_run/", formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    });
+    return response.data;
+};
+
+const importClassroomsFinalize = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    const response = await api.post("api/allocation/classrooms/import/final/", formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    });
+    return response.data;
+};
+
 export {
     getClassroom,
     getClassrooms,
@@ -58,4 +82,6 @@ export {
     getClassroomInfoFromObj,
     createClassroom,
     exportClassrooms,
+    importClassroomsDryRun,
+    importClassroomsFinalize,
 };
