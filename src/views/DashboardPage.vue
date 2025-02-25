@@ -9,7 +9,17 @@
     />
     </v-col>
     <v-col cols="12" lg="4">
-      <StudentsStatsCard />
+      <StudentsStatsCard 
+        :buttons="[
+          { 
+            text: 'Resolve Pending Approvals', 
+          },
+          {
+            text: 'View All Students',
+            to: { name: 'Students' }
+          }
+        ]"
+      />
     </v-col>
     <v-col cols="12" lg="4">
       <TeachersStatsCard />

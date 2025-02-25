@@ -41,9 +41,9 @@
             <v-btn 
                 :to="{ name: to || 'Announcements' }"
                 variant="outlined"
-                density="comfortable"
             >
                 View All
+                <v-icon end icon="mdi-chevron-right"></v-icon>
             </v-btn>
         </v-card-actions>
     </v-card>

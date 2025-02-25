@@ -4,7 +4,13 @@
       <v-col>
         <v-row>
           <v-col cols="12" md="4">
-            <StudentsStatsCard />
+            <StudentsStatsCard 
+              :buttons="[
+                { 
+                  text: 'Resolve Pending Approvals', 
+                }
+              ]"
+            />
           </v-col>
           <v-col cols="12" md="8">
             <StudentsLookup />

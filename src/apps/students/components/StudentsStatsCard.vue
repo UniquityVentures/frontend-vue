@@ -37,6 +37,18 @@
         </v-col>
       </v-row>
     </v-card-text>
+    <v-card-actions v-if="buttons" class="justify-center gap-2 flex-wrap">
+      <v-btn
+        v-for="button in buttons"
+        :key="button.text"
+        color="primary"
+        variant="outlined"
+        :to="button.to"
+      >
+        {{ button.text }}
+        <v-icon end icon="mdi-chevron-right"></v-icon>
+      </v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 
@@ -44,23 +56,30 @@
 import { getStudentStats } from "@/apps/students/api";
 import { onMounted, ref } from "vue";
 
+const props = defineProps({
+  buttons: {
+    type: Array,
+    default: null
+  }
+});
+
 const stats = ref({
-	total: 0,
-	pending_approval: 0,
+  total: 0,
+  pending_approval: 0,
 });
 const loading = ref(true);
 const error = ref(false);
 
 onMounted(async () => {
-	try {
-		loading.value = true;
-		error.value = false;
-		stats.value = await getStudentStats();
-	} catch (error) {
-		console.error("Error fetching student stats:", error);
-		error.value = true;
-	} finally {
-		loading.value = false;
-	}
+  try {
+    loading.value = true;
+    error.value = false;
+    stats.value = await getStudentStats();
+  } catch (error) {
+    console.error("Error fetching student stats:", error);
+    error.value = true;
+  } finally {
+    loading.value = false;
+  }
 });
 </script>
