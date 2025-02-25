@@ -2,7 +2,7 @@ import { useAuthStore } from "@/stores/auth";
 import axios from "axios";
 
 const api = axios.create({
-	baseURL: "http://school1.localhost:8000/",
+	baseURL: "",
 	headers: {
 		"Content-Type": "application/json",
 	},
@@ -54,7 +54,7 @@ api.interceptors.response.use(
 			if (refresh) {
 				try {
 					const response = await axios.post(
-						"http://school1.localhost:8000/api/token/refresh/",
+						"/api/token/refresh/",
 						{ refresh: refresh },
 					);
 					authStore.refreshTokens({
