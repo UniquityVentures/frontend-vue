@@ -32,29 +32,29 @@
   </template>
   
   <script>
-  export default {
-    name: 'LoginForm',
-    props: {
-      error: {
-        type: String,
-        default: '',
-      },
-    },
-    data() {
-      return {
-        localUsername: '',
-        localPassword: '',
-      };
-    },
-    methods: {
-      onSubmit() {
-        // Emit an event carrying the username and password back to the parent
-        this.$emit('login', {
-          username: this.localUsername,
-          password: this.localPassword,
-        });
-      },
-    },
-  };
-  </script>
+export default {
+	name: "LoginForm",
+	props: {
+		error: {
+			type: String,
+			default: "",
+		},
+	},
+	data() {
+		return {
+			localUsername: "",
+			localPassword: "",
+		};
+	},
+	methods: {
+		onSubmit() {
+			// Emit an event carrying the username and password back to the parent
+			this.$emit("login", {
+				username: this.localUsername,
+				password: this.localPassword,
+			});
+		},
+	},
+};
+</script>
   

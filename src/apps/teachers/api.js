@@ -1,29 +1,22 @@
-import { api } from "@/services/api";
+import { createViewset } from "@/services/viewset";
 
-const getTeachers = async (filter) =>
-    (
-        await api.get("api/accounts/teachers/all", {
-            params: { page_size: 10000, ...filter },
-        })
-    ).data;
+const teacherViewset = createViewset("api/accounts/teachers");
 
-const getTeacher = async (id) =>
-    (await api.get(`api/accounts/teachers/${id}`)).data;
-
+// Get base methods
+const getTeachers = teacherViewset.list;
+const getTeacher = teacherViewset.retrieve;
+const getTeacherStats = teacherViewset.stats;
 
 const getTeacherInfoFromObj = (item) => ({
-    title: `${item.user_details.full_name}`,
-    subtitle: item.identifier,
-    value: item.id,
+	title: `${item.user_details.full_name}`,
+	subtitle: item.identifier,
+	value: item.id,
 });
 
-
-const getTeacherStats = async () =>
-    (await api.get("api/accounts/teachers/stats/")).data;
-
 export {
-    getTeachers,
-    getTeacher,
-    getTeacherInfoFromObj,
-    getTeacherStats,
+	getTeachers,
+	getTeacher,
+	getTeacherInfoFromObj,
+	getTeacherStats,
+	teacherViewset,
 };

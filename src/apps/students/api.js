@@ -1,35 +1,26 @@
-import { api } from "@/services/api";
+import { createViewset } from "@/services/viewset";
 
-const getStudents = async (filter) =>
-    (
-        await api.get("api/accounts/students/all", {
-            params:  filter,
-        })
-    ).data;
+const studentViewset = createViewset("api/accounts/students");
 
-const getStudent = async (id) =>
-    (await api.get(`api/accounts/students/${id}`)).data;
-
-const updateStudent = async (student) =>
-    await api.put(`api/accounts/students/${student.id}/`, student);
+// Get base methods
+const getStudents = studentViewset.list;
+const getStudent = studentViewset.retrieve;
+const updateStudent = studentViewset.update;
+const createStudent = studentViewset.create;
+const getStudentStats = studentViewset.stats;
 
 const getStudentInfoFromObj = (item) => ({
-    title: `${item.user_details.full_name}`,
-    subtitle: item.identifier,
-    value: item.id,
+	title: `${item.user_details.full_name}`,
+	subtitle: item.identifier,
+	value: item.id,
 });
 
-const getStudentStats = async () =>
-    (await api.get("api/accounts/students/stats/")).data;
-
-const createStudent = async (student) =>
-    await api.post("api/users/students/create/", student);
-
 export {
-    getStudents,
-    getStudent,
-    getStudentInfoFromObj,
-    updateStudent,
+	getStudents,
+	getStudent,
+	getStudentInfoFromObj,
+	updateStudent,
 	createStudent,
-    getStudentStats,
+	getStudentStats,
+	studentViewset,
 };

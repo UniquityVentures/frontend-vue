@@ -26,13 +26,13 @@
 </template>
 
 <script setup>
-import { getClassroomImage, getClassroom } from "@/apps/classrooms/api";
-import { ref, onMounted } from "vue";
+import { getClassroom, getClassroomImage } from "@/apps/classrooms/api";
+import { onMounted, ref } from "vue";
 
 const classroom = ref(null);
 const props = defineProps({ classroomId: Number });
 
 onMounted(async () => {
-  classroom.value = await getClassroom(props.classroomId);
+	classroom.value = await getClassroom(props.classroomId);
 });
 </script>

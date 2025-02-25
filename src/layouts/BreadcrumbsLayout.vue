@@ -25,7 +25,7 @@
 <style>
 </style>
 <script setup>
-import { ref, watch, onMounted } from "vue";
+import { onMounted, ref, watch } from "vue";
 
 import { useRoute } from "vue-router";
 

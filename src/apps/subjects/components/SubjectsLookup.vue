@@ -1,28 +1,26 @@
 <template>
-	<v-container>
-		<v-card variant="flat">
-			<v-card-title>
-				<FilterCard 
-					:fields="fields"
-					:exportFunction="teacherViewset.export"
-				/>
-			</v-card-title>
-			<ResponsiveDataTable
-				:headers="headers"
-				:fetch="getTeachers"
-				v-model="filters"
-				:getToFunction="(item) => ({name: 'Teacher', params: {teacherId: item.id}})"
-				:forceMobile="forceMobile"
-			/>
-		</v-card>
-	</v-container>
+  <v-card variant="flat">
+    <v-card-title>
+      <FilterCard 
+        :fields="fields"
+        :exportFunction="exportSubjects"
+      /> 
+    </v-card-title>
+    <ResponsiveDataTable 
+      :getToFunction="(item) => ({name: 'Subject', params: {subjectId: item.id}})" 
+      :headers="headers" 
+      :fetch="getSubjects" 
+      v-model="filters"
+      :forceMobile="forceMobile"
+    />
+  </v-card>
 </template>
 
 <script setup>
-import { getTeachers, teacherViewset } from "@/apps/teachers/api";
 import FilterCard from "@/components/FilterCard.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { computed, ref } from "vue";
+import { exportSubjects, getSubjects } from "../api";
 
 const defaultFields = [
 	{
@@ -33,9 +31,15 @@ const defaultFields = [
 		defaultValue: "",
 	},
 	{
-		label: "Filter by classroom",
+		label: "Classroom",
 		type: "classroom",
-		key: "classrooms",
+		key: "classroom",
+		value: null,
+	},
+	{
+		label: "Teacher",
+		type: "teacher",
+		key: "teacher",
 		value: null,
 	},
 ];
@@ -61,6 +65,7 @@ const fields = ref(
 	}),
 );
 
+// Replace the filters ref with computed property
 const filters = computed(() => {
 	return fields.value.reduce((acc, field) => {
 		if (Array.isArray(field.key)) {
@@ -75,8 +80,17 @@ const filters = computed(() => {
 });
 
 const headers = [
-	{ title: "Name", key: "user_details", formatFunc: (ud) => ud.full_name },
-	{ title: "Teacher Id", key: "identifier" },
-	{ title: "", key: "actions", align: "end", sortable: false },
+	{ title: "Name", key: "name" },
+	{
+		title: "Classroom",
+		key: "classroom_details",
+		formatFunc: (classroom) => classroom?.name || "-",
+	},
+	{
+		title: "Teacher",
+		key: "teacher_details",
+		formatFunc: (teacher) => teacher?.user_details?.full_name || "-",
+	},
+	{ title: "Actions", key: "actions", sortable: false },
 ];
-</script>
+</script> 

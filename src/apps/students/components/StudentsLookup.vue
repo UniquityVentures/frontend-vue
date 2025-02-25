@@ -3,8 +3,8 @@
 		<v-card variant="flat">
 			<v-card-title>
 				<FilterCard 
-					v-model="filters"
-					:filtersInfo="filtersInfo" 
+					:fields="fields"
+					:exportFunction="studentViewset.export"
 				/>
 			</v-card-title>
 
@@ -12,7 +12,7 @@
 				:getToFunction="(item) => ({ name: 'Student', params: { studentId: item.id }})" 
 				:headers="headers" 
 				:fetch="getStudents" 
-				v-model="filters"
+				:filters="filters"
 				:forceMobile="forceMobile"
 			/>
 		</v-card>
@@ -20,28 +20,61 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { getStudents } from "@/apps/students/api";
-import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
+import { getStudents, studentViewset } from "@/apps/students/api";
 import FilterCard from "@/components/FilterCard.vue";
+import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
+import { computed, ref } from "vue";
 
-const filters = ref({
-	name: "",
-	classroom: null,
-});
-
-const filtersInfo = ref([
+const defaultFields = [
 	{
 		label: "Search by name",
 		type: "string",
 		key: "name",
+		value: "",
+		defaultValue: "",
 	},
 	{
 		label: "Filter by classroom",
 		type: "classroom",
 		key: "classrooms",
+		value: null,
 	},
-]);
+];
+
+const props = defineProps({
+	forceMobile: {
+		type: Boolean,
+		default: false,
+	},
+	initialFields: {
+		type: Array,
+		default: () => [],
+	},
+});
+
+// Initialize fields with any overrides from props
+const fields = ref(
+	defaultFields.map((defaultField) => {
+		const override = props.initialFields.find(
+			(f) => f.key === defaultField.key,
+		);
+		return override ? { ...defaultField, ...override } : defaultField;
+	}),
+);
+
+// Replace the filters ref with computed property
+const filters = computed(() => {
+	return fields.value.reduce((acc, field) => {
+		if (Array.isArray(field.key)) {
+			field.key.forEach((k, i) => {
+				acc[k] = field.value?.[i] ?? null;
+			});
+		} else {
+			acc[field.key] = field.value;
+		}
+		return acc;
+	}, {});
+});
 
 const headers = [
 	{ title: "Name", key: "user_details", formatFunc: (item) => item.full_name },

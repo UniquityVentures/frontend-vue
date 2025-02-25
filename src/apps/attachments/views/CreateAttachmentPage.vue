@@ -10,8 +10,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import FormCard from '@/components/FormCard.vue'
+import FormCard from "@/components/FormCard.vue";
+import { ref } from "vue";
 
 const model = ref([
 	{
@@ -20,6 +20,5 @@ const model = ref([
 		type: "attachment",
 	},
 ]);
-
 </script>
 

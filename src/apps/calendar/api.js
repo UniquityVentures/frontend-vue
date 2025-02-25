@@ -1,28 +1,16 @@
 import { api } from "@/services/api";
+import { createViewset } from "@/services/viewset";
 
-const getEvents = async (filter) =>
-    (
-        await api.get("api/events/all", {
-            params: { ...filter },
-        })
-    ).data;
+const eventViewset = createViewset("api/events");
 
-const getEvent = async (id) =>
-    (await api.get(`api/events/${id}`)).data;
+// Get base methods
+const getEvents = eventViewset.list;
+const getEvent = eventViewset.retrieve;
+const updateEvent = eventViewset.update;
+const createEvent = eventViewset.create;
 
-const updateEvent = async (event) =>
-    await api.put(`api/events/${event.id}/`, event);
-
-const createEvent = async (data) =>
-    await api.post("api/events/create/", data);
-
+// Custom method
 const getCalendar = async (filter) =>
-    (await api.get("api/events/calendar/", { params: { ...filter } })).data;
+	(await api.get("api/events/calendar/", { params: { ...filter } })).data;
 
-export {
-    getEvents,
-    getEvent,
-    updateEvent,
-    createEvent,
-    getCalendar,
-};
+export { getEvents, getEvent, updateEvent, createEvent, getCalendar };

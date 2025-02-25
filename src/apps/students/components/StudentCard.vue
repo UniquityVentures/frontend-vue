@@ -51,35 +51,69 @@
           </div>
 
           <h4 class="text-subtitle-1 mt-4">Guardians:</h4>
-          <v-list lines="2">
-            <v-list-item 
-              v-if="guardian1?.user_details"
-              :title="guardian1.user_details.full_name"
-              :subtitle="guardian1.user_details.email"
-              variant="tonal"
-              rounded="lg"
-              class="ma-2"
-              :to="{ name: 'Parent', params: { parentId: guardian1.id } }"
+          <div class="d-flex flex-wrap">
+            <v-card
+              v-if="student.guardian1_name"
+              variant="flat"
+              class="ma-2 flex-grow-1 border"
+              min-width="300"
             >
-              <template v-slot:prepend>
-                <v-icon>mdi-account-child</v-icon>
-              </template>
-            </v-list-item>
-            
-            <v-list-item 
-              v-if="guardian2?.user_details"
-              :title="guardian2.user_details.full_name"
-              :subtitle="guardian2.user_details.email"
-              variant="tonal"
-              rounded="lg"
-              class="ma-2"
-              :to="{ name: 'Parent', params: { parentId: guardian2.id } }"
+              <v-card-item>
+                <template v-slot:prepend>
+                  <v-avatar color="primary" variant="tonal">
+                    <v-icon>mdi-account-child</v-icon>
+                  </v-avatar>
+                </template>
+                <v-card-title>{{ student.guardian1_name }}</v-card-title>
+                <v-card-subtitle>
+                  <v-icon size="small" class="me-1">mdi-email</v-icon>
+                  {{ student.guardian1_email }}
+                </v-card-subtitle>
+              </v-card-item>
+              
+              <v-card-text class="d-flex gap-2">
+                <v-chip size="small" color="primary">
+                  <v-icon start size="small">mdi-phone</v-icon>
+                  {{ student.guardian1_phone }}
+                </v-chip>
+                <v-chip size="small" color="success">
+                  <v-icon start size="small">mdi-whatsapp</v-icon>
+                  {{ student.guardian1_whatsapp }}
+                </v-chip>
+              </v-card-text>
+            </v-card>
+
+            <v-card
+              v-if="student.guardian2_name"
+              variant="flat"
+              class="ma-2 flex-grow-1 border"
+              min-width="300"
             >
-              <template v-slot:prepend>
-                <v-icon>mdi-account-child</v-icon>
-              </template>
-            </v-list-item>
-          </v-list>
+              <v-card-item>
+                <template v-slot:prepend>
+                  <v-avatar color="primary" variant="tonal">
+                    <v-icon>mdi-account-child</v-icon>
+                  </v-avatar>
+                </template>
+                <v-card-title>{{ student.guardian2_name }}</v-card-title>
+                <v-card-subtitle>
+                  <v-icon size="small" class="me-1">mdi-email</v-icon>
+                  {{ student.guardian2_email }}
+                </v-card-subtitle>
+              </v-card-item>
+              
+              <v-card-text class="d-flex gap-2">
+                <v-chip size="small" color="primary">
+                  <v-icon start size="small">mdi-phone</v-icon>
+                  {{ student.guardian2_phone }}
+                </v-chip>
+                <v-chip size="small" color="success">
+                  <v-icon start size="small">mdi-whatsapp</v-icon>
+                  {{ student.guardian2_whatsapp }}
+                </v-chip>
+              </v-card-text>
+            </v-card>
+          </div>
         </v-card-text>
         <v-card-actions>
             <v-btn
@@ -98,27 +132,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { getParent } from '@/apps/parents/api';
+import { ref } from "vue";
 
 const props = defineProps({
-  student: {
-    type: Object,
-    required: true
-  }
+	student: {
+		type: Object,
+		required: true,
+	},
 });
-
-const guardian1 = ref(null);
-const guardian2 = ref(null);
-
-const fetchGuardians = async () => {
-  if (props.student.guardian_1) {
-    guardian1.value = await getParent(props.student.guardian_1);
-  }
-  if (props.student.guardian_2) {
-    guardian2.value = await getParent(props.student.guardian_2);
-  }
-};
-
-onMounted(fetchGuardians);
 </script>

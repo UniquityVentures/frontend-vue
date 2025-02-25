@@ -4,12 +4,11 @@
 		rounded="lg"
 	>
 	<v-row>
-		<v-col cols="12" md="4" lg="3" v-for="field in filtersInfo">
+		<v-col cols="12" md="4" lg="3" v-for="field in fields">
 			<v-text-field 
 				v-if="field.type === 'string'"
 				:label="field.label" 
-				v-model="filters[field.key]"
-				:rules="[v => !!v || `${field.label} is required`]"
+				v-model="field.value"
 				density="comfortable"
 				hide-details
 				:disabled="field.disabled"
@@ -17,18 +16,17 @@
 			<v-number-input
 				v-if="field.type === 'integer'"
 				:label="field.label" 
-				v-model="filters[field.key]"
-				:rules="[v => !!v || `${field.label} is required`]"
+				v-model="field.value"
 				density="comfortable"
 				hide-details
 				:disabled="field.disabled"
 			></v-number-input>
 			<ServerAutocomplete
 				v-if="['number', 'classroom', 'subject', 'teacher', 'student', 'payment_purpose'].includes(field.type)"
-				v-model="filters[field.key]"
+				v-model="field.value"
 				:clearable="!field.disabled"
 				:fetch="getFilterFetch(field)"
-				:getInfo="getFilterInfo(field)"
+				:getInfo="getInstanceInfoFromObj(field)"
 				:searchField="field.searchField || 'name'"
 				:label="field.label"
 				density="comfortable"
@@ -37,14 +35,14 @@
 			<v-checkbox 
 				v-if="field.type === 'boolean'"
 				:label="field.label" 
-				v-model="filters[field.key]"
+				v-model="field.value"
 			></v-checkbox>
 			<ServerAutocomplete
 				v-if="field.type === 'array'"
-				v-model="filters[field.key]"
+				v-model="field.value"
 				clearable
 				:fetch="getFilterFetch(field)"
-				:getInfo="getFilterInfo(field)"
+				:getInfo="getInstanceInfoFromObj(field)"
 				:searchField="field.searchField || 'name'"
 				:label="field.label"
 				:multiple='true'
@@ -52,7 +50,7 @@
 			/>
 			<v-select
 				v-if="field.type === 'n_nary'"
-				v-model="filters[field.key]"
+				v-model="field.value"
 				:items="field.fetchOptions()"
 				:label="field.label"
 				hide-details
@@ -62,20 +60,70 @@
 				v-if="field.type === 'dates'"
 				color="primary"
 				:label="field.label" 
-				:multiple="field.key.length"
+				v-model="field.value"
+				:multiple="Array.isArray(field.key) ? 'range' : false"
 				density="comfortable"
 				clearable
 				:disabled="field.disabled"
-				@update:modelValue="(value) => [...value].sort((a,b) => a - b).forEach((e, i) => {filters[field.key[i]] = e})"
-			></v-date-input>
+				@update:modelValue="(value) => updateDates(value, field)"
+			>
 				<!--- The above one-liner does the following
 				- Gets the dates in an array from datepicker
 				- Sorts them, treating them as a number
 				- Assigns the corresponding date to the corresponding field in filter
 				--->
+
+
+				</v-date-input>
+			</v-col>
+			<v-col cols="12" md="4" lg="3" class="d-flex gap-2">
+				<v-btn
+					color="primary"
+					@click="clearFilters"
+					class="ma-2"
+				>
+					Clear
+				</v-btn>
+				<v-btn
+					v-if="exportFunction"
+					color="success"
+					:loading="isExporting"
+					@click="showExportDialog"
+					class="ma-2"
+				>
+					Export
+				</v-btn>
 			</v-col>
 		</v-row>
 	</v-container>
+
+	<!-- Add dialog component -->
+	<v-dialog v-model="showDialog" max-width="400">
+		<v-card>
+			<v-card-title>Confirm Export</v-card-title>
+			<v-card-text>
+				Are you sure you want to export this data?
+			</v-card-text>
+			<v-card-actions>
+				<v-spacer></v-spacer>
+				<v-btn
+					color="grey-darken-1"
+					variant="text"
+					@click="showDialog = false"
+				>
+					Cancel
+				</v-btn>
+				<v-btn
+					color="success"
+					variant="text"
+					:loading="isExporting"
+					@click="handleExport"
+				>
+					Confirm Export
+				</v-btn>
+			</v-card-actions>
+		</v-card>
+	</v-dialog>
 </template>
 
 <script setup>
@@ -86,17 +134,17 @@ import {
 	getPaymentPurposeInfoFromObj,
 	getPaymentPurposes,
 } from "@/apps/finances/api";
+import { getStudentInfoFromObj, getStudents } from "@/apps/students/api";
 import { getSubjectInfoFromObj, getSubjects } from "@/apps/subjects/api";
 import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
-import { getStudentInfoFromObj, getStudents } from "@/apps/students/api";
 
 import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
+import { ref } from "vue";
 
 const props = defineProps({
-	// Each element for this array will be an object with the following keys:
-	// - label: String
-	// - key: String & [String] for date range
-	// - type: String
+	// Array of field objects, each containing:
+	// - label: String (display label for the field)
+	// - type: String - One of:
 	//   - 'string'
 	//   - 'integer'
 	//   - 'number'
@@ -109,16 +157,20 @@ const props = defineProps({
 	//   - 'student'
 	//   - 'payment_purpose'
 	//   - 'dates'
-	// - fetchOptions: Function? (only for custom number/array types)
-	// - fetchOptionsInfo: Function? (only for custom number/array types)
-	// - searchField: String? (defaults to 'name')
-	filtersInfo: {
+	// - value: any (current value of the field)
+	// - defaultValue?: any (value to reset to when clearing)
+	// - disabled?: boolean
+	// - fetchOptions?: Function (for custom number/array types)
+	// - searchField?: String (defaults to 'name')
+	fields: {
 		type: Array,
 		required: true,
 	},
+	exportFunction: {
+		type: Function,
+		default: null,
+	},
 });
-
-const filters = defineModel();
 
 const getFilterFetch = (field) => {
 	switch (field.type) {
@@ -139,7 +191,37 @@ const getFilterFetch = (field) => {
 	}
 };
 
-const getFilterInfo = (field) => {
+const clearFilters = () => {
+	console.log("Clearing filters");
+	for (const field of props.fields) {
+		if ("defaultValue" in field) {
+			field.value = field.defaultValue;
+		} else if (Array.isArray(field.value)) {
+			field.value = [];
+		} else if (field.type === "string") {
+			field.value = "";
+		} else {
+			field.value = null;
+		}
+	}
+};
+
+const updateDates = (value, field) => {
+	if (!value) {
+		field.value = null;
+		return;
+	}
+	// If it's a date range (array of dates)
+	if (Array.isArray(field.key)) {
+		const dates = [...value].sort((a, b) => a - b);
+		field.value = dates; // Store the sorted array directly in field.value
+	} else {
+		// Single date
+		field.value = value;
+	}
+};
+
+const getInstanceInfoFromObj = (field) => {
 	switch (field.type) {
 		case "classroom":
 			return getClassroomInfoFromObj;
@@ -155,6 +237,28 @@ const getFilterInfo = (field) => {
 			return getStudentInfoFromObj;
 		default:
 			return field.fetchOptionsInfo;
+	}
+};
+
+// Exporting Logic Here
+const isExporting = ref(false);
+const showDialog = ref(false);
+
+const showExportDialog = () => {
+	showDialog.value = true;
+};
+
+const handleExport = async () => {
+	if (!props.exportFunction) return;
+
+	try {
+		isExporting.value = true;
+		await props.exportFunction(filters.value);
+		showDialog.value = false;
+	} catch (error) {
+		console.error("Export failed:", error);
+	} finally {
+		isExporting.value = false;
 	}
 };
 </script>

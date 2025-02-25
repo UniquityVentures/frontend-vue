@@ -16,17 +16,17 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
 import ClassroomsCard from "@/apps/classrooms/components/ClassroomsCard.vue";
+import { reactive, ref } from "vue";
 
 const search = ref("");
 const filter = reactive({});
 
 const updateFilter = (value) => {
-    if (value) {
-        filter.name = value;
-    } else {
-        delete filter.name;
-    }
+	if (value) {
+		filter.name = value;
+	} else {
+		filter.name = undefined;
+	}
 };
 </script>

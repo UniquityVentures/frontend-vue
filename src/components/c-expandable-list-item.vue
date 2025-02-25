@@ -30,22 +30,22 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 
 // Props definition with validation
 const props = defineProps({
 	title: {
 		type: String,
-		required: true
+		required: true,
 	},
 	icon: {
 		type: String,
-		default: null
+		default: null,
 	},
 	initiallyOpen: {
 		type: Boolean,
-		default: false
-	}
+		default: false,
+	},
 });
 
 // State management
@@ -57,5 +57,5 @@ const toggleOpen = () => {
 };
 
 // Emits
-defineEmits(['update:open']);
+defineEmits(["update:open"]);
 </script>

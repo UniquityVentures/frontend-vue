@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
+import { getTeacherStats } from "@/apps/teachers/api";
 import TeachersLookup from "@/apps/teachers/components/TeachersLookup.vue";
 import StatsCard from "@/components/StatsCard.vue";
-import { getTeacherStats } from "@/apps/teachers/api";
 </script>

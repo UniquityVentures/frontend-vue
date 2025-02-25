@@ -2,12 +2,12 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <EventLookup />
+        <EventsLookup />
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script setup>
-import EventLookup from '../components/EventLookup.vue';
+import EventsLookup from "../components/EventsLookup.vue";
 </script>

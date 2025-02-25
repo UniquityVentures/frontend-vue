@@ -30,20 +30,20 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore } from "@/stores/auth";
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 
-const router = useRouter()
-const authStore = useAuthStore()
-const accounts = ref([])
+const router = useRouter();
+const authStore = useAuthStore();
+const accounts = ref([]);
 
 onMounted(async () => {
-  accounts.value = authStore.user.accounts || []
-})
+	accounts.value = authStore.user.accounts || [];
+});
 
 async function selectAccount(account) {
-  await authStore.setActiveAccount(account)
-  router.push({ name: 'Dashboard' })
+	await authStore.setActiveAccount(account);
+	router.push({ name: "Dashboard" });
 }
 </script>

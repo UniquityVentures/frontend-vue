@@ -10,8 +10,8 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import FormCard from "@/components/FormCard.vue";
+import { ref } from "vue";
 import { createStudent } from "../api";
 
 const model = ref([

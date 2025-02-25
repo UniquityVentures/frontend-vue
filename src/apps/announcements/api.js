@@ -1,21 +1,23 @@
-import { api } from "@/services/api";
+import { createViewset } from "@/services/viewset";
 
-const getAnnouncements = async (filter) =>
-    (await api.get("api/announcements/all", { params: filter })).data;
+const announcementViewset = createViewset("api/announcements", "announcements");
 
-const getAnnouncement = async (id) =>
-    (await api.get(`api/announcements/${id}`)).data;
-
-const updateAnnouncement = async (announcement) =>
-    await api.put(`api/announcements/${announcement.id}/`, announcement);
-
-const createAnnouncement = async (data) => {
-    return await api.post("api/announcements/create/", data);
+// Get base methods
+const getAnnouncements = announcementViewset.list;
+const getAnnouncement = announcementViewset.retrieve;
+const updateAnnouncement = announcementViewset.update;
+const createAnnouncement = announcementViewset.create;
+const exportAnnouncements = announcementViewset.export;
+const importAnnouncements = {
+	dryRun: announcementViewset.import.dryRun,
+	finalize: announcementViewset.import.finalize,
 };
 
 export {
-    getAnnouncements,
-    getAnnouncement,
-    updateAnnouncement,
-    createAnnouncement,
+	getAnnouncements,
+	getAnnouncement,
+	updateAnnouncement,
+	createAnnouncement,
+	exportAnnouncements,
+	importAnnouncements,
 };

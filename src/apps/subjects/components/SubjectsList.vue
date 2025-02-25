@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { getSubjects } from "../api";
 
 // Props

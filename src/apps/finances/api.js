@@ -1,49 +1,38 @@
-import { api } from "@/services/api";
+import { createViewset } from "@/services/viewset";
 
-const getRecords = async (filter) =>
-    (
-        await api.get("api/finances/record/all", {
-            params: filter,
-        })
-    ).data;
+const recordViewset = createViewset("api/finances/record");
+const purposeViewset = createViewset("api/finances/purpose");
+const payeeViewset = createViewset("api/finances/payee");
 
+// Get base methods
+const getRecords = recordViewset.list;
+const getPaymentPurposes = purposeViewset.list;
+const getPayees = payeeViewset.list;
+
+// Info formatters
 const getRecordInfoFromObj = (item) => ({
-    title: item.amount,
-    subtitle: item.student_details.user_details.full_name,
-    value: item.id,
+	title: item.amount,
+	subtitle: item.student_details.user_details.full_name,
+	value: item.id,
 });
-
-const getPaymentPurposes = async (filter) =>
-    (
-        await api.get("api/finances/purpose/all", {
-            params: filter,
-        })
-    ).data;
 
 const getPaymentPurposeInfoFromObj = (item) => ({
-    title: item.name,
-    subtitle: item.description,
-    value: item.id,
+	title: item.name,
+	subtitle: item.description,
+	value: item.id,
 });
 
-const getPayees = async (filter) =>
-    (
-        await api.get("api/finances/payee/all", {
-            params: filter,
-        })
-    ).data;
-
 const getPayeeInfoFromObj = (item) => ({
-    title: item.email,
-    subtitle: item.phone,
-    value: item.id,
+	title: item.email,
+	subtitle: item.phone,
+	value: item.id,
 });
 
 export {
-    getRecords,
-    getPaymentPurposes,
-    getPaymentPurposeInfoFromObj,
-    getRecordInfoFromObj,
-    getPayees,
-    getPayeeInfoFromObj,
+	getRecords,
+	getPaymentPurposes,
+	getPaymentPurposeInfoFromObj,
+	getRecordInfoFromObj,
+	getPayees,
+	getPayeeInfoFromObj,
 };

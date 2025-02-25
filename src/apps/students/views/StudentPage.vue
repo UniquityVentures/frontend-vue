@@ -13,10 +13,10 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { getStudent } from "@/apps/students/api";
 import ClassroomsCard from "@/apps/classrooms/components/ClassroomsCard";
+import { getStudent } from "@/apps/students/api";
 import StudentCard from "@/apps/students/components/StudentCard";
+import { onMounted, ref } from "vue";
 
 const student = ref({});
 

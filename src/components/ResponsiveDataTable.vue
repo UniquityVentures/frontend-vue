@@ -10,30 +10,32 @@
 	>
 		<template #headers={}></template>
 		<template #item={item}>
-			<v-card
-				class="ma-2 pa-2"
-				variant="outlined"
-			>
-				<div class="d-flex align-center justify-space-between">
-					<v-card-title v-if="title.formatFunc" class="text-subtitle-1">{{ title.formatFunc(item[title.key]) }}</v-card-title>
-					<v-card-title v-else class="text-subtitle-1">{{ item[title.key] }}</v-card-title>
-					<v-btn v-if="getToFunction"
-						icon="mdi-arrow-right"
-						size="small"
-						variant="outlined"
-						:to="getToFunction(item)"
-					></v-btn> 
-				</div>
-				<v-card-text>
-					<div class="d-flex flex-column gap-1">
+			<v-list class="ma-2 border">
+				<v-list-item>
+					<v-list-item-title v-if="title.formatFunc" class="text-subtitle-1">
+						{{ title.formatFunc(item[title.key]) }}
+					</v-list-item-title>
+					<v-list-item-title v-else class="text-subtitle-1">
+						{{ item[title.key] }}
+					</v-list-item-title>
+					<v-list-item-subtitle>
 						<div v-for="header in data_headers" class="d-flex align-center justify-space-between">
-							<span class="text-caption">{{header.title}}:</span>
+							<span c>{{header.title}}:</span>
 							<span v-if="header.formatFunc">{{ header.formatFunc(item[header.key]) }}</span>
 							<span v-else>{{ item[header.key] }}</span>
 						</div>
-					</div>
-				</v-card-text>
-			</v-card>
+					</v-list-item-subtitle>
+					<template v-slot:append>
+						<v-btn v-if="getToFunction"
+							icon="mdi-arrow-right"
+							size="small"
+							variant="text"
+							:to="getToFunction(item)"
+							class="ml-4 border"
+						></v-btn>
+					</template>
+				</v-list-item>
+			</v-list>
 		</template>
 	</v-data-table-server>
 	<v-data-table-server
@@ -91,7 +93,6 @@ const props = defineProps({
 
 const filters = defineModel();
 
-
 const title = ref(props.headers[0]);
 const data_headers = ref(props.headers.slice(1, props.headers.length - 1));
 
@@ -112,9 +113,9 @@ const convertFiltersForBackend = (filters) => {
 	);
 };
 
-const fetchData = async ({page, itemsPerPage, search}) => {
+const fetchData = async ({ page, itemsPerPage, search }) => {
 	loading.value = true;
-	
+
 	try {
 		const filterParams = {
 			...convertFiltersForBackend(JSON.parse(search)),

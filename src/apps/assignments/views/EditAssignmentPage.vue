@@ -11,10 +11,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { getSubjectInfoFromObj, getSubjects } from "@/apps/subjects/api";
 import FormCard from "@/components/FormCard.vue";
+import { onMounted, ref } from "vue";
 import { getAssignment, updateAssignment } from "../api";
-import { getSubjects, getSubjectInfoFromObj } from "@/apps/subjects/api";
 
 const props = defineProps({
 	assignmentId: {
@@ -69,11 +69,12 @@ const model = ref([
 onMounted(async () => {
 	assignment.value = await getAssignment(props.assignmentId);
 	// Update model with default values from the existing assignment
-	model.value = model.value.map(field => ({
+	model.value = model.value.map((field) => ({
 		...field,
-		defaultValue: field.key === 'release_at' || field.key === 'expiry_at'
-			? formatDateForInput(assignment.value[field.key])
-			: assignment.value[field.key]
+		defaultValue:
+			field.key === "release_at" || field.key === "expiry_at"
+				? formatDateForInput(assignment.value[field.key])
+				: assignment.value[field.key],
 	}));
 });
 </script>

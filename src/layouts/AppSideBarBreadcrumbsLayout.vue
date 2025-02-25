@@ -7,6 +7,6 @@
 </template>
 
 <script setup>
-import BreadcrumbsLayout from "@/layouts/BreadcrumbsLayout.vue";
 import AppSideBarLayout from "@/layouts/AppSideBarLayout.vue";
+import BreadcrumbsLayout from "@/layouts/BreadcrumbsLayout.vue";
 </script>

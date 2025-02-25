@@ -32,8 +32,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
 import { getTeachers } from "@/apps/teachers/api";
+import { onMounted, ref } from "vue";
 
 const props = defineProps({
 	filter: Object,
