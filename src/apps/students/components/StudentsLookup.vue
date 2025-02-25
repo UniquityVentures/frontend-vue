@@ -4,7 +4,7 @@
 			<v-card-title>
 				<FilterCard 
 					:fields="fields"
-					:exportFunction="studentViewset.export"
+					:exportFunction="exportStudents"
 				/>
 			</v-card-title>
 
@@ -12,7 +12,7 @@
 				:getToFunction="(item) => ({ name: 'Student', params: { studentId: item.id }})" 
 				:headers="headers" 
 				:fetch="getStudents" 
-				:filters="filters"
+				v-model="filters"
 				:forceMobile="forceMobile"
 			/>
 		</v-card>
@@ -21,7 +21,7 @@
 
 <script setup>
 import { ref, computed } from "vue";
-import { getStudents, studentViewset } from "@/apps/students/api";
+import { getStudents, exportStudents } from "@/apps/students/api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import FilterCard from "@/components/FilterCard.vue";
 

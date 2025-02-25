@@ -8,6 +8,8 @@ const getStudent = studentViewset.retrieve;
 const updateStudent = studentViewset.update;
 const createStudent = studentViewset.create;
 const getStudentStats = studentViewset.stats;
+const exportStudents = studentViewset.export;
+const importStudents = studentViewset.import;
 
 const getStudentInfoFromObj = (item) => ({
     title: `${item.user_details.full_name}`,
@@ -22,5 +24,6 @@ export {
     updateStudent,
     createStudent,
     getStudentStats,
-    studentViewset,
+    exportStudents,
+    importStudents,
 };
