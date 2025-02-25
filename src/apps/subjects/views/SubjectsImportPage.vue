@@ -56,56 +56,58 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { importSubjects } from '../api';
+import { ref } from "vue";
+import { importSubjects } from "../api";
 
 const file = ref(null);
 const isDryRunning = ref(false);
 const isImporting = ref(false);
 const dryRunResult = ref(null);
-const errorMessage = ref('');
-const successMessage = ref('');
+const errorMessage = ref("");
+const successMessage = ref("");
 
 const clearMessages = () => {
-  errorMessage.value = '';
-  successMessage.value = '';
-  dryRunResult.value = null;
+	errorMessage.value = "";
+	successMessage.value = "";
+	dryRunResult.value = null;
 };
 
 const handleDryRun = async () => {
-  if (!file.value) return;
-  
-  try {
-    isDryRunning.value = true;
-    errorMessage.value = '';
-    dryRunResult.value = null;
-    
-    const result = await importSubjects.dryRun(file.value);
-    dryRunResult.value = result;
-  } catch (error) {
-    console.error('Dry run failed:', error);
-    errorMessage.value = error.response?.data?.message || 'Failed to analyze file';
-  } finally {
-    isDryRunning.value = false;
-  }
+	if (!file.value) return;
+
+	try {
+		isDryRunning.value = true;
+		errorMessage.value = "";
+		dryRunResult.value = null;
+
+		const result = await importSubjects.dryRun(file.value);
+		dryRunResult.value = result;
+	} catch (error) {
+		console.error("Dry run failed:", error);
+		errorMessage.value =
+			error.response?.data?.message || "Failed to analyze file";
+	} finally {
+		isDryRunning.value = false;
+	}
 };
 
 const handleImport = async () => {
-  if (!file.value || !dryRunResult.value) return;
-  
-  try {
-    isImporting.value = true;
-    errorMessage.value = '';
-    
-    await importSubjects.finalize(file.value);
-    successMessage.value = 'Subjects imported successfully!';
-    file.value = null;
-    dryRunResult.value = null;
-  } catch (error) {
-    console.error('Import failed:', error);
-    errorMessage.value = error.response?.data?.message || 'Failed to import file';
-  } finally {
-    isImporting.value = false;
-  }
+	if (!file.value || !dryRunResult.value) return;
+
+	try {
+		isImporting.value = true;
+		errorMessage.value = "";
+
+		await importSubjects.finalize(file.value);
+		successMessage.value = "Subjects imported successfully!";
+		file.value = null;
+		dryRunResult.value = null;
+	} catch (error) {
+		console.error("Import failed:", error);
+		errorMessage.value =
+			error.response?.data?.message || "Failed to import file";
+	} finally {
+		isImporting.value = false;
+	}
 };
 </script> 

@@ -85,45 +85,45 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { getEvent } from "../api";
 import { getClassroom } from "@/apps/classrooms/api";
 import { getSubject } from "@/apps/subjects/api";
+import { onMounted, ref } from "vue";
+import { getEvent } from "../api";
 
 const event = ref({});
 const classroomDetails = ref([]);
 const subjectDetails = ref([]);
 
 const props = defineProps({
-  eventId: Number,
+	eventId: Number,
 });
 
 const formatDate = (dateString) => {
-  return new Date(dateString).toLocaleString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+	return new Date(dateString).toLocaleString("en-US", {
+		year: "numeric",
+		month: "short",
+		day: "numeric",
+		hour: "2-digit",
+		minute: "2-digit",
+	});
 };
 
 const fetchDetails = async () => {
-  event.value = await getEvent(props.eventId);
+	event.value = await getEvent(props.eventId);
 
-  // Fetch classroom details
-  if (event.value.classrooms?.length > 0) {
-    classroomDetails.value = await Promise.all(
-      event.value.classrooms.map((id) => getClassroom(id))
-    );
-  }
+	// Fetch classroom details
+	if (event.value.classrooms?.length > 0) {
+		classroomDetails.value = await Promise.all(
+			event.value.classrooms.map((id) => getClassroom(id)),
+		);
+	}
 
-  // Fetch subject details
-  if (event.value.subjects?.length > 0) {
-    subjectDetails.value = await Promise.all(
-      event.value.subjects.map((id) => getSubject(id))
-    );
-  }
+	// Fetch subject details
+	if (event.value.subjects?.length > 0) {
+		subjectDetails.value = await Promise.all(
+			event.value.subjects.map((id) => getSubject(id)),
+		);
+	}
 };
 
 onMounted(fetchDetails);

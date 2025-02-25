@@ -55,9 +55,9 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from "vue";
+import { getClassroomInfoFromObj, getClassrooms } from "@/apps/classrooms/api";
 import { getStudents } from "@/apps/students/api";
-import { getClassrooms, getClassroomInfoFromObj } from "@/apps/classrooms/api";
+import { onMounted, ref, watch } from "vue";
 
 const students = ref([]);
 const classrooms = ref([]);

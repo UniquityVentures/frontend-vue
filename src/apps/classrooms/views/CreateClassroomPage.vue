@@ -10,11 +10,11 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import { createClassroom } from "@/apps/classrooms/api";
-import { getTeachers, getTeacherInfoFromObj } from "@/apps/teachers/api";
-import { getStudents, getStudentInfoFromObj } from "@/apps/students/api";
+import { getStudentInfoFromObj, getStudents } from "@/apps/students/api";
+import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
 import FormCard from "@/components/FormCard.vue";
+import { ref } from "vue";
 
 const model = ref([
 	{

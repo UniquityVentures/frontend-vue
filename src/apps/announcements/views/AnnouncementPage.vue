@@ -79,10 +79,10 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { getAnnouncement } from "../api";
 import { getClassroom } from "@/apps/classrooms/api";
 import { getSubject } from "@/apps/subjects/api";
+import { onMounted, ref } from "vue";
+import { getAnnouncement } from "../api";
 
 const announcement = ref({});
 const classroomDetails = ref([]);

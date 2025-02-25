@@ -132,12 +132,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 
 const props = defineProps({
-  student: {
-    type: Object,
-    required: true
-  }
+	student: {
+		type: Object,
+		required: true,
+	},
 });
 </script>

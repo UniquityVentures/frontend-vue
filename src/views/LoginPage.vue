@@ -14,22 +14,22 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
-import LoginForm from '@/components/LoginForm.vue'
+import LoginForm from "@/components/LoginForm.vue";
+import { useAuthStore } from "@/stores/auth";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
-const error = ref('')
-const router = useRouter()
-const authStore = useAuthStore()
+const error = ref("");
+const router = useRouter();
+const authStore = useAuthStore();
 
 async function handleLogin({ username, password }) {
-  try {
-    await authStore.login({ username, password })
-    router.push({ name: 'Accounts' })
-  } catch (err) {
-    error.value = 'Login failed. Please check your credentials.'
-  }
+	try {
+		await authStore.login({ username, password });
+		router.push({ name: "Accounts" });
+	} catch (err) {
+		error.value = "Login failed. Please check your credentials.";
+	}
 }
 </script>
 

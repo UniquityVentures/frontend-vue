@@ -58,37 +58,37 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
 import { getAssignments } from "@/apps/assignments/api";
+import { onMounted, ref } from "vue";
 
 const props = defineProps({
-    filter: {
-        type: Object,
-        default: () => ({}),
-    },
-    title: String,
-    subtitle: String,
-    to: String,
+	filter: {
+		type: Object,
+		default: () => ({}),
+	},
+	title: String,
+	subtitle: String,
+	to: String,
 });
 
 const AssignmentsData = ref([]);
 
 const formatDate = (dateString) => {
-    if (!dateString) return 'No date';
-    return new Date(dateString).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-    });
+	if (!dateString) return "No date";
+	return new Date(dateString).toLocaleDateString("en-US", {
+		month: "short",
+		day: "numeric",
+		hour: "2-digit",
+		minute: "2-digit",
+	});
 };
 
 const isOverdue = (dueDate) => {
-    if (!dueDate) return false;
-    return new Date(dueDate) < new Date();
+	if (!dueDate) return false;
+	return new Date(dueDate) < new Date();
 };
 
 onMounted(async () => {
-    AssignmentsData.value = (await getAssignments(props.filter)).results;
+	AssignmentsData.value = (await getAssignments(props.filter)).results;
 });
 </script>

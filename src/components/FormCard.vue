@@ -92,11 +92,11 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import SubmitButton from "@/components/SubmitButton.vue";
-import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
 import AttachmentForm from "@/apps/attachments/components/AttachmentForm.vue";
 import AttachmentsForm from "@/apps/attachments/components/AttachmentsForm.vue";
+import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
+import SubmitButton from "@/components/SubmitButton.vue";
+import { ref } from "vue";
 
 const props = defineProps({
 	title: {

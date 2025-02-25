@@ -50,8 +50,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
 import { getAnnouncements } from "@/apps/announcements/api";
+import { onMounted, ref } from "vue";
 
 const props = defineProps({
 	filter: {
@@ -60,7 +60,7 @@ const props = defineProps({
 	},
 	title: String,
 	subtitle: String,
-    to: String,
+	to: String,
 });
 
 const AnnouncementsData = ref([]);

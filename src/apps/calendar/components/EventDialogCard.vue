@@ -55,9 +55,9 @@
 
 <script setup>
 defineProps({
-    event: {
-        type: Object,
-        required: true
-    }
+	event: {
+		type: Object,
+		required: true,
+	},
 });
 </script>

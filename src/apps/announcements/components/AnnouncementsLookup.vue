@@ -112,11 +112,11 @@ const filters = computed(() => {
 });
 
 const formatDate = (dateString) =>
-	Intl.DateTimeFormat("en-US", {
-		year: "numeric",
-		month: "short",
-		day: "numeric",
-	}).format(Date.parse(dateString));
+Intl.DateTimeFormat("en-US", {
+	year: "numeric",
+	month: "short",
+	day: "numeric",
+}).format(Date.parse(dateString));
 
 const headers = [
 	{ title: "Title", key: "title" },

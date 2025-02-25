@@ -26,7 +26,7 @@ const updateFilter = (value) => {
 	if (value) {
 		filter.name = value;
 	} else {
-		delete filter.name;
+		filter.name = undefined;
 	}
 };
 </script>

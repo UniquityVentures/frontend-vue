@@ -29,10 +29,10 @@ const props = defineProps({
 });
 
 import AnnouncementsList from "@/apps/announcements/components/AnnouncementsList.vue";
-import SubjectsList from "@/apps/subjects/components/SubjectsList.vue";
-import ClassroomCard from "@/apps/classrooms/components/ClassroomCard.vue";
 import AnnouncementsLookup from "@/apps/announcements/components/AnnouncementsLookup.vue";
 import AssignmentsLookup from "@/apps/assignments/components/AssignmentsLookup.vue";
+import ClassroomCard from "@/apps/classrooms/components/ClassroomCard.vue";
+import SubjectsList from "@/apps/subjects/components/SubjectsList.vue";
 
 classroom.value = await getClassroom(props.classroomId);
 </script>

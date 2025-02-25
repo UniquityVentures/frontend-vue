@@ -26,7 +26,7 @@
 	</v-autocomplete>
 </template>
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 
 const emit = defineEmits(["update:modelValue"]);
 
@@ -88,8 +88,8 @@ const triggered = ref(false);
 const reTriggered = ref(false);
 
 watch(query.value, () => {
-	hasMore.value = true
-})
+	hasMore.value = true;
+});
 
 const fetchResults = async () => {
 	if (loading.value || !hasMore.value) return;

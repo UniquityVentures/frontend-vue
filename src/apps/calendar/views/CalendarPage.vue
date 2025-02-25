@@ -5,5 +5,5 @@
 </template>
 
 <script setup>
-import CalendarCard from '@/apps/calendar/components/CalendarCard.vue';
+import CalendarCard from "@/apps/calendar/components/CalendarCard.vue";
 </script>

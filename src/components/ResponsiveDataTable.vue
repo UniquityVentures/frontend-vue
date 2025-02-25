@@ -93,7 +93,6 @@ const props = defineProps({
 
 const filters = defineModel();
 
-
 const title = ref(props.headers[0]);
 const data_headers = ref(props.headers.slice(1, props.headers.length - 1));
 
@@ -114,9 +113,9 @@ const convertFiltersForBackend = (filters) => {
 	);
 };
 
-const fetchData = async ({page, itemsPerPage, search}) => {
+const fetchData = async ({ page, itemsPerPage, search }) => {
 	loading.value = true;
-	
+
 	try {
 		const filterParams = {
 			...convertFiltersForBackend(JSON.parse(search)),

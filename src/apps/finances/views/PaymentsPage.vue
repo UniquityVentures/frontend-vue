@@ -17,10 +17,10 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import { getAssignments } from "@/apps/assignments/api.js";
-import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import FilterCard from "@/components/FilterCard.vue";
+import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
+import { ref } from "vue";
 
 const filters = ref({
 	title: "",

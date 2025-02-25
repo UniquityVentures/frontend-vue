@@ -1,6 +1,6 @@
 import { createViewset } from "@/services/viewset";
 
-const studentViewset = createViewset('api/accounts/students');
+const studentViewset = createViewset("api/accounts/students");
 
 // Get base methods
 const getStudents = studentViewset.list;
@@ -12,9 +12,9 @@ const exportStudents = studentViewset.export;
 const importStudents = studentViewset.import;
 
 const getStudentInfoFromObj = (item) => ({
-    title: `${item.user_details.full_name}`,
-    subtitle: item.identifier,
-    value: item.id,
+	title: `${item.user_details.full_name}`,
+	subtitle: item.identifier,
+	value: item.id,
 });
 
 export {

@@ -113,9 +113,9 @@
 </template>
 
 <script setup>
+import { useAuthStore } from "@/stores/auth";
 import { onMounted, ref } from "vue";
 import { getAssignment } from "../api";
-import { useAuthStore } from "@/stores/auth";
 
 const assignment = ref({});
 const authStore = useAuthStore();
