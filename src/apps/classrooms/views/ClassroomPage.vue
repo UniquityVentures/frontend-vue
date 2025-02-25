@@ -2,17 +2,7 @@
 	<v-container class="columns-container" v-if="classroom">
 		<ClassroomCard class="column-item" :classroomId="classroomId" />
 		<SubjectsList class="column-item" :filter="{ classroom: classroom.id }" />
-		<AnnouncementsDataList
-			class="column-item"
-			title="Announcements"
-			:filters="{ classroom: classroom.id }"
-			:buttons="[
-				{
-					text: 'View All Announcements',
-					to: { name: 'ClassroomAnnouncements', params: { classroomId } }
-				}
-			]"
-		/>
+		<AnnouncementsList class="column-item" :filter="{ classroom: classroom.id }" title="Announcements" :to="`ClassroomAnnouncements`" />
 	</v-container>
 </template>
 
@@ -28,7 +18,7 @@ const classroom = ref(null);
 
 import ClassroomCard from "@/apps/classrooms/components/ClassroomCard.vue";
 import SubjectsList from "@/apps/subjects/components/SubjectsList.vue";
-import AnnouncementsDataList from "@/apps/announcements/components/AnnouncementsDataList.vue";
+import AnnouncementsList from "@/apps/announcements/components/AnnouncementsList.vue";
 
 // Fetch classroom data
 classroom.value = await getClassroom(props.classroomId);
