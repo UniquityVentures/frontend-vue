@@ -21,22 +21,22 @@
 
 <script>
 export default {
-  data() {
-    return {
-      selectedTab: "", // Holds the currently selected tab name
-    };
-  },
-  props: {
-    tabs: {
-      type: Array, // Expects an array of tab names to be passed from the parent component
-      required: true, // Makes the `tabs` prop mandatory
-    },
-  },
-  mounted() {
-    if (this.tabs.length > 0) {
-      this.selectedTab = this.tabs[0]; // Sets the default selected tab to the first one in the array
-    }
-  },
+	data() {
+		return {
+			selectedTab: "", // Holds the currently selected tab name
+		};
+	},
+	props: {
+		tabs: {
+			type: Array, // Expects an array of tab names to be passed from the parent component
+			required: true, // Makes the `tabs` prop mandatory
+		},
+	},
+	mounted() {
+		if (this.tabs.length > 0) {
+			this.selectedTab = this.tabs[0]; // Sets the default selected tab to the first one in the array
+		}
+	},
 };
 </script>
 

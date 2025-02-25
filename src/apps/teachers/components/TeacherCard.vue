@@ -76,9 +76,9 @@
 
 <script setup>
 const props = defineProps({
-  teacher: {
-    type: Object,
-    required: true
-  }
+	teacher: {
+		type: Object,
+		required: true,
+	},
 });
 </script>

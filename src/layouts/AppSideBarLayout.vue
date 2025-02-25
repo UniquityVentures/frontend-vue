@@ -43,11 +43,11 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from "vue";
-import { useDisplay } from "vuetify/lib/framework.mjs";
-import { useRoute } from "vue-router";
 import RecursiveList from "@/components/RecursiveList.vue";
 import { currentRouteMeta } from "@/router/menu";
+import { onMounted, ref, watch } from "vue";
+import { useRoute } from "vue-router";
+import { useDisplay } from "vuetify/lib/framework.mjs";
 
 const currentRoute = useRoute();
 

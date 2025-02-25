@@ -46,8 +46,8 @@
 <style>
 </style>
 <script setup>
-import { ref, computed } from "vue";
 import { useAuthStore } from "@/stores/auth"; // Pinia store
+import { computed, ref } from "vue";
 import { useDisplay } from "vuetify/lib/framework.mjs";
 
 import { useRouter } from "vue-router";
@@ -68,13 +68,14 @@ const user = computed(() => authStore.user);
 const account = computed(() => authStore.account);
 
 function logoutHandler() {
-	router.push({ name: "Login" })
+	router
+		.push({ name: "Login" })
 		.then(() => {
 			authStore.logout();
 		})
 		.catch((error) => {
-			console.error('Navigation failed:', error);
-			authStore.logout();  // Still logout even if navigation fails
+			console.error("Navigation failed:", error);
+			authStore.logout(); // Still logout even if navigation fails
 		});
 }
 

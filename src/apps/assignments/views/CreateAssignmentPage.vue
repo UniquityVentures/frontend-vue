@@ -10,10 +10,10 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { getSubjectInfoFromObj, getSubjects } from "@/apps/subjects/api";
 import FormCard from "@/components/FormCard.vue";
+import { ref } from "vue";
 import { createAssignment } from "../api";
-import { getSubjects, getSubjectInfoFromObj } from "@/apps/subjects/api";
 
 const model = ref([
 	{

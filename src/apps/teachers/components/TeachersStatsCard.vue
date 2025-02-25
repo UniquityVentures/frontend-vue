@@ -41,8 +41,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
 import { getTeacherStats } from "@/apps/teachers/api";
+import { onMounted, ref } from "vue";
 
 const stats = ref({
 	total: 0,

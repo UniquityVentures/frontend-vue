@@ -9,6 +9,5 @@
 </template>
 
 <script setup>
-import AnnouncementsLookup from '../components/AnnouncementsLookup.vue';
-
+import AnnouncementsLookup from "../components/AnnouncementsLookup.vue";
 </script>

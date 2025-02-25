@@ -134,12 +134,12 @@ import {
 	getPaymentPurposeInfoFromObj,
 	getPaymentPurposes,
 } from "@/apps/finances/api";
+import { getStudentInfoFromObj, getStudents } from "@/apps/students/api";
 import { getSubjectInfoFromObj, getSubjects } from "@/apps/subjects/api";
 import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
-import { getStudentInfoFromObj, getStudents } from "@/apps/students/api";
 
 import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
-import { ref, computed } from 'vue';
+import { ref } from "vue";
 
 const props = defineProps({
 	// Array of field objects, each containing:
@@ -194,12 +194,12 @@ const getFilterFetch = (field) => {
 const clearFilters = () => {
 	console.log("Clearing filters");
 	for (const field of props.fields) {
-		if ('defaultValue' in field) {
+		if ("defaultValue" in field) {
 			field.value = field.defaultValue;
 		} else if (Array.isArray(field.value)) {
 			field.value = [];
-		} else if (field.type === 'string') {
-			field.value = '';
+		} else if (field.type === "string") {
+			field.value = "";
 		} else {
 			field.value = null;
 		}
@@ -214,7 +214,7 @@ const updateDates = (value, field) => {
 	// If it's a date range (array of dates)
 	if (Array.isArray(field.key)) {
 		const dates = [...value].sort((a, b) => a - b);
-		field.value = dates;  // Store the sorted array directly in field.value
+		field.value = dates; // Store the sorted array directly in field.value
 	} else {
 		// Single date
 		field.value = value;
@@ -250,13 +250,13 @@ const showExportDialog = () => {
 
 const handleExport = async () => {
 	if (!props.exportFunction) return;
-	
+
 	try {
 		isExporting.value = true;
 		await props.exportFunction(filters.value);
 		showDialog.value = false;
 	} catch (error) {
-		console.error('Export failed:', error);
+		console.error("Export failed:", error);
 	} finally {
 		isExporting.value = false;
 	}

@@ -39,9 +39,9 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue';
-import { getCalendar } from '@/apps/calendar/api';
-import EventDialogCard from '@/apps/calendar/components/EventDialogCard.vue';
+import { getCalendar } from "@/apps/calendar/api";
+import EventDialogCard from "@/apps/calendar/components/EventDialogCard.vue";
+import { computed, onMounted, ref, watch } from "vue";
 
 // Calendar state
 const currentDate = ref(new Date());
@@ -51,43 +51,43 @@ const selectedOpen = ref(false);
 
 // Replace onMounted and add fetchEvents function
 const fetchEvents = async () => {
-    try {
-        const date = new Date(currentDate.value);
-        const filter = {
-            month: date.getMonth() + 1, // Months are 0-based in JS
-            year: date.getFullYear()
-        };
-        const response = await getCalendar(filter);
-        events.value = response;
-    } catch (error) {
-        console.error('Error fetching events:', error);
-    }
+	try {
+		const date = new Date(currentDate.value);
+		const filter = {
+			month: date.getMonth() + 1, // Months are 0-based in JS
+			year: date.getFullYear(),
+		};
+		const response = await getCalendar(filter);
+		events.value = response;
+	} catch (error) {
+		console.error("Error fetching events:", error);
+	}
 };
 
 // Watch for changes in view mode and current date
 watch([currentDate], () => {
-    fetchEvents();
+	fetchEvents();
 });
 
 onMounted(() => {
-    fetchEvents();
+	fetchEvents();
 });
 
 // Format events for the calendar
 const formattedEvents = computed(() => {
-    return events.value.map(event => ({
-        title: event.title,
-        start: new Date(event.start),
-        end: new Date(event.end),
-        color: event.is_school_wide ? 'red' : 'primary',
-        allDay: false,
-        originalEvent: event,
-    }));
+	return events.value.map((event) => ({
+		title: event.title,
+		start: new Date(event.start),
+		end: new Date(event.end),
+		color: event.is_school_wide ? "red" : "primary",
+		allDay: false,
+		originalEvent: event,
+	}));
 });
 
 // Open the event dialog when a chip is clicked
 const showEvent = (event) => {
-    selectedEvent.value = event.originalEvent;
-    selectedOpen.value = true;
+	selectedEvent.value = event.originalEvent;
+	selectedOpen.value = true;
 };
 </script>

@@ -28,7 +28,7 @@
 
 <script setup>
 import { ref, watch } from "vue";
-import { getClassrooms, getClassroomImage } from "../api";
+import { getClassroomImage, getClassrooms } from "../api";
 
 const props = defineProps({
 	filter: {

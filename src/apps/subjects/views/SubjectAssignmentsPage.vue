@@ -19,20 +19,20 @@
 </template>
 
 <script setup>
-import AssignmentsLookup from '@/apps/assignments/components/AssignmentsLookup.vue';
-import { getSubject } from '@/apps/subjects/api';
-import { ref, onMounted } from 'vue';
+import AssignmentsLookup from "@/apps/assignments/components/AssignmentsLookup.vue";
+import { getSubject } from "@/apps/subjects/api";
+import { onMounted, ref } from "vue";
 
 const props = defineProps({
-    subjectId: {
-        type: String,
-        required: true
-    }
+	subjectId: {
+		type: String,
+		required: true,
+	},
 });
 
 const subject = ref(null);
 
 onMounted(async () => {
-    subject.value = await getSubject(props.subjectId);
+	subject.value = await getSubject(props.subjectId);
 });
 </script>

@@ -17,19 +17,19 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { getTeacher } from "@/apps/teachers/api";
 import ClassroomsCard from "@/apps/classrooms/components/ClassroomsCard";
+import { getTeacher } from "@/apps/teachers/api";
 import TeacherCard from "@/apps/teachers/components/TeacherCard";
+import { onMounted, ref } from "vue";
 
 const teacher = ref({});
 
 const props = defineProps({
-  teacherId: Number,
+	teacherId: Number,
 });
 
 const fetchDetails = async () => {
-  teacher.value = await getTeacher(props.teacherId);
+	teacher.value = await getTeacher(props.teacherId);
 };
 
 onMounted(fetchDetails);

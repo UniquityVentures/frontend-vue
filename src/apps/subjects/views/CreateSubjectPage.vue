@@ -16,8 +16,8 @@ import { ref } from "vue";
 
 import FormCard from "@/components/FormCard.vue";
 
-import { getClassrooms, getClassroomInfoFromObj } from "@/apps/classrooms/api";
-import { getTeachers, getTeacherInfoFromObj } from "@/apps/teachers/api";
+import { getClassroomInfoFromObj, getClassrooms } from "@/apps/classrooms/api";
+import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
 
 const model = ref([
 	{

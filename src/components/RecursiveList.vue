@@ -14,11 +14,10 @@
 
 
 <script setup>
+import ExpandableListItem from "@/components/c-expandable-list-item.vue";
 import RecursiveList from "./RecursiveList.vue";
-import ExpandableListItem from '@/components/c-expandable-list-item.vue'
 
 const listProps = defineProps({
 	item: Object,
 });
-
 </script>

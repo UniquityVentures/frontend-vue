@@ -18,20 +18,20 @@
 </template>
 
 <script setup>
-import AnnouncementsLookup from '@/apps/announcements/components/AnnouncementsLookup.vue';
-import { getClassroom } from '@/apps/classrooms/api';
-import { ref, onMounted } from 'vue';
+import AnnouncementsLookup from "@/apps/announcements/components/AnnouncementsLookup.vue";
+import { getClassroom } from "@/apps/classrooms/api";
+import { onMounted, ref } from "vue";
 
 const props = defineProps({
-  classroomId: {
-    type: String,
-    required: true
-  }
+	classroomId: {
+		type: String,
+		required: true,
+	},
 });
 
 const classroom = ref(null);
 
 onMounted(async () => {
-  classroom.value = await getClassroom(props.classroomId);
+	classroom.value = await getClassroom(props.classroomId);
 });
 </script>

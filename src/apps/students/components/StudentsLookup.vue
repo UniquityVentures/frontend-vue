@@ -20,10 +20,10 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
 import { getStudents, studentViewset } from "@/apps/students/api";
-import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import FilterCard from "@/components/FilterCard.vue";
+import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
+import { computed, ref } from "vue";
 
 const defaultFields = [
 	{
@@ -48,15 +48,19 @@ const props = defineProps({
 	},
 	initialFields: {
 		type: Array,
-		default: () => ([]),
+		default: () => [],
 	},
 });
 
 // Initialize fields with any overrides from props
-const fields = ref(defaultFields.map(defaultField => {
-	const override = props.initialFields.find(f => f.key === defaultField.key);
-	return override ? { ...defaultField, ...override } : defaultField;
-}));
+const fields = ref(
+	defaultFields.map((defaultField) => {
+		const override = props.initialFields.find(
+			(f) => f.key === defaultField.key,
+		);
+		return override ? { ...defaultField, ...override } : defaultField;
+	}),
+);
 
 // Replace the filters ref with computed property
 const filters = computed(() => {

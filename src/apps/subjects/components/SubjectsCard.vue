@@ -20,8 +20,8 @@ import { onMounted, ref, watch } from "vue";
 const props = defineProps({
 	filter: {
 		type: Object,
-		default: () => ({})
-	}
+		default: () => ({}),
+	},
 });
 
 const classroomsData = ref([]);

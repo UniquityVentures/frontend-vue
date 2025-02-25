@@ -26,6 +26,6 @@
 </template>
 
 <script setup>
-import { LottieAnimation } from "lottie-web-vue"
-import accessDeniedAnimation from '@/assets/access-denied.json'
+import accessDeniedAnimation from "@/assets/access-denied.json";
+import { LottieAnimation } from "lottie-web-vue";
 </script>

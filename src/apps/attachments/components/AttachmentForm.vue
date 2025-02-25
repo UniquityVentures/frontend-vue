@@ -10,9 +10,9 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import FormCard from "@/components/FormCard.vue";
 import { createAttachment } from "@/apps/attachments/api";
+import FormCard from "@/components/FormCard.vue";
+import { ref } from "vue";
 
 const props = defineProps({
 	title: {
@@ -31,7 +31,7 @@ const emit = defineEmits(["update:attachment"]);
 async function handleCreateAttachment(data) {
 	attachment.value = await createAttachment(data);
 	emit("update:attachment", attachment?.value);
-	attachment.value = null;  // Reset the attachment after emitting
+	attachment.value = null; // Reset the attachment after emitting
 }
 
 const model = ref([

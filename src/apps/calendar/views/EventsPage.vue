@@ -9,5 +9,5 @@
 </template>
 
 <script setup>
-import EventsLookup from '../components/EventsLookup.vue';
+import EventsLookup from "../components/EventsLookup.vue";
 </script>

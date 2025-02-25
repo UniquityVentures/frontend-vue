@@ -9,6 +9,5 @@
 </template>
 
 <script setup>
-import AssignmentsLookup from '../components/AssignmentsLookup.vue';
-
+import AssignmentsLookup from "../components/AssignmentsLookup.vue";
 </script>

@@ -19,20 +19,19 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
-import AnnouncementsList from '@/apps/announcements/components/AnnouncementsList.vue';
-import StudentsStatsCard from '@/apps/students/components/StudentsStatsCard.vue';
-import TeachersStatsCard from '@/apps/teachers/components/TeachersStatsCard.vue';
+import AnnouncementsList from "@/apps/announcements/components/AnnouncementsList.vue";
+import StudentsStatsCard from "@/apps/students/components/StudentsStatsCard.vue";
+import TeachersStatsCard from "@/apps/teachers/components/TeachersStatsCard.vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  components: {
-    AnnouncementsList,
-    StudentsStatsCard,
-    TeachersStatsCard,
-  },
-  setup() {
-    return {};
-  },
+	components: {
+		AnnouncementsList,
+		StudentsStatsCard,
+		TeachersStatsCard,
+	},
+	setup() {
+		return {};
+	},
 });
-
 </script>

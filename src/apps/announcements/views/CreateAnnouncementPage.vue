@@ -10,12 +10,12 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { getClassroomInfoFromObj, getClassrooms } from "@/apps/classrooms/api";
+import { getSubjectInfoFromObj, getSubjects } from "@/apps/subjects/api";
+import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
 import FormCard from "@/components/FormCard.vue";
+import { ref } from "vue";
 import { createAnnouncement } from "../api";
-import { getTeachers, getTeacherInfoFromObj } from "@/apps/teachers/api";
-import { getClassrooms, getClassroomInfoFromObj } from "@/apps/classrooms/api";
-import { getSubjects, getSubjectInfoFromObj } from "@/apps/subjects/api";
 
 const model = ref([
 	{

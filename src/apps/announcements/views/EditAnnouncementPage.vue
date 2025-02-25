@@ -11,12 +11,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { getClassroomInfoFromObj, getClassrooms } from "@/apps/classrooms/api";
+import { getSubjectInfoFromObj, getSubjects } from "@/apps/subjects/api";
+import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
 import FormCard from "@/components/FormCard.vue";
+import { onMounted, ref } from "vue";
 import { getAnnouncement, updateAnnouncement } from "../api";
-import { getTeachers, getTeacherInfoFromObj } from "@/apps/teachers/api";
-import { getClassrooms, getClassroomInfoFromObj } from "@/apps/classrooms/api";
-import { getSubjects, getSubjectInfoFromObj } from "@/apps/subjects/api";
 
 const props = defineProps({
 	announcementId: {
@@ -47,7 +47,7 @@ const model = ref([
 		label: "Priority",
 		key: "priority",
 		type: "select",
-		items: ['low', 'medium', 'high'],
+		items: ["low", "medium", "high"],
 	},
 	{
 		label: "Is Active",
@@ -95,15 +95,15 @@ const model = ref([
 	},
 ]);
 
-
 onMounted(async () => {
 	announcement.value = await getAnnouncement(props.announcementId);
 	// Update model with default values from the existing announcement
-	model.value = model.value.map(field => ({
+	model.value = model.value.map((field) => ({
 		...field,
-		defaultValue: field.key === 'release_at' || field.key === 'expiry_at'
-			? formatDateForInput(announcement.value[field.key])
-			: announcement.value[field.key]
+		defaultValue:
+			field.key === "release_at" || field.key === "expiry_at"
+				? formatDateForInput(announcement.value[field.key])
+				: announcement.value[field.key],
 	}));
 });
 </script>

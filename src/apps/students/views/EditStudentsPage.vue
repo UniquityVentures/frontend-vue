@@ -11,10 +11,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import FormCard from "@/components/FormCard.vue";
-import { getStudent, updateStudent } from "../api";
 import { getUser, updateUser } from "@/apps/users/api";
+import FormCard from "@/components/FormCard.vue";
+import { onMounted, ref } from "vue";
+import { getStudent, updateStudent } from "../api";
 
 const props = defineProps({
 	studentId: {
@@ -73,9 +73,9 @@ onMounted(async () => {
 	student.value = await getStudent(props.studentId);
 	user.value = await getUser(student.value.user);
 	// Update model with default values from the existing user data
-	model.value = model.value.map(field => ({
+	model.value = model.value.map((field) => ({
 		...field,
-		defaultValue: user.value[field.key]
+		defaultValue: user.value[field.key],
 	}));
 });
 </script>

@@ -5,5 +5,5 @@
 </template>
 
 <script setup>
-import ClassroomsLookup from '../components/ClassroomsLookup.vue';
+import ClassroomsLookup from "../components/ClassroomsLookup.vue";
 </script>
