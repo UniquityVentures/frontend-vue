@@ -23,7 +23,7 @@
 import { ref, computed } from "vue";
 import { getStudents, exportStudents } from "@/apps/students/api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
-import { computed, ref } from "vue";
+import FilterCard from "@/components/FilterCard.vue";
 
 const defaultFields = [
 	{
