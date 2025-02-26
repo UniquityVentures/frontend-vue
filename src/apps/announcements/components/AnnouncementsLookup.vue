@@ -8,7 +8,7 @@
     </v-card-title>
     <ResponsiveDataTable 
       :getToFunction="(item) => ({name: 'Announcement', params: {announcementId: item.id}})" 
-      :headers="headers" 
+      :headers="announcementHeaders" 
       :fetch="getAnnouncements" 
       v-model="filters"
     />
@@ -17,7 +17,7 @@
 
 <script setup> 
 import { ref, computed } from "vue";
-import { getAnnouncements, exportAnnouncements } from "../api";
+import { getAnnouncements, exportAnnouncements, announcementHeaders } from "../api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import FilterCard from "@/components/FilterCard.vue";
 
@@ -110,23 +110,4 @@ const filters = computed(() => {
 		return acc;
 	}, {});
 });
-
-const formatDate = (dateString) =>
-Intl.DateTimeFormat("en-US", {
-	year: "numeric",
-	month: "short",
-	day: "numeric",
-}).format(Date.parse(dateString));
-
-const headers = [
-	{ title: "Title", key: "title" },
-	{ title: "Release Date", key: "release_at", formatFunc: formatDate },
-	{ title: "Expiry Date", key: "expiry_at", formatFunc: formatDate },
-	{
-		title: "Signed By",
-		key: "signed_by_details",
-		formatFunc: (signedBy) => signedBy.user_details.full_name,
-	},
-	{ title: "Actions", key: "actions", sortable: false },
-];
 </script>

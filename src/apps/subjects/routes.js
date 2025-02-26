@@ -3,12 +3,9 @@ import EditSubjectPage from "@/apps/subjects/views/EditSubjectPage.vue";
 import SubjectPage from "@/apps/subjects/views/SubjectPage.vue";
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
-import { api } from "@/services/api";
 import { getSubject } from "./api";
 import SubjectAnnouncementsPage from "./views/SubjectAnnouncementsPage.vue";
 import SubjectAssignmentsPage from "./views/SubjectAssignmentsPage.vue";
-import SubjectsExportPage from "./views/SubjectsExportPage.vue";
-import SubjectsImportPage from "./views/SubjectsImportPage.vue";
 import SubjectsPage from "./views/SubjectsPage.vue";
 
 export default [
@@ -27,14 +24,6 @@ export default [
 				{
 					title: "Create Subject",
 					to: { name: "CreateSubject" },
-				},
-				{
-					title: "Export Subjects",
-					to: { name: "SubjectsExport" },
-				},
-				{
-					title: "Import Subjects",
-					to: { name: "SubjectsImport" },
 				},
 			],
 			icon: "mdi-book-open-variant",
@@ -55,23 +44,13 @@ export default [
 				name: "Subjects",
 			},
 			{
-				path: "export/",
-				component: SubjectsExportPage,
-				name: "SubjectsExport",
-			},
-			{
-				path: "import/",
-				component: SubjectsImportPage,
-				name: "SubjectsImport",
-			},
-			{
 				path: ":subjectId/",
 				component: EmptyLayout,
 				meta: {
 					defaultRoute: "Subject",
 					getDisplayName: async (props) => {
 						const subject = await getSubject(props.subjectId);
-						return `${subject.name} [${subject.classroom_details.name}]`;
+						return `${subject.name}`;
 					},
 					getMenu: (props) => [
 						{

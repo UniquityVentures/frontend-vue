@@ -13,10 +13,18 @@ const getTeacherInfoFromObj = (item) => ({
 	value: item.id,
 });
 
+
+const teacherHeaders = [
+	{ title: "Name", key: "user_details", formatFunc: (ud) => ud.full_name },
+	{ title: "Teacher Id", key: "identifier" },
+	{ title: "", key: "actions", align: "end", sortable: false },
+];
+
 export {
 	getTeachers,
 	getTeacher,
 	getTeacherInfoFromObj,
 	getTeacherStats,
 	teacherViewset,
+	teacherHeaders,
 };

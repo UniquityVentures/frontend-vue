@@ -8,7 +8,7 @@
 				/>
 			</v-card-title>
 			<ResponsiveDataTable
-				:headers="headers"
+				:headers="teacherHeaders"
 				:fetch="getTeachers"
 				v-model="filters"
 				:getToFunction="(item) => ({name: 'Teacher', params: {teacherId: item.id}})"
@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import { getTeachers, teacherViewset } from "@/apps/teachers/api";
+import { getTeachers, teacherHeaders, teacherViewset } from "@/apps/teachers/api";
 import FilterCard from "@/components/FilterCard.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { computed, ref } from "vue";
@@ -35,7 +35,7 @@ const defaultFields = [
 	{
 		label: "Filter by classroom",
 		type: "classroom",
-		key: "classrooms",
+		key: "classroom",
 		value: null,
 	},
 ];
@@ -74,9 +74,4 @@ const filters = computed(() => {
 	}, {});
 });
 
-const headers = [
-	{ title: "Name", key: "user_details", formatFunc: (ud) => ud.full_name },
-	{ title: "Teacher Id", key: "identifier" },
-	{ title: "", key: "actions", align: "end", sortable: false },
-];
 </script>

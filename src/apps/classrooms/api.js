@@ -8,8 +8,8 @@ const images = [
 
 const classroomViewset = createViewset("api/allocation/classrooms");
 
-// Get base methods
-const getClassrooms = classroomViewset.list;
+// Get base methods with page size limit
+const getClassrooms = (filters = {}) => classroomViewset.list({ ...filters, page_size: 1000 });
 const getClassroom = classroomViewset.retrieve;
 const updateClassroom = classroomViewset.update;
 const createClassroom = classroomViewset.create;
@@ -29,6 +29,27 @@ const getClassroomInfoFromObj = (item) => ({
 	value: item.id,
 });
 
+const classroomHeaders = [
+	{ title: "Name", key: "name" },
+	{ title: "Grade", key: "standard" },
+	{
+		title: "Teacher",
+		key: "teacher_details",
+		formatFunc: (teacher) => teacher?.user_details?.full_name || "-",
+	},
+	{
+		title: "Students Count",
+		key: "students",
+		formatFunc: (students) => students?.length || 0,
+	},
+	{
+		title: "Status",
+		key: "is_active",
+		formatFunc: (status) => (status ? "Active" : "Inactive"),
+	},
+	{ title: "Actions", key: "actions", sortable: false },
+];
+
 export {
 	getClassroom,
 	getClassrooms,
@@ -39,4 +60,5 @@ export {
 	exportClassrooms,
 	importClassroomsDryRun,
 	importClassroomsFinalize,
+	classroomHeaders,
 };

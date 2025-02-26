@@ -30,7 +30,6 @@
 import AnnouncementsList from "@/apps/announcements/components/AnnouncementsList.vue";
 import AssignmentsList from "@/apps/assignments/components/AssignmentsList.vue";
 import SubjectCard from "@/apps/subjects/components/SubjectCard.vue";
-import { getTeachers } from "@/apps/teachers/api";
 import { api } from "@/services/api";
 import { onMounted, ref } from "vue";
 
@@ -38,8 +37,6 @@ const props = defineProps({
 	subjectId: String,
 });
 
-const tabs = ref(null);
-const teachers = ref([]);
 const subject = ref({});
 
 const getSubjectData = async () => {
@@ -50,7 +47,6 @@ const getSubjectData = async () => {
 
 onMounted(async () => {
 	getSubjectData();
-	teachers.value = (await getTeachers()).results;
 });
 </script>
   

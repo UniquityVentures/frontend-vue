@@ -28,8 +28,8 @@ const model = ref([
 		type: "string",
 	},
 	{
-		label: "Class Teacher",
-		key: "class_teacher",
+		label: "Teacher",
+		key: "teacher",
 		type: "number",
 		fetchOptions: getTeachers,
 		fetchOptionsInfo: getTeacherInfoFromObj,
@@ -40,15 +40,6 @@ const model = ref([
 		key: "is_active",
 		type: "boolean",
 		defaultValue: true,
-	},
-	{
-		label: "Other Teachers",
-		key: "other_teachers",
-		type: "array",
-		fetchOptions: getTeachers,
-		fetchOptionsInfo: getTeacherInfoFromObj,
-		searchField: "name",
-		defaultValue: [],
 	},
 	{
 		label: "Students",

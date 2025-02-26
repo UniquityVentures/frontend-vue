@@ -9,7 +9,7 @@
 
 		<ResponsiveDataTable 
 			:getToFunction="(item) => ({ name: 'Student', params: { studentId: item.id }})" 
-			:headers="headers" 
+			:headers="studentHeaders" 
 			:fetch="getStudents" 
 			v-model="filters"
 			:forceMobile="forceMobile"
@@ -19,7 +19,7 @@
 
 <script setup>
 import { ref, computed } from "vue";
-import { getStudents, exportStudents } from "@/apps/students/api";
+import { getStudents, exportStudents, studentHeaders } from "@/apps/students/api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import FilterCard from "@/components/FilterCard.vue";
 
@@ -34,7 +34,7 @@ const defaultFields = [
 	{
 		label: "Filter by classroom",
 		type: "classroom",
-		key: "classrooms",
+		key: "classroom",
 		value: null,
 	},
 ];
@@ -73,10 +73,4 @@ const filters = computed(() => {
 		return acc;
 	}, {});
 });
-
-const headers = [
-	{ title: "Name", key: "user_details", formatFunc: (item) => item.full_name },
-	{ title: "Student No", key: "student_no" },
-	{ title: "", key: "actions", align: "end", sortable: false },
-];
 </script>

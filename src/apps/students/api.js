@@ -17,6 +17,14 @@ const getStudentInfoFromObj = (item) => ({
 	value: item.id,
 });
 
+const studentHeaders = [
+	{ title: "Name", key: "user_details", formatFunc: (item) => item.full_name },
+	{ title: "Student No", key: "student_no" },
+    { title: "Class", key: "classroom_details", formatFunc: (item) => item.name },
+    { title: "Roll Number", key: "roll_no" },
+	{ title: "", key: "actions", align: "end", sortable: false },
+];
+
 export {
     getStudents,
     getStudent,
@@ -26,4 +34,5 @@ export {
     getStudentStats,
     exportStudents,
     importStudents,
+    studentHeaders,
 };

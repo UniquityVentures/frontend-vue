@@ -14,11 +14,11 @@
                     :to="{ 
                         name: 'Teacher', 
                         params: { 
-                            teacherId: classroom.class_teacher_details?.id 
+                            teacherId: classroom.teacher_details?.id 
                         }
                     }"
                 >
-                Class Teacher: {{ classroom.class_teacher_details?.user_details?.full_name || "Loading..." }}
+                Class Teacher: {{ classroom.teacher_details?.user_details?.full_name || "Loading..." }}
                 </v-chip>
             </p>
         </v-card-subtitle>

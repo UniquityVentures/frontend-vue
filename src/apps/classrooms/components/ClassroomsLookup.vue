@@ -8,7 +8,7 @@
     </v-card-title>
     <ResponsiveDataTable 
       :getToFunction="(item) => ({name: 'Classroom', params: {classroomId: item.id}})" 
-      :headers="headers" 
+      :headers="classroomHeaders" 
       :fetch="getClassrooms" 
       v-model="filters"
       :forceMobile="forceMobile"
@@ -20,7 +20,7 @@
 import FilterCard from "@/components/FilterCard.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { computed, ref } from "vue";
-import { exportClassrooms, getClassrooms } from "../api";
+import { exportClassrooms, getClassrooms, classroomHeaders } from "../api";
 
 const defaultFields = [
 	{
@@ -44,9 +44,9 @@ const defaultFields = [
 		],
 	},
 	{
-		label: "Class Teacher",
+		label: "Teacher",
 		type: "teacher",
-		key: "class_teacher",
+		key: "teacher",
 		value: null,
 	},
 	{
@@ -96,25 +96,4 @@ const filters = computed(() => {
 		return acc;
 	}, {});
 });
-
-const headers = [
-	{ title: "Name", key: "name" },
-	{ title: "Grade", key: "standard" },
-	{
-		title: "Class Teacher",
-		key: "class_teacher_details",
-		formatFunc: (teacher) => teacher?.user_details?.full_name || "-",
-	},
-	{
-		title: "Students Count",
-		key: "students",
-		formatFunc: (students) => students?.length || 0,
-	},
-	{
-		title: "Status",
-		key: "is_active",
-		formatFunc: (status) => (status ? "Active" : "Inactive"),
-	},
-	{ title: "Actions", key: "actions", sortable: false },
-];
 </script>
