@@ -1,6 +1,6 @@
 <template>
 	<v-container class="columns-container" v-if="classroom">
-		<ClassroomCard class="column-item" :classroomId="classroomId" />
+		<ClassroomCard class="column-item" :classroomId=classroomId />
 		<SubjectsList class="column-item" :filter="{ classroom: classroom.id }" />
 		<AnnouncementsList class="column-item" :filter="{ classroom: classroom.id }" title="Announcements" :to="`ClassroomAnnouncements`" />
 	</v-container>
