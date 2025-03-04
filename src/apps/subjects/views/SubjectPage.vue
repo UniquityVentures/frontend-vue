@@ -7,13 +7,6 @@
             <SubjectCard :subject="subject"></SubjectCard>
           </v-col>
           <v-col cols="12" lg="4">
-            <AnnouncementsList 
-              :filter="{ subject: subject.id }" 
-              :to="`SubjectAnnouncements`" 
-              :title="`Announcements`" 
-            />
-          </v-col>
-          <v-col cols="12" lg="4">
             <AssignmentsList 
               :filter="{ subject: subject.id }" 
               :title="`Assignments`" 
@@ -27,7 +20,6 @@
 </template>
   
 <script setup>
-import AnnouncementsList from "@/apps/announcements/components/AnnouncementsList.vue";
 import AssignmentsList from "@/apps/assignments/components/AssignmentsList.vue";
 import SubjectCard from "@/apps/subjects/components/SubjectCard.vue";
 import { getTeachers } from "@/apps/teachers/api";
@@ -38,7 +30,6 @@ const props = defineProps({
 	subjectId: String,
 });
 
-const tabs = ref(null);
 const teachers = ref([]);
 const subject = ref({});
 

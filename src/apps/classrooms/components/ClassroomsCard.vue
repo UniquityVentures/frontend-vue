@@ -38,9 +38,6 @@ const props = defineProps({
 });
 
 const classrooms = ref([]);
-const totalRecords = ref(0);
-const totalPages = ref(0);
-const currentPage = ref(1);
 
 const fetchClassrooms = async () => {
 	classrooms.value = (await getClassrooms(props.filter)).results;

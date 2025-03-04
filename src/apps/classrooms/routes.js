@@ -8,7 +8,7 @@ import EditClassroomPage from "@/apps/classrooms/views/EditClassroomPage.vue";
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import { getClassroom } from "@/apps/classrooms/api";
-
+import subjectsRoutes from "@/apps/subjects/routes";
 export default [
 	{
 		path: "classrooms/",
@@ -49,7 +49,7 @@ export default [
 				},
 			},
 			{
-				path: "",
+				path: "all/",
 				name: "Classrooms",
 				component: ClassroomsPage,
 			},
@@ -89,11 +89,15 @@ export default [
 							title: "Announcements",
 							to: { name: "ClassroomAnnouncements", props },
 						},
+						{
+							title: "Subjects",
+							to: { name: "Subjects", props },
+						},
 					],
 				},
 				children: [
 					{
-						path: "",
+						path: "view/",
 						props: true,
 						name: "Classroom",
 						component: ClassroomPage,
@@ -114,6 +118,7 @@ export default [
 							defaultRoute: "ClassroomAnnouncements",
 						},
 					},
+					...subjectsRoutes,
 				],
 			},
 		],

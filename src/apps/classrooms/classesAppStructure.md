@@ -1,4 +1,4 @@
-# Ideas
+# Structure for the Classes and Subjects Apps
 
 ## Classroom-first approach
 
@@ -93,3 +93,13 @@
 
 - Easiest to implement (already done)
 - Most amount of features. But there is high complexity and properly operating the software is going to need some skill.
+
+### Problems with this approach:
+
+- Not intuitive for user.
+
+## Our selection
+
+- We will go with the classroom-first approach - the reason is as follows:
+  - Classroom is a `PrimaryKey` on Subject. This means that each subject is inherently bound to a single classroom. 
+  - So it has already been established, that subjects are inside classrooms. We just haven't implemented it in the frontend yet.

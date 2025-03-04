@@ -1,18 +1,18 @@
 <template>
 	<Suspense>
 		<v-app>
-			<v-navigation-drawer location="right" v-model="rightDrawer" color="accent" > 
+			<v-navigation-drawer location="right" v-model="rightDrawer" color="accent">
 				<v-btn :to="{ name: 'All Apps' }" class="ma-4 d-flex justify-center" color="white">
 					Go to All Apps
 				</v-btn>
-				
-				<template v-for="(route, index) in routes" :key="index">
+
+				<template v-for="(route, index) in reversedRoutes" :key="index">
 					<v-card v-if="route.meta.displayName" class="mb-4 ma-4">
 						<v-card-title>{{ route.meta.displayName }}</v-card-title>
-					</v-card>
-					<span>
+					<v-card-text>
 						<RecursiveList v-for="item in route.meta.menu" :key="item.id" :item="item" />
-					</span>
+					</v-card-text>
+					</v-card>
 				</template>
 			</v-navigation-drawer>
 			<v-fab app location="right top" @click="rightDrawer = !rightDrawer" icon>
@@ -33,7 +33,7 @@
 <script setup>
 import RecursiveList from "@/components/RecursiveList.vue";
 import { currentRouteMeta } from "@/router/menu";
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useDisplay } from "vuetify/lib/framework.mjs";
 
@@ -43,11 +43,13 @@ const { mobile } = useDisplay();
 const rightDrawer = ref(!mobile.value);
 const routes = ref([]);
 
+const reversedRoutes = computed(() => [...routes.value].reverse());
+
 watch(
-	() => currentRoute, 
-	async (route) => {
-		routes.value = await currentRouteMeta(route);
-	}, 
+	() => currentRoute.fullPath,
+	async () => {
+		routes.value = await currentRouteMeta(currentRoute);
+	},
 	{ immediate: true }
 );
 
