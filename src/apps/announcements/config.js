@@ -13,7 +13,7 @@ export const announcementDefaultHeaders = [
     { title: "Actions", key: "actions", sortable: false },
 ];
 
-export const announcementDefaultFields = [
+export const announcementDefaultFilterFields = [
     {
         label: "Search by title",
         type: "string",
@@ -74,4 +74,75 @@ export const announcementDefaultFields = [
         key: ["expired_start", "expired_end"],
         value: null,
     },
+];
+
+export const announcementDefaultFormFields = [
+	{
+		label: "Title",
+		key: "title",
+		type: "string",
+		required: true,
+	},
+	{
+		label: "Description",
+		key: "description",
+		type: "longstring",
+		required: true,
+	},
+	{
+		label: "Priority",
+		key: "priority",
+		type: "string",
+		defaultValue: "low",
+	},
+	{
+		label: "Is Active",
+		key: "is_active",
+		type: "boolean",
+		defaultValue: true,
+	},
+	{
+		label: "Is School Wide",
+		key: "is_school_wide",
+		type: "boolean",
+		defaultValue: false,
+	},
+	{
+		label: "Signed By",
+		key: "signed_by",
+		type: "teacher",
+		required: true,
+	},
+	{
+		label: "Release Date",
+		key: "release_at",
+		type: "datetime",
+		required: true,
+	},
+	{
+		label: "Expiry Date",
+		key: "expiry_at",
+		type: "datetime",
+		required: true,
+	},
+	{
+		label: "Classrooms",
+		key: "classrooms",
+		type: "classroom",
+		multiple: true,
+		defaultValue: [],
+	},
+	{
+		label: "Subjects",
+		key: "subjects",
+		type: "subject",
+		multiple: true,
+		defaultValue: [],
+	},
+	{
+		label: "Attach File",
+		key: "attachments",
+		type: "attachment_list",
+		defaultValue: null,
+	},
 ];

@@ -18,7 +18,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import { getAnnouncements, exportAnnouncements } from "../api";
-import { announcementDefaultHeaders, announcementDefaultFields } from "../config";
+import { announcementDefaultHeaders, announcementDefaultFilterFields } from "../config";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import FilterCard from "@/components/FilterCard.vue";
 
@@ -27,7 +27,7 @@ const customFields = [
   // Example: { key: 'status', value: 'active' }
 ];
 
-const fields = ref(announcementDefaultFields.map(defaultField => {
+const fields = ref(announcementDefaultFilterFields.map(defaultField => {
   const override = customFields.find(f => f.key === defaultField.key);
   return override ? { ...defaultField, ...override } : defaultField;
 }));
