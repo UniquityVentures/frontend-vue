@@ -146,3 +146,20 @@ export const announcementDefaultFormFields = [
         defaultValue: null,
     },
 ];
+
+export const announcementListConfig = {
+    primaryField: { key: 'title', default: 'Untitled' },
+    secondaryField: { key: 'description', default: 'No description available' },
+    chips: [
+        { 
+            text: (item) => `Signed by: ${item.signed_by_details?.user_details?.full_name || 'Unknown'}`,
+            color: 'primary'
+        }
+    ],
+    chipAlignment: 'text-end',
+    detailRoute: 'Announcement',
+    detailParamKey: 'announcementId',
+    viewAllRoute: 'Announcements',
+    limit: 3,
+    emptyMessage: 'No announcements available'
+};

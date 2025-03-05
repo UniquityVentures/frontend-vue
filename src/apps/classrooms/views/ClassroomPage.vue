@@ -1,14 +1,35 @@
 <template>
 	<v-container class="columns-container" v-if="classroom">
 		<ClassroomCard class="column-item" :classroomId=classroomId />
-		<SubjectsList class="column-item" :filter="{ classroom: classroom.id }" />
-		<AnnouncementsList class="column-item" :filter="{ classroom: classroom.id }" title="Announcements" :to="`ClassroomAnnouncements`" />
+		
+		<GenericList 
+			class="column-item"
+			:fetchFunction="getSubjects"
+			:filter="{ classroom: classroom.id }"
+			:title="'Subjects'"
+			:config="subjectListConfig"
+		/>
+		
+		<GenericList 
+			class="column-item"
+			:fetchFunction="getAnnouncements"
+			:filter="{ classroom: classroom.id }"
+			:title="'Announcements'"
+			:viewAllRoute="'ClassroomAnnouncements'"
+			:config="announcementListConfig"
+		/>
 	</v-container>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { getClassroom } from "@/apps/classrooms/api";
+import { getSubjects } from "@/apps/subjects/api";
+import { getAnnouncements } from "@/apps/announcements/api";
+import { subjectListConfig } from "@/apps/subjects/config";
+import { announcementListConfig } from "@/apps/announcements/config";
+import GenericList from "@/components/GenericList.vue";
+import ClassroomCard from "@/apps/classrooms/components/ClassroomCard.vue";
 
 const props = defineProps({
 	classroomId: Number,
@@ -16,32 +37,10 @@ const props = defineProps({
 
 const classroom = ref(null);
 
-import ClassroomCard from "@/apps/classrooms/components/ClassroomCard.vue";
-import SubjectsList from "@/apps/subjects/components/SubjectsList.vue";
-import AnnouncementsList from "@/apps/announcements/components/AnnouncementsList.vue";
-
 // Fetch classroom data
 classroom.value = await getClassroom(props.classroomId);
 </script>
 
 <style scoped>
-.columns-container {
-	/* Default: one column (for mobile) */
-	column-count: 1;
-	column-gap: 1rem;
-	/* You may need to adjust padding or margins inherited from v-container */
-}
-
-/* For larger screens, use 3 columns */
-@media (min-width: 1024px) {
-	.columns-container {
-		column-count: 3;
-	}
-}
-
-/* Prevent cards from splitting between columns */
-.column-item {
-	break-inside: avoid;
-	margin-bottom: 1rem;
-}
+@import "@/assets/styles/cardLayout.css";
 </style>

@@ -1,7 +1,7 @@
 <template>
 	<v-container class="pa-4 bg-grey-lighten-5" rounded="lg">
 		<v-row>
-			<v-col cols="12" md="4" lg="3" v-for="field in fields">
+			<v-col cols="12" md="4" lg="3" v-for="field in fields" v-show="!field.hidden">
 				<v-text-field v-if="field.type === 'string'" :label="field.label" v-model="field.value"
 					density="comfortable" hide-details :disabled="field.disabled"></v-text-field>
 				<v-number-input v-if="field.type === 'integer'" :label="field.label" v-model="field.value"
@@ -75,12 +75,7 @@
 
 <script setup>
 import { getClassroomInfoFromObj, getClassrooms } from "@/apps/classrooms/api";
-import {
-	getPayeeInfoFromObj,
-	getPayees,
-	getPaymentPurposeInfoFromObj,
-	getPaymentPurposes,
-} from "@/apps/finances/api";
+import { getPayeeInfoFromObj, getPayees, getPaymentPurposeInfoFromObj, getPaymentPurposes } from "@/apps/finances/api";
 import { getStudentInfoFromObj, getStudents } from "@/apps/students/api";
 import { getSubjectInfoFromObj, getSubjects } from "@/apps/subjects/api";
 import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
@@ -122,6 +117,8 @@ const props = defineProps({
 const clearFilters = () => {
 	console.log("Clearing filters");
 	for (const field of props.fields) {
+		if (field.disabled) continue;
+
 		if ("defaultValue" in field) {
 			field.value = field.defaultValue;
 		} else if (Array.isArray(field.value)) {

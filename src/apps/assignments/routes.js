@@ -1,6 +1,5 @@
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
-
 import AssignmentPage from "./views/AssignmentPage.vue";
 import AssignmentsPage from "./views/AssignmentsPage.vue";
 import CreateAssignmentPage from "./views/CreateAssignmentPage.vue";
@@ -28,7 +27,7 @@ export default [
 		},
 		children: [
 			{
-				path: "",
+				path: "all/",
 				component: AssignmentsPage,
 				name: "Assignments",
 			},
@@ -58,7 +57,7 @@ export default [
 				},
 				children: [
 					{
-						path: "",
+						path: "view/",
 						component: AssignmentPage,
 						name: "Assignment",
 						props: true,

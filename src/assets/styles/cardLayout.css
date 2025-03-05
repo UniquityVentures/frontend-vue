@@ -1,0 +1,19 @@
+/* Card column layout styles */
+.columns-container {
+    /* Default: one column (for mobile) */
+    column-count: 1;
+    column-gap: 1rem;
+}
+
+/* For larger screens, use 3 columns */
+@media (min-width: 1024px) {
+    .columns-container {
+        column-count: 3;
+    }
+}
+
+/* Prevent cards from splitting between columns */
+.column-item {
+    break-inside: avoid;
+    margin-bottom: 1rem;
+} 
