@@ -8,7 +8,10 @@
             <!-- Items List or Loading Skeleton -->
             <v-list :lines="config.lines || 'two'" density="compact"
                 v-if="!loading && limitedItems.length">
-                <v-list-item v-for="item in limitedItems" :key="item.id || index" class="ma-1 pa-2 border">
+                <v-list-item v-for="item in limitedItems" :key="item.id || index" class="ma-1 pa-2 border" 
+                :to="config.listItemRoute ? config.listItemRoute(item) : null"
+                :disabled="!config.listItemRoute"
+                :link="!!config.listItemRoute">
                     <v-list-item-content>
                         <!-- Primary Content -->
                         <v-list-item-title v-if="config.listItemTitle">
@@ -33,12 +36,6 @@
                             </template>
                         </v-list-item-text>
                     </v-list-item-content>
-
-                    <!-- Action Button -->
-                    <template v-slot:append>
-                        <v-btn v-if="config.listItemRoute" :icon="'mdi-arrow-right'" :to="config.listItemRoute(item)"
-                            variant="text" class="ml-2 border" density="comfortable" />
-                    </template>
                 </v-list-item>
             </v-list>
 

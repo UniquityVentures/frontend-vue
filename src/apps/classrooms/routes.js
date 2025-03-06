@@ -9,6 +9,7 @@ import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.v
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import { getClassroom } from "@/apps/classrooms/api";
 import subjectsRoutes from "@/apps/subjects/routes";
+import ClassroomMembersPage from "@/apps/classrooms/views/ClassroomMembersPage.vue";
 export default [
 	{
 		path: "classrooms/",
@@ -93,6 +94,10 @@ export default [
 							title: "Subjects",
 							to: { name: "Subjects", props },
 						},
+						{
+							title: "Members",
+							to: { name: "ClassroomMembers", props },
+						},
 					],
 				},
 				children: [
@@ -119,6 +124,12 @@ export default [
 						},
 					},
 					...subjectsRoutes,
+					{
+						path: "members/",
+						props: true,
+						name: "ClassroomMembers",
+						component: ClassroomMembersPage,
+					},
 				],
 			},
 		],
