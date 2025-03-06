@@ -21,8 +21,7 @@
                         </v-list-item-subtitle>
 
                         <!-- Additional Content (Chips, etc.) -->
-                        <v-list-item-text v-if="config.chips && config.chips.length"
-                            :class="config.chipAlignment || ''">
+                        <v-list-item-text v-if="config.chips && config.chips.length">
                             <template v-for="(chipConfig, chipIndex) in config.chips" :key="chipIndex">
                                 <v-chip size="small" :color="getChipColor(item, chipConfig)"
                                     :class="chipConfig.class || 'mr-2'">

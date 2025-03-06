@@ -10,21 +10,53 @@
 	>
 		<template #headers={}></template>
 		<template #item={item}>
-			<v-list class="ma-2 border">
+			<v-list class="ma-2 border rounded-lg" density="compact">
 				<v-list-item>
-					<v-list-item-title v-if="title.formatFunc" class="text-subtitle-1">
-						{{ title.formatFunc(item[title.key]) }}
-					</v-list-item-title>
-					<v-list-item-title v-else class="text-subtitle-1">
+					<v-list-item-title class="text-subtitle-1">
 						{{ item[title.key] }}
 					</v-list-item-title>
+					
+					<!-- Subtitle items -->
 					<v-list-item-subtitle>
 						<div v-for="header in data_headers" class="d-flex align-center justify-space-between">
-							<span c>{{header.title}}:</span>
-							<span v-if="header.formatFunc">{{ header.formatFunc(item[header.key]) }}</span>
-							<span v-else>{{ item[header.key] }}</span>
+							<span>{{header.title}}:</span>
+							<!-- Date type -->
+							<span v-if="header.type === 'date'">
+								{{ formatDate(item[header.key]) }}
+							</span>
+							<!-- Teacher type -->
+							<span v-else-if="header.type === 'teacher'" class="d-flex align-center border">
+								<v-avatar size="20" class="mr-1">
+									<v-icon size="small">mdi-account</v-icon>
+								</v-avatar>
+								<router-link 
+									:to="{ name: 'Teacher', params: { teacherId: item[header.key]?.id } }" 
+									class="text-decoration-none text-caption"
+								>
+									{{ item[header.key]?.user_details?.full_name || 'Unknown' }}
+								</router-link>
+							</span>
+							<!-- Status type -->
+							<span v-else-if="header.type === 'status'">
+								<v-chip
+									:color="getStatusColor(item[header.key])"
+									size="x-small"
+									variant="outlined"
+								>
+									{{ item[header.key] }}
+								</v-chip>
+							</span>
+							<!-- Custom format function -->
+							<span v-else-if="header.formatFunc">
+								{{ header.formatFunc(item[header.key]) }}
+							</span>
+							<!-- Default -->
+							<span v-else>
+								{{ item[header.key] }}
+							</span>
 						</div>
 					</v-list-item-subtitle>
+					
 					<template v-slot:append>
 						<v-btn v-if="getToFunction"
 							icon="mdi-arrow-right"
@@ -50,9 +82,43 @@
 		<template #item="{ item }">
 			<tr>
 				<td v-for="header in headers" :class="header.key === 'actions' ? 'text-right' : null">
-					<span v-if="header.formatFunc">
+					<!-- Date type -->
+					<span v-if="header.type === 'date'">
+						{{ formatDate(item[header.key]) }}
+					</span>
+					<!-- Teacher type -->
+					<span v-else-if="header.type === 'teacher'" class="d-flex align-center border rounded-lg">
+						<v-avatar size="24" class="mr-2">
+							<v-img v-if="item[header.key]?.user_details?.avatar" :src="item[header.key].user_details.avatar" alt="teacher"></v-img>
+							<v-icon v-else>mdi-account</v-icon>
+						</v-avatar>
+						<router-link 
+							:to="{ name: 'Teacher', params: { teacherId: item[header.key]?.id } }" 
+							class="text-decoration-none"
+						>
+							<span class="teacher-name">
+								{{ item[header.key]?.user_details?.full_name || 'Unknown' }}
+								<small v-if="item[header.key]?.identifier" class="text-caption text-medium-emphasis ml-1">
+									({{ item[header.key]?.identifier }})
+								</small>
+							</span>
+						</router-link>
+					</span>
+					<!-- Status type with colored chip -->
+					<span v-else-if="header.type === 'status'">
+						<v-chip
+							:color="getStatusColor(item[header.key])"
+							size="small"
+							variant="outlined"
+						>
+							{{ item[header.key] }}
+						</v-chip>
+					</span>
+					<!-- Custom format function (existing logic) -->
+					<span v-else-if="header.formatFunc">
 						{{ header.formatFunc(item[header.key]) }}
 					</span>
+					<!-- Action button (existing logic) -->
 					<v-btn
 						v-else-if="header.key === 'actions'"
 						icon="mdi-arrow-right"
@@ -60,6 +126,7 @@
 						variant="outlined"
 						:to="getToFunction(item)"
 					></v-btn>
+					<!-- Default (existing logic) -->
 					<span v-else>
 						{{ item[header.key] }}
 					</span>
@@ -73,6 +140,7 @@
 import { onMounted, ref } from "vue";
 import { useDisplay } from "vuetify";
 const { mobile } = useDisplay();
+import { formatDate } from "@/services/utils";
 
 const props = defineProps({
 	headers: {
@@ -136,4 +204,15 @@ const fetchData = async ({ page, itemsPerPage, search }) => {
 };
 
 onMounted(() => fetchData({ search: filters }));
+
+const getStatusColor = (status) => {
+	const statusColors = {
+		active: 'success',
+		pending: 'warning',
+		inactive: 'error',
+		completed: 'info',
+		// Add more status mappings as needed
+	};
+	return statusColors[status?.toLowerCase()] || 'default';
+};
 </script>
