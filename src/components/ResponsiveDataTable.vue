@@ -12,29 +12,21 @@
 		<template #item={item}>
 			<v-list class="ma-2 border rounded-lg" density="compact">
 				<v-list-item>
-					<v-list-item-title class="text-subtitle-1">
+					<v-list-item-title class="text-subtitle-1 mb-2">
 						{{ item[title.key] }}
 					</v-list-item-title>
 					
 					<!-- Subtitle items -->
 					<v-list-item-subtitle>
-						<div v-for="header in data_headers" class="d-flex align-center justify-space-between">
+						<div v-for="header in data_headers" class="d-flex align-center justify-space-between mt-1">
 							<span>{{header.title}}:</span>
 							<!-- Date type -->
 							<span v-if="header.type === 'date'">
 								{{ formatDate(item[header.key]) }}
 							</span>
 							<!-- Teacher type -->
-							<span v-else-if="header.type === 'teacher'" class="d-flex align-center border">
-								<v-avatar size="20" class="mr-1">
-									<v-icon size="small">mdi-account</v-icon>
-								</v-avatar>
-								<router-link 
-									:to="{ name: 'Teacher', params: { teacherId: item[header.key]?.id } }" 
-									class="text-decoration-none text-caption"
-								>
-									{{ item[header.key]?.user_details?.full_name || 'Unknown' }}
-								</router-link>
+							<span v-else-if="header.type === 'teacher'" class="d-flex align-center">
+								<TeacherChip :teacher="item[header.key]" />
 							</span>
 							<!-- Status type -->
 							<span v-else-if="header.type === 'status'">
@@ -87,22 +79,8 @@
 						{{ formatDate(item[header.key]) }}
 					</span>
 					<!-- Teacher type -->
-					<span v-else-if="header.type === 'teacher'" class="d-flex align-center border rounded-lg">
-						<v-avatar size="24" class="mr-2">
-							<v-img v-if="item[header.key]?.user_details?.avatar" :src="item[header.key].user_details.avatar" alt="teacher"></v-img>
-							<v-icon v-else>mdi-account</v-icon>
-						</v-avatar>
-						<router-link 
-							:to="{ name: 'Teacher', params: { teacherId: item[header.key]?.id } }" 
-							class="text-decoration-none"
-						>
-							<span class="teacher-name">
-								{{ item[header.key]?.user_details?.full_name || 'Unknown' }}
-								<small v-if="item[header.key]?.identifier" class="text-caption text-medium-emphasis ml-1">
-									({{ item[header.key]?.identifier }})
-								</small>
-							</span>
-						</router-link>
+					<span v-else-if="header.type === 'teacher'" class="d-flex align-center">
+						<TeacherChip :teacher="item[header.key]" />
 					</span>
 					<!-- Status type with colored chip -->
 					<span v-else-if="header.type === 'status'">
@@ -141,6 +119,7 @@ import { onMounted, ref } from "vue";
 import { useDisplay } from "vuetify";
 const { mobile } = useDisplay();
 import { formatDate } from "@/services/utils";
+import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 
 const props = defineProps({
 	headers: {
