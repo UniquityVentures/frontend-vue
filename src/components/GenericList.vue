@@ -6,26 +6,29 @@
 
         <v-card-text>
             <!-- Items List or Loading Skeleton -->
-            <v-list :lines="config.lines || 'two'" :density="config.density || 'default'"
+            <v-list :lines="config.lines || 'two'" density="compact"
                 v-if="!loading && limitedItems.length">
                 <v-list-item v-for="item in limitedItems" :key="item.id || index" class="ma-1 pa-2 border">
                     <v-list-item-content>
                         <!-- Primary Content -->
-                        <v-list-item-title>
-                            {{ getFormattedValue(item, config.primaryField) }}
+                        <v-list-item-title v-if="config.listItemTitle">
+                            {{ keyHandler(item, config.listItemTitle) }}
                         </v-list-item-title>
 
                         <!-- Secondary Content -->
-                        <v-list-item-subtitle v-if="config.secondaryField" class="mb-2">
-                            {{ getFormattedValue(item, config.secondaryField) }}
+                        <v-list-item-subtitle v-if="config.listItemSubtitle" class="mb-2">
+                            {{ keyHandler(item, config.listItemSubtitle) }}
                         </v-list-item-subtitle>
 
                         <!-- Additional Content (Chips, etc.) -->
-                        <v-list-item-text v-if="config.chips && config.chips.length">
-                            <template v-for="(chipConfig, chipIndex) in config.chips" :key="chipIndex">
-                                <v-chip size="small" :color="getChipColor(item, chipConfig)"
-                                    :class="chipConfig.class || 'mr-2'">
-                                    {{ getChipText(item, chipConfig) }}
+                        <v-list-item-text v-if="config.listItemChips && config.listItemChips.length">
+                            <template v-for="(chipConfig, chipIndex) in config.listItemChips" :key="chipIndex">
+                                <v-chip v-if="chipConfig.type === 'chip'" size="small" :color="chipConfig.color || 'primary'" class="mr-2">
+                                    {{ `${chipConfig.label}: ${keyHandler(item, chipConfig)}` }}
+                                </v-chip>
+                                <TeacherChip v-if="chipConfig.type === 'teacher'" :teacher="keyHandler(item, chipConfig)" />
+                                <v-chip v-if="chipConfig.type === 'datetime'" :color="chipConfig.color || 'primary'" class="mr-2" size="small">
+                                    {{ `${chipConfig.label}: ${formatDateTime(keyHandler(item, chipConfig))}` }}
                                 </v-chip>
                             </template>
                         </v-list-item-text>
@@ -33,10 +36,8 @@
 
                     <!-- Action Button -->
                     <template v-slot:append>
-                        <v-btn v-if="config.detailRoute" :icon="config.detailIcon || 'mdi-arrow-right'"
-                            :variant="config.buttonVariant || 'flat'" border
-                            :density="config.buttonDensity || 'comfortable'" :to="getDetailRoute(item)"
-                            :aria-label="config.detailAriaLabel || 'View details'"></v-btn>
+                        <v-btn v-if="config.listItemRoute" :icon="'mdi-arrow-right'" :to="config.listItemRoute(item)"
+                            variant="text" class="ml-2 border" density="comfortable" />
                     </template>
                 </v-list-item>
             </v-list>
@@ -51,11 +52,9 @@
         </v-card-text>
 
         <!-- 'View All' Button -->
-        <v-card-actions v-if="config.viewAllRoute" class="justify-center">
-            <v-btn :to="{ name: viewAllRoute || config.viewAllRoute }" variant="outlined"
-                :aria-label="config.viewAllAriaLabel || 'View All Items'">
-                {{ config.viewAllText || 'View All' }}
-                <v-icon v-if="config.viewAllIcon" end :icon="config.viewAllIcon"></v-icon>
+        <v-card-actions v-if="viewAllRoute" class="justify-center">
+            <v-btn :to="{ name: viewAllRoute }" variant="outlined">
+                {{ 'View All' }}
             </v-btn>
         </v-card-actions>
     </v-card>
@@ -63,6 +62,8 @@
 
 <script setup>
 import { computed, ref, onMounted } from "vue";
+import { keyHandler, formatDateTime } from "@/services/utils";
+import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 
 const props = defineProps({
     // Data and API function
@@ -80,7 +81,8 @@ const props = defineProps({
         //   secondaryField: { key: 'description', default: 'No description' },
         //   chips: [
         //     { 
-        //       text: (item) => `Signed by: ${item.signed_by_details?.user_details?.full_name || 'Unknown'}`,
+        //       label: 'Signed By',
+        //       key: 'signed_by_details.user_details.full_name',
         //       color: 'primary'
         //     }
         //   ],
@@ -105,59 +107,6 @@ const limitedItems = computed(() => {
     const limit = props.config.limit || 3;
     return items.value.slice(0, limit);
 });
-
-// Helper functions for rendering data
-const getFormattedValue = (item, fieldConfig) => {
-    if (!fieldConfig) return '';
-
-    if (typeof fieldConfig === 'function') {
-        return fieldConfig(item);
-    }
-
-    // Handle nested properties using dot notation (e.g. "subject_details.name")
-    if (fieldConfig.key && fieldConfig.key.includes('.')) {
-        const keys = fieldConfig.key.split('.');
-        let value = item;
-        for (const key of keys) {
-            value = value?.[key];
-            if (value === undefined) break;
-        }
-        return value || fieldConfig.default || '';
-    }
-
-    return item?.[fieldConfig.key] || fieldConfig.default || '';
-};
-
-const getChipColor = (item, chipConfig) => {
-    if (typeof chipConfig.color === 'function') {
-        return chipConfig.color(item);
-    }
-    return chipConfig.color || 'primary';
-};
-
-const getChipText = (item, chipConfig) => {
-    if (typeof chipConfig.text === 'function') {
-        return chipConfig.text(item);
-    }
-
-    if (chipConfig.key) {
-        return getFormattedValue(item, { key: chipConfig.key, default: chipConfig.default });
-    }
-
-    return chipConfig.text || '';
-};
-
-const getDetailRoute = (item) => {
-    const routeName = props.config.detailRoute;
-    const paramKey = props.config.detailParamKey || 'id';
-
-    if (!routeName) return {};
-
-    const params = {};
-    params[paramKey] = item.id;
-
-    return { name: routeName, params };
-};
 
 // Fetch data if a fetch function is provided
 onMounted(async () => {

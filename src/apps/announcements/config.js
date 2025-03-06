@@ -41,17 +41,12 @@ export const announcementDefaultFormFields = [
 ];
 
 export const announcementListConfig = {
-    primaryField: { key: 'title', default: 'Untitled' },
-    secondaryField: { key: 'description', default: 'No description available' },
-    chips: [
-        {
-            text: (item) => `Signed by: ${item.signed_by_details?.user_details?.full_name || 'Unknown'}`,
-            color: 'primary'
-        }
+    listItemTitle: { key: 'title', default: 'Untitled' },
+    listItemSubtitle: { key: 'description', default: 'No description available' },
+    listItemChips: [
+        { label: 'Signed By', key: 'signed_by_details', color: 'primary', type: 'teacher'}
     ],
-    detailRoute: 'Announcement',
-    detailParamKey: 'announcementId',
-    viewAllRoute: 'Announcements',
+    listItemRoute: (item) => ({ name: 'Announcement', params: { announcementId: item.id } }),
     limit: 3,
     emptyMessage: 'No announcements available'
 };

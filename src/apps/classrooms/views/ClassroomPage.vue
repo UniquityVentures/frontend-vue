@@ -1,4 +1,4 @@
-<template>
+<template> 
 	<v-container class="columns-container" v-if="classroom">
 		<ClassroomCard class="column-item" :classroomId=classroomId />
 		
@@ -7,6 +7,7 @@
 			:fetchFunction="getSubjects"
 			:filter="{ classroom: classroom.id }"
 			:title="'Subjects'"
+			:viewAllRoute="'Subjects'"
 			:config="subjectListConfig"
 		/>
 		

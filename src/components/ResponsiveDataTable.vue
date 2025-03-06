@@ -18,10 +18,10 @@
 					
 					<!-- Subtitle items -->
 					<v-list-item-subtitle>
-						<div v-for="header in data_headers" class="d-flex align-center justify-space-between mt-1">
-							<span>{{header.title}}:</span>
+						<div v-for="header in data_headers" class="d-flex align-center">
+							<span class="mr-2 text-primary font-weight-bold">{{header.title}}:</span>
 							<!-- Date type -->
-							<span v-if="header.type === 'date'">
+							<span v-if="header.type === 'date'" class="my-1">
 								{{ formatDate(item[header.key]) }}
 							</span>
 							<!-- Teacher type -->
@@ -39,11 +39,11 @@
 								</v-chip>
 							</span>
 							<!-- Custom format function -->
-							<span v-else-if="header.formatFunc">
+							<span v-else-if="header.formatFunc" class="my-1">
 								{{ header.formatFunc(item[header.key]) }}
 							</span>
 							<!-- Default -->
-							<span v-else>
+							<span v-else class="my-1">
 								{{ item[header.key] }}
 							</span>
 						</div>
@@ -65,7 +65,7 @@
 	<v-data-table-server
 		v-else
 		:items-length="itemsLen"
-		:headers="headers"
+		:headers="table_headers"
 		:items="items"
 		@update:options="fetchData"
 		:search="JSON.stringify(filters)"
@@ -115,7 +115,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { useDisplay } from "vuetify";
 const { mobile } = useDisplay();
 import { formatDate } from "@/services/utils";
@@ -141,7 +141,8 @@ const props = defineProps({
 const filters = defineModel();
 
 const title = ref(props.headers[0]);
-const data_headers = ref(props.headers.slice(1, props.headers.length - 1));
+const data_headers = computed(() => props.headers.slice(1, props.headers.length - 1));
+const table_headers = computed(() => props.headers.slice(0, -1));
 
 const loading = ref(false);
 const itemsLen = ref(10);
@@ -187,10 +188,7 @@ onMounted(() => fetchData({ search: filters }));
 const getStatusColor = (status) => {
 	const statusColors = {
 		active: 'success',
-		pending: 'warning',
 		inactive: 'error',
-		completed: 'info',
-		// Add more status mappings as needed
 	};
 	return statusColors[status?.toLowerCase()] || 'default';
 };

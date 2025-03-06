@@ -27,3 +27,24 @@ export const formToApiDateTime = (dateString) => {
     if (!dateString) return null;
     return new Date(dateString).toISOString();
 };
+
+export const keyHandler = (item, fieldConfig) => {
+    if (!fieldConfig || !fieldConfig.key) return '';
+
+    if (typeof fieldConfig === 'function') {
+        return fieldConfig(item);
+    }
+
+    // Handle nested properties using dot notation (e.g. "subject_details.name")
+    if (fieldConfig.key && fieldConfig.key.includes('.')) {
+        const keys = fieldConfig.key.split('.');
+        let value = item;
+        for (const key of keys) {
+            value = value?.[key];
+            if (value === undefined) break;
+        }
+        return value || fieldConfig.default || '';
+    }
+
+    return item?.[fieldConfig.key] || fieldConfig.default || '';
+};
