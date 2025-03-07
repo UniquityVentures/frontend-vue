@@ -3,41 +3,41 @@
 		<v-row>
 			<v-col cols="12" md="4" lg="3" v-for="field in fields" v-show="!field.hidden">
 				<v-text-field v-if="field.type === 'string'" :label="field.label" v-model="field.value"
-					density="comfortable" hide-details :disabled="field.disabled"></v-text-field>
+					hide-details :disabled="field.disabled"></v-text-field>
 				<v-number-input v-if="field.type === 'integer'" :label="field.label" v-model="field.value"
-					density="comfortable" hide-details :disabled="field.disabled"></v-number-input>
+					hide-details :disabled="field.disabled"></v-number-input>
 				<ServerAutocomplete v-if="field.type === 'classroom'" v-model="field.value" :clearable="!field.disabled"
 					:fetch="getClassrooms" :getInfo="getClassroomInfoFromObj" :searchField="field.searchField || 'name'"
-					:label="field.label" density="comfortable" :disabled="field.disabled" />
+					:label="field.label" :disabled="field.disabled" />
 				<ServerAutocomplete v-if="field.type === 'subject'" v-model="field.value" :clearable="!field.disabled"
 					:fetch="getSubjects" :getInfo="getSubjectInfoFromObj" :searchField="field.searchField || 'name'"
-					:label="field.label" density="comfortable" :disabled="field.disabled" />
+					:label="field.label" :disabled="field.disabled" />
 				<ServerAutocomplete v-if="field.type === 'teacher'" v-model="field.value" :clearable="!field.disabled"
 					:fetch="getTeachers" :getInfo="getTeacherInfoFromObj" :searchField="field.searchField || 'name'"
-					:label="field.label" density="comfortable" :disabled="field.disabled" />
+					:label="field.label" :disabled="field.disabled" />
 				<ServerAutocomplete v-if="field.type === 'student'" v-model="field.value" :clearable="!field.disabled"
 					:fetch="getStudents" :getInfo="getStudentInfoFromObj" :searchField="field.searchField || 'name'"
-					:label="field.label" density="comfortable" :disabled="field.disabled" />
+					:label="field.label" :disabled="field.disabled" />
 				<ServerAutocomplete v-if="field.type === 'payment_purpose'" v-model="field.value"
 					:clearable="!field.disabled" :fetch="getPaymentPurposes" :getInfo="getPaymentPurposeInfoFromObj"
-					:searchField="field.searchField || 'name'" :label="field.label" density="comfortable"
+					:searchField="field.searchField || 'name'" :label="field.label"
 					:disabled="field.disabled" />
 				<ServerAutocomplete v-if="field.type === 'number'" v-model="field.value" :clearable="!field.disabled"
 					:fetch="field.fetchOptions" :getInfo="field.fetchOptionsInfo"
-					:searchField="field.searchField || 'name'" :label="field.label" density="comfortable"
+					:searchField="field.searchField || 'name'" :label="field.label"
 					:disabled="field.disabled" />
 				<ServerAutocomplete v-if="field.type === 'payee'" v-model="field.value" :clearable="!field.disabled"
 					:fetch="getPayees" :getInfo="getPayeeInfoFromObj" :searchField="field.searchField || 'name'"
-					:label="field.label" density="comfortable" :disabled="field.disabled" />
+					:label="field.label" :disabled="field.disabled" />
 				<v-checkbox v-if="field.type === 'boolean'" :label="field.label" v-model="field.value"></v-checkbox>
 				<ServerAutocomplete v-if="field.type === 'array'" v-model="field.value" clearable
 					:fetch="field.fetchOptions" :getInfo="field.fetchOptionsInfo"
 					:searchField="field.searchField || 'name'" :label="field.label" :multiple='true'
-					density="comfortable" />
+					/>
 				<v-select v-if="field.type === 'n_nary'" v-model="field.value" :items="field.fetchOptions()"
-					:label="field.label" hide-details density="comfortable"></v-select>
+					:label="field.label" hide-details></v-select>
 				<v-date-input v-if="field.type === 'dates'" color="primary" :label="field.label" v-model="field.value"
-					:multiple="Array.isArray(field.key) ? 'range' : false" density="comfortable" clearable
+					:multiple="Array.isArray(field.key) ? 'range' : false" clearable
 					:disabled="field.disabled" @update:modelValue="(value) => updateDates(value, field)">
 				</v-date-input>
 			</v-col>

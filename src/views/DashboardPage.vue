@@ -18,7 +18,3 @@ import { getAnnouncements } from "@/apps/announcements/api";
 import { announcementListConfig } from "@/apps/announcements/config";
 import GenericList from "@/components/GenericList.vue";
 </script>
-
-<style scoped>
-@import "@/assets/styles/cardLayout.css";
-</style>

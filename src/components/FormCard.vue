@@ -14,7 +14,7 @@
 						:items="field.items" :required="field.required"></v-select>
 					<v-text-field v-if="field.type === 'datetime'" :label="field.label" type="datetime-local"
 						v-model="newValue[field.key]" :rules="[v => !!v || `${field.label} is required`]"
-						:required="field.required" density="comfortable"></v-text-field>
+						:required="field.required" ></v-text-field>
 					<ServerAutocomplete v-if="field.type === 'classroom'" v-model="newValue[field.key]"
 						:fetch="getClassrooms" :getInfo="getClassroomInfoFromObj"
 						:searchField="field.searchField || 'name'" :label="field.label" :required="field.required" />

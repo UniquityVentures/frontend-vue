@@ -39,8 +39,4 @@ onMounted(async () => {
 	teachers.value = (await getTeachers()).results;
 });
 </script>
-
-<style scoped>
-@import "@/assets/styles/cardLayout.css";
-</style>
   

@@ -3,7 +3,7 @@
         <v-container>
             <v-row>
                 <v-col cols="12">
-                    <h6 class="text-h5 mb-4">{{ classroom.name }} Members</h6>
+                    <h6 class="text-h5">{{ classroom.name }} Members</h6>
                 </v-col>
             </v-row>
 
@@ -16,12 +16,8 @@
                 <!-- Join Code Section -->
                 <v-col cols="12" md="6">
                     <v-card>
-                        <v-card-title>Join Code</v-card-title>
-                        <v-card-text>
-                            <div>
-                                <v-chip color="primary" class="ml-2" label variant="outlined">{{ classroom.join_code }}</v-chip>
-                            </div>
-                        </v-card-text>
+                        <v-card-title>Join Code: <v-chip color="primary" class="ml-2" label variant="outlined">{{ classroom.join_code }}</v-chip>
+                        </v-card-title>
                         <v-card-actions>
                             <v-btn color="primary" variant="outlined" @click="copyJoinCode">Copy</v-btn>
                             <v-btn color="primary" variant="outlined" @click="generateNewJoinCode">Generate New</v-btn>

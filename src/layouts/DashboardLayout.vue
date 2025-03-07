@@ -85,5 +85,3 @@ getAppsMeta(appRoutes).then((menu) => {
 	appsMenu.value = menu;
 });
 </script>
-
-

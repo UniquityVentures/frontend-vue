@@ -10,8 +10,8 @@
 	>
 		<template #headers={}></template>
 		<template #item={item}>
-			<v-list class="ma-2 border rounded-lg" density="compact">
-				<v-list-item>
+			<v-list class="ma-2 border" density="compact">
+				<v-list-item link :to="getToFunction(item)">
 					<v-list-item-title class="text-subtitle-1 mb-2">
 						{{ item[title.key] }}
 					</v-list-item-title>
@@ -48,16 +48,6 @@
 							</span>
 						</div>
 					</v-list-item-subtitle>
-					
-					<template v-slot:append>
-						<v-btn v-if="getToFunction"
-							icon="mdi-arrow-right"
-							size="small"
-							variant="text"
-							:to="getToFunction(item)"
-							class="ml-4 border"
-						></v-btn>
-					</template>
 				</v-list-item>
 			</v-list>
 		</template>

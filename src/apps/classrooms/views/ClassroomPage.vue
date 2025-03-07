@@ -41,7 +41,3 @@ const classroom = ref(null);
 // Fetch classroom data
 classroom.value = await getClassroom(props.classroomId);
 </script>
-
-<style scoped>
-@import "@/assets/styles/cardLayout.css";
-</style>
