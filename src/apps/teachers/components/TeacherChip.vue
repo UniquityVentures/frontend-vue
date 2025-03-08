@@ -8,12 +8,9 @@
     link
     :to="{ name: 'Teacher', params: { teacherId: teacher.id } }"
 >
-    <v-avatar start size="24">
-    <v-img v-if="teacher?.user_details?.avatar" :src="teacher.user_details.avatar" alt="teacher"></v-img>
-    <v-icon v-else>mdi-account-tie</v-icon>
-    </v-avatar>
+    <strong v-if="label">{{ label }}: </strong>
+    <v-avatar size="24" icon="mdi-account-tie" />
     {{ teacher?.user_details?.full_name || 'Unknown' }}
-    <v-icon v-if="showIcon" end size="small" class="ml-1">mdi-open-in-new</v-icon>
 </v-chip>
 </template>
 
@@ -22,6 +19,10 @@ const props = defineProps({
   teacher: {
     type: Object,
     required: true
+  },
+  label: {
+    type: String,
+    default: ''
   },
 });
 </script>

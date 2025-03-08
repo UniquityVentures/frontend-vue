@@ -1,19 +1,10 @@
 import { getClassroom } from './api';
 
 export const classroomDefaultHeaders = [
-	{ title: "Name", key: "name" },
-	{ title: "Grade", key: "standard" },
-	{
-		title: "Students Count",
-		key: "students",
-		formatFunc: (students) => students?.length || 0,
-	},
-	{
-		title: "Class Teacher",
-		key: "class_teacher_details",
-		type: 'teacher'
-	},
-	{ title: "Actions", key: "actions", sortable: false },
+	{ label: "Name", key: "name" },
+	{ label: "Grade", key: "standard" },
+	{ label: "Students Count", key: "students", formatFunc: (students) => students?.length || 0 },
+	{ label: "Class Teacher", key: "class_teacher_details", type: 'teacher' },
 ];
 
 export const classroomDefaultFilterFields = [

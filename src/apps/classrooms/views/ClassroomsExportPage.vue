@@ -14,7 +14,7 @@
             :headers="classroomDefaultHeaders" 
             :fetch="getClassrooms" 
             v-model="filters"
-            :forceMobile="forceMobile"
+            template="card"
           />
         </v-card>
       </v-col>

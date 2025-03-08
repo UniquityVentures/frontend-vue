@@ -3,37 +3,13 @@
 
 // Global styles for Vuetify components
 
-// Form input density settings - set all form inputs to comfortable density
-.v-text-field,
-.v-select,
-.v-combobox,
-.v-autocomplete,
-.v-checkbox,
-.v-radio,
-.v-switch,
-.v-textarea,
-.v-file-input,
-.v-otp-input,
-.v-slider,
-.v-range-slider,
-.v-rating,
-.v-color-picker,
-.v-date-picker,
-.v-time-picker,
-.v-input {
-    // This will apply comfortable density to all form inputs
-    &.v-input--density-default {
-        --v-input-density: comfortable;
-    }
-}
-
 // Styling v-card-actions
 .v-card-actions {
-    padding: 16px 24px;
+    padding: 10px;
     border-top: 1px solid rgba(0, 0, 0, 0.12);
     background-color: rgb(var(--v-theme-background));
     .v-btn {
-        margin-right: 8px;
+        margin-right: 10px;
     }
 }
 
@@ -46,7 +22,7 @@
 }
 
 .v-card-text {
-    padding: 10px !important;
+    padding: 5px 10px 10px 10px !important;
 }
 
 .v-divider {
@@ -55,18 +31,14 @@
 }
 
 .v-chip {
-    margin: 4px;
+    margin: 2px;
 }
 
 // Styling v-list-item
 .v-list-item {
-    border-radius: 8px;
-    margin: 4px 0;
+    margin: 4px;
     &:hover {
         background-color: rgba(var(--v-theme-primary), 0.05);
-    }
-    .v-list-item-title {
-        font-weight: 500;
     }
 }
 

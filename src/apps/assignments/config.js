@@ -17,7 +17,6 @@ export const assignmentDefaultHeaders = [
 	{ title: "Release Date", key: "release_at", type: "date" },
 	{ title: "Due Date", key: "due_at", type: "date" },
 	{ title: "Subject", key: "subject_details", type: "subject" },
-	{ title: "Actions", key: "actions", sortable: false },
 ];
 
 export const assignmentDefaultFormFields = [

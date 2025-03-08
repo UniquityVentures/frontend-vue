@@ -12,30 +12,28 @@
                 :to="config.listItemRoute ? config.listItemRoute(item) : null"
                 :disabled="!config.listItemRoute"
                 :link="!!config.listItemRoute">
-                    <v-list-item-content>
-                        <!-- Primary Content -->
-                        <v-list-item-title v-if="config.listItemTitle">
-                            {{ keyHandler(item, config.listItemTitle) }}
-                        </v-list-item-title>
+                    <!-- Primary Content -->
+                    <v-list-item-title v-if="config.listItemTitle">
+                        {{ keyHandler(item, config.listItemTitle) }}
+                    </v-list-item-title>
 
-                        <!-- Secondary Content -->
-                        <v-list-item-subtitle v-if="config.listItemSubtitle" class="mb-2">
-                            {{ keyHandler(item, config.listItemSubtitle) }}
-                        </v-list-item-subtitle>
+                    <!-- Secondary Content -->
+                    <v-list-item-subtitle v-if="config.listItemSubtitle" class="mb-2">
+                        {{ keyHandler(item, config.listItemSubtitle) }}
+                    </v-list-item-subtitle>
 
-                        <!-- Additional Content (Chips, etc.) -->
-                        <v-list-item-text v-if="config.listItemChips && config.listItemChips.length">
-                            <template v-for="(chipConfig, chipIndex) in config.listItemChips" :key="chipIndex">
-                                <v-chip v-if="chipConfig.type === 'chip'" size="small" :color="chipConfig.color || 'primary'" class="mr-2">
-                                    {{ `${chipConfig.label}: ${keyHandler(item, chipConfig)}` }}
-                                </v-chip>
-                                <TeacherChip v-if="chipConfig.type === 'teacher'" :teacher="keyHandler(item, chipConfig)" />
-                                <v-chip v-if="chipConfig.type === 'datetime'" :color="chipConfig.color || 'primary'" class="mr-2" size="small">
-                                    {{ `${chipConfig.label}: ${formatDateTime(keyHandler(item, chipConfig))}` }}
-                                </v-chip>
-                            </template>
-                        </v-list-item-text>
-                    </v-list-item-content>
+                    <!-- Additional Content (Chips, etc.) -->
+                    <div v-if="config.listItemChips && config.listItemChips.length">
+                        <template v-for="(chipConfig, chipIndex) in config.listItemChips" :key="chipIndex">
+                            <v-chip v-if="chipConfig.type === 'chip'" size="small" :color="chipConfig.color || 'primary'" class="mr-2">
+                                {{ `${chipConfig.label}: ${keyHandler(item, chipConfig)}` }}
+                            </v-chip>
+                            <TeacherChip v-if="chipConfig.type === 'teacher'" :teacher="keyHandler(item, chipConfig)" />
+                            <v-chip v-if="chipConfig.type === 'datetime'" :color="chipConfig.color || 'primary'" class="mr-2" size="small">
+                                {{ `${chipConfig.label}: ${formatDateTime(keyHandler(item, chipConfig))}` }}
+                            </v-chip>
+                        </template>
+                    </div>
                 </v-list-item>
             </v-list>
 

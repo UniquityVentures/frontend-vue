@@ -6,7 +6,6 @@ export const announcementDefaultHeaders = [
     { title: "Release Date", key: "release_at", type: "date" },
     { title: "Expiry Date", key: "expiry_at", type: "date" },
     { title: "Signed By", key: "signed_by_details", type: "teacher" },
-    { title: "Actions", key: "actions" },
 ];
 
 export const announcementDefaultFilterFields = [

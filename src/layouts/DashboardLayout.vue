@@ -5,7 +5,7 @@
 				color="secondary">
 				<v-list dense>
 					<v-list-item>
-						<v-card class="ma-2 mb-4" 
+						<v-card class="mb-4" 
 							:title="user.first_name + ' ' + user.last_name"
 							:subtitle="account?.group_details?.name || 'No linked account'">
 							<template v-slot:append>
