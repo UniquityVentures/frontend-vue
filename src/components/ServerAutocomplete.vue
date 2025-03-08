@@ -1,42 +1,37 @@
 <template>
-	<!--- update:modelValue is a special event that is emitted when you want to indicate to vue that model's value has been changed --->
 	<v-autocomplete
+		v-model="model"
 		chips
-		:value="selectedItem"
 		:items="results"
 		:loading="loading"
 		:search-input.sync="query"
 		:label="label"
 		:item-props="getInfo"
 		:multiple="multiple"
-		@input="selectedItem = $event.target.value"
-		@update:modelValue="emit('update:modelValue', $event)"
-		@update:search="debouncedFetchResults"
-		:clearable="clearable"
-		density="comfortable"
+		@update:search="onSearchUpdate"
+		:clearable="true"
 	>
+		<!-- Infinite Scrolling Slot -->
 		<template v-slot:append-item>
-			<div v-if="hasMore" v-intersect="debouncedFetchResults" class="pa-4">
-				Loading more items ...
+			<div v-if="hasMore" v-intersect="fetchMoreResults" class="pa-4">
+				<i>Loading more items ...</i>
 			</div>
 			<div v-else class="pa-4">
-				No more items to load
+				<i>No more items to load</i>
 			</div>
 		</template>
 	</v-autocomplete>
 </template>
-<script setup>
-import { onMounted, ref, watch } from "vue";
 
-const emit = defineEmits(["update:modelValue"]);
+<script setup>
+import { ref, watch, onMounted } from "vue";
+
+// Replace modelValue prop and update:modelValue emit with defineModel
+const model = defineModel();
 
 const props = defineProps({
 	getInfo: {
 		type: Function,
-		required: true,
-	},
-	modelValue: {
-		type: [Number, Array],
 		required: true,
 	},
 	fetch: {
@@ -55,53 +50,49 @@ const props = defineProps({
 		type: Boolean,
 		default: false,
 	},
-	clearable: {
-		type: Boolean,
-		default: true,
-	},
-	density: {
-		type: String,
-		default: "standard",
-	},
 });
 
-// Text used to search for items
+// Query and filter setup
 const query = ref("");
-
-// Filters passed to the fetch function
 const filters = ref({ page_size: 10, page: 1 });
 
+// Results and loading state
 const results = ref([]);
-
-const selectedItem = ref(null);
-
-// To shut up the linter
-const _ = selectedItem;
-
 const loading = ref(false);
-
-// Flag to indicate if there are more items to fetch
 const hasMore = ref(true);
 
-// For debouncing
-const triggered = ref(false);
-const reTriggered = ref(false);
-
-watch(query.value, () => {
+// Search handling with debounce
+let debounceTimeout = null;
+const onSearchUpdate = () => {
+	// Clear previous timeout
+	if (debounceTimeout) clearTimeout(debounceTimeout);
+	
+	// Reset search state
 	hasMore.value = true;
-});
+	filters.value.page = 1;
+	
+	// Debounce the search
+	debounceTimeout = setTimeout(() => {
+		results.value = []; // Clear results only after debounce
+		fetchResults();
+	}, 300);
+};
 
+// Fetch results
 const fetchResults = async () => {
 	if (loading.value || !hasMore.value) return;
+	
 	filters.value[props.searchField] = query.value;
 	loading.value = true;
+
 	try {
 		const listing = await props.fetch(filters.value);
-		if (!filters?.page || filters?.page <= listing.total_pages) {
-			results.value = [...results.value, ...listing.results];
+		results.value = [...results.value, ...listing.results];
+		
+		// Update pagination state
+		hasMore.value = filters.value.page < listing.total_pages;
+		if (hasMore.value) {
 			filters.value.page++;
-		} else {
-			hasMore.value = false;
 		}
 	} catch (error) {
 		hasMore.value = false;
@@ -111,22 +102,11 @@ const fetchResults = async () => {
 	}
 };
 
-// Allow for fetch every 300ms
-// Allow for re-triggering fetch if the user scrolls to the bottom of the list
-const debouncedFetchResults = () => {
-	if (triggered.value) {
-		reTriggered.value = true;
-		return;
+// Fetch more results when scrolling
+const fetchMoreResults = () => {
+	if (!loading.value && hasMore.value) {
+		fetchResults();
 	}
-	triggered.value = true;
-	fetchResults();
-	setTimeout(() => {
-		triggered.value = false;
-		if (reTriggered.value) {
-			reTriggered.value = false;
-			debouncedFetchResults();
-		}
-	}, 300);
 };
 
 onMounted(fetchResults);

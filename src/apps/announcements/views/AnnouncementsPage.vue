@@ -2,12 +2,47 @@
   <v-container>
     <v-row>
       <v-col cols="12">
-        <AnnouncementsLookup />
+        <v-card variant="flat">
+          <v-card-title>
+            <FilterCard :fields="fields" :exportFunction="exportAnnouncements" />
+          </v-card-title>
+          <ResponsiveDataTable
+            :getToFunction="(item) => ({ name: 'Announcement', params: { announcementId: item.id } })"
+            :headers="announcementDefaultHeaders" :fetch="getAnnouncements" v-model="filters" />
+        </v-card>
       </v-col>
     </v-row>
-  </v-container>
+  </v-container> 
 </template>
 
 <script setup>
-import AnnouncementsLookup from "../components/AnnouncementsLookup.vue";
+import { ref, computed } from "vue";
+import { getAnnouncements, exportAnnouncements } from "../api";
+import { announcementDefaultHeaders, announcementDefaultFilterFields } from "../config";
+import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
+import FilterCard from "@/components/FilterCard.vue";
+
+const customFields = [
+  // Add your custom field overrides here
+  // Example: { key: 'status', value: 'active' }
+];
+
+const fields = ref(announcementDefaultFilterFields.map(defaultField => {
+  const override = customFields.find(f => f.key === defaultField.key);
+  return override ? { ...defaultField, ...override } : defaultField;
+}));
+
+const filters = computed(() => {
+  return fields.value.reduce((acc, field) => {
+    if (Array.isArray(field.key)) {
+      field.key.forEach((k, i) => {
+        acc[k] = field.value?.[i] ?? null;
+      });
+    } else {
+      acc[field.key] = field.value;
+    }
+    return acc;
+  }, {});
+});
+
 </script>

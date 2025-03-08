@@ -1,96 +1,52 @@
 <template>
-	<v-container
-		class="pa-4 bg-grey-lighten-5"
-		rounded="lg"
-	>
-	<v-row>
-		<v-col cols="12" md="4" lg="3" v-for="field in fields">
-			<v-text-field 
-				v-if="field.type === 'string'"
-				:label="field.label" 
-				v-model="field.value"
-				density="comfortable"
-				hide-details
-				:disabled="field.disabled"
-			></v-text-field>
-			<v-number-input
-				v-if="field.type === 'integer'"
-				:label="field.label" 
-				v-model="field.value"
-				density="comfortable"
-				hide-details
-				:disabled="field.disabled"
-			></v-number-input>
-			<ServerAutocomplete
-				v-if="['number', 'classroom', 'subject', 'teacher', 'student', 'payment_purpose'].includes(field.type)"
-				v-model="field.value"
-				:clearable="!field.disabled"
-				:fetch="getFilterFetch(field)"
-				:getInfo="getInstanceInfoFromObj(field)"
-				:searchField="field.searchField || 'name'"
-				:label="field.label"
-				density="comfortable"
-				:disabled="field.disabled"
-			/>
-			<v-checkbox 
-				v-if="field.type === 'boolean'"
-				:label="field.label" 
-				v-model="field.value"
-			></v-checkbox>
-			<ServerAutocomplete
-				v-if="field.type === 'array'"
-				v-model="field.value"
-				clearable
-				:fetch="getFilterFetch(field)"
-				:getInfo="getInstanceInfoFromObj(field)"
-				:searchField="field.searchField || 'name'"
-				:label="field.label"
-				:multiple='true'
-				density="comfortable"
-			/>
-			<v-select
-				v-if="field.type === 'n_nary'"
-				v-model="field.value"
-				:items="field.fetchOptions()"
-				:label="field.label"
-				hide-details
-				density="comfortable"
-			></v-select>
-			<v-date-input
-				v-if="field.type === 'dates'"
-				color="primary"
-				:label="field.label" 
-				v-model="field.value"
-				:multiple="Array.isArray(field.key) ? 'range' : false"
-				density="comfortable"
-				clearable
-				:disabled="field.disabled"
-				@update:modelValue="(value) => updateDates(value, field)"
-			>
-				<!--- The above one-liner does the following
-				- Gets the dates in an array from datepicker
-				- Sorts them, treating them as a number
-				- Assigns the corresponding date to the corresponding field in filter
-				--->
-
-
+	<v-container class="pa-4 bg-grey-lighten-5" rounded="lg">
+		<v-row>
+			<v-col cols="12" md="4" lg="3" v-for="field in fields" v-show="!field.hidden">
+				<v-text-field v-if="field.type === 'string'" :label="field.label" v-model="field.value"
+					hide-details :disabled="field.disabled"></v-text-field>
+				<v-number-input v-if="field.type === 'integer'" :label="field.label" v-model="field.value"
+					hide-details :disabled="field.disabled"></v-number-input>
+				<ServerAutocomplete v-if="field.type === 'classroom'" v-model="field.value" :clearable="!field.disabled"
+					:fetch="getClassrooms" :getInfo="getClassroomInfoFromObj" :searchField="field.searchField || 'name'"
+					:label="field.label" :disabled="field.disabled" />
+				<ServerAutocomplete v-if="field.type === 'subject'" v-model="field.value" :clearable="!field.disabled"
+					:fetch="getSubjects" :getInfo="getSubjectInfoFromObj" :searchField="field.searchField || 'name'"
+					:label="field.label" :disabled="field.disabled" />
+				<ServerAutocomplete v-if="field.type === 'teacher'" v-model="field.value" :clearable="!field.disabled"
+					:fetch="getTeachers" :getInfo="getTeacherInfoFromObj" :searchField="field.searchField || 'name'"
+					:label="field.label" :disabled="field.disabled" />
+				<ServerAutocomplete v-if="field.type === 'student'" v-model="field.value" :clearable="!field.disabled"
+					:fetch="getStudents" :getInfo="getStudentInfoFromObj" :searchField="field.searchField || 'name'"
+					:label="field.label" :disabled="field.disabled" />
+				<ServerAutocomplete v-if="field.type === 'payment_purpose'" v-model="field.value"
+					:clearable="!field.disabled" :fetch="getPaymentPurposes" :getInfo="getPaymentPurposeInfoFromObj"
+					:searchField="field.searchField || 'name'" :label="field.label"
+					:disabled="field.disabled" />
+				<ServerAutocomplete v-if="field.type === 'number'" v-model="field.value" :clearable="!field.disabled"
+					:fetch="field.fetchOptions" :getInfo="field.fetchOptionsInfo"
+					:searchField="field.searchField || 'name'" :label="field.label"
+					:disabled="field.disabled" />
+				<ServerAutocomplete v-if="field.type === 'payee'" v-model="field.value" :clearable="!field.disabled"
+					:fetch="getPayees" :getInfo="getPayeeInfoFromObj" :searchField="field.searchField || 'name'"
+					:label="field.label" :disabled="field.disabled" />
+				<v-checkbox v-if="field.type === 'boolean'" :label="field.label" v-model="field.value"></v-checkbox>
+				<ServerAutocomplete v-if="field.type === 'array'" v-model="field.value" clearable
+					:fetch="field.fetchOptions" :getInfo="field.fetchOptionsInfo"
+					:searchField="field.searchField || 'name'" :label="field.label" :multiple='true'
+					/>
+				<v-select v-if="field.type === 'n_nary'" v-model="field.value" :items="field.fetchOptions()"
+					:label="field.label" hide-details></v-select>
+				<v-date-input v-if="field.type === 'dates'" color="primary" :label="field.label" v-model="field.value"
+					:multiple="Array.isArray(field.key) ? 'range' : false" clearable
+					:disabled="field.disabled" @update:modelValue="(value) => updateDates(value, field)">
 				</v-date-input>
 			</v-col>
 			<v-col cols="12" md="4" lg="3" class="d-flex gap-2">
-				<v-btn
-					color="primary"
-					@click="clearFilters"
-					class="ma-2"
-				>
+				<v-btn color="primary" @click="clearFilters" class="ma-2">
 					Clear
 				</v-btn>
-				<v-btn
-					v-if="exportFunction"
-					color="success"
-					:loading="isExporting"
-					@click="showExportDialog"
-					class="ma-2"
-				>
+				<v-btn v-if="exportFunction" color="success" :loading="isExporting" @click="showExportDialog"
+					class="ma-2">
 					Export
 				</v-btn>
 			</v-col>
@@ -106,19 +62,10 @@
 			</v-card-text>
 			<v-card-actions>
 				<v-spacer></v-spacer>
-				<v-btn
-					color="grey-darken-1"
-					variant="text"
-					@click="showDialog = false"
-				>
+				<v-btn color="grey-darken-1" variant="text" @click="showDialog = false">
 					Cancel
 				</v-btn>
-				<v-btn
-					color="success"
-					variant="text"
-					:loading="isExporting"
-					@click="handleExport"
-				>
+				<v-btn color="success" variant="text" :loading="isExporting" @click="handleExport">
 					Confirm Export
 				</v-btn>
 			</v-card-actions>
@@ -128,12 +75,7 @@
 
 <script setup>
 import { getClassroomInfoFromObj, getClassrooms } from "@/apps/classrooms/api";
-import {
-	getPayeeInfoFromObj,
-	getPayees,
-	getPaymentPurposeInfoFromObj,
-	getPaymentPurposes,
-} from "@/apps/finances/api";
+import { getPayeeInfoFromObj, getPayees, getPaymentPurposeInfoFromObj, getPaymentPurposes } from "@/apps/finances/api";
 import { getStudentInfoFromObj, getStudents } from "@/apps/students/api";
 import { getSubjectInfoFromObj, getSubjects } from "@/apps/subjects/api";
 import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
@@ -172,28 +114,11 @@ const props = defineProps({
 	},
 });
 
-const getFilterFetch = (field) => {
-	switch (field.type) {
-		case "classroom":
-			return getClassrooms;
-		case "subject":
-			return getSubjects;
-		case "teacher":
-			return getTeachers;
-		case "payment_purpose":
-			return getPaymentPurposes;
-		case "payee":
-			return getPayees;
-		case "student":
-			return getStudents;
-		default:
-			return field.fetchOptions;
-	}
-};
-
 const clearFilters = () => {
 	console.log("Clearing filters");
 	for (const field of props.fields) {
+		if (field.disabled) continue;
+
 		if ("defaultValue" in field) {
 			field.value = field.defaultValue;
 		} else if (Array.isArray(field.value)) {
@@ -218,25 +143,6 @@ const updateDates = (value, field) => {
 	} else {
 		// Single date
 		field.value = value;
-	}
-};
-
-const getInstanceInfoFromObj = (field) => {
-	switch (field.type) {
-		case "classroom":
-			return getClassroomInfoFromObj;
-		case "subject":
-			return getSubjectInfoFromObj;
-		case "teacher":
-			return getTeacherInfoFromObj;
-		case "payment_purpose":
-			return getPaymentPurposeInfoFromObj;
-		case "payee":
-			return getPayeeInfoFromObj;
-		case "student":
-			return getStudentInfoFromObj;
-		default:
-			return field.fetchOptionsInfo;
 	}
 };
 

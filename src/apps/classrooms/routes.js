@@ -7,8 +7,9 @@ import CreateClassroomPage from "@/apps/classrooms/views/CreateClassroomPage.vue
 import EditClassroomPage from "@/apps/classrooms/views/EditClassroomPage.vue";
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
-import { api } from "@/services/api";
-
+import { getClassroom } from "@/apps/classrooms/api";
+import subjectsRoutes from "@/apps/subjects/routes";
+import ClassroomMembersPage from "@/apps/classrooms/views/ClassroomMembersPage.vue";
 export default [
 	{
 		path: "classrooms/",
@@ -49,7 +50,7 @@ export default [
 				},
 			},
 			{
-				path: "",
+				path: "all/",
 				name: "Classrooms",
 				component: ClassroomsPage,
 			},
@@ -68,14 +69,13 @@ export default [
 				props: true,
 				component: EmptyLayout,
 				meta: {
-					getDisplayName: async (props) =>
-						props
-							? (
-									await api.get(
-										`api/allocation/classrooms/${props.classroomId}`,
-									)
-								).data.name
-							: "Classrooms",
+					getDisplayName: async (props) => {
+						if (props?.classroomId) {
+							const classroom = await getClassroom(props.classroomId);
+							return classroom.name;
+						}
+						return "Classrooms";
+					},
 					defaultRoute: "Classrooms",
 					getMenu: (props) => [
 						{
@@ -90,11 +90,19 @@ export default [
 							title: "Announcements",
 							to: { name: "ClassroomAnnouncements", props },
 						},
+						{
+							title: "Subjects",
+							to: { name: "Subjects", props },
+						},
+						{
+							title: "Members",
+							to: { name: "ClassroomMembers", props },
+						},
 					],
 				},
 				children: [
 					{
-						path: "",
+						path: "view/",
 						props: true,
 						name: "Classroom",
 						component: ClassroomPage,
@@ -114,6 +122,13 @@ export default [
 							getDisplayName: () => "Announcements",
 							defaultRoute: "ClassroomAnnouncements",
 						},
+					},
+					...subjectsRoutes,
+					{
+						path: "members/",
+						props: true,
+						name: "ClassroomMembers",
+						component: ClassroomMembersPage,
 					},
 				],
 			},

@@ -5,16 +5,13 @@ import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.v
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import { api } from "@/services/api";
 import { getSubject } from "./api";
-import SubjectAnnouncementsPage from "./views/SubjectAnnouncementsPage.vue";
 import SubjectAssignmentsPage from "./views/SubjectAssignmentsPage.vue";
-import SubjectsExportPage from "./views/SubjectsExportPage.vue";
-import SubjectsImportPage from "./views/SubjectsImportPage.vue";
-import SubjectsPage from "./views/SubjectsPage.vue";
-
+import ClassroomSubjectsPage from "./views/ClassroomSubjectsPage.vue";
 export default [
 	{
 		path: "subjects/",
-		component: AppSideBarBreadcrumbsLayout,
+		component: EmptyLayout,
+		props: true,
 		meta: {
 			getDisplayName: () => "Subjects",
 			defaultRoute: "Subjects",
@@ -28,14 +25,6 @@ export default [
 					title: "Create Subject",
 					to: { name: "CreateSubject" },
 				},
-				{
-					title: "Export Subjects",
-					to: { name: "SubjectsExport" },
-				},
-				{
-					title: "Import Subjects",
-					to: { name: "SubjectsImport" },
-				},
 			],
 			icon: "mdi-book-open-variant",
 		},
@@ -43,6 +32,7 @@ export default [
 			{
 				path: "create/",
 				name: "CreateSubject",
+				props: true,
 				component: CreateSubjectPage,
 				meta: {
 					getDisplayName: () => "Create Subject",
@@ -50,19 +40,10 @@ export default [
 				},
 			},
 			{
-				path: "",
-				component: SubjectsPage,
+				path: "all/",
+				props: true,
+				component: ClassroomSubjectsPage,
 				name: "Subjects",
-			},
-			{
-				path: "export/",
-				component: SubjectsExportPage,
-				name: "SubjectsExport",
-			},
-			{
-				path: "import/",
-				component: SubjectsImportPage,
-				name: "SubjectsImport",
 			},
 			{
 				path: ":subjectId/",
@@ -83,10 +64,6 @@ export default [
 							to: { name: "EditSubject", props },
 						},
 						{
-							title: "Announcements",
-							to: { name: "SubjectAnnouncements", props },
-						},
-						{
 							title: "Assignments",
 							to: { name: "SubjectAssignments", props },
 						},
@@ -94,7 +71,7 @@ export default [
 				},
 				children: [
 					{
-						path: "",
+						path: "view/",
 						component: SubjectPage,
 						name: "Subject",
 						props: true,
@@ -103,12 +80,6 @@ export default [
 						path: "edit/",
 						component: EditSubjectPage,
 						name: "EditSubject",
-						props: true,
-					},
-					{
-						path: "announcements/",
-						component: SubjectAnnouncementsPage,
-						name: "SubjectAnnouncements",
 						props: true,
 					},
 					{

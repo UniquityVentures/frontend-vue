@@ -1,35 +1,22 @@
 <template>
-  <v-container>
-    <v-row align="center" justify="center" v-if="subject">
-      <v-col>
-        <v-row class="ma-2">
-          <v-col cols="12" lg="4">
-            <SubjectCard :subject="subject"></SubjectCard>
-          </v-col>
-          <v-col cols="12" lg="4">
-            <AnnouncementsList 
-              :filter="{ subject: subject.id }" 
-              :to="`SubjectAnnouncements`" 
-              :title="`Announcements`" 
-            />
-          </v-col>
-          <v-col cols="12" lg="4">
-            <AssignmentsList 
-              :filter="{ subject: subject.id }" 
-              :title="`Assignments`" 
-              :to="`SubjectAssignments`"
-            />
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
+  <v-container class="columns-container" v-if="subject">
+    <SubjectCard class="column-item" :subject="subject" />
+    <GenericList 
+      class="column-item"
+      :fetchFunction="getAssignments"
+      :filter="{ subject: subject.id }" 
+      :title="`Assignments`" 
+      :viewAllRoute="`SubjectAssignments`"
+      :config="assignmentListConfig"
+    />
   </v-container>
 </template>
   
 <script setup>
-import AnnouncementsList from "@/apps/announcements/components/AnnouncementsList.vue";
-import AssignmentsList from "@/apps/assignments/components/AssignmentsList.vue";
+import { getAssignments } from "@/apps/assignments/api";
+import { assignmentListConfig } from "@/apps/assignments/config";
 import SubjectCard from "@/apps/subjects/components/SubjectCard.vue";
+import GenericList from "@/components/GenericList.vue";
 import { getTeachers } from "@/apps/teachers/api";
 import { api } from "@/services/api";
 import { onMounted, ref } from "vue";
@@ -38,7 +25,6 @@ const props = defineProps({
 	subjectId: String,
 });
 
-const tabs = ref(null);
 const teachers = ref([]);
 const subject = ref({});
 

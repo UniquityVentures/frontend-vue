@@ -10,30 +10,44 @@
 	>
 		<template #headers={}></template>
 		<template #item={item}>
-			<v-list class="ma-2 border">
-				<v-list-item>
-					<v-list-item-title v-if="title.formatFunc" class="text-subtitle-1">
-						{{ title.formatFunc(item[title.key]) }}
-					</v-list-item-title>
-					<v-list-item-title v-else class="text-subtitle-1">
+			<v-list class="ma-2 border" density="compact">
+				<v-list-item link :to="getToFunction(item)">
+					<v-list-item-title class="text-subtitle-1 mb-2">
 						{{ item[title.key] }}
 					</v-list-item-title>
+					
+					<!-- Subtitle items -->
 					<v-list-item-subtitle>
-						<div v-for="header in data_headers" class="d-flex align-center justify-space-between">
-							<span c>{{header.title}}:</span>
-							<span v-if="header.formatFunc">{{ header.formatFunc(item[header.key]) }}</span>
-							<span v-else>{{ item[header.key] }}</span>
+						<div v-for="header in data_headers" class="d-flex align-center">
+							<span class="mr-2 text-primary font-weight-bold">{{header.title}}:</span>
+							<!-- Date type -->
+							<span v-if="header.type === 'date'" class="my-1">
+								{{ formatDate(item[header.key]) }}
+							</span>
+							<!-- Teacher type -->
+							<span v-else-if="header.type === 'teacher'" class="d-flex align-center">
+								<TeacherChip :teacher="item[header.key]" />
+							</span>
+							<!-- Status type -->
+							<span v-else-if="header.type === 'status'">
+								<v-chip
+									:color="getStatusColor(item[header.key])"
+									size="x-small"
+									variant="outlined"
+								>
+									{{ item[header.key] }}
+								</v-chip>
+							</span>
+							<!-- Custom format function -->
+							<span v-else-if="header.formatFunc" class="my-1">
+								{{ header.formatFunc(item[header.key]) }}
+							</span>
+							<!-- Default -->
+							<span v-else class="my-1">
+								{{ item[header.key] }}
+							</span>
 						</div>
 					</v-list-item-subtitle>
-					<template v-slot:append>
-						<v-btn v-if="getToFunction"
-							icon="mdi-arrow-right"
-							size="small"
-							variant="text"
-							:to="getToFunction(item)"
-							class="ml-4 border"
-						></v-btn>
-					</template>
 				</v-list-item>
 			</v-list>
 		</template>
@@ -41,7 +55,7 @@
 	<v-data-table-server
 		v-else
 		:items-length="itemsLen"
-		:headers="headers"
+		:headers="table_headers"
 		:items="items"
 		@update:options="fetchData"
 		:search="JSON.stringify(filters)"
@@ -50,9 +64,29 @@
 		<template #item="{ item }">
 			<tr>
 				<td v-for="header in headers" :class="header.key === 'actions' ? 'text-right' : null">
-					<span v-if="header.formatFunc">
+					<!-- Date type -->
+					<span v-if="header.type === 'date'">
+						{{ formatDate(item[header.key]) }}
+					</span>
+					<!-- Teacher type -->
+					<span v-else-if="header.type === 'teacher'" class="d-flex align-center">
+						<TeacherChip :teacher="item[header.key]" />
+					</span>
+					<!-- Status type with colored chip -->
+					<span v-else-if="header.type === 'status'">
+						<v-chip
+							:color="getStatusColor(item[header.key])"
+							size="small"
+							variant="outlined"
+						>
+							{{ item[header.key] }}
+						</v-chip>
+					</span>
+					<!-- Custom format function (existing logic) -->
+					<span v-else-if="header.formatFunc">
 						{{ header.formatFunc(item[header.key]) }}
 					</span>
+					<!-- Action button (existing logic) -->
 					<v-btn
 						v-else-if="header.key === 'actions'"
 						icon="mdi-arrow-right"
@@ -60,6 +94,7 @@
 						variant="outlined"
 						:to="getToFunction(item)"
 					></v-btn>
+					<!-- Default (existing logic) -->
 					<span v-else>
 						{{ item[header.key] }}
 					</span>
@@ -70,9 +105,11 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { useDisplay } from "vuetify";
 const { mobile } = useDisplay();
+import { formatDate } from "@/services/utils";
+import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 
 const props = defineProps({
 	headers: {
@@ -94,7 +131,8 @@ const props = defineProps({
 const filters = defineModel();
 
 const title = ref(props.headers[0]);
-const data_headers = ref(props.headers.slice(1, props.headers.length - 1));
+const data_headers = computed(() => props.headers.slice(1, props.headers.length - 1));
+const table_headers = computed(() => props.headers.slice(0, -1));
 
 const loading = ref(false);
 const itemsLen = ref(10);
@@ -136,4 +174,12 @@ const fetchData = async ({ page, itemsPerPage, search }) => {
 };
 
 onMounted(() => fetchData({ search: filters }));
+
+const getStatusColor = (status) => {
+	const statusColors = {
+		active: 'success',
+		inactive: 'error',
+	};
+	return statusColors[status?.toLowerCase()] || 'default';
+};
 </script>

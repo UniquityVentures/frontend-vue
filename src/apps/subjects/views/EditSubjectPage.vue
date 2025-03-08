@@ -11,10 +11,10 @@
 </template>
 
 <script setup>
-import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
 import FormCard from "@/components/FormCard.vue";
 import { onMounted, ref } from "vue";
 import { getSubject, updateSubject } from "../api";
+import { subjectDefaultFormFields } from "@/apps/subjects/config";
 
 const props = defineProps({
 	subjectId: {
@@ -24,32 +24,7 @@ const props = defineProps({
 });
 
 const subject = ref(null);
-
-const model = ref([
-	{
-		label: "Name",
-		key: "name",
-		type: "string",
-	},
-	{
-		label: "Description",
-		key: "description",
-		type: "longstring",
-	},
-	{
-		label: "Teacher",
-		key: "teacher",
-		type: "number",
-		fetchOptions: getTeachers,
-		fetchOptionsInfo: getTeacherInfoFromObj,
-		searchField: "name",
-	},
-	{
-		label: "Is Active",
-		key: "is_active",
-		type: "boolean",
-	},
-]);
+const model = ref([]);
 
 const handleUpdate = async (formData) => {
 	try {
@@ -63,8 +38,9 @@ const handleUpdate = async (formData) => {
 
 onMounted(async () => {
 	subject.value = await getSubject(props.subjectId);
-	// Update model with default values from the existing subject
-	model.value = model.value.map((field) => ({
+	
+	// Use the default form fields from config but add default values from the existing subject
+	model.value = subjectDefaultFormFields.map((field) => ({
 		...field,
 		defaultValue: subject.value[field.key],
 	}));

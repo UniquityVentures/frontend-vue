@@ -14,7 +14,7 @@
 
 
 <script setup>
-import ExpandableListItem from "@/components/c-expandable-list-item.vue";
+import ExpandableListItem from "@/components/ExpandableListItem.vue";
 import RecursiveList from "./RecursiveList.vue";
 
 const listProps = defineProps({

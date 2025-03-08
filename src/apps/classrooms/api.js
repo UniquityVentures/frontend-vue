@@ -9,7 +9,10 @@ const images = [
 const classroomViewset = createViewset("api/allocation/classrooms");
 
 // Get base methods
-const getClassrooms = classroomViewset.list;
+const getClassrooms = (filter = {}) => classroomViewset.list({
+	page_size: 100,
+	...filter
+});
 const getClassroom = classroomViewset.retrieve;
 const updateClassroom = classroomViewset.update;
 const createClassroom = classroomViewset.create;

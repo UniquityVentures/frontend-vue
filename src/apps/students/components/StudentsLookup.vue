@@ -1,29 +1,27 @@
 <template>
-	<v-container>
-		<v-card variant="flat">
-			<v-card-title>
-				<FilterCard 
-					:fields="fields"
-					:exportFunction="studentViewset.export"
-				/>
-			</v-card-title>
-
-			<ResponsiveDataTable 
-				:getToFunction="(item) => ({ name: 'Student', params: { studentId: item.id }})" 
-				:headers="headers" 
-				:fetch="getStudents" 
-				:filters="filters"
-				:forceMobile="forceMobile"
+	<v-card>
+		<v-card-title>
+			<FilterCard 
+				:fields="fields"
+				:exportFunction="exportStudents"
 			/>
-		</v-card>
-	</v-container>
+		</v-card-title>
+
+		<ResponsiveDataTable 
+			:getToFunction="(item) => ({ name: 'Student', params: { studentId: item.id }})" 
+			:headers="headers" 
+			:fetch="getStudents" 
+			v-model="filters"
+			:forceMobile="forceMobile"
+		/>
+	</v-card>
 </template>
 
 <script setup>
-import { getStudents, studentViewset } from "@/apps/students/api";
-import FilterCard from "@/components/FilterCard.vue";
+import { ref, computed } from "vue";
+import { getStudents, exportStudents } from "@/apps/students/api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
-import { computed, ref } from "vue";
+import FilterCard from "@/components/FilterCard.vue";
 
 const defaultFields = [
 	{

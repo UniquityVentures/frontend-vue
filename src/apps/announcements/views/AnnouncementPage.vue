@@ -30,8 +30,8 @@
                     />
                   </v-list>
                   <h4 class="text-subtitle-1 mt-4">Dates:</h4>
-                  <v-chip color="primary">Release: {{ formatDate(announcement.release_at) }}</v-chip>
-                  <v-chip color="red">Expiry: {{ formatDate(announcement.expiry_at) }}</v-chip>
+                  <v-chip color="primary">Release: {{ formatDateTime(announcement.release_at) }}</v-chip>
+                  <v-chip color="red">Expiry: {{ formatDateTime(announcement.expiry_at) }}</v-chip>
 
                   <h4 class="text-subtitle-1 mt-4">Assigned to:</h4>
                   <div v-if="announcement?.is_school_wide">
@@ -83,6 +83,7 @@ import { getClassroom } from "@/apps/classrooms/api";
 import { getSubject } from "@/apps/subjects/api";
 import { onMounted, ref } from "vue";
 import { getAnnouncement } from "../api";
+import { formatDateTime } from "@/services/utils";
 
 const announcement = ref({});
 const classroomDetails = ref([]);
@@ -91,16 +92,6 @@ const props = defineProps({
 	announcementId: Number,
 });
 
-const formatDate = (dateString) => {
-	return new Date(dateString).toLocaleString("en-US", {
-		year: "numeric",
-		month: "short",
-		day: "numeric",
-		hour: "2-digit",
-		minute: "2-digit",
-		second: "2-digit",
-	});
-};
 
 const fetchDetails = async () => {
 	announcement.value = await getAnnouncement(props.announcementId);

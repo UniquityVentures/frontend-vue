@@ -5,7 +5,7 @@ export const createViewset = (baseUrl, filename = "export") => ({
 	list: async (filter = {}) =>
 		(
 			await api.get(`${baseUrl}/all`, {
-				params: { page_size: 10000, ...filter },
+				params: { ...filter },
 			})
 		).data,
 
