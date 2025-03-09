@@ -5,7 +5,7 @@
                 <v-col 
                     v-for="(classroom, index) in classroomsData"
                     :key="index" lg="3">
-                    <SubjectsList :filter="{ classroom: classroom.id }" :title="classroom.name"/>
+                    <SubjectsList :filter="{ classrooms: classroom.id }" :title="classroom.name"/>
                 </v-col>
             </v-row>
         </v-card-text>

@@ -1,13 +1,12 @@
 export const studentDefaultHeaders = [
     { label: "Name", key: "user_details.full_name"},
     { label: "Student No", key: "student_no" },
-    { label: "Classroom", key: "classroom_details.name" },
-    { label: "Grade Level", key: "grade_level" },
+    { label: "Classroom", key: "classroom_details", type: "classroom" },
 ];
 
 export const studentDefaultFilterFields = [
     { label: "Search by name", type: "string", key: "name", value: "", defaultValue: "" },
-    { label: "Filter by classroom", type: "classroom", key: "classrooms", value: null },
+    { label: "Filter by classroom", type: "classroom", key: "classroom", value: null },
     { label: "Filter by grade level", type: "n_nary", key: "grade_level", value: null, 
       fetchOptions: () => [
         { title: "All Grades", value: null },

@@ -1,6 +1,6 @@
 export const subjectListConfig = {
     listItemTitle: { key: 'name', default: 'Untitled' },
-    listItemSubtitle: { key: 'teacher_details.user_details.full_name', default: 'No teacher assigned' },
+    listItemSubtitle: { key: 'main_teacher_details.user_details.full_name', default: 'No teacher assigned' },
     listItemRoute: (item) => ({ name: 'Subject', params: { subjectId: item.id } }),
     limit: 10,
     emptyMessage: 'No subjects available'

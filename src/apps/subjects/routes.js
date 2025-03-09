@@ -6,12 +6,12 @@ import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import { api } from "@/services/api";
 import { getSubject } from "./api";
 import SubjectAssignmentsPage from "./views/SubjectAssignmentsPage.vue";
-import ClassroomSubjectsPage from "./views/ClassroomSubjectsPage.vue";
+import SubjectsPage from "./views/SubjectsPage.vue";
+
 export default [
 	{
 		path: "subjects/",
 		component: EmptyLayout,
-		props: true,
 		meta: {
 			getDisplayName: () => "Subjects",
 			defaultRoute: "Subjects",
@@ -42,7 +42,7 @@ export default [
 			{
 				path: "all/",
 				props: true,
-				component: ClassroomSubjectsPage,
+				component: SubjectsPage,
 				name: "Subjects",
 			},
 			{

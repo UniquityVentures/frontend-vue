@@ -1,5 +1,3 @@
-import { getClassroom } from './api';
-
 export const classroomDefaultHeaders = [
 	{ label: "Name", key: "name" },
 	{ label: "Grade", key: "standard" },
@@ -46,6 +44,29 @@ export const classroomDefaultFilterFields = [
 		],
 	},
 ];
+
+export const classroomDefaultFormFields = [
+	{
+		label: "Standard",
+		key: "standard",
+		type: "string",
+	},
+	{
+		label: "Name",
+		key: "name",
+		type: "string",
+	},
+	{
+		label: "Class Teacher",
+		key: "class_teacher",
+		type: "teacher",
+	},
+	{
+		label: "Is Active",
+		key: "is_active",
+		type: "boolean",
+	},
+]
 
 export const classroomListConfig = {
     listItemTitle: { key: 'name', default: 'Unnamed Classroom' },

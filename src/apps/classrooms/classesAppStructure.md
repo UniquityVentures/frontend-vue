@@ -103,3 +103,18 @@
 - We will go with the classroom-first approach - the reason is as follows:
   - Classroom is a `PrimaryKey` on Subject. This means that each subject is inherently bound to a single classroom. 
   - So it has already been established, that subjects are inside classrooms. We just haven't implemented it in the frontend yet.
+
+
+## Further problems with the classroom-first approach:
+
+- There are cases where different students in the same classroom have a different set of subjects. There could be a student enrolled in class 10A who only switches classes for a single subject, which he studies in class 10C. This is not possible in the current approach. 
+- There are a few ways to solve this: 
+  - Enforcing the Subjects-inside-classrooms relationship: This means that each subject will be inside a classroom. In this method - students will be enrolled in a classroom, and they will only have access to the Subjects inside that classroom. They can join a subset of the subjects of the classroom they are enrolled in. Students will need to be enrolled in multiple classrooms. 
+  - Separating the Classroom and Subject apps: Subjects and Classrooms are ManyToMany, each subject can now be in multiple classrooms. So now we can control which classrooms can have which subjects openly. We no longer need to give Students access to multiple classrooms, we can just add this subject to their classroom. This seems like the right choice.
+
+## Implementation plan:
+
+- Now classrooms and subjects are different apps again. 
+- Student is assigned to a single classroom. He can join any number of subjects. 
+- Classroom and Subjects are ManyToMany.
+- Don't focus on the names of 'Classroom' or 'Subject'. 'Classroom' is basically an entity that a Student cannot have multiple of and 'Subject' is basically an entity that a Student can have multiple of. These entities are ManyToMany with each other, so any combination is possible.

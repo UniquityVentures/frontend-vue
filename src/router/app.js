@@ -10,6 +10,7 @@ import teachersRoutes from "@/apps/teachers/routes";
 
 export default [
 	...classroomsRoutes,
+	...subjectsRoutes,
 	...studentsRoutes,
 	...teachersRoutes,
 	...announcementsRoutes,

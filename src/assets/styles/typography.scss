@@ -1,0 +1,40 @@
+// Global typography scale reduction
+:root {
+  --v-font-size-multiplier: 0.9; // Adjust this value to scale all typography
+}
+
+// Apply font size reduction to all text elements
+html {
+  font-size: calc(1rem * var(--v-font-size-multiplier));
+}
+
+// Set the primary font to Roboto Flex with optimized settings
+body, .v-application {
+  font-family: 'Roboto Flex', sans-serif !important;
+  
+  // Make the font more compact with variable font settings
+  font-variation-settings: 
+    'wght' 400,    // Weight (100-900)
+    'GRAD' -25,    // Grade (-200 to 150) - negative values make it lighter
+    'XTRA' 400,    // Width (323-603) - lower values make it narrower
+    'YOPQ' 80;     // Contrast (25-135)
+}
+
+// Headings - slightly different settings
+h1, h2, h3, h4, h5, h6,
+.text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6 {
+  font-variation-settings: 
+    'wght' 500,
+    'GRAD' -15,
+    'XTRA' 420,
+    'YOPQ' 90;
+}
+
+// Smaller text elements
+.text-caption, .text-overline, .v-card-subtitle {
+  font-variation-settings: 
+    'wght' 400,
+    'GRAD' -30,
+    'XTRA' 390,
+    'YOPQ' 75;
+}

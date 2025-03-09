@@ -48,7 +48,7 @@
 
         <!-- 'View All' Button -->
         <v-card-actions v-if="viewAllRoute" class="justify-center">
-            <v-btn :to="{ name: viewAllRoute }" variant="outlined">
+            <v-btn :to="{ name: viewAllRoute }">
                 {{ 'View All' }}
             </v-btn>
         </v-card-actions>
@@ -84,7 +84,6 @@ const props = defineProps({
         //   detailRoute: 'Announcement',
         //   detailParamKey: 'announcementId',
         //   viewAllRoute: 'Announcements',
-        //   limit: 3
         // }
     },
 
@@ -92,6 +91,7 @@ const props = defineProps({
     title: String,
     subtitle: String,
     viewAllRoute: String,
+    limit: { type: Number, default: 5 },    
 });
 
 const items = ref(props.items || []);
@@ -99,7 +99,7 @@ const loading = ref(!!props.fetchFunction);
 
 // Limit items displayed
 const limitedItems = computed(() => {
-    const limit = props.config.limit || 3;
+    const limit = props.limit;
     return items.value.slice(0, limit);
 });
 

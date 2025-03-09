@@ -31,8 +31,6 @@
 						<v-chip v-if="header.type === 'date'">
 							{{ `${header.label}: ${formatDate(item[header.key])}` }}
 						</v-chip>
-						<!-- Teacher type -->
-						<TeacherChip v-if="header.type === 'teacher'" :teacher="item[header.key]" :label="header.label"/>
 						<!-- Status type -->
 						<v-chip v-if="header.type === 'status'" :color="getStatusColor(item[header.key])">
 							{{ `${header.label}: ${keyHandler(item, header)}` }}
@@ -41,6 +39,9 @@
 						<v-chip v-if="header.formatFunc">
 							{{ `${header.label}: ${header.formatFunc(item[header.key])}` }}
 						</v-chip>
+						<!-- Custom Chips -->
+						<TeacherChip v-if="header.type === 'teacher'" :teacher="keyHandler(item, header)" :label="header.label"/>
+						<ClassroomChip v-if="header.type === 'classroom'" :classroom="keyHandler(item, header)" :label="header.label"/>
 					</div>
 				</v-list-item>
 			</v-list>
@@ -71,14 +72,22 @@
 							</v-card-subtitle>
 							<v-card-text>
 								<div v-for="header in data_headers">
-									<TeacherChip v-if="header.type === 'teacher'" :teacher="item[header.key]" :label="header.label" />
+									<!-- Status type -->
 									<v-chip v-if="header.type === 'status'" :color="getStatusColor(item[header.key])">
 										{{ `${header.label}: ${keyHandler(item, header)}` }}
 									</v-chip>
+									<!-- Date type -->
+									<v-chip v-if="header.type === 'date'">
+										{{ `${header.label}: ${formatDate(item[header.key])}` }}
+									</v-chip>
+									<!-- Custom format function -->
 									<v-chip v-if="header.formatFunc">
 										<strong class="mr-2">{{ header.label }}: </strong>
 										{{ header.formatFunc(item[header.key]) }}
 									</v-chip>
+									<!-- Custom Chips -->
+									<TeacherChip v-if="header.type === 'teacher'" :teacher="keyHandler(item, header)" :label="header.label" />
+									<ClassroomChip v-if="header.type === 'classroom'" :classroom="keyHandler(item, header)" :label="header.label"/>
 								</div>
 							</v-card-text>
 						</v-card>
@@ -138,7 +147,7 @@ import { useDisplay } from "vuetify";
 const { mobile } = useDisplay();
 import { formatDate, keyHandler } from "@/services/utils";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
-
+import ClassroomChip from "@/apps/classrooms/components/ClassroomChip.vue";
 const props = defineProps({
 	headers: {
 		type: Array,

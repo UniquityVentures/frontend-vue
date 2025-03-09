@@ -1,7 +1,8 @@
 <template>
   <v-container>
-    <v-card class="mt-4">
-      <v-card-title>Upload CSV file of classrooms here:</v-card-title>
+    <v-card>
+      <v-card-title>Bulk Import Classrooms</v-card-title>
+      <v-card-subtitle>Upload CSV file of classrooms here</v-card-subtitle>
       <v-card-text>
         <v-file-input
           v-model="file"
@@ -26,7 +27,6 @@
             :loading="isDryRunning"
             :disabled="!file || isImporting"
             @click="handleDryRun"
-            class="ma-2"
           >
             Analyze File
           </v-btn>
@@ -36,7 +36,6 @@
             :loading="isImporting"
             :disabled="!dryRunResult || isDryRunning"
             @click="handleImport"
-            class="ma-2"
           >
             Import
           </v-btn>

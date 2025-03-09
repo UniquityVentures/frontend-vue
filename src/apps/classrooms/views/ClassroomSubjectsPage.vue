@@ -5,6 +5,7 @@
             :filter="filter"
             :title="'Subjects'"
             :config="subjectListConfig"
+            :limit="25"
         />
     </v-container>
 </template>

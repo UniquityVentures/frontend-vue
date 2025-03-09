@@ -1,30 +1,38 @@
 // Import Vuetify's variables (for Vuetify 3)
 @use 'vuetify/styles' as vuetify;
+@import './typography.scss';
 
-// Global styles for Vuetify components
-
-// Styling v-card-actions
-.v-card-actions {
-    padding: 10px;
-    border-top: 1px solid rgba(0, 0, 0, 0.12);
-    background-color: rgb(var(--v-theme-background));
-    .v-btn {
-        margin-right: 10px;
-    }
-}
-
+// v-card styles
 .v-card-title {
     padding: 10px 10px 0px 10px !important;
 }
-
 .v-card-subtitle {
-    padding: 0px 10px 10px 10px !important; 
+    padding: 0px 10px 10px 10px !important;
 }
-
 .v-card-text {
     padding: 5px 10px 10px 10px !important;
 }
+.v-card-actions {
+    padding: 0px;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    background-color: rgb(var(--v-theme-background));
+}
 
+// v-list styles
+.v-list-item {
+    margin: 4px;
+    &:hover {
+        background-color: rgba(var(--v-theme-primary), 0.05);
+    }
+}
+
+// form input styles
+.v-text-field {
+    padding: 0px;
+    margin: 0px;
+}
+
+// other component styles
 .v-divider {
     margin: 5px 0px 0px !important;
     border-color: rgba(0, 0, 0, 1) !important;
@@ -34,12 +42,8 @@
     margin: 2px;
 }
 
-// Styling v-list-item
-.v-list-item {
-    margin: 4px;
-    &:hover {
-        background-color: rgba(var(--v-theme-primary), 0.05);
-    }
+.v-btn {
+    margin: 5px;
 }
 
 // Dashboard layout styles

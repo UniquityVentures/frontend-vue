@@ -1,7 +1,7 @@
 <template>
-	<v-container class="pa-4 bg-grey-lighten-5" rounded="lg">
+	<v-container rounded="lg">
 		<v-row>
-			<v-col cols="12" md="4" lg="3" v-for="field in fields" v-show="!field.hidden">
+			<v-col cols="6" md="3" lg="2" v-for="field in fields" v-show="!field.hidden" class="pa-2">
 				<v-text-field v-if="field.type === 'string'" :label="field.label" v-model="field.value"
 					hide-details :disabled="field.disabled"></v-text-field>
 				<v-number-input v-if="field.type === 'integer'" :label="field.label" v-model="field.value"
@@ -41,12 +41,11 @@
 					:disabled="field.disabled" @update:modelValue="(value) => updateDates(value, field)">
 				</v-date-input>
 			</v-col>
-			<v-col cols="12" md="4" lg="3" class="d-flex gap-2">
-				<v-btn color="primary" @click="clearFilters" class="ma-2">
+			<v-col cols="12" md="4" lg="3">
+				<v-btn color="primary" @click="clearFilters">
 					Clear
 				</v-btn>
-				<v-btn v-if="exportFunction" color="success" :loading="isExporting" @click="showExportDialog"
-					class="ma-2">
+				<v-btn v-if="exportFunction" color="success" :loading="isExporting" @click="showExportDialog">
 					Export
 				</v-btn>
 			</v-col>

@@ -5,10 +5,11 @@
 		<GenericList 
 			class="column-item"
 			:fetchFunction="getSubjects"
-			:filter="{ classroom: classroom.id }"
+			:filter="{ classrooms: classroom.id }"
 			:title="'Subjects'"
-			:viewAllRoute="'Subjects'"
+			:viewAllRoute="'ClassroomSubjects'"
 			:config="subjectListConfig"
+			:limit="10"
 		/>
 		
 		<GenericList 
