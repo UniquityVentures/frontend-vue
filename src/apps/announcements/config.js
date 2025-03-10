@@ -3,7 +3,7 @@ import { getAnnouncement } from './api';
 
 export const announcementDefaultHeaders = [
     { label: "Title", key: "title" },
-    { label: "Description", key: "description" },
+    { label: "Description", key: "description", type: "longstring" },
     { label: "Release Date", key: "release_at", type: "date" },
     { label: "Expiry Date", key: "expiry_at", type: "date" },
     { label: "Signed By", key: "signed_by_details", type: "teacher" },

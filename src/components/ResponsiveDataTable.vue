@@ -79,8 +79,11 @@
 							<v-card-text>
 								<div v-for="header in data_headers">
 									<div v-if="header.type === 'longstring'" class="mb-2">
-										{{ item[header.key]?.length > 100 ? item[header.key].substring(0, 20) + '...' : item[header.key] }}
+										{{ item[header.key]?.length > 100 ? item[header.key].substring(0, 50) + '...' : item[header.key] }}
 									</div>
+									<v-chip v-if="header.type === 'string'">
+										{{ `${header.label}: ${item[header.key]}` }}
+									</v-chip>
 									<!-- Active type -->
 									<v-chip v-if="header.type === 'is_active'" :color="item[header.key]? 'success' : 'error'">
 										{{ `${header.label}: ${item[header.key]? 'Active' : 'Inactive'}` }}
