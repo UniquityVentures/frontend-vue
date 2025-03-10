@@ -1,17 +1,7 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col cols="12" md="4">
-        <StudentsStatsCard 
-          :buttons="[
-            { 
-              text: 'Resolve Pending Approvals', 
-            }
-          ]"
-        />
-      </v-col>
-      <v-col cols="12">
-        <v-card>
+  <v-container class="columns-container">
+        <StudentsStatsCard class="column-item card-width-1" :buttons="[{ text: 'Resolve Pending Approvals', }]" />
+        <v-card class="column-item card-width-3">
           <v-card-title>
             <FilterCard :fields="fields" :exportFunction="exportStudents" />
           </v-card-title>
@@ -20,11 +10,10 @@
             :headers="studentDefaultHeaders" 
             :fetch="getStudents" 
             v-model="filters" 
-            template="card"
+            desktopTemplate="card"
+            mobileTemplate="list"
           />
         </v-card>
-      </v-col>
-    </v-row>
   </v-container>
 </template>
 

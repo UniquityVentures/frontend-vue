@@ -2,7 +2,7 @@
     <v-container>
         <v-card variant="flat">
             <v-card-title>
-                Assignments for {{ course?.name }} ({{ course?.batch_details?.name }})
+                Assignments for {{ course?.name }}
             </v-card-title>
             <v-card-text>
                 <FilterCard :fields="fields" />

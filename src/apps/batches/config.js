@@ -3,7 +3,7 @@ export const batchDefaultHeaders = [
 	{ label: "Grade", key: "standard" },
 	{ label: "Students Count", key: "students", formatFunc: (students) => students?.length || 0 },
 	{ label: "Class Teacher", key: "class_teacher_details", type: 'teacher' },
-];
+]; 
 
 export const batchDefaultFilterFields = [
 	{

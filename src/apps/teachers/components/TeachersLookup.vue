@@ -1,21 +1,19 @@
 <template>
-	<v-container>
-		<v-card variant="flat">
-			<v-card-title>
-				<FilterCard 
-					:fields="fields"
-					:exportFunction="teacherViewset.export"
-				/>
-			</v-card-title>
-			<ResponsiveDataTable
-				:headers="headers"
-				:fetch="getTeachers"
-				v-model="filters"
-				:getToFunction="(item) => ({name: 'Teacher', params: {teacherId: item.id}})"
-				:forceMobile="forceMobile"
+	<v-card variant="flat">
+		<v-card-title>
+			<FilterCard 
+				:fields="fields"
+				:exportFunction="teacherViewset.export"
 			/>
-		</v-card>
-	</v-container>
+		</v-card-title>
+		<ResponsiveDataTable
+			:headers="headers"
+			:fetch="getTeachers"
+			v-model="filters"
+			:getToFunction="(item) => ({name: 'Teacher', params: {teacherId: item.id}})"
+			:forceMobile="forceMobile"
+		/>
+	</v-card>
 </template>
 
 <script setup>

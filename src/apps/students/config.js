@@ -2,6 +2,7 @@ export const studentDefaultHeaders = [
     { label: "Name", key: "user_details.full_name"},
     { label: "Student No", key: "student_no" },
     { label: "Batch", key: "batch_details", type: "batch" },
+    { label: "Roll Number", key: "roll_no", type: "string" },
 ];
 
 export const studentDefaultFilterFields = [

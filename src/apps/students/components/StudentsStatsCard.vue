@@ -41,8 +41,6 @@
       <v-btn
         v-for="button in buttons"
         :key="button.text"
-        color="primary"
-        variant="outlined"
         :to="button.to"
       >
         {{ button.text }}

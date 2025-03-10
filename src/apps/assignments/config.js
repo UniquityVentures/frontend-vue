@@ -13,10 +13,11 @@ export const assignmentDefaultFilterFields = [
 ];
 
 export const assignmentDefaultHeaders = [
-	{ title: "Title", key: "title" },
-	{ title: "Release Date", key: "release_at", type: "date" },
-	{ title: "Due Date", key: "due_at", type: "date" },
-	{ title: "Course", key: "course_details", type: "course" },
+	{ label: "Title", key: "title" },
+	{ label: "Description", key: "description", type: "longstring" },
+	{ label: "Release Date", key: "release_at", type: "date" },
+	{ label: "Due Date", key: "due_at", type: "date" },
+	{ label: "Course", key: "course_details", type: "course" },
 ];
 
 export const assignmentDefaultFormFields = [
@@ -34,10 +35,7 @@ export const assignmentListConfig = {
 	listItemChips: [
 		{ label: 'Due', key: 'due_at', color: 'error', type: 'datetime' }
 	],
-	detailRoute: 'Assignment',
-	detailParamKey: 'assignmentId',
-	viewAllRoute: 'Assignments',
-	viewAllText: 'View All',
+    listItemRoute: (item) => ({ name: 'Assignment', params: { assignmentId: item.id } }),
 	limit: 3,
 	emptyMessage: 'No assignments available'
 };
