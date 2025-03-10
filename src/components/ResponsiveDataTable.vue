@@ -42,7 +42,7 @@
 						</v-chip>
 						<!-- Custom Chips -->
 						<TeacherChip v-if="header.type === 'teacher'" :teacher="keyHandler(item, header)" :label="header.label"/>
-						<ClassroomChip v-if="header.type === 'classroom'" :classroom="keyHandler(item, header)" :label="header.label"/>
+						<BatchChip v-if="header.type === 'batch'" :batch="keyHandler(item, header)" :label="header.label"/>
 					</div>
 					</div>
 				</v-list-item>
@@ -92,7 +92,7 @@
 									</v-chip>
 									<!-- Custom Chips -->
 									<TeacherChip v-if="header.type === 'teacher'" :teacher="keyHandler(item, header)" :label="header.label" />
-									<ClassroomChip v-if="header.type === 'classroom'" :classroom="keyHandler(item, header)" :label="header.label"/>
+									<BatchChip v-if="header.type === 'batch'" :batch="keyHandler(item, header)" :label="header.label"/>
 									
 								</div>
 							</v-card-text>
@@ -152,7 +152,7 @@ import { onMounted, ref, computed } from "vue";
 import { useDisplay } from "vuetify";
 import { formatDate, keyHandler } from "@/services/utils";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
-import ClassroomChip from "@/apps/classrooms/components/ClassroomChip.vue";
+import BatchChip from "@/apps/batches/components/BatchChip.vue";
 
 const props = defineProps({
 	headers: {

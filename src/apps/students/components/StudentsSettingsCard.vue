@@ -15,10 +15,10 @@
 					</v-col>
 					<v-col cols="12" md="6">
 						<v-autocomplete
-							v-model="filters.classroom"
-							:items="classrooms"
-							label="Filter by classroom"
-							:item-props="getClassroomInfoFromObj"
+							v-model="filters.batch"
+							:items="batches"
+							label="Filter by batch"
+							:item-props="getBatchInfoFromObj"
 							density="comfortable"
 							clearable
 							@update:model-value="fetchStudents"
@@ -55,17 +55,17 @@
 </template>
 
 <script setup>
-import { getClassroomInfoFromObj, getClassrooms } from "@/apps/classrooms/api";
+import { getBatchInfoFromObj, getBatches } from "@/apps/batches/api";
 import { getStudents } from "@/apps/students/api";
 import { onMounted, ref, watch } from "vue";
 
 const students = ref([]);
-const classrooms = ref([]);
+const batches = ref([]);
 const loading = ref(false);
 
 const filters = ref({
 	name: "",
-	classroom: null,
+	batch: null,
 });
 
 const headers = [
@@ -81,7 +81,7 @@ const fetchStudents = async () => {
 	try {
 		const filter = {};
 		if (filters.value.name) filter.name = filters.value.name;
-		if (filters.value.classroom) filter.classroom = filters.value.classroom;
+		if (filters.value.batch) filter.batch = filters.value.batch;
 
 		students.value = (await getStudents(filter)).results;
 	} catch (error) {
@@ -92,7 +92,7 @@ const fetchStudents = async () => {
 };
 
 onMounted(async () => {
-	classrooms.value = (await getClassrooms()).results;
+	batches.value = (await getBatches()).results;
 });
 
 watch(() => filters.value, fetchStudents, { deep: true });

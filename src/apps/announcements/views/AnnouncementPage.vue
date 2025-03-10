@@ -38,33 +38,33 @@
                     <v-chip color="success">The whole school</v-chip>
                   </div>
                   <div v-else>
-                    <div v-if="announcement?.classrooms?.length > 0">
-                      <h5 class="text-subtitle-2 mt-2">Classrooms:</h5>
+                    <div v-if="announcement?.batches?.length > 0">
+                      <h5 class="text-subtitle-2 mt-2">Batches:</h5>
                       <v-chip-group column>
                         <v-chip
-                          v-for="classroom in classroomDetails"
-                          :key="classroom.id"
+                          v-for="batch in batchDetails"
+                          :key="batch.id"
                           color="primary"
                           variant="outlined"
-                          :to="{ name: 'Classroom', params: { classroomId: classroom.id }}"
+                          :to="{ name: 'Batch', params: { batchId: batch.id }}"
                           link
                         >
-                          {{ classroom.name }}
+                          {{ batch.name }}
                         </v-chip>
                       </v-chip-group>
                     </div>
-                    <div v-if="announcement?.subjects?.length > 0">
-                      <h5 class="text-subtitle-2 mt-2">Subjects:</h5>
+                    <div v-if="announcement?.courses?.length > 0">
+                      <h5 class="text-subtitle-2 mt-2">Courses:</h5>
                       <v-chip-group column>
                         <v-chip
-                          v-for="subject in subjectDetails"
-                          :key="subject.id"
+                          v-for="course in courseDetails"
+                          :key="course.id"
                           color="secondary"
                           variant="outlined"
-                          :to="{ name: 'Subject', params: { subjectId: subject.id }}"
+                          :to="{ name: 'Course', params: { courseId: course.id }}"
                           link
                         >
-                          {{ subject.name }} ({{ subject.classroom_details?.name }})
+                          {{ course.name }} ({{ course.batch_details?.name }})
                         </v-chip>
                       </v-chip-group>
                     </div>
@@ -79,15 +79,15 @@
 </template>
 
 <script setup>
-import { getClassroom } from "@/apps/classrooms/api";
-import { getSubject } from "@/apps/subjects/api";
+import { getBatch } from "@/apps/batches/api";
+import { getCourse } from "@/apps/courses/api";
 import { onMounted, ref } from "vue";
 import { getAnnouncement } from "../api";
 import { formatDateTime } from "@/services/utils";
 
 const announcement = ref({});
-const classroomDetails = ref([]);
-const subjectDetails = ref([]);
+const batchDetails = ref([]);
+const courseDetails = ref([]);
 const props = defineProps({
 	announcementId: Number,
 });
@@ -96,17 +96,17 @@ const props = defineProps({
 const fetchDetails = async () => {
 	announcement.value = await getAnnouncement(props.announcementId);
 
-	// Fetch classroom details
-	if (announcement.value.classrooms?.length > 0) {
-		classroomDetails.value = await Promise.all(
-			announcement.value.classrooms.map((id) => getClassroom(id)),
+	// Fetch batch details
+	if (announcement.value.batches?.length > 0) {
+		batchDetails.value = await Promise.all(
+			announcement.value.batches.map((id) => getBatch(id)),
 		);
 	}
 
-	// Fetch subject details
-	if (announcement.value.subjects?.length > 0) {
-		subjectDetails.value = await Promise.all(
-			announcement.value.subjects.map((id) => getSubject(id)),
+	// Fetch course details
+	if (announcement.value.courses?.length > 0) {
+		courseDetails.value = await Promise.all(
+			announcement.value.courses.map((id) => getCourse(id)),
 		);
 	}
 };

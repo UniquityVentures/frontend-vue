@@ -33,9 +33,9 @@ const defaultFields = [
 		defaultValue: "",
 	},
 	{
-		label: "Filter by classroom",
-		type: "classroom",
-		key: "classrooms",
+		label: "Filter by batch",
+		type: "batch",
+		key: "batches",
 		value: null,
 	},
 ];

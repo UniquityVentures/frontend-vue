@@ -6,11 +6,11 @@
 					hide-details :disabled="field.disabled"></v-text-field>
 				<v-number-input v-if="field.type === 'integer'" :label="field.label" v-model="field.value"
 					hide-details :disabled="field.disabled"></v-number-input>
-				<ServerAutocomplete v-if="field.type === 'classroom'" v-model="field.value" :clearable="!field.disabled"
-					:fetch="getClassrooms" :getInfo="getClassroomInfoFromObj" :searchField="field.searchField || 'name'"
+				<ServerAutocomplete v-if="field.type === 'batch'" v-model="field.value" :clearable="!field.disabled"
+					:fetch="getBatches" :getInfo="getBatchInfoFromObj" :searchField="field.searchField || 'name'"
 					:label="field.label" :disabled="field.disabled" />
-				<ServerAutocomplete v-if="field.type === 'subject'" v-model="field.value" :clearable="!field.disabled"
-					:fetch="getSubjects" :getInfo="getSubjectInfoFromObj" :searchField="field.searchField || 'name'"
+				<ServerAutocomplete v-if="field.type === 'course'" v-model="field.value" :clearable="!field.disabled"
+					:fetch="getCourses" :getInfo="getCourseInfoFromObj" :searchField="field.searchField || 'name'"
 					:label="field.label" :disabled="field.disabled" />
 				<ServerAutocomplete v-if="field.type === 'teacher'" v-model="field.value" :clearable="!field.disabled"
 					:fetch="getTeachers" :getInfo="getTeacherInfoFromObj" :searchField="field.searchField || 'name'"
@@ -73,10 +73,10 @@
 </template>
 
 <script setup>
-import { getClassroomInfoFromObj, getClassrooms } from "@/apps/classrooms/api";
+import { getBatchInfoFromObj, getBatches } from "@/apps/batches/api";
 import { getPayeeInfoFromObj, getPayees, getPaymentPurposeInfoFromObj, getPaymentPurposes } from "@/apps/finances/api";
 import { getStudentInfoFromObj, getStudents } from "@/apps/students/api";
-import { getSubjectInfoFromObj, getSubjects } from "@/apps/subjects/api";
+import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
 import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
 
 import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
@@ -92,8 +92,8 @@ const props = defineProps({
 	//   - 'boolean'
 	//   - 'array'
 	//   - 'n_nary'
-	//   - 'classroom'
-	//   - 'subject'
+	//   - 'batch'
+	//   - 'course'
 	//   - 'teacher'
 	//   - 'student'
 	//   - 'payment_purpose'

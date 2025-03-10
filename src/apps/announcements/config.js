@@ -11,8 +11,8 @@ export const announcementDefaultHeaders = [
 
 export const announcementDefaultFilterFields = [
     { label: "Search by title", type: "string", key: "title", value: "", defaultValue: "" },
-    { label: "Filter by classroom", type: "classroom", key: "classroom", value: null },
-    { label: "Filter by subject", type: "subject", key: "subject", value: null },
+    { label: "Filter by batch", type: "batch", key: "batch", value: null },
+    { label: "Filter by course", type: "course", key: "course", value: null },
     { label: "Filter by signer", type: "teacher", key: "signed_by", value: null },
     { label: "Is School Wide", type: "n_nary", key: "is_school_wide", value: null, fetchOptions: () => [
         { title: "All Announcements", value: null },
@@ -35,8 +35,8 @@ export const announcementDefaultFormFields = [
     { label: "Signed By", type: "teacher", key: "signed_by", required: true },
     { label: "Release Date", type: "datetime", key: "release_at", required: true },
     { label: "Expiry Date", type: "datetime", key: "expiry_at", required: true },
-    { label: "Classrooms", type: "classroom", key: "classrooms", multiple: true, defaultValue: [] },
-    { label: "Subjects", type: "subject", key: "subjects", multiple: true, defaultValue: [] },
+    { label: "Batches", type: "batch", key: "batches", multiple: true, defaultValue: [] },
+    { label: "Courses", type: "course", key: "courses", multiple: true, defaultValue: [] },
     { label: "Attach File", type: "attachment_list", key: "attachments", defaultValue: null },
 ];
 

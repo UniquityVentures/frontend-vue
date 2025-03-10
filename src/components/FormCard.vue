@@ -18,11 +18,11 @@
 					<v-text-field v-if="field.type === 'datetime'" :label="field.label" type="datetime-local"
 						v-model="newValue[field.key]" :rules="[v => !!v || `${field.label} is required`]"
 						:required="field.required" ></v-text-field>
-					<ServerAutocomplete v-if="field.type === 'classroom'" v-model="newValue[field.key]"
-						:fetch="getClassrooms" :getInfo="getClassroomInfoFromObj"
+					<ServerAutocomplete v-if="field.type === 'batch'" v-model="newValue[field.key]"
+						:fetch="getBatches" :getInfo="getBatchInfoFromObj"
 						:searchField="field.searchField || 'name'" :label="field.label" :required="field.required" />
-					<ServerAutocomplete v-if="field.type === 'subject'" v-model="newValue[field.key]"
-						:fetch="getSubjects" :getInfo="getSubjectInfoFromObj" :searchField="field.searchField || 'name'"
+					<ServerAutocomplete v-if="field.type === 'course'" v-model="newValue[field.key]"
+						:fetch="getCourses" :getInfo="getCourseInfoFromObj" :searchField="field.searchField || 'name'"
 						:label="field.label" :required="field.required" />
 					<ServerAutocomplete v-if="field.type === 'teacher'" v-model="newValue[field.key]"
 						:fetch="getTeachers" :getInfo="getTeacherInfoFromObj" :searchField="field.searchField || 'name'"
@@ -58,8 +58,8 @@ import AttachmentsForm from "@/apps/attachments/components/AttachmentsForm.vue";
 import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
 import SubmitButton from "@/components/SubmitButton.vue";
 import { ref } from "vue";
-import { getClassroomInfoFromObj, getClassrooms } from "@/apps/classrooms/api";
-import { getSubjectInfoFromObj, getSubjects } from "@/apps/subjects/api";
+import { getBatchInfoFromObj, getBatches } from "@/apps/batches/api";
+import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
 import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
 import { getPayeeInfoFromObj, getPayees } from "@/apps/finances/api";
 import { formToApiDateTime } from "@/services/utils";

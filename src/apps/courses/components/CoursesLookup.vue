@@ -1,27 +1,26 @@
 <template>
-	<v-card>
-		<v-card-title>
-			<FilterCard 
-				:fields="fields"
-				:exportFunction="exportStudents"
-			/>
-		</v-card-title>
-
-		<ResponsiveDataTable 
-			:getToFunction="(item) => ({ name: 'Student', params: { studentId: item.id }})" 
-			:headers="headers" 
-			:fetch="getStudents" 
-			v-model="filters"
-			:forceMobile="forceMobile"
-		/>
-	</v-card>
+  <v-card variant="flat">
+    <v-card-title>
+      <FilterCard 
+        :fields="fields"
+        :exportFunction="exportCourses"
+      /> 
+    </v-card-title>
+    <ResponsiveDataTable 
+      :getToFunction="(item) => ({name: 'Course', params: {courseId: item.id}})" 
+      :headers="headers" 
+      :fetch="getCourses" 
+      v-model="filters"
+      :forceMobile="forceMobile"
+    />
+  </v-card>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
-import { getStudents, exportStudents } from "@/apps/students/api";
-import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import FilterCard from "@/components/FilterCard.vue";
+import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
+import { computed, ref } from "vue";
+import { exportCourses, getCourses } from "../api";
 
 const defaultFields = [
 	{
@@ -32,9 +31,15 @@ const defaultFields = [
 		defaultValue: "",
 	},
 	{
-		label: "Filter by batch",
+		label: "Batch",
 		type: "batch",
-		key: "batches",
+		key: "batch",
+		value: null,
+	},
+	{
+		label: "Teacher",
+		type: "teacher",
+		key: "teacher",
 		value: null,
 	},
 ];
@@ -75,8 +80,17 @@ const filters = computed(() => {
 });
 
 const headers = [
-	{ title: "Name", key: "user_details", formatFunc: (item) => item.full_name },
-	{ title: "Student No", key: "student_no" },
-	{ title: "", key: "actions", align: "end", sortable: false },
+	{ title: "Name", key: "name" },
+	{
+		title: "Batch",
+		key: "batch_details",
+		formatFunc: (batch) => batch?.name || "-",
+	},
+	{
+		title: "Teacher",
+		key: "teacher_details",
+		formatFunc: (teacher) => teacher?.user_details?.full_name || "-",
+	},
+	{ title: "Actions", key: "actions", sortable: false },
 ];
-</script>
+</script> 

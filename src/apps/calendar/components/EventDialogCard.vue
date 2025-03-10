@@ -43,10 +43,10 @@
             </div>
             <div v-else class="d-flex flex-wrap gap-2">
                 <v-chip color="primary" size="small">
-                    {{ event.classrooms?.length }} Classroom(s)
+                    {{ event.batches?.length }} Batch(s)
                 </v-chip>
                 <v-chip color="secondary" size="small">
-                    {{ event.subjects?.length }} Subject(s)
+                    {{ event.courses?.length }} Course(s)
                 </v-chip>
             </div>
         </div>

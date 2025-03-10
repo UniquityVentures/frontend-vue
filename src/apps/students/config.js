@@ -1,12 +1,12 @@
 export const studentDefaultHeaders = [
     { label: "Name", key: "user_details.full_name"},
     { label: "Student No", key: "student_no" },
-    { label: "Classroom", key: "classroom_details", type: "classroom" },
+    { label: "Batch", key: "batch_details", type: "batch" },
 ];
 
 export const studentDefaultFilterFields = [
     { label: "Search by name", type: "string", key: "name", value: "", defaultValue: "" },
-    { label: "Filter by classroom", type: "classroom", key: "classroom", value: null },
+    { label: "Filter by batch", type: "batch", key: "batch", value: null },
     { label: "Filter by grade level", type: "n_nary", key: "grade_level", value: null, 
       fetchOptions: () => [
         { title: "All Grades", value: null },
@@ -54,7 +54,7 @@ export const studentDefaultFormFields = [
         value: (i+1).toString() 
       }))
     },
-    { label: "Classroom", type: "classroom", key: "classroom", required: true },
+    { label: "Batch", type: "batch", key: "batch", required: true },
     { label: "Parent/Guardian Name", type: "string", key: "guardian_name" },
     { label: "Parent/Guardian Contact", type: "phone", key: "guardian_contact" },
     { label: "Address", type: "longstring", key: "address" },
@@ -70,7 +70,7 @@ export const studentListConfig = {
     listItemChips: [
         { label: 'Status', key: 'status', color: 'primary', type: 'chip' },
         { label: 'Grade', key: 'grade_level', color: 'secondary', type: 'chip' },
-        { label: 'Classroom', key: 'classroom_details.name', color: 'info', type: 'chip' }
+        { label: 'Batch', key: 'batch_details.name', color: 'info', type: 'chip' }
     ],
     listItemRoute: (item) => ({ name: 'Student', params: { studentId: item.id } }),
     lines: 'two',
