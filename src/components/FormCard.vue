@@ -27,7 +27,6 @@
 					<ServerAutocomplete v-if="field.type === 'teacher'" v-model="newValue[field.key]"
 						:fetch="getTeachers" :getInfo="getTeacherInfoFromObj" :searchField="field.searchField || 'name'"
 						:label="field.label" :required="field.required" />
-					<pre v-if="field.type === 'teacher'">{{ newValue[field.key] }}</pre>
 					<ServerAutocomplete v-if="field.type === 'number'" v-model="newValue[field.key]"
 						:fetch="field.fetchOptions" :getInfo="field.fetchOptionsInfo"
 						:searchField="field.searchField || 'name'" :label="field.label" :required="field.required" />

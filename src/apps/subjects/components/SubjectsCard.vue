@@ -1,38 +1,55 @@
 <template>
     <v-card variant="flat">
-        <v-card-text>
-            <v-row>
-                <v-col 
-                    v-for="(classroom, index) in classroomsData"
-                    :key="index" lg="3">
-                    <SubjectsList :filter="{ classrooms: classroom.id }" :title="classroom.name"/>
-                </v-col>
-            </v-row>
-        </v-card-text>
+        <v-card-title>
+            <FilterCard 
+                :fields="fields"
+                :exportFunction="exportSubjects"
+            /> 
+        </v-card-title>
+        <ResponsiveDataTable 
+            :getToFunction="(item) => ({name: 'Subject', params: {subjectId: item.id}})" 
+            :headers="subjectDefaultHeaders" 
+            :fetch="getSubjects" 
+            v-model="filters"
+            desktopTemplate="card"
+            mobileTemplate="list"
+            
+        />
     </v-card>
 </template>
 
 <script setup>
-import { getClassrooms } from "@/apps/classrooms/api";
-import SubjectsList from "@/apps/subjects/components/SubjectsList";
-import { onMounted, ref, watch } from "vue";
+import FilterCard from "@/components/FilterCard.vue";
+import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
+import { computed, ref } from "vue";
+import { getSubjects } from "../api";
+import { subjectDefaultHeaders, subjectDefaultFilterFields } from "../config";
 
-const props = defineProps({
-	filter: {
-		type: Object,
-		default: () => ({}),
-	},
-});
-
-const classroomsData = ref([]);
-
-const fetchClassroomsData = async () => {
-	const response = await getClassrooms(props.filter);
-	classroomsData.value = response.results;
+// You'll need to implement this function in your API or remove it if not needed
+const exportSubjects = async (filters) => {
+    console.log("Export subjects with filters:", filters);
+    // Implement export functionality or remove if not needed
 };
 
-watch(() => props.filter, fetchClassroomsData, { deep: true });
+const customFields = [
+    // Add your custom field overrides here if needed
+];
 
-onMounted(fetchClassroomsData);
+const fields = ref(subjectDefaultFilterFields.map(defaultField => {
+    const override = customFields.find(f => f.key === defaultField.key);
+    return override ? { ...defaultField, ...override } : defaultField;
+}));
+
+const filters = computed(() => {
+    return fields.value.reduce((acc, field) => {
+        if (Array.isArray(field.key)) {
+            field.key.forEach((k, i) => {
+                acc[k] = field.value?.[i] ?? null;
+            });
+        } else {
+            acc[field.key] = field.value;
+        }
+        return acc;
+    }, {});
+});
 </script>
-

@@ -7,6 +7,7 @@
             :headers="announcementDefaultHeaders"
             :fetch="getAnnouncements"
             v-model="filters"
+            :desktopTemplate="'list'"
             />
         </v-card>
     </v-container>

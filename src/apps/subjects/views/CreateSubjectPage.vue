@@ -3,7 +3,7 @@
 		<FormCard
 			title="Subject"
 			actionName="Create"
-			:model="subjectDefaultFormFields"
+			:formFields="subjectDefaultFormFields"
 			:action="createSubject"
 		/>
 	</v-container>

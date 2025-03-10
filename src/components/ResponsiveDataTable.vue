@@ -10,7 +10,7 @@
 		:loading="loading"
 	>
 		<template #headers={}></template>
-		<template #item={item}>
+		<template #default>
 			<v-list density="compact" v-if="template === 'list'">
 				<v-list-item 
 					v-for="item in items" 
@@ -26,6 +26,7 @@
 						{{ `${subtitle.label}: ${keyHandler(item, subtitle)}` }}
 					</v-list-item-subtitle>
 					<!-- Chips -->
+					<div class="d-flex flex-wrap mt-1">
 					<div v-for="header in data_headers">
 						<!-- Date type -->
 						<v-chip v-if="header.type === 'date'">
@@ -42,6 +43,7 @@
 						<!-- Custom Chips -->
 						<TeacherChip v-if="header.type === 'teacher'" :teacher="keyHandler(item, header)" :label="header.label"/>
 						<ClassroomChip v-if="header.type === 'classroom'" :classroom="keyHandler(item, header)" :label="header.label"/>
+					</div>
 					</div>
 				</v-list-item>
 			</v-list>
@@ -68,13 +70,16 @@
 								{{ keyHandler(item, title) }}
 							</v-card-title>
 							<v-card-subtitle>
-								{{ `${subtitle.label}: ${keyHandler(item, subtitle)}` }}
+								{{ `${subtitle.label}: ${keyHandler(item, subtitle).user_details.full_name}` }}
 							</v-card-subtitle>
 							<v-card-text>
 								<div v-for="header in data_headers">
-									<!-- Status type -->
-									<v-chip v-if="header.type === 'status'" :color="getStatusColor(item[header.key])">
-										{{ `${header.label}: ${keyHandler(item, header)}` }}
+									<div v-if="header.type === 'longstring'" class="mb-2">
+										{{ item[header.key] }}
+									</div>
+									<!-- Active type -->
+									<v-chip v-if="header.type === 'is_active'" :color="item[header.key]? 'success' : 'error'">
+										{{ `${header.label}: ${item[header.key]? 'Active' : 'Inactive'}` }}
 									</v-chip>
 									<!-- Date type -->
 									<v-chip v-if="header.type === 'date'">
@@ -88,6 +93,7 @@
 									<!-- Custom Chips -->
 									<TeacherChip v-if="header.type === 'teacher'" :teacher="keyHandler(item, header)" :label="header.label" />
 									<ClassroomChip v-if="header.type === 'classroom'" :classroom="keyHandler(item, header)" :label="header.label"/>
+									
 								</div>
 							</v-card-text>
 						</v-card>
@@ -144,10 +150,10 @@
 <script setup>
 import { onMounted, ref, computed } from "vue";
 import { useDisplay } from "vuetify";
-const { mobile } = useDisplay();
 import { formatDate, keyHandler } from "@/services/utils";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 import ClassroomChip from "@/apps/classrooms/components/ClassroomChip.vue";
+
 const props = defineProps({
 	headers: {
 		type: Array,
@@ -160,13 +166,19 @@ const props = defineProps({
 	getToFunction: {
 		type: Function,
 	},
-	template: {
+	desktopTemplate: {
 		type: String,
 		default: 'table',
+	},
+	mobileTemplate: {
+		type: String,
+		default: 'list',
 	},
 });
 
 const filters = defineModel();
+const { mobile } = useDisplay();
+const template = computed(() => mobile.value ? props.mobileTemplate : props.desktopTemplate);
 
 // first header is the title and the second header is the subtitle
 const title = ref(props.headers[0]);
@@ -216,14 +228,6 @@ const fetchData = async ({ page, itemsPerPage, search }) => {
 };
 
 onMounted(() => fetchData({ search: filters }));
-
-const getStatusColor = (status) => {
-	const statusColors = {
-		active: 'success',
-		inactive: 'error',
-	};
-	return statusColors[status?.toLowerCase()] || 'default';
-};
 </script>
 
 <style scoped>

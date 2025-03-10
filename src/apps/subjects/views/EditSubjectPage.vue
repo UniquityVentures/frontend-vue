@@ -4,7 +4,7 @@
 			v-if="subject"
 			title="Subject"
 			actionName="Update"
-			:model="model"
+			:formFields="formFields"
 			:action="handleUpdate"
 		/>
 	</v-container>
@@ -24,7 +24,7 @@ const props = defineProps({
 });
 
 const subject = ref(null);
-const model = ref([]);
+const formFields = ref(subjectDefaultFormFields);
 
 const handleUpdate = async (formData) => {
 	try {
@@ -40,7 +40,7 @@ onMounted(async () => {
 	subject.value = await getSubject(props.subjectId);
 	
 	// Use the default form fields from config but add default values from the existing subject
-	model.value = subjectDefaultFormFields.map((field) => ({
+	formFields.value = subjectDefaultFormFields.map((field) => ({
 		...field,
 		defaultValue: subject.value[field.key],
 	}));

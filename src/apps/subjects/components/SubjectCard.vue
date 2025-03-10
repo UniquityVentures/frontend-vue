@@ -1,6 +1,6 @@
 <template>
 	<v-card>
-		<v-card-title class="pb-0">{{subject.name}} ({{subject.classroom_details?.name}})</v-card-title>
+		<v-card-title class="pb-0">{{subject.name}}</v-card-title>
 		<v-card-subtitle class="pt-2">
 			<v-chip 
 				v-if="subject.teacher_details"

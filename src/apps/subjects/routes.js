@@ -11,7 +11,7 @@ import SubjectsPage from "./views/SubjectsPage.vue";
 export default [
 	{
 		path: "subjects/",
-		component: EmptyLayout,
+		component: AppSideBarBreadcrumbsLayout,
 		meta: {
 			getDisplayName: () => "Subjects",
 			defaultRoute: "Subjects",
@@ -32,7 +32,6 @@ export default [
 			{
 				path: "create/",
 				name: "CreateSubject",
-				props: true,
 				component: CreateSubjectPage,
 				meta: {
 					getDisplayName: () => "Create Subject",
@@ -41,7 +40,6 @@ export default [
 			},
 			{
 				path: "all/",
-				props: true,
 				component: SubjectsPage,
 				name: "Subjects",
 			},
@@ -52,7 +50,7 @@ export default [
 					defaultRoute: "Subject",
 					getDisplayName: async (props) => {
 						const subject = await getSubject(props.subjectId);
-						return `${subject.name} [${subject.classroom_details.name}]`;
+						return `${subject.name}`;
 					},
 					getMenu: (props) => [
 						{

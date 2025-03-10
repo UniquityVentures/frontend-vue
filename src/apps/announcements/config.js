@@ -2,10 +2,11 @@
 import { getAnnouncement } from './api';
 
 export const announcementDefaultHeaders = [
-    { title: "Title", key: "title" },
-    { title: "Release Date", key: "release_at", type: "date" },
-    { title: "Expiry Date", key: "expiry_at", type: "date" },
-    { title: "Signed By", key: "signed_by_details", type: "teacher" },
+    { label: "Title", key: "title" },
+    { label: "Description", key: "description" },
+    { label: "Release Date", key: "release_at", type: "date" },
+    { label: "Expiry Date", key: "expiry_at", type: "date" },
+    { label: "Signed By", key: "signed_by_details", type: "teacher" },
 ];
 
 export const announcementDefaultFilterFields = [
