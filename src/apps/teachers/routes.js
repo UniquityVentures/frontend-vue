@@ -23,7 +23,7 @@ export default [
 		},
 		children: [
 			{
-				path: "",
+				path: "all/",
 				component: TeachersPage,
 				name: "Teachers",
 			},
@@ -50,7 +50,7 @@ export default [
 				},
 				children: [
 					{
-						path: "",
+						path: "view/",
 						component: EmptyLayout,
 						//component: StudentPage,
 						name: "Teacher",

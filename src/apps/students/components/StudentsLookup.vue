@@ -1,67 +1,33 @@
 <template>
 	<v-card>
 		<v-card-title>
-			<FilterCard 
-				:fields="fields"
-				:exportFunction="exportStudents"
-			/>
+			<FilterCard :fields="fields" :exportFunction="exportStudents" />
 		</v-card-title>
-
-		<ResponsiveDataTable 
-			:getToFunction="(item) => ({ name: 'Student', params: { studentId: item.id }})" 
-			:headers="headers" 
-			:fetch="getStudents" 
-			v-model="filters"
-			desktopTemplate="card"
-			mobileTemplate="list"
-		/>
+		<ResponsiveDataTable :getToFunction="(item) => ({ name: 'Student', params: { studentId: item.id } })"
+			:headers="studentDefaultHeaders" :fetch="getStudents" v-model="filters" :desktopTemplate="props.overrideDesktopTemplate"
+			mobileTemplate="list" />
 	</v-card>
 </template>
 
 <script setup>
 import { ref, computed } from "vue";
-import { getStudents, exportStudents } from "@/apps/students/api";
+import { getStudents, exportStudents } from "../api";
+import { studentDefaultHeaders, studentDefaultFilterFields } from "../config";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import FilterCard from "@/components/FilterCard.vue";
 
-const defaultFields = [
-	{
-		label: "Search by name",
-		type: "string",
-		key: "name",
-		value: "",
-		defaultValue: "",
-	},
-	{
-		label: "Filter by batch",
-		type: "batch",
-		key: "batches",
-		value: null,
-	},
-];
-
 const props = defineProps({
-	forceMobile: {
-		type: Boolean,
-		default: false,
-	},
-	initialFields: {
+	overrideFields: {
 		type: Array,
-		default: () => [],
+	},
+	overrideDesktopTemplate: {
+		type: String,
+		default: 'card',
 	},
 });
 
-// Initialize fields with any overrides from props
-const fields = ref(
-	defaultFields.map((defaultField) => {
-		const override = props.initialFields.find(
-			(f) => f.key === defaultField.key,
-		);
-		return override ? { ...defaultField, ...override } : defaultField;
-	}),
-);
+const fields = ref(props.overrideFields ? props.overrideFields : studentDefaultFilterFields)
 
-// Replace the filters ref with computed property
 const filters = computed(() => {
 	return fields.value.reduce((acc, field) => {
 		if (Array.isArray(field.key)) {
@@ -74,10 +40,4 @@ const filters = computed(() => {
 		return acc;
 	}, {});
 });
-
-const headers = [
-	{ title: "Name", key: "user_details", formatFunc: (item) => item.full_name },
-	{ title: "Student No", key: "student_no" },
-	{ title: "", key: "actions", align: "end", sortable: false },
-];
 </script>

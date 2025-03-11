@@ -32,21 +32,24 @@
 							{{ `${header.label}: ${item[header.key]}` }}
 						</v-chip>
 						<!-- Date type -->
-						<v-chip v-if="header.type === 'date'">
+						<v-chip v-else-if="header.type === 'date'">
 							{{ `${header.label}: ${formatDate(item[header.key])}` }}
 						</v-chip>
 						<!-- Status type -->
-						<v-chip v-if="header.type === 'status'" :color="getStatusColor(item[header.key])">
+						<v-chip v-else-if="header.type === 'status'" :color="getStatusColor(item[header.key])">
 							{{ `${header.label}: ${keyHandler(item, header)}` }}
 						</v-chip>
 						<!-- Custom format function -->
-						<v-chip v-if="header.formatFunc">
+						<v-chip v-else-if="header.formatFunc">
 							{{ `${header.label}: ${header.formatFunc(item[header.key])}` }}
 						</v-chip>
 						<!-- Custom Chips -->
-						<TeacherChip v-if="header.type === 'teacher'" :teacher="keyHandler(item, header)" :label="header.label"/>
-						<BatchChip v-if="header.type === 'batch'" :batch="keyHandler(item, header)" :label="header.label"/>
-						<CourseChip v-if="header.type === 'course'" :course="keyHandler(item, header)" :label="header.label"/>
+						<TeacherChip v-else-if="header.type === 'teacher'" :teacher="keyHandler(item, header)" :label="header.label"/>
+						<BatchChip v-else-if="header.type === 'batch'" :batch="keyHandler(item, header)" :label="header.label"/>
+						<CourseChip v-else-if="header.type === 'course'" :course="keyHandler(item, header)" :label="header.label"/>
+						<v-chip v-else>
+							{{ `${header.label}: ${keyHandler(item, header)}` }}
+						</v-chip>
 					</div>
 					</div>
 				</v-list-item>
@@ -81,26 +84,29 @@
 									<div v-if="header.type === 'longstring'" class="mb-2">
 										{{ item[header.key]?.length > 100 ? item[header.key].substring(0, 50) + '...' : item[header.key] }}
 									</div>
-									<v-chip v-if="header.type === 'string'">
+									<v-chip v-else-if="header.type === 'string'">
 										{{ `${header.label}: ${item[header.key]}` }}
 									</v-chip>
 									<!-- Active type -->
-									<v-chip v-if="header.type === 'is_active'" :color="item[header.key]? 'success' : 'error'">
+									<v-chip v-else-if="header.type === 'is_active'" :color="item[header.key]? 'success' : 'error'">
 										{{ `${header.label}: ${item[header.key]? 'Active' : 'Inactive'}` }}
 									</v-chip>
 									<!-- Date type -->
-									<v-chip v-if="header.type === 'date'">
+									<v-chip v-else-if="header.type === 'date'">
 										{{ `${header.label}: ${formatDate(item[header.key])}` }}
 									</v-chip>
 									<!-- Custom format function -->
-									<v-chip v-if="header.formatFunc">
+									<v-chip v-else-if="header.formatFunc">
 										<strong class="mr-2">{{ header.label }}: </strong>
 										{{ header.formatFunc(item[header.key]) }}
 									</v-chip>
 									<!-- Custom Chips -->
-									<TeacherChip v-if="header.type === 'teacher'" :teacher="keyHandler(item, header)" :label="header.label" />
-									<BatchChip v-if="header.type === 'batch'" :batch="keyHandler(item, header)" :label="header.label"/>
-									<CourseChip v-if="header.type === 'course'" :course="keyHandler(item, header)" :label="header.label"/>
+									<TeacherChip v-else-if="header.type === 'teacher'" :teacher="keyHandler(item, header)" :label="header.label" />
+									<BatchChip v-else-if="header.type === 'batch'" :batch="keyHandler(item, header)" :label="header.label"/>
+									<CourseChip v-else-if="header.type === 'course'" :course="keyHandler(item, header)" :label="header.label"/>
+									<v-chip v-else>
+										{{ `${header.label}: ${keyHandler(item, header)}` }}
+									</v-chip>
 								</div>
 							</v-card-text>
 						</v-card>
@@ -212,7 +218,10 @@ const props = defineProps({
 
 const filters = defineModel();
 const { mobile } = useDisplay();
-const template = computed(() => mobile.value ? props.mobileTemplate : props.desktopTemplate);
+
+// Hardcoded breakpoint
+const BREAKPOINT = 768; // pixels
+const template = ref(props.desktopTemplate); // Default to desktop template
 
 // first header is the title and the second header is the subtitle
 const title = ref(props.headers[0]);
@@ -261,7 +270,16 @@ const fetchData = async ({ page, itemsPerPage, search }) => {
 	}
 };
 
-onMounted(() => fetchData({ search: filters }));
+onMounted(() => {
+	// Check component width once on mount
+	const containerElement = document.querySelector('.v-data-table-server');
+	if (containerElement) {
+		const width = containerElement.getBoundingClientRect().width;
+		template.value = width < BREAKPOINT ? props.mobileTemplate : props.desktopTemplate;
+	}
+	
+	fetchData({ search: filters });
+});
 </script>
 
 <style scoped>

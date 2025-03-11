@@ -1,7 +1,7 @@
 <template>
-	<v-container rounded="lg">
+	<v-container rounded="lg" ref="containerRef">
 		<v-row>
-			<v-col cols="6" md="3" lg="2" v-for="field in fields" v-show="!field.hidden" class="pa-2">
+			<v-col :cols="isNarrow ? 12 : 6" :md="isNarrow ? 12 : 3" :lg="isNarrow ? 12 : 2" v-for="field in fields" v-show="!field.hidden" class="pa-2">
 				<v-text-field v-if="field.type === 'string'" :label="field.label" v-model="field.value"
 					hide-details :disabled="field.disabled"></v-text-field>
 				<v-number-input v-if="field.type === 'integer'" :label="field.label" v-model="field.value"
@@ -80,7 +80,7 @@ import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
 import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
 
 import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 const props = defineProps({
 	// Array of field objects, each containing:
@@ -111,6 +111,19 @@ const props = defineProps({
 		type: Function,
 		default: null,
 	},
+});
+
+// Width-based responsiveness
+const containerRef = ref(null);
+const isNarrow = ref(false);
+const BREAKPOINT = 768; // pixels
+
+onMounted(() => {
+	// Check component width once on mount
+	if (containerRef.value) {
+		const width = containerRef.value.$el.getBoundingClientRect().width;
+		isNarrow.value = width < BREAKPOINT;
+	}
 });
 
 const clearFilters = () => {

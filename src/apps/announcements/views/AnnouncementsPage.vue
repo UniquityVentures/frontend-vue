@@ -22,13 +22,13 @@ import { announcementDefaultHeaders, announcementDefaultFilterFields } from "../
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import FilterCard from "@/components/FilterCard.vue";
 
-const customFields = [
+const overrideFields = [
   // Add your custom field overrides here
   // Example: { key: 'status', value: 'active' }
 ];
 
 const fields = ref(announcementDefaultFilterFields.map(defaultField => {
-  const override = customFields.find(f => f.key === defaultField.key);
+  const override = overrideFields.find(f => f.key === defaultField.key);
   return override ? { ...defaultField, ...override } : defaultField;
 }));
 

@@ -11,6 +11,7 @@
 			:fetch="getTeachers"
 			v-model="filters"
 			:getToFunction="(item) => ({name: 'Teacher', params: {teacherId: item.id}})"
+			desktopTemplate="card"
 		/>
 	</v-card>
 </template>

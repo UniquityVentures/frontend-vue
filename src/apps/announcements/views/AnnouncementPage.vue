@@ -20,15 +20,7 @@
             <v-card variant="flat">
               <v-card-text>
                 <h4 class="text-subtitle-1">Signed by:</h4>
-                  <v-list lines="2">
-                    <v-list-item 
-                      :title="announcement?.signed_by_details?.user_details?.full_name"
-                      :subtitle="announcement?.signed_by_details?.user_details?.email"
-                      :variant="'flat'"
-                      rounded="lg"
-                      :to="'#'"
-                    />
-                  </v-list>
+                    <TeacherListItem :teacher="announcement?.signed_by_details" />
                   <h4 class="text-subtitle-1 mt-4">Dates:</h4>
                   <v-chip color="primary">Release: {{ formatDateTime(announcement.release_at) }}</v-chip>
                   <v-chip color="red">Expiry: {{ formatDateTime(announcement.expiry_at) }}</v-chip>
@@ -84,6 +76,7 @@ import { getCourse } from "@/apps/courses/api";
 import { onMounted, ref } from "vue";
 import { getAnnouncement } from "../api";
 import { formatDateTime } from "@/services/utils";
+import TeacherListItem from "@/apps/teachers/components/TeacherListItem.vue";
 
 const announcement = ref({});
 const batchDetails = ref([]);
