@@ -35,7 +35,7 @@ export const keyHandler = (item, fieldConfig) => {
         return fieldConfig(item);
     }
 
-    // Handle nested properties using dot notation (e.g. "subject_details.name")
+    // Handle nested properties using dot notation (e.g. "course_details.name")
     if (fieldConfig.key && fieldConfig.key.includes('.')) {
         const keys = fieldConfig.key.split('.');
         let value = item;

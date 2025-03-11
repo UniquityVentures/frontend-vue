@@ -1,16 +1,16 @@
 <template>
-	<v-container class="pa-4 bg-grey-lighten-5" rounded="lg">
+	<v-container rounded="lg">
 		<v-row>
-			<v-col cols="12" md="4" lg="3" v-for="field in fields" v-show="!field.hidden">
+			<v-col cols="6" md="3" lg="2" v-for="field in fields" v-show="!field.hidden" class="pa-2">
 				<v-text-field v-if="field.type === 'string'" :label="field.label" v-model="field.value"
 					hide-details :disabled="field.disabled"></v-text-field>
 				<v-number-input v-if="field.type === 'integer'" :label="field.label" v-model="field.value"
 					hide-details :disabled="field.disabled"></v-number-input>
-				<ServerAutocomplete v-if="field.type === 'classroom'" v-model="field.value" :clearable="!field.disabled"
-					:fetch="getClassrooms" :getInfo="getClassroomInfoFromObj" :searchField="field.searchField || 'name'"
+				<ServerAutocomplete v-if="field.type === 'batch'" v-model="field.value" :clearable="!field.disabled"
+					:fetch="getBatches" :getInfo="getBatchInfoFromObj" :searchField="field.searchField || 'name'"
 					:label="field.label" :disabled="field.disabled" />
-				<ServerAutocomplete v-if="field.type === 'subject'" v-model="field.value" :clearable="!field.disabled"
-					:fetch="getSubjects" :getInfo="getSubjectInfoFromObj" :searchField="field.searchField || 'name'"
+				<ServerAutocomplete v-if="field.type === 'course'" v-model="field.value" :clearable="!field.disabled"
+					:fetch="getCourses" :getInfo="getCourseInfoFromObj" :searchField="field.searchField || 'name'"
 					:label="field.label" :disabled="field.disabled" />
 				<ServerAutocomplete v-if="field.type === 'teacher'" v-model="field.value" :clearable="!field.disabled"
 					:fetch="getTeachers" :getInfo="getTeacherInfoFromObj" :searchField="field.searchField || 'name'"
@@ -41,12 +41,11 @@
 					:disabled="field.disabled" @update:modelValue="(value) => updateDates(value, field)">
 				</v-date-input>
 			</v-col>
-			<v-col cols="12" md="4" lg="3" class="d-flex gap-2">
-				<v-btn color="primary" @click="clearFilters" class="ma-2">
+			<v-col cols="12" md="4" lg="3">
+				<v-btn color="primary" @click="clearFilters">
 					Clear
 				</v-btn>
-				<v-btn v-if="exportFunction" color="success" :loading="isExporting" @click="showExportDialog"
-					class="ma-2">
+				<v-btn v-if="exportFunction" color="success" :loading="isExporting" @click="showExportDialog">
 					Export
 				</v-btn>
 			</v-col>
@@ -74,10 +73,10 @@
 </template>
 
 <script setup>
-import { getClassroomInfoFromObj, getClassrooms } from "@/apps/classrooms/api";
+import { getBatchInfoFromObj, getBatches } from "@/apps/batches/api";
 import { getPayeeInfoFromObj, getPayees, getPaymentPurposeInfoFromObj, getPaymentPurposes } from "@/apps/finances/api";
 import { getStudentInfoFromObj, getStudents } from "@/apps/students/api";
-import { getSubjectInfoFromObj, getSubjects } from "@/apps/subjects/api";
+import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
 import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
 
 import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
@@ -93,8 +92,8 @@ const props = defineProps({
 	//   - 'boolean'
 	//   - 'array'
 	//   - 'n_nary'
-	//   - 'classroom'
-	//   - 'subject'
+	//   - 'batch'
+	//   - 'course'
 	//   - 'teacher'
 	//   - 'student'
 	//   - 'payment_purpose'

@@ -1,51 +1,29 @@
 <template>
-	<v-container>
-		<v-card variant="flat">
-			<v-card-title>
-				<FilterCard 
-					:fields="fields"
-					:exportFunction="teacherViewset.export"
-				/>
-			</v-card-title>
-			<ResponsiveDataTable
-				:headers="headers"
-				:fetch="getTeachers"
-				v-model="filters"
-				:getToFunction="(item) => ({name: 'Teacher', params: {teacherId: item.id}})"
-				:forceMobile="forceMobile"
+	<v-card>
+		<v-card-title>
+			<FilterCard 
+				:fields="fields"
+				:exportFunction="teacherViewset.export"
 			/>
-		</v-card>
-	</v-container>
+		</v-card-title>
+		<ResponsiveDataTable
+			:headers="teacherDefaultHeaders"
+			:fetch="getTeachers"
+			v-model="filters"
+			:getToFunction="(item) => ({name: 'Teacher', params: {teacherId: item.id}})"
+		/>
+	</v-card>
 </template>
 
 <script setup>
 import { getTeachers, teacherViewset } from "@/apps/teachers/api";
+import { teacherDefaultFilterFields, teacherDefaultHeaders } from "@/apps/teachers/config";
 import FilterCard from "@/components/FilterCard.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { computed, ref } from "vue";
 
-const defaultFields = [
-	{
-		label: "Search by name",
-		type: "string",
-		key: "name",
-		value: "",
-		defaultValue: "",
-	},
-	{
-		label: "Filter by classroom",
-		type: "classroom",
-		key: "classrooms",
-		value: null,
-	},
-];
-
 const props = defineProps({
-	forceMobile: {
-		type: Boolean,
-		default: false,
-	},
-	initialFields: {
+	overrideFields: {
 		type: Array,
 		default: () => [],
 	},
@@ -53,8 +31,8 @@ const props = defineProps({
 
 // Initialize fields with any overrides from props
 const fields = ref(
-	defaultFields.map((defaultField) => {
-		const override = props.initialFields.find(
+	teacherDefaultFilterFields.map((defaultField) => {
+		const override = props.overrideFields.find(
 			(f) => f.key === defaultField.key,
 		);
 		return override ? { ...defaultField, ...override } : defaultField;
@@ -73,10 +51,4 @@ const filters = computed(() => {
 		return acc;
 	}, {});
 });
-
-const headers = [
-	{ title: "Name", key: "user_details", formatFunc: (ud) => ud.full_name },
-	{ title: "Teacher Id", key: "identifier" },
-	{ title: "", key: "actions", align: "end", sortable: false },
-];
 </script>

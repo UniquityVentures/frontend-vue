@@ -25,8 +25,8 @@ import { ref } from "vue";
 const filters = ref({
 	title: "",
 	description: "",
-	classroom: null,
-	subject: null,
+	batch: null,
+	course: null,
 	is_active: null,
 });
 
@@ -42,14 +42,14 @@ const filtersInfo = ref([
 		key: "description",
 	},
 	{
-		label: "Filter by classroom",
-		type: "classroom",
-		key: "classroom",
+		label: "Filter by batch",
+		type: "batch",
+		key: "batch",
 	},
 	{
-		label: "Filter by subject",
-		type: "subject",
-		key: "subject",
+		label: "Filter by course",
+		type: "course",
+		key: "course",
 	},
 	{
 		label: "Filter by active",
@@ -82,7 +82,7 @@ const headers = [
 	{ title: "Title", key: "title" },
 	{ title: "Release Date", key: "release_at", formatFunc: formatDate },
 	{ title: "Due Date", key: "due_at", formatFunc: formatDate },
-	{ title: "Subject", key: "subject_details", formatFunc: (item) => item.name },
+	{ title: "Course", key: "course_details", formatFunc: (item) => item.name },
 	{ title: "Actions", key: "actions", sortable: false },
 ];
 </script>

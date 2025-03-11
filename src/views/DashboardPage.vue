@@ -7,6 +7,7 @@
 			:fetchFunction="getAnnouncements"
 			:config="announcementListConfig"
 			:title="'Announcements'"
+      viewAllRoute="Announcements"
 		/>
 	</v-container>
 </template>

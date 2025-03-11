@@ -1,17 +1,7 @@
 <template>
-	<v-container>
-		<v-row>
-			<v-col>
-				<v-row>
-					<v-col cols="12" md="4">
-						<StatsCard title="Teachers" :fetchStats="getTeacherStats" />
-					</v-col>
-					<v-col cols="12" md="8">
-						<TeachersLookup />
-					</v-col>
-				</v-row>
-			</v-col>
-		</v-row>
+	<v-container class="columns-container">
+		<StatsCard class="column-item" title="Teachers" :fetchStats="getTeacherStats" />
+		<TeachersLookup class="column-item card-width-3" />
 	</v-container>
 </template>
 

@@ -12,7 +12,8 @@
 			:headers="headers" 
 			:fetch="getStudents" 
 			v-model="filters"
-			:forceMobile="forceMobile"
+			desktopTemplate="card"
+			mobileTemplate="list"
 		/>
 	</v-card>
 </template>
@@ -32,9 +33,9 @@ const defaultFields = [
 		defaultValue: "",
 	},
 	{
-		label: "Filter by classroom",
-		type: "classroom",
-		key: "classrooms",
+		label: "Filter by batch",
+		type: "batch",
+		key: "batches",
 		value: null,
 	},
 ];

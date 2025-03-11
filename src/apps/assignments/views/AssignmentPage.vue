@@ -38,16 +38,16 @@
 					<v-col lg="4">
 						<v-card variant="flat">
 							<v-card-text>
-								<h4 class="text-subtitle-1">Subject Teacher:</h4>
+								<h4 class="text-subtitle-1">Course Teacher:</h4>
 								<v-list lines="2">
 									<v-list-item link
-										v-if="assignment?.subject_details?.classroom_details?.class_teacher_details"
-										:title="assignment?.subject_details?.classroom_details?.class_teacher_details?.user_details?.full_name"
-										:subtitle="assignment?.subject_details?.classroom_details?.class_teacher_details?.user_details?.email"
+										v-if="assignment?.course_details?.batch_details?.class_teacher_details"
+										:title="assignment?.course_details?.batch_details?.class_teacher_details?.user_details?.full_name"
+										:subtitle="assignment?.course_details?.batch_details?.class_teacher_details?.user_details?.email"
 										variant="flat" rounded="lg" :to="{
 											name: 'Teacher',
 											params: {
-												teacherId: assignment?.subject_details?.classroom_details?.class_teacher_details?.id
+												teacherId: assignment?.course_details?.batch_details?.class_teacher_details?.id
 											}
 										}" />
 								</v-list>

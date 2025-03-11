@@ -1,6 +1,7 @@
 <template>
+	<!-- List template -->
 	<v-data-table-server
-		v-if="mobile || forceMobile"
+		v-if="template === 'list'"
 		:items-length="itemsLen"
 		:headers="[]"
 		:items="items"
@@ -9,51 +10,108 @@
 		:loading="loading"
 	>
 		<template #headers={}></template>
-		<template #item={item}>
-			<v-list class="ma-2 border" density="compact">
-				<v-list-item link :to="getToFunction(item)">
-					<v-list-item-title class="text-subtitle-1 mb-2">
-						{{ item[title.key] }}
+		<template #default>
+			<v-list density="compact" v-if="template === 'list'">
+				<v-list-item 
+					v-for="item in items" 
+					:key="item.id" 
+					class="ma-1 pa-2 border" 
+					:to="getToFunction(item)" 
+					link
+				>
+					<v-list-item-title>
+						{{ keyHandler(item, title) }}
 					</v-list-item-title>
-					
-					<!-- Subtitle items -->
 					<v-list-item-subtitle>
-						<div v-for="header in data_headers" class="d-flex align-center">
-							<span class="mr-2 text-primary font-weight-bold">{{header.title}}:</span>
-							<!-- Date type -->
-							<span v-if="header.type === 'date'" class="my-1">
-								{{ formatDate(item[header.key]) }}
-							</span>
-							<!-- Teacher type -->
-							<span v-else-if="header.type === 'teacher'" class="d-flex align-center">
-								<TeacherChip :teacher="item[header.key]" />
-							</span>
-							<!-- Status type -->
-							<span v-else-if="header.type === 'status'">
-								<v-chip
-									:color="getStatusColor(item[header.key])"
-									size="x-small"
-									variant="outlined"
-								>
-									{{ item[header.key] }}
-								</v-chip>
-							</span>
-							<!-- Custom format function -->
-							<span v-else-if="header.formatFunc" class="my-1">
-								{{ header.formatFunc(item[header.key]) }}
-							</span>
-							<!-- Default -->
-							<span v-else class="my-1">
-								{{ item[header.key] }}
-							</span>
-						</div>
+						{{ `${subtitle.label}: ${keyHandler(item, subtitle)}` }}
 					</v-list-item-subtitle>
+					<!-- Chips -->
+					<div class="d-flex flex-wrap mt-1">
+					<div v-for="header in data_headers">
+						<v-chip v-if="header.type === 'string'">
+							{{ `${header.label}: ${item[header.key]}` }}
+						</v-chip>
+						<!-- Date type -->
+						<v-chip v-if="header.type === 'date'">
+							{{ `${header.label}: ${formatDate(item[header.key])}` }}
+						</v-chip>
+						<!-- Status type -->
+						<v-chip v-if="header.type === 'status'" :color="getStatusColor(item[header.key])">
+							{{ `${header.label}: ${keyHandler(item, header)}` }}
+						</v-chip>
+						<!-- Custom format function -->
+						<v-chip v-if="header.formatFunc">
+							{{ `${header.label}: ${header.formatFunc(item[header.key])}` }}
+						</v-chip>
+						<!-- Custom Chips -->
+						<TeacherChip v-if="header.type === 'teacher'" :teacher="keyHandler(item, header)" :label="header.label"/>
+						<BatchChip v-if="header.type === 'batch'" :batch="keyHandler(item, header)" :label="header.label"/>
+						<CourseChip v-if="header.type === 'course'" :course="keyHandler(item, header)" :label="header.label"/>
+					</div>
+					</div>
 				</v-list-item>
 			</v-list>
 		</template>
 	</v-data-table-server>
+
+	<!-- Card template -->
 	<v-data-table-server
-		v-else
+		v-if="template === 'card'"
+		:items-length="itemsLen"
+		:headers="[]"
+		:items="items"
+		@update:options="fetchData"
+		:search="JSON.stringify(filters)"
+		:loading="loading"
+		class="body-container"
+	>
+		<template #default>
+			<div class="body-grid-container">
+				<v-row no-gutters class="ma-1 pa-0">
+					<v-col v-for="item in items" :key="item.id" cols="12" sm="6" md="3" class="pa-2">
+						<v-card height="100%" link :to="getToFunction(item)" variant="flat" class="border">
+							<v-card-title>
+								{{ keyHandler(item, title) }}
+							</v-card-title>
+							<v-card-subtitle>
+								{{ `${subtitle.label}: ${keyHandler(item, subtitle)}` }}
+							</v-card-subtitle>
+							<v-card-text>
+								<div v-for="header in data_headers">
+									<div v-if="header.type === 'longstring'" class="mb-2">
+										{{ item[header.key]?.length > 100 ? item[header.key].substring(0, 50) + '...' : item[header.key] }}
+									</div>
+									<v-chip v-if="header.type === 'string'">
+										{{ `${header.label}: ${item[header.key]}` }}
+									</v-chip>
+									<!-- Active type -->
+									<v-chip v-if="header.type === 'is_active'" :color="item[header.key]? 'success' : 'error'">
+										{{ `${header.label}: ${item[header.key]? 'Active' : 'Inactive'}` }}
+									</v-chip>
+									<!-- Date type -->
+									<v-chip v-if="header.type === 'date'">
+										{{ `${header.label}: ${formatDate(item[header.key])}` }}
+									</v-chip>
+									<!-- Custom format function -->
+									<v-chip v-if="header.formatFunc">
+										<strong class="mr-2">{{ header.label }}: </strong>
+										{{ header.formatFunc(item[header.key]) }}
+									</v-chip>
+									<!-- Custom Chips -->
+									<TeacherChip v-if="header.type === 'teacher'" :teacher="keyHandler(item, header)" :label="header.label" />
+									<BatchChip v-if="header.type === 'batch'" :batch="keyHandler(item, header)" :label="header.label"/>
+									<CourseChip v-if="header.type === 'course'" :course="keyHandler(item, header)" :label="header.label"/>
+								</div>
+							</v-card-text>
+						</v-card>
+					</v-col>
+				</v-row>
+			</div>
+		</template>
+	</v-data-table-server>
+	<!-- Table template -->
+	<v-data-table-server
+		v-if="template === 'table'"
 		:items-length="itemsLen"
 		:headers="table_headers"
 		:items="items"
@@ -61,45 +119,63 @@
 		:search="JSON.stringify(filters)"
 		:loading="loading"
 	>
-		<template #item="{ item }">
-			<tr>
-				<td v-for="header in headers" :class="header.key === 'actions' ? 'text-right' : null">
-					<!-- Date type -->
-					<span v-if="header.type === 'date'">
-						{{ formatDate(item[header.key]) }}
-					</span>
-					<!-- Teacher type -->
-					<span v-else-if="header.type === 'teacher'" class="d-flex align-center">
-						<TeacherChip :teacher="item[header.key]" />
-					</span>
-					<!-- Status type with colored chip -->
-					<span v-else-if="header.type === 'status'">
-						<v-chip
-							:color="getStatusColor(item[header.key])"
-							size="small"
-							variant="outlined"
-						>
-							{{ item[header.key] }}
-						</v-chip>
-					</span>
-					<!-- Custom format function (existing logic) -->
-					<span v-else-if="header.formatFunc">
-						{{ header.formatFunc(item[header.key]) }}
-					</span>
-					<!-- Action button (existing logic) -->
-					<v-btn
-						v-else-if="header.key === 'actions'"
-						icon="mdi-arrow-right"
-						size="x-small"
-						variant="outlined"
-						:to="getToFunction(item)"
-					></v-btn>
-					<!-- Default (existing logic) -->
-					<span v-else>
-						{{ item[header.key] }}
-					</span>
-				</td>
+		<template #headers>
+			<tr>	
+				<th 
+					v-for="header in table_headers" 
+					:key="header.key"
+					class="text-subtitle-1 text-primary-darken-1 py-3"
+				>
+					{{ header.label }}
+				</th>
 			</tr>
+		</template>
+		<template #item="{ item }">
+				<tr>
+					<td v-for="header in table_headers" :key="header.key">
+						<!-- Date type -->
+						<span v-if="header.type === 'date'">
+							{{ formatDate(item[header.key]) }}
+						</span>
+						<!-- Longstring type -->
+						<span v-else-if="header.type === 'longstring'">
+							{{ item[header.key]?.length > 100 ? item[header.key].substring(0, 50) + '...' : item[header.key] }}
+						</span>
+						<!-- Teacher type -->
+						<span v-else-if="header.type === 'teacher'" class="d-flex align-center">
+							<TeacherChip :teacher="item[header.key]"/>
+						</span>
+						<!-- Batch type -->
+						<span v-else-if="header.type === 'batch'">
+							<BatchChip :batch="item[header.key]"/>
+						</span>
+						<!-- Course type -->
+						<span v-else-if="header.type === 'course'">
+							<CourseChip :course="item[header.key]"/>
+						</span>
+						<!-- Status type with colored chip -->
+						<span v-else-if="header.type === 'status'">
+							<v-chip
+								:color="getStatusColor(item[header.key])"
+								size="small"
+								variant="outlined"
+							>
+								{{ keyHandler(item, header) }}
+							</v-chip>
+						</span>
+						<!-- Custom format function (existing logic) -->
+						<span v-else-if="header.formatFunc">
+							{{ header.formatFunc(item[header.key]) }}
+						</span>
+						<span v-else-if="header.key === 'actions'">
+							<v-btn icon="mdi-arrow-right" size="x-small" link :to="getToFunction(item)" />
+						</span>
+						<!-- Default (existing logic) -->
+						<span v-else>
+							{{ keyHandler(item, header) }}
+						</span>
+					</td>
+				</tr>
 		</template>
 	</v-data-table-server>
 </template>
@@ -107,9 +183,10 @@
 <script setup>
 import { onMounted, ref, computed } from "vue";
 import { useDisplay } from "vuetify";
-const { mobile } = useDisplay();
-import { formatDate } from "@/services/utils";
+import { formatDate, keyHandler } from "@/services/utils";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
+import BatchChip from "@/apps/batches/components/BatchChip.vue";
+import CourseChip from "@/apps/courses/components/CourseChip.vue";
 
 const props = defineProps({
 	headers: {
@@ -123,16 +200,27 @@ const props = defineProps({
 	getToFunction: {
 		type: Function,
 	},
-	forceMobile: {
-		type: Boolean,
+	desktopTemplate: {
+		type: String,
+		default: 'table',
+	},
+	mobileTemplate: {
+		type: String,
+		default: 'list',
 	},
 });
 
 const filters = defineModel();
+const { mobile } = useDisplay();
+const template = computed(() => mobile.value ? props.mobileTemplate : props.desktopTemplate);
 
+// first header is the title and the second header is the subtitle
 const title = ref(props.headers[0]);
-const data_headers = computed(() => props.headers.slice(1, props.headers.length - 1));
-const table_headers = computed(() => props.headers.slice(0, -1));
+const subtitle = ref(props.headers[1]);
+// data headers are all headers except the title and subtitle
+const data_headers = computed(() => props.headers.slice(2, props.headers.length));
+// table headers are all headers for now
+const table_headers = computed(() => [...props.headers, { label: 'Actions', key: 'actions', sortable: false, type: 'actions' }]);
 
 const loading = ref(false);
 const itemsLen = ref(10);
@@ -174,12 +262,15 @@ const fetchData = async ({ page, itemsPerPage, search }) => {
 };
 
 onMounted(() => fetchData({ search: filters }));
-
-const getStatusColor = (status) => {
-	const statusColors = {
-		active: 'success',
-		inactive: 'error',
-	};
-	return statusColors[status?.toLowerCase()] || 'default';
-};
 </script>
+
+<style scoped>
+.body-grid-container {
+	width: 100%;
+	overflow: hidden;
+}
+
+.body-container :deep(.v-table__wrapper) {
+	overflow: visible;
+}
+</style>

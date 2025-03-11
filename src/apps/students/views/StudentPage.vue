@@ -6,14 +6,14 @@
       </v-col>
     </v-row>
     <v-container>
-      <h4 class="text-h6 mb-4">Enrolled Classrooms</h4>
-      <ClassroomsCard :filter="{ student: props.studentId }" />
+      <h4 class="text-h6 mb-4">Enrolled Batches</h4>
+      <BatchesCard :filter="{ student: props.studentId }" />
     </v-container>
   </v-container>
 </template>
 
 <script setup>
-import ClassroomsCard from "@/apps/classrooms/components/ClassroomsCard";
+import BatchesCard from "@/apps/batches/components/BatchesCard";
 import { getStudent } from "@/apps/students/api";
 import StudentCard from "@/apps/students/components/StudentCard";
 import { onMounted, ref } from "vue";

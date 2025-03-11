@@ -1,11 +1,14 @@
 <template>
 	<v-card>
 		<v-card-title>
-			{{ actionName }} {{ title }}
+			{{ actionName }}
 		</v-card-title>
+		<v-card-subtitle>
+			{{ title }}
+		</v-card-subtitle>
 		<v-card-text>
-			<v-row>
-				<v-col v-for="field in model" v-bind="getFieldWidth(field.type)">
+			<v-row class="pa-2">
+				<v-col v-for="field in formFields" v-bind="getFieldWidth(field.type)" class="pa-2">
 					<v-text-field v-if="field.type === 'string'" :label="field.label" v-model="newValue[field.key]"
 						:rules="[v => !!v || `${field.label} is required`]" :required="field.required"></v-text-field>
 					<v-textarea v-if="field.type === 'longstring'" :label="field.label" v-model="newValue[field.key]"
@@ -15,11 +18,11 @@
 					<v-text-field v-if="field.type === 'datetime'" :label="field.label" type="datetime-local"
 						v-model="newValue[field.key]" :rules="[v => !!v || `${field.label} is required`]"
 						:required="field.required" ></v-text-field>
-					<ServerAutocomplete v-if="field.type === 'classroom'" v-model="newValue[field.key]"
-						:fetch="getClassrooms" :getInfo="getClassroomInfoFromObj"
+					<ServerAutocomplete v-if="field.type === 'batch'" v-model="newValue[field.key]"
+						:fetch="getBatches" :getInfo="getBatchInfoFromObj"
 						:searchField="field.searchField || 'name'" :label="field.label" :required="field.required" />
-					<ServerAutocomplete v-if="field.type === 'subject'" v-model="newValue[field.key]"
-						:fetch="getSubjects" :getInfo="getSubjectInfoFromObj" :searchField="field.searchField || 'name'"
+					<ServerAutocomplete v-if="field.type === 'course'" v-model="newValue[field.key]"
+						:fetch="getCourses" :getInfo="getCourseInfoFromObj" :searchField="field.searchField || 'name'"
 						:label="field.label" :required="field.required" />
 					<ServerAutocomplete v-if="field.type === 'teacher'" v-model="newValue[field.key]"
 						:fetch="getTeachers" :getInfo="getTeacherInfoFromObj" :searchField="field.searchField || 'name'"
@@ -55,8 +58,8 @@ import AttachmentsForm from "@/apps/attachments/components/AttachmentsForm.vue";
 import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
 import SubmitButton from "@/components/SubmitButton.vue";
 import { ref } from "vue";
-import { getClassroomInfoFromObj, getClassrooms } from "@/apps/classrooms/api";
-import { getSubjectInfoFromObj, getSubjects } from "@/apps/subjects/api";
+import { getBatchInfoFromObj, getBatches } from "@/apps/batches/api";
+import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
 import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
 import { getPayeeInfoFromObj, getPayees } from "@/apps/finances/api";
 import { formToApiDateTime } from "@/services/utils";
@@ -87,7 +90,7 @@ const props = defineProps({
 	// - searchField: String?
 	// - defaultValue: Any
 	// - required
-	model: {
+	formFields: {
 		type: Array,
 		required: true,
 	},
@@ -98,7 +101,7 @@ const props = defineProps({
 });
 
 const newValue = ref(
-	props.model.reduce((acc, { key, defaultValue }) => {
+	props.formFields.reduce((acc, { key, defaultValue }) => {
 		acc[key] = defaultValue;
 		return acc;
 	}, {}),
@@ -114,7 +117,7 @@ const getFieldWidth = (fieldType) => {
 	if (quarterWidthFields.includes(fieldType)) {
 		return { cols: 6, md: 4, lg: 3 };
 	}
-	return { cols: 12, md: 6, lg: 6 };
+	return { cols: 12, md: 6, lg: 4 };
 };
 
 const handleAction = async () => {
@@ -122,7 +125,7 @@ const handleAction = async () => {
 		// Format datetime fields before sending to API
 		const formattedValue = Object.fromEntries(
 			Object.entries(newValue.value).map(([key, value]) => {
-				const field = props.model.find(f => f.key === key);
+				const field = props.formFields.find(f => f.key === key);
 				if (field?.type === 'datetime') {
 					return [key, formToApiDateTime(value)];
 				}

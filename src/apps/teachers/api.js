@@ -8,7 +8,7 @@ const getTeacher = teacherViewset.retrieve;
 const getTeacherStats = teacherViewset.stats;
 
 const getTeacherInfoFromObj = (item) => ({
-	title: `${item.user_details.full_name}`,
+	title: `${item.user_details?.full_name}`,
 	subtitle: item.identifier,
 	value: item.id,
 });
