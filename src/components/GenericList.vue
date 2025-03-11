@@ -8,7 +8,7 @@
             <!-- Items List or Loading Skeleton -->
             <v-list :lines="config.lines || 'two'" density="compact"
                 v-if="!loading && limitedItems.length">
-                <v-list-item v-for="item in limitedItems" :key="item.id || index" class="ma-1 pa-2 border" 
+                <v-list-item v-for="item in limitedItems" :key="item.id || index" class="pa-2 border"
                 :to="config.listItemRoute ? config.listItemRoute(item) : null"
                 :disabled="!config.listItemRoute"
                 :link="!!config.listItemRoute">
@@ -25,11 +25,11 @@
                     <!-- Additional Content (Chips, etc.) -->
                     <div v-if="config.listItemChips && config.listItemChips.length">
                         <template v-for="(chipConfig, chipIndex) in config.listItemChips" :key="chipIndex">
-                            <v-chip v-if="chipConfig.type === 'chip'" size="small" :color="chipConfig.color || 'primary'" class="mr-2">
+                            <v-chip v-if="chipConfig.type === 'chip'" size="small" :color="chipConfig.color || 'primary'">
                                 {{ `${chipConfig.label}: ${keyHandler(item, chipConfig)}` }}
                             </v-chip>
                             <TeacherChip v-if="chipConfig.type === 'teacher'" :teacher="keyHandler(item, chipConfig)" />
-                            <v-chip v-if="chipConfig.type === 'datetime'" :color="chipConfig.color || 'primary'" class="mr-2" size="small">
+                            <v-chip v-if="chipConfig.type === 'datetime'" :color="chipConfig.color || 'primary'" size="small">
                                 {{ `${chipConfig.label}: ${formatDateTime(keyHandler(item, chipConfig))}` }}
                             </v-chip>
                         </template>

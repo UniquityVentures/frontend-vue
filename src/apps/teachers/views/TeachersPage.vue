@@ -1,7 +1,7 @@
 <template>
 	<v-container class="columns-container">
 		<StatsCard class="column-item" title="Teachers" :fetchStats="getTeacherStats" />
-		<TeachersLookup class="column-item card-width-2" />
+		<TeachersLookup class="column-item card-width-3" />
 	</v-container>
 </template>
 
