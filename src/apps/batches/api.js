@@ -1,9 +1,9 @@
 import { createViewset } from "@/services/viewset";
 
 const images = [
-	require("@/assets/batches/batch1.png"),
-	require("@/assets/batches/batch2.png"),
-	require("@/assets/batches/batch3.png"),
+	import("@/assets/batches/batch1.png"),
+	import("@/assets/batches/batch2.png"),
+	import("@/assets/batches/batch3.png"),
 ];
 
 const batchViewset = createViewset("api/allocation/batches");

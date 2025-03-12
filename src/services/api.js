@@ -2,7 +2,8 @@ import { useAuthStore } from "@/stores/auth";
 import axios from "axios";
 
 const api = axios.create({
-	baseURL: "/",
+	// TODO: Setup a proper screen or system for setting the api url in mobile
+	baseURL: window.__TAURI__ ? "https://school.lariv.in/" : "/",
 	headers: {
 		"Content-Type": "application/json",
 	},

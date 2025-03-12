@@ -21,9 +21,9 @@
 </template>
 
 <script setup>
-import BatchesCard from "@/apps/batches/components/BatchesCard";
+import BatchesCard from "@/apps/batches/components/BatchesCard.vue";
 import { getTeacher } from "@/apps/teachers/api";
-import TeacherCard from "@/apps/teachers/components/TeacherCard";
+import TeacherCard from "@/apps/teachers/components/TeacherCard.vue";
 import { onMounted, ref } from "vue";
 
 const teacher = ref({});
