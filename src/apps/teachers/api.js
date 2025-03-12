@@ -1,5 +1,14 @@
 import { createViewset } from "@/services/viewset";
 
+const portraitImages = [
+	...Array.from({ length: 30 }, (_, i) => require(`@/assets/portraits/portrait${i + 1}.svg`)),
+];
+
+const getPortraitImage = () => {
+	const index = Math.floor(Math.random() * portraitImages.length);
+	return portraitImages[index];
+};
+
 const teacherViewset = createViewset("api/accounts/teachers");
 
 // Get base methods
@@ -18,5 +27,6 @@ export {
 	getTeacher,
 	getTeacherInfoFromObj,
 	getTeacherStats,
+	getPortraitImage,
 	teacherViewset,
 };

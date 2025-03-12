@@ -1,80 +1,66 @@
 <template>
-  <v-card class="pa-4" variant="flat">
-    <v-row>
-      <v-col cols="auto">
-        <v-avatar size="120" color="grey-lighten-2">
-          <v-icon size="64">mdi-account-tie</v-icon>
-        </v-avatar>
-      </v-col>
+  <v-card v-if="teacher">
+    <!-- Teacher Avatar/Image -->
+    <v-img class="teacher-avatar-container" height="180" cover>
+      <v-avatar size="120" color="primary" class="ma-4">
+        <v-img :src="getPortraitImage()" />
+      </v-avatar>
+    </v-img>
+
+    <!-- Teacher Name -->
+    <v-card-title>
+      {{ teacher.user_details.full_name }}
+    </v-card-title>
+
+    <!-- Teacher Info with Chips -->
+    <v-card-subtitle>
+      ID: {{ teacher.identifier }}
+    </v-card-subtitle>
+
+    <v-card-text>
+      <div class="text-subtitle-2 mb-1">Contact Information: </div>
+
+      <v-chip color="blue" prepend-icon="mdi-phone" :href="`tel:${teacher.phone}`">
+        Phone Number: {{ teacher.phone }}
+      </v-chip>
       
-      <v-col>
-        <v-card-title class="text-h5 pa-0 mb-4">
-          {{ teacher.user_details.full_name }}
-        </v-card-title>
-        
-        <v-card-text class="pa-0">
-          <v-list density="compact">
-            <v-list-item>
-              <template v-slot:prepend>
-                <v-icon>mdi-identifier</v-icon>
-              </template>
-              <v-list-item-title>Teacher ID: {{ teacher.identifier }}</v-list-item-title>
-            </v-list-item>
+      <v-chip color="green" prepend-icon="mdi-whatsapp" :href="`https://wa.me/${teacher.whatsapp}`">
+        Whatsapp Number: {{ teacher.whatsapp }}
+      </v-chip>
+      
+      <v-chip color="grey" prepend-icon="mdi-email" :href="`mailto:${teacher.user_details.email}`">
+        Email: {{ teacher.user_details.email }}
+      </v-chip>
+    </v-card-text>
 
-            <v-list-item>
-              <template v-slot:prepend>
-                <v-icon>mdi-phone</v-icon>
-              </template>
-              <v-list-item-title>Phone: {{ teacher.phone }}</v-list-item-title>
-            </v-list-item>
-
-            <v-list-item>
-              <template v-slot:prepend>
-                <v-icon>mdi-whatsapp</v-icon>
-              </template>
-              <v-list-item-title>WhatsApp: {{ teacher.whatsapp }}</v-list-item-title>
-            </v-list-item>
-
-            <v-list-item>
-              <template v-slot:prepend>
-                <v-icon>mdi-email</v-icon>
-              </template>
-              <v-list-item-title>{{ teacher.user_details.email }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-
-          <div class="mt-4">
-            <v-chip
-              :color="teacher.user_details.is_approved ? 'success' : 'warning'"
-              class="mr-2"
-            >
-              {{ teacher.user_details.is_approved ? 'Approved' : 'Pending Approval' }}
-            </v-chip>
-            <v-chip
-              :color="teacher.user_details.is_active ? 'success' : 'error'"
-            >
-              {{ teacher.user_details.is_active ? 'Active' : 'Inactive' }}
-            </v-chip>
-          </div>
-        </v-card-text>
-        
-        <v-card-actions>
-          <v-btn
-            v-if="!teacher.user_details.is_approved"
-            color="warning"
-            :to="{ name: 'EditTeacher', params: { teacherId: teacher.id }}"
-            prepend-icon="mdi-check-circle"
-            variant="outlined"
-          >
-            Approve Teacher
-          </v-btn>
-        </v-card-actions>
-      </v-col>
-    </v-row>
+    <v-card-text>
+      <!-- Status Chips -->
+      <v-chip :color="teacher.user_details.is_approved ? 'success' : 'warning'">
+        {{ teacher.user_details.is_approved ? 'Approved' : 'Pending Approval' }}
+      </v-chip>
+      
+      <v-chip :color="teacher.user_details.is_active ? 'success' : 'error'">
+        {{ teacher.user_details.is_active ? 'Active' : 'Inactive' }}
+      </v-chip>
+    </v-card-text>
+    
+    <v-card-actions>
+      <v-btn
+        v-if="!teacher.user_details.is_approved"
+        color="warning"
+        :to="{ name: 'EditTeacher', params: { teacherId: teacher.id }}"
+        prepend-icon="mdi-check-circle"
+        variant="outlined"
+      >
+        Approve Teacher
+      </v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 
 <script setup>
+import { getPortraitImage } from "@/apps/teachers/api";
+
 const props = defineProps({
 	teacher: {
 		type: Object,
@@ -82,3 +68,13 @@ const props = defineProps({
 	},
 });
 </script>
+
+<style scoped>
+.teacher-avatar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ff6969;
+}
+</style>
+

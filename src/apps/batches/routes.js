@@ -8,8 +8,9 @@ import EditBatchPage from "@/apps/batches/views/EditBatchPage.vue";
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import { getBatch } from "@/apps/batches/api";
-import BatchMembersPage from "@/apps/batches/views/BatchMembersPage.vue";
+import BatchTeachersPage from "@/apps/batches/views/BatchTeachersPage.vue";
 import BatchCoursesPage from "@/apps/batches/views/BatchCoursesPage.vue";
+import BatchStudentsPage from "@/apps/batches/views/BatchStudentsPage.vue";
 
 export default [
 	{
@@ -96,8 +97,12 @@ export default [
 							to: { name: "BatchCourses", props },
 						},
 						{
-							title: "Members",
-							to: { name: "BatchMembers", props },
+							title: "Teachers",
+							to: { name: "BatchTeachers", props },
+						},
+						{
+							title: "Students",
+							to: { name: "BatchStudents", props },
 						},
 					],
 				},
@@ -125,16 +130,22 @@ export default [
 						},
 					},
 					{
-						path: "members/",
+						path: "teachers/",
 						props: true,
-						name: "BatchMembers",
-						component: BatchMembersPage,
+						name: "BatchTeachers",
+						component: BatchTeachersPage,
 					},
 					{
 						path: "courses/",
 						props: true,
 						name: "BatchCourses",
 						component: BatchCoursesPage,
+					},
+					{
+						path: "students/",
+						props: true,
+						name: "BatchStudents",
+						component: BatchStudentsPage,
 					},
 				],
 			},

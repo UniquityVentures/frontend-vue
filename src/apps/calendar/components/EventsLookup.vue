@@ -1,18 +1,22 @@
 <template>
-  <v-card variant="flat">
-    <v-card-title>
-      <FilterCard 
-        :fields="fields"
-      /> 
-    </v-card-title>
-    <ResponsiveDataTable 
-      :getToFunction="(item) => ({name: 'Event', params: {eventId: item.id}})" 
-      :headers="headers" 
-      :fetch="getEvents" 
-      v-model="filters"
-      :forceMobile="forceMobile"
-    />
-  </v-card>
+	<v-card variant="flat">
+		<v-card-title>
+			<FilterCard :fields="fields" />
+		</v-card-title>
+		<v-card-text>
+			<ResponsiveDataTable :getToFunction="(item) => ({ name: 'Event', params: { eventId: item.id } })"
+				:headers="eventDefaultHeaders" :fetch="getEvents" v-model="filters">
+				<template #list-item-slot="{ item }">
+					<v-list-item-title>{{ item.title }}</v-list-item-title>
+					<v-list-item-subtitle>{{ item.description }}</v-list-item-subtitle>
+					<v-list-item-text>
+						<v-chip color="blue">{{ `Start: ${formatDateTime(item.start)}` }}</v-chip>
+						<v-chip color="red">{{ `End: ${formatDateTime(item.end)}` }}</v-chip>
+					</v-list-item-text>
+				</template>
+			</ResponsiveDataTable>
+		</v-card-text>
+	</v-card>
 </template>
 
 <script setup>
@@ -20,72 +24,17 @@ import FilterCard from "@/components/FilterCard.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { computed, ref } from "vue";
 import { getEvents } from "../api";
-
-const defaultFields = [
-	{
-		label: "Search by title",
-		type: "string",
-		key: "title",
-		value: "",
-		defaultValue: "",
-	},
-	{
-		label: "Filter by batch",
-		type: "batch",
-		key: "batch",
-		value: null,
-	},
-	{
-		label: "Filter by course",
-		type: "course",
-		key: "course",
-		value: null,
-	},
-	{
-		label: "Filter by creator",
-		type: "teacher",
-		key: "created_by",
-		value: null,
-	},
-	{
-		label: "Is School Wide",
-		type: "n_nary",
-		key: "is_school_wide",
-		value: null,
-		fetchOptions: () => [
-			{ title: "All Events", value: null },
-			{ title: "School Wide Only", value: "True" },
-			{ title: "Non-School Wide Only", value: "False" },
-		],
-	},
-	{
-		label: "Date Range",
-		type: "dates",
-		key: ["start", "end"],
-		value: null,
-	},
-];
+import { eventDefaultFilterFields, eventDefaultHeaders } from "../config";
+import { formatDateTime } from "@/services/utils";
 
 const props = defineProps({
-	forceMobile: {
-		type: Boolean,
-		default: false,
-	},
-	initialFields: {
+	overrideFields: {
 		type: Array,
-		default: () => [],
 	},
 });
 
 // Initialize fields with any overrides from props
-const fields = ref(
-	defaultFields.map((defaultField) => {
-		const override = props.initialFields.find(
-			(f) => f.key === defaultField.key,
-		);
-		return override ? { ...defaultField, ...override } : defaultField;
-	}),
-);
+const fields = ref(props.overrideFields ?? eventDefaultFilterFields);
 
 // Replace the filters ref with computed property
 const filters = computed(() => {
@@ -100,20 +49,4 @@ const filters = computed(() => {
 		return acc;
 	}, {});
 });
-
-const formatDate = (dateString) =>
-	Intl.DateTimeFormat("en-US", {
-		year: "numeric",
-		month: "short",
-		day: "numeric",
-		hour: "numeric",
-		minute: "numeric",
-	}).format(new Date(dateString));
-
-const headers = [
-	{ title: "Title", key: "title" },
-	{ title: "Start Time", key: "start", formatFunc: formatDate },
-	{ title: "End Time", key: "end", formatFunc: formatDate },
-	{ title: "Actions", key: "actions", sortable: false },
-];
 </script>

@@ -1,5 +1,4 @@
 // Here we define the headers, filters, and other config
-import { getAnnouncement } from './api';
 
 export const announcementDefaultHeaders = [
     { label: "Title", key: "title" },

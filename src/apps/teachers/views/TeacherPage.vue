@@ -1,18 +1,22 @@
 <template>
   <v-container>
-    <v-row class="ma-2">
-      <v-col cols="12">
+    <v-row>
+      <v-col cols="12" lg="4">
         <TeacherCard :teacher="teacher" v-if="teacher?.user_details" />
       </v-col>
     </v-row>
-    <v-container>
-      <h4 class="text-h6 mb-4">Class Teacher for Batches</h4>
-      <BatchesCard :filter="{ class_teacher: props.teacherId }" />
-    </v-container>
-    <v-container>
-      <h4 class="text-h6 mb-4">Teaching Batches</h4>
-      <BatchesCard :filter="{ teacher: props.teacherId }" />
-    </v-container>
+    <v-row v-if="teacher?.batches_leading?.length > 0">
+      <v-col cols="12">
+        <h4 class="text-h6 mb-4">Class Teacher for Batches</h4>
+        <BatchesCard :filter="{ class_teacher: props.teacherId }" />
+      </v-col>
+    </v-row>
+    <v-row v-if="teacher?.batches_assisting?.length > 0">
+      <v-col cols="12">
+        <h4 class="text-h6 mb-4">Teaching Batches</h4>
+        <BatchesCard :filter="{ teacher: props.teacherId }" />
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 

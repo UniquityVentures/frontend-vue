@@ -4,7 +4,7 @@
 			v-if="announcement"
 			title="Announcement"
 			actionName="Update"
-			:model="model"
+			:formFields="formFields"
 			:action="updateAnnouncement"
 		/>
 	</v-container>
@@ -25,12 +25,12 @@ const props = defineProps({
 });
 
 const announcement = ref(null);
-const model = ref([]);
+const formFields = ref([]);
 
 onMounted(async () => {
 	announcement.value = await getAnnouncement(props.announcementId);
 	// Update model with default values from the existing announcement
-	model.value = announcementDefaultFormFields.map((field) => ({
+	formFields.value = announcementDefaultFormFields.map((field) => ({
 		...field,
 		defaultValue:
 			field.key === "release_at" || field.key === "expiry_at"

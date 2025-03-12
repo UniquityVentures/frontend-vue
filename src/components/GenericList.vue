@@ -8,7 +8,7 @@
             <!-- Items List or Loading Skeleton -->
             <v-list :lines="config.lines || 'two'" density="compact"
                 v-if="!loading && limitedItems.length">
-                <v-list-item v-for="item in limitedItems" :key="item.id || index" class="pa-2 border"
+                <v-list-item v-for="item in limitedItems" :key="item.id || index" class="border"
                 :to="config.listItemRoute ? config.listItemRoute(item) : null"
                 :disabled="!config.listItemRoute"
                 :link="!!config.listItemRoute">
@@ -18,7 +18,7 @@
                     </v-list-item-title>
 
                     <!-- Secondary Content -->
-                    <v-list-item-subtitle v-if="config.listItemSubtitle" class="mb-2">
+                    <v-list-item-subtitle v-if="config.listItemSubtitle">
                         {{ keyHandler(item, config.listItemSubtitle) }}
                     </v-list-item-subtitle>
 

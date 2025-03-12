@@ -26,7 +26,7 @@ export default [
 		},
 		children: [
 			{
-				path: "",
+				path: "calendar/",
 				component: CalendarPage,
 				name: "Calendar",
 			},
@@ -53,7 +53,7 @@ export default [
 						},
 						children: [
 							{
-								path: "",
+								path: "all/",
 								component: EventPage,
 								name: "Event",
 								props: true,
