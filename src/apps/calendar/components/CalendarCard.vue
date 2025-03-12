@@ -4,7 +4,7 @@
             <v-calendar ref="calendar" v-model="currentDate" :events="formattedEvents" view-mode="month"
                 color="primary">
                 <template v-slot:event="{ event }">
-                    <v-chip :color="event.color" class="ma-1" @click.stop="showEvent(event)">
+                    <v-chip :color="event.color" @click.stop="showEvent(event)">
                         {{ event.title }}
                     </v-chip>
                 </template>

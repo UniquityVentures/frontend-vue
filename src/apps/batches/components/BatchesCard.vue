@@ -7,6 +7,7 @@
                 v-model="filter"
                 :getToFunction="(batch) => ({ name: 'Batch', params: { batchId: batch.id }})"
                 desktopTemplate="card"
+                mobileTemplate="card"
             >
                 <!-- Custom template for each individual card item -->
                 <template #card-item-slot="{ item }">

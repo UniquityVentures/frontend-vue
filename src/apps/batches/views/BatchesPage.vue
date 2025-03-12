@@ -5,7 +5,6 @@
                 <v-text-field
                     v-model="search"
                     label="Search by batch name"
-                    density="comfortable"
                     @update:model-value="updateFilter"
                     clearable
                 />

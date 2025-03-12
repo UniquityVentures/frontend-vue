@@ -13,40 +13,33 @@
     </v-card-title>
 
     <!-- Teacher Info with Chips -->
+    <v-card-subtitle>
+      ID: {{ teacher.identifier }}
+    </v-card-subtitle>
+
     <v-card-text>
-      <v-chip size="small" color="primary" prepend-icon="mdi-identifier">
-        ID: {{ teacher.identifier }}
-      </v-chip>
-      
-      <v-chip size="small" color="primary" prepend-icon="mdi-phone">
+      <div class="text-subtitle-2 mb-1">Contact Information: </div>
+
+      <v-chip color="blue" prepend-icon="mdi-phone" :href="`tel:${teacher.phone}`">
         Phone Number: {{ teacher.phone }}
       </v-chip>
       
-      <v-chip size="small" color="primary" prepend-icon="mdi-whatsapp">
+      <v-chip color="green" prepend-icon="mdi-whatsapp" :href="`https://wa.me/${teacher.whatsapp}`">
         Whatsapp Number: {{ teacher.whatsapp }}
       </v-chip>
       
-      <v-chip size="small" color="primary" prepend-icon="mdi-email">
+      <v-chip color="grey" prepend-icon="mdi-email" :href="`mailto:${teacher.user_details.email}`">
         Email: {{ teacher.user_details.email }}
       </v-chip>
     </v-card-text>
 
     <v-card-text>
       <!-- Status Chips -->
-      <v-chip
-        :color="teacher.user_details.is_approved ? 'success' : 'warning'"
-        size="small"
-        label
-        class="mr-2"
-      >
+      <v-chip :color="teacher.user_details.is_approved ? 'success' : 'warning'">
         {{ teacher.user_details.is_approved ? 'Approved' : 'Pending Approval' }}
       </v-chip>
       
-      <v-chip
-        :color="teacher.user_details.is_active ? 'success' : 'error'"
-        size="small"
-        label
-      >
+      <v-chip :color="teacher.user_details.is_active ? 'success' : 'error'">
         {{ teacher.user_details.is_active ? 'Active' : 'Inactive' }}
       </v-chip>
     </v-card-text>

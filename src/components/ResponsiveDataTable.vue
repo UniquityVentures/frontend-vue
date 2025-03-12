@@ -4,10 +4,10 @@
 		@update:options="fetchData" :search="JSON.stringify(filters)" :loading="loading">
 		<template #headers={}></template>
 		<template #default>
-			<slot name="list-item-slot" :items="items">
-				<v-list density="compact" v-if="template === 'list'">
-					<v-list-item v-for="item in items" :key="item.id" class="ma-1 pa-2 border" :to="getToFunction(item)"
-						link>
+			<v-list density="compact" v-if="template === 'list'">
+				<v-list-item v-for="item in items" :key="item.id" class="border" :to="getToFunction(item)"
+					link>
+					<slot name="list-item-slot" :item="item">
 						<v-list-item-title>
 							{{ keyHandler(item, title) }}
 						</v-list-item-title>
@@ -44,9 +44,9 @@
 								</v-chip>
 							</div>
 						</div>
-					</v-list-item>
-				</v-list>
-			</slot>
+					</slot>
+				</v-list-item>
+			</v-list>
 		</template>
 	</v-data-table-server>
 
@@ -167,7 +167,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from "vue";
+import { onMounted, ref, computed, watch } from "vue";
 import { useDisplay } from "vuetify";
 import { formatDate, keyHandler } from "@/services/utils";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
@@ -199,7 +199,13 @@ const props = defineProps({
 const filters = defineModel();
 const { mobile } = useDisplay();
 
+// Make template reactive with ref instead of computed
 const template = ref(mobile.value ? props.mobileTemplate : props.desktopTemplate);
+
+// Watch for changes in mobile state and update template accordingly
+watch(mobile, (newValue) => {
+	template.value = newValue ? props.mobileTemplate : props.desktopTemplate;
+});
 
 // first header is the title and the second header is the subtitle
 const title = ref(props.headers[0]);

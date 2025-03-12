@@ -1,7 +1,7 @@
 import { api } from "@/services/api";
 import { createViewset } from "@/services/viewset";
 
-const eventViewset = createViewset("api/events");
+const eventViewset = createViewset("api/events", "events");
 
 // Get base methods
 const getEvents = eventViewset.list;

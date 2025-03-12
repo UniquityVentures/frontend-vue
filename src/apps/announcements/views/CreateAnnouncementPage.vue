@@ -3,7 +3,7 @@
 		<FormCard
 			title="Announcement"
 			actionName="Create"
-			:model="announcementDefaultFormFields"
+			:formFields="announcementDefaultFormFields"
 			:action="createAnnouncement"
 		/>
 	</v-container>
@@ -11,6 +11,6 @@
 
 <script setup>
 import FormCard from "@/components/FormCard.vue";
-import { createAnnouncement } from "../api";
-import { announcementDefaultFormFields } from "../config";
+import { createAnnouncement } from "@/apps/announcements/api";
+import { announcementDefaultFormFields } from "@/apps/announcements/config";
 </script>
