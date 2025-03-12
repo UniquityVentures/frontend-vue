@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <StudentsLookup class="column-item" :overrideFields="overrideFields" />   
+        <StudentsLookup class="column-item" :overrideFields="overrideFields" title="Students in this batch" subtitle="Click on any item to view or edit."/>   
     </v-container>
 </template>
 

@@ -1,8 +1,13 @@
 <template>
 	<v-card>
 		<v-card-title>
-			<FilterCard :fields="fields" :exportFunction="exportStudents" />
+			{{ title }}
 		</v-card-title>
+		<v-card-subtitle>
+			{{ subtitle }}
+		</v-card-subtitle>
+
+		<FilterCard :fields="fields" :exportFunction="exportStudents" />
 		<ResponsiveDataTable :getToFunction="(item) => ({ name: 'Student', params: { studentId: item.id } })"
 			:headers="studentDefaultHeaders" :fetch="getStudents" v-model="filters" :desktopTemplate="props.overrideDesktopTemplate"
 			mobileTemplate="list" />
@@ -17,6 +22,14 @@ import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import FilterCard from "@/components/FilterCard.vue";
 
 const props = defineProps({
+	title: {
+		type: String,
+		default: 'Students',
+	},
+	subtitle: {
+		type: String,
+		default: 'Click on any item to view or edit.',
+	},
 	overrideFields: {
 		type: Array,
 	},

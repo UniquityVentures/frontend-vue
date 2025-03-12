@@ -1,34 +1,36 @@
 <template>
     <v-card variant="flat">
         <v-card-text>
-            <v-row>
-                <v-col 
-                v-for="batch in batches" 
-                :key="batch.id" 
-                cols="6" 
-                md="3" 
-                lg="2"
-                >
-                    <v-card>
+            <ResponsiveDataTable
+                :headers="batchHeaders"
+                :fetch="getBatches"
+                v-model="filter"
+                :getToFunction="(batch) => ({ name: 'Batch', params: { batchId: batch.id }})"
+                desktopTemplate="card"
+            >
+                <!-- Custom template for each individual card item -->
+                <template #card-item-slot="{ item }">
+                    <v-card height="100%" link :to="{ name: 'Batch', params: { batchId: item.id }}" variant="flat" class="border">
                         <v-img 
                             :src="getBatchImage()" 
                             class="custom-img"
                         ></v-img>
-                        <v-card-title>{{ batch.name }}</v-card-title>
-                        <v-card-subtitle>{{ batch.class_teacher_details?.user_details?.full_name || "Loading..." }}</v-card-subtitle>
+                        <v-card-title>{{ item.name }}</v-card-title>
+                        <v-card-subtitle>{{ item.class_teacher_details?.user_details?.full_name || "Loading..." }}</v-card-subtitle>
                         <v-card-actions class="d-flex justify-center">
-                            <v-btn :to="{ name: 'Batch', params: { batchId: batch.id }}">Enter</v-btn>
+                            <v-btn :to="{ name: 'Batch', params: { batchId: item.id }}">Enter</v-btn>
                         </v-card-actions>
                     </v-card>
-                </v-col>
-            </v-row>
+                </template>
+            </ResponsiveDataTable>
         </v-card-text>
     </v-card>
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { getBatchImage, getBatches } from "../api";
+import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 
 const props = defineProps({
 	filter: {
@@ -37,17 +39,15 @@ const props = defineProps({
 	},
 });
 
-const batches = ref([]);
+const filter = ref(props.filter);
 
-const fetchBatches = async () => {
-	batches.value = (await getBatches(props.filter)).results;
-};
-
-// Watch for changes in the filter
-watch(() => props.filter, fetchBatches, { deep: true });
-
-// Initial fetch
-fetchBatches();
+// Define headers for the ResponsiveDataTable
+const batchHeaders = [
+	{ label: "Name", key: "name" },
+	{ label: "Teacher", key: "class_teacher_details.user_details.full_name" },
+	{ label: "Grade", key: "standard" },
+	{ label: "Students Count", key: "students", formatFunc: (students) => students?.length || 0 },
+];
 </script>
 
 <style>
@@ -56,6 +56,11 @@ fetchBatches();
 	object-fit: cover;
 	width: 100%;
 	height: auto;
+}
+
+.body-grid-container {
+	width: 100%;
+	overflow: hidden;
 }
 </style>
   
