@@ -18,9 +18,9 @@
                         ></v-img>
                         <v-card-title>{{ item.name }}</v-card-title>
                         <v-card-subtitle>{{ item.class_teacher_details?.user_details?.full_name || "Loading..." }}</v-card-subtitle>
-                        <v-card-actions class="d-flex justify-center">
+                        <!-- <v-card-actions class="d-flex justify-center">
                             <v-btn :to="{ name: 'Batch', params: { batchId: item.id }}">Enter</v-btn>
-                        </v-card-actions>
+                        </v-card-actions> -->
                     </v-card>
                 </template>
             </ResponsiveDataTable>
