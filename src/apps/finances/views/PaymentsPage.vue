@@ -70,14 +70,6 @@ const props = defineProps({
 	},
 });
 
-// Properly parses the date string, Date() constructor doesn't work well with ISO strings
-const formatDate = (dateString) =>
-	Intl.DateTimeFormat("en-US", {
-		year: "numeric",
-		month: "short",
-		day: "numeric",
-	}).format(Date.parse(dateString));
-
 const headers = [
 	{ title: "Title", key: "title" },
 	{ title: "Release Date", key: "release_at", formatFunc: formatDate },

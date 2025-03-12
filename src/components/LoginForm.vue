@@ -1,22 +1,19 @@
 <template>
     <v-card class="pa-4">
-      <v-card-title class="headline justify-center">Login</v-card-title>
+      <v-card-title>Login</v-card-title>
+      <v-card-subtitle>Enter your credentials to login</v-card-subtitle>
       <v-card-text>
         <v-form @submit.prevent="onSubmit">
           <v-text-field
             v-model="localUsername"
             label="Username"
             required
-            prepend-icon="mdi-account"
-            outlined
           ></v-text-field>
           <v-text-field
             v-model="localPassword"
             label="Password"
             type="password"
             required
-            prepend-icon="mdi-lock"
-            outlined
           ></v-text-field>
   
           <v-btn color="primary" class="mt-4" block type="submit">
