@@ -60,7 +60,7 @@ jobs:
 
     - name: Build Android APK
     - uses: actions-rust-lang/setup-rust-toolchain@v1
-      run: ./build-android.sh
+    - run: ./build-android.sh
       env:
         NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
 
