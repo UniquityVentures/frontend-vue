@@ -45,6 +45,7 @@ const vuetify = createVuetify({
 			label: true,
 		},
 		VTextField: { density: 'compact', variant: 'outlined' },
+		VNumberInput: { density: 'compact', variant: 'outlined', controlVariant: 'hidden' },
 		VSelect: { density: 'compact', variant: 'outlined' },
 		VCombobox: { density: 'compact', variant: 'outlined' },
 		VAutocomplete: { density: 'compact', variant: 'outlined' },

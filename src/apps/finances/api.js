@@ -1,22 +1,22 @@
 import { createViewset } from "@/services/viewset";
 
-const recordViewset = createViewset("api/finances/record");
+const transactionViewset = createViewset("api/finances/transaction");
 const purposeViewset = createViewset("api/finances/purpose");
 const payeeViewset = createViewset("api/finances/payee");
 
 // Get base methods
-const getRecords = recordViewset.list;
-const getPaymentPurposes = purposeViewset.list;
+const getTransactions = transactionViewset.list;
+const getTransactionPurposes = purposeViewset.list;
 const getPayees = payeeViewset.list;
 
 // Info formatters
-const getRecordInfoFromObj = (item) => ({
+const getTransactionInfoFromObj = (item) => ({
 	title: item.amount,
 	subtitle: item.student_details.user_details.full_name,
 	value: item.id,
 });
 
-const getPaymentPurposeInfoFromObj = (item) => ({
+const getTransactionPurposeInfoFromObj = (item) => ({
 	title: item.name,
 	subtitle: item.description,
 	value: item.id,
@@ -29,10 +29,10 @@ const getPayeeInfoFromObj = (item) => ({
 });
 
 export {
-	getRecords,
-	getPaymentPurposes,
-	getPaymentPurposeInfoFromObj,
-	getRecordInfoFromObj,
+	getTransactions,
+	getTransactionPurposes,
+	getTransactionPurposeInfoFromObj,
+	getTransactionInfoFromObj,
 	getPayees,
 	getPayeeInfoFromObj,
 };

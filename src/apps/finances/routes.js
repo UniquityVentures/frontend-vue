@@ -1,8 +1,8 @@
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import { api } from "@/services/api";
-import RecordPage from "./views/RecordPage.vue";
-import RecordsPage from "./views/RecordsPage.vue";
+import TransactionPage from "./views/TransactionPage.vue";
+import TransactionsPage from "./views/TransactionsPage.vue";
 
 export default [
 	{
@@ -11,34 +11,34 @@ export default [
 		meta: {
 			requiresAuth: true,
 			getDisplayName: () => "Finances",
-			defaultRoute: "Records",
+			defaultRoute: "Transactions",
 			description: "View and manage finances",
 			getMenu: (props) => [
 				{
-					title: "View Records",
-					to: { name: "Records", params: props },
+					title: "All Transactions",
+					to: { name: "Transactions", params: props },
 				},
 			],
 			icon: "mdi-credit-card-outline",
 		},
 		children: [
 			{
-				path: "",
-				component: RecordsPage,
-				name: "Records",
+				path: "all/",
+				component: TransactionsPage,
+				name: "Transactions",
 			},
 			{
-				path: ":recordId",
+				path: ":transactionId",
 				props: true,
 				component: EmptyLayout,
 				meta: {
-					defaultRoute: "Record",
+					defaultRoute: "Transaction",
 					getDisplayName: async (params) =>
-						(await api.get(`api/finances/record/${params.recordId}/`)).data.id,
+						(await api.get(`api/finances/transaction/${params.transactionId}/`)).data.id,
 					getMenu: (props) => [
 						{
-							title: "View Record",
-							to: { name: "Record", params: props },
+							title: "View Transaction",
+							to: { name: "Transaction", params: props },
 						},
 					],
 					icon: "mdi-account-card-outline",
@@ -46,8 +46,8 @@ export default [
 				children: [
 					{
 						path: "",
-						component: RecordPage,
-						name: "Record",
+						component: TransactionPage,
+						name: "Transaction",
 						props: true,
 					},
 					/*
