@@ -58,7 +58,6 @@ jobs:
       env:
         NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
 
-    - name: Build Android APK
     - uses: actions-rust-lang/setup-rust-toolchain@v1
     - run: ./build-android.sh
       env:
@@ -78,3 +77,4 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         release_id: ${{ steps.create_release.outputs.id }}
+
