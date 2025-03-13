@@ -1,16 +1,5 @@
 import { createViewset } from "@/services/viewset";
-
-const images = [
-	require("@/assets/courses/course1.png"),
-	require("@/assets/courses/course2.png"),
-	require("@/assets/courses/course3.png"),
-	require("@/assets/courses/course4.png"),
-	require("@/assets/courses/course5.png"),
-	require("@/assets/courses/course6.png"),
-	require("@/assets/courses/course7.png"),
-	require("@/assets/courses/course8.png"),
-	require("@/assets/courses/course9.png"),
-];
+const images = import.meta.glob("@/assets/courses/course*.png");
 
 const getCourseImage = () => {
 	const index = Math.floor(Math.random() * images.length);

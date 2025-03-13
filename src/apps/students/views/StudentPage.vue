@@ -13,9 +13,9 @@
 </template>
 
 <script setup>
-import BatchesCard from "@/apps/batches/components/BatchesCard";
+import BatchesCard from "@/apps/batches/components/BatchesCard.vue";
 import { getStudent } from "@/apps/students/api";
-import StudentCard from "@/apps/students/components/StudentCard";
+import StudentCard from "@/apps/students/components/StudentCard.vue";
 import { onMounted, ref } from "vue";
 
 const student = ref({});

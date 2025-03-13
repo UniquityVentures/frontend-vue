@@ -1,0 +1,94 @@
+name: Node
+
+on:
+  push:
+    branches: [ "staging" ]
+  pull_request:
+    branches: [ "staging" ]
+env: 
+  CI: false
+  
+jobs:
+  release:
+    permissions: write-all
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: pnpm/action-setup@v4
+      with:
+        version: 10
+    - uses: actions/checkout@v3
+    - name: Build
+      run: ./build.sh
+    - name: Set tag name
+      id: tag
+      run: |
+        if [[ "${{ github.event_name }}" != "push" ]]; then
+          tag=v$(date +%Y%m%d.%H%M%S)
+        else
+          tag=$(echo $GITHUB_SHA | cut --characters=-10)
+        fi
+        echo "tag=$tag" >> $GITHUB_OUTPUT
+    - name: Publish Release Build
+      id: create_release
+      uses: actions/create-release@v1
+      env: 
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        prerelease: false
+        draft: true
+        tag_name: ${{ steps.tag.outputs.tag }}
+        release_name: release
+    - uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./build.tar.xz
+        asset_name: build.tar.xz
+        asset_content_type: application/tar+gzip
+
+    - uses: nttld/setup-ndk@v1
+      id: setup-ndk
+      with:
+        ndk-version: r28
+        local-cache: true
+        link-to-sdk: true
+    - run: echo "${{ steps.setup-ndk.outputs.ndk-path }}/toolchains/llvm/prebuilt/linux-x86_64/bin/" >> $GITHUB_PATH
+
+    - run: tree ${{ steps.setup-ndk.outputs.ndk-path }} >> ndk_tree.txt
+
+
+#   - uses: actions-rust-lang/setup-rust-toolchain@v1
+#     with:
+#       toolchain: nightly
+#       target: aarch64-linux-android
+#   - run: ./build-android.sh
+#     env:
+#       NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+#
+#
+#   - uses: actions/upload-release-asset@v1.0.1
+#     env:
+#       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#     with:
+#       upload_url: ${{ steps.create_release.outputs.upload_url }}
+#       asset_path: ./src-tauri/gen/android/app/build/outputs/apk/arm64/release/app-arm64-release.apk
+#       asset_name: app-arm64-release.apk
+#       asset_content_type: application/vnd.android.package-archive
+#
+    - uses: actions/upload-release-asset@v1.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ndk_tree.txt
+        asset_name: ndk_tree.txt
+        asset_content_type: text/plain
+
+    - uses: eregon/publish-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        release_id: ${{ steps.create_release.outputs.id }}
+

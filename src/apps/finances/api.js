@@ -9,6 +9,8 @@ const getTransactions = transactionViewset.list;
 const getTransactionPurposes = purposeViewset.list;
 const getPayees = payeeViewset.list;
 
+const exportTransactions = transactionViewset.export;
+
 // Info formatters
 const getTransactionInfoFromObj = (item) => ({
 	title: item.amount,
@@ -35,4 +37,5 @@ export {
 	getTransactionInfoFromObj,
 	getPayees,
 	getPayeeInfoFromObj,
+	exportTransactions,
 };

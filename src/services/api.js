@@ -2,7 +2,8 @@ import { useAuthStore } from "@/stores/auth";
 import axios from "axios";
 
 const api = axios.create({
-	baseURL: "http://school1.localhost:8000/",
+	// TODO: Setup a proper screen or system for setting the api url in mobile
+	baseURL: window.__TAURI__ ? "https://school.lariv.in/" : "http://school1.localhost:8000",
 	headers: {
 		"Content-Type": "application/json",
 	},
@@ -54,7 +55,7 @@ api.interceptors.response.use(
 			if (refresh) {
 				try {
 					const response = await axios.post(
-						"http://school1.localhost:8000/api/token/refresh/",
+						"/api/token/refresh/",
 						{ refresh: refresh },
 					);
 					authStore.refreshTokens({
