@@ -59,6 +59,9 @@ jobs:
         NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
 
     - uses: actions-rust-lang/setup-rust-toolchain@v1
+      with:
+        toolchain: nightly
+        target: aarch64-linux-android
     - run: ./build-android.sh
       env:
         NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
