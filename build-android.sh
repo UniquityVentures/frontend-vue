@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-echo TODO
+pnpm tauri android build --apk --split-per-abi --target aarch64
