@@ -55,6 +55,8 @@ jobs:
         local-cache: true
         link-to-sdk: true
     - run: echo ${{ steps.setup-ndk.outputs.ndk-path }}
+      env:
+        NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
 
     - name: Build Android APK
       run: ./build-android.sh
