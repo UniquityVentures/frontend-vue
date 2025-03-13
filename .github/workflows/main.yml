@@ -53,6 +53,8 @@ jobs:
       with:
         ndk-version: r28
         local-cache: true
+        link-to-sdk: true
+    - run: echo ${{ steps.setup-ndk.outputs.ndk-path }}
 
     - name: Build Android APK
       run: ./build-android.sh
