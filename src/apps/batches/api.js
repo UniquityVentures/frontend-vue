@@ -1,10 +1,6 @@
 import { createViewset } from "@/services/viewset";
 
-const images = [
-	import("@/assets/batches/batch1.png"),
-	import("@/assets/batches/batch2.png"),
-	import("@/assets/batches/batch3.png"),
-];
+const images = import.meta.glob("@/assets/batches/batch*.png");
 
 const batchViewset = createViewset("api/allocation/batches");
 
