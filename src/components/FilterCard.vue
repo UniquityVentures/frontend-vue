@@ -19,7 +19,7 @@
 					:fetch="getStudents" :getInfo="getStudentInfoFromObj" :searchField="field.searchField || 'name'"
 					:label="field.label" :disabled="field.disabled" />
 				<ServerAutocomplete v-if="field.type === 'payment_purpose'" v-model="field.value"
-					:clearable="!field.disabled" :fetch="getPaymentPurposes" :getInfo="getPaymentPurposeInfoFromObj"
+					:clearable="!field.disabled" :fetch="getTransactionPurposes" :getInfo="getTransactionPurposeInfoFromObj"
 					:searchField="field.searchField || 'name'" :label="field.label"
 					:disabled="field.disabled" />
 				<ServerAutocomplete v-if="field.type === 'number'" v-model="field.value" :clearable="!field.disabled"
@@ -74,7 +74,7 @@
 
 <script setup>
 import { getBatchInfoFromObj, getBatches } from "@/apps/batches/api";
-import { getPayeeInfoFromObj, getPayees, getPaymentPurposeInfoFromObj, getPaymentPurposes } from "@/apps/finances/api";
+import { getPayeeInfoFromObj, getPayees, getTransactionPurposeInfoFromObj, getTransactionPurposes } from "@/apps/finances/api";
 import { getStudentInfoFromObj, getStudents } from "@/apps/students/api";
 import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
 import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
