@@ -48,8 +48,16 @@ jobs:
         asset_name: build.tar.xz
         asset_content_type: application/tar+gzip
 
+    - uses: actions/checkout@v3
+    - uses: nttld/setup-ndk@v1
+      with:
+        ndk-version: r28
+        local-cache: true
+
     - name: Build Android APK
       run: ./build-android.sh
+      env:
+        NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
 
     - uses: actions/upload-release-asset@v1.0.1
       env:
