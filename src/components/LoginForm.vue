@@ -16,7 +16,7 @@
             required
           ></v-text-field>
   
-          <v-btn color="primary" class="mt-4" block type="submit">
+          <v-btn color="primary" block type="submit">
             Login
           </v-btn>
   
