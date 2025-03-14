@@ -1,6 +1,6 @@
 // Import Vuetify's variables (for Vuetify 3)
 @use 'vuetify/styles' as vuetify;
-@import './typography.scss';
+@use './typography.scss';
 
 // v-card styles
 .v-card-title {
