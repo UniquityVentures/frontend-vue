@@ -1,4 +1,5 @@
 import { createViewset } from "@/services/viewset";
+import { getRandomImage } from "@/services/api";
 
 // Static imports work better for this use case
 import batch1 from "@/assets/batches/batch1.png";
@@ -10,10 +11,11 @@ const images = [batch1, batch2, batch3];
 const batchViewset = createViewset("api/allocation/batches");
 
 // Get base methods
-const getBatches = (filter = {}) => batchViewset.list({
-	page_size: 100,
-	...filter
-});
+const getBatches = (filter = {}) =>
+    batchViewset.list({
+        page_size: 100,
+        ...filter,
+    });
 const getBatch = batchViewset.retrieve;
 const updateBatch = batchViewset.update;
 const createBatch = batchViewset.create;
@@ -22,25 +24,22 @@ const importBatchesDryRun = batchViewset.import.dryRun;
 const importBatchesFinalize = batchViewset.import.finalize;
 
 // Custom methods
-const getBatchImage = () => {
-	const index = Math.floor(Math.random() * images.length);
-	return images[index];
-};
+const getBatchImage = () => getRandomImage(images);
 
 const getBatchInfoFromObj = (item) => ({
-	title: item.name,
-	subtitle: `Grade ${item.standard}`,
-	value: item.id,
+    title: item.name,
+    subtitle: `Grade ${item.standard}`,
+    value: item.id,
 });
 
 export {
-	getBatch,
-	getBatches,
-	updateBatch,
-	getBatchImage,
-	getBatchInfoFromObj,
-	createBatch,
-	exportBatches,
-	importBatchesDryRun,
-	importBatchesFinalize,
+    getBatch,
+    getBatches,
+    updateBatch,
+    getBatchImage,
+    getBatchInfoFromObj,
+    createBatch,
+    exportBatches,
+    importBatchesDryRun,
+    importBatchesFinalize,
 };
