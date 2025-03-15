@@ -1,7 +1,7 @@
 <template>
 	<!-- List template -->
 	<v-data-table-server v-if="template === 'list'" :items-length="itemsLen" :headers="[]" :items="items"
-		@update:options="fetchData" :search="JSON.stringify(filters)" :loading="loading" :items-per-page-options="itemsPerPageOptions">
+		@update:options="fetchData" :search="filters ? JSON.stringify(filters) : ''" :loading="loading" :items-per-page-options="itemsPerPageOptions">
 		<template #headers={}></template>
 		<template #default>
 			<v-list density="compact" v-if="template === 'list'">
@@ -52,22 +52,23 @@
 
 	<!-- Card template -->
 	<v-data-table-server v-if="template === 'card'" :items-length="itemsLen" :headers="[]" :items="items"
-		@update:options="fetchData" :search="JSON.stringify(filters)" :loading="loading" class="body-container" :items-per-page-options="itemsPerPageOptions">
+		@update:options="fetchData" :search="filters ? JSON.stringify(filters) : ''" :loading="loading" class="body-container" :items-per-page-options="itemsPerPageOptions">
 		<template #default>
 			<div class="body-grid-container">
 				<v-row no-gutters class="ma-1 pa-0">
 					<v-col v-for="item in items" :key="item.id" cols="6" md="3" lg="2" class="pa-2">
 						<slot name="card-item-slot" :item="item">
 							<v-card height="100%" link :to="getToFunction(item)" variant="flat" class="border">
+								<v-img 
+									v-for="header in headers.filter((a) => a.type === 'image')"
+									:src="item[header.key]" max-height="256" max-width="256"></v-img>
 								<v-card-title>
 									{{ keyHandler(item, title) }}
 								</v-card-title>
 								<v-card-subtitle>
 									{{ `${subtitle.label}: ${keyHandler(item, subtitle)}` }}
 								</v-card-subtitle>
-								<v-img 
-									v-for="header in data_headers.filter((a) => a === 'image')"
-									:src="item[header.key]"></v-img>
+								{{console.log(data_headers)}}
 								<v-card-text>
 									<div v-for="header in data_headers">
 										<div v-if="header.type === 'longstring'" class="mb-2">
@@ -253,7 +254,9 @@ const fetchData = async ({ page, itemsPerPage, search }) => {
 
 	try {
 		const filterParams = {
-			...convertFiltersForBackend(JSON.parse(search)),
+			...convertFiltersForBackend(
+				typeof search === "string" ? JSON.parse(search) : search.value,
+			),
 			page_size: itemsPerPage || 10,
 			page: page || 1,
 		};

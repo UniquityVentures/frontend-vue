@@ -41,13 +41,13 @@ export default [
 				name: "Attachments",
 			},
 			{
-				path: ":parentId",
+				path: ":attachmentId",
 				props: true,
 				component: EmptyLayout,
 				meta: {
 					defaultRoute: "Attachment",
 					getDisplayName: async (params) =>
-						(await api.get(`api/accounts/parents/${params.parentId}/`)).data
+						(await api.get(`api/accounts/parents/${params.attachmentId}/`)).data
 							.user_details.full_name,
 					getMenu: (props) => [
 						{
