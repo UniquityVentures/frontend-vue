@@ -6,14 +6,14 @@ export const formatDate = (dateString) =>
     }).format(Date.parse(dateString));
 
 export const formatDateTime = (dateString) => {
-	return new Date(dateString).toLocaleString("en-US", {
-		year: "numeric",
-		month: "short",
-		day: "numeric",
-		hour: "2-digit",
-		minute: "2-digit",
-		second: "2-digit",
-	});
+    return new Date(dateString).toLocaleString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+    });
 };
 
 // Convert API datetime string to HTML datetime-local input format
@@ -29,22 +29,47 @@ export const formToApiDateTime = (dateString) => {
 };
 
 export const keyHandler = (item, fieldConfig) => {
-    if (!fieldConfig || !fieldConfig.key) return '';
+    if (!fieldConfig || !fieldConfig.key) return "";
 
-    if (typeof fieldConfig === 'function') {
+    if (typeof fieldConfig === "function") {
         return fieldConfig(item);
     }
 
     // Handle nested properties using dot notation (e.g. "course_details.name")
-    if (fieldConfig.key && fieldConfig.key.includes('.')) {
-        const keys = fieldConfig.key.split('.');
+    if (fieldConfig.key?.includes(".")) {
+        const keys = fieldConfig.key.split(".");
         let value = item;
         for (const key of keys) {
             value = value?.[key];
             if (value === undefined) break;
         }
-        return value || fieldConfig.default || '';
+        return value || fieldConfig.default || "";
     }
 
-    return item?.[fieldConfig.key] || fieldConfig.default || '';
+    return item?.[fieldConfig.key] || fieldConfig.default || "";
 };
+
+export const toHeaderCase = (str) => {
+    let shouldCapitalize = true;
+    let outputString = "";
+    for (const c of str) {
+        if (!isAlphabet(c)) {
+            shouldCapitalize = true;
+            if (c === "_") {
+                outputString = `${outputString} `;
+            } else {
+                outputString = `${outputString}${c}`;
+            }
+        } else if (shouldCapitalize) {
+            outputString = `${outputString}${c.toUpperCase()}`;
+            shouldCapitalize = false;
+        } else {
+            outputString = `${outputString}${c}`;
+        }
+    }
+    return outputString;
+};
+
+const isAlphabet = (str) =>
+    (str.codePointAt(0) > 64 && str.codePointAt(0) < 91) ||
+    (str.codePointAt(0) > 96 && str.codePointAt(0) < 123);

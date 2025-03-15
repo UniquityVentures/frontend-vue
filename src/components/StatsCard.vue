@@ -19,19 +19,11 @@
 				</v-col>
 			</v-row>
 			<v-row v-else>
-				<v-col cols="6">
+				<v-col cols="6" v-for="key in Object.keys(stats)">
 					<v-card variant="outlined">
 						<v-card-item>
-							<div class="text-h4 text-primary text-center">{{ stats.total }}</div>
-							<div class="text-subtitle-2 text-center">Total {{title}}</div>
-						</v-card-item>
-					</v-card>
-				</v-col>
-				<v-col cols="6">
-					<v-card variant="outlined">
-						<v-card-item>
-							<div class="text-h4 text-primary text-center">{{ stats.pending_approval }}</div>
-							<div class="text-subtitle-2 text-center">Pending Approval</div>
+							<div class="text-h4 text-primary text-center">{{stats[key]}}</div>
+							<div class="text-subtitle-2 text-center">{{toHeaderCase(key)}}</div>
 						</v-card-item>
 					</v-card>
 				</v-col>
@@ -42,11 +34,9 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
+import { toHeaderCase } from "@/services/utils";
 
-const stats = ref({
-	total: 0,
-	pending_approval: 0,
-});
+const stats = ref({});
 const loading = ref(true);
 const error = ref(false);
 

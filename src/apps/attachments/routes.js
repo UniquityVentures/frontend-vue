@@ -2,6 +2,7 @@ import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.v
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import { api } from "@/services/api";
 import CreateAttachmentPage from "./views/CreateAttachmentPage.vue";
+import AttachmentsPage from "./views/AttachmentsPage.vue";
 
 export default [
 	{
@@ -36,7 +37,7 @@ export default [
 			},
 			{
 				path: "",
-				component: EmptyLayout,
+				component: AttachmentsPage,
 				name: "Attachments",
 			},
 			{

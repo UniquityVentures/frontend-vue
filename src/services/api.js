@@ -5,7 +5,7 @@ const api = axios.create({
     // TODO: Setup a proper screen or system for setting the api url in mobile
     baseURL: window.__TAURI__
         ? "http://192.168.0.118:80/"
-        : "http://school1.localhost:80/",  
+        : "http://school1.localhost:8000/",  
     headers: {
         "Content-Type": "application/json",
     },

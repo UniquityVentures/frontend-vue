@@ -2,7 +2,7 @@
 	<FormCard
 		:title="title"
 		actionName="Add"
-		:model="model"
+		:formFields="model"
 		:action="handleCreateAttachment"
 		class="border mb-4"
 		variant="flat"
@@ -39,12 +39,14 @@ const model = ref([
 		label: "Name",
 		key: "name",
 		type: "string",
+		value: "",
 	},
 	{
 		label: "File",
 		key: "file",
 		type: "file",
 		required: props.required,
+		value: null,
 	},
 ]);
 </script>

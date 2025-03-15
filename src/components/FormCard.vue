@@ -99,9 +99,10 @@ const props = defineProps({
 		required: true,
 	},
 });
+console.log(props.formFields);
 
 const newValue = ref(
-	props.formFields.reduce((acc, { key, defaultValue }) => {
+	props?.formFields?.reduce((acc, { key, defaultValue }) => {
 		acc[key] = defaultValue;
 		return acc;
 	}, {}),

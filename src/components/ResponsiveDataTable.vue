@@ -65,6 +65,9 @@
 								<v-card-subtitle>
 									{{ `${subtitle.label}: ${keyHandler(item, subtitle)}` }}
 								</v-card-subtitle>
+								<v-img 
+									v-for="header in data_headers.filter((a) => a === 'image')"
+									:src="item[header.key]"></v-img>
 								<v-card-text>
 									<div v-for="header in data_headers">
 										<div v-if="header.type === 'longstring'" class="mb-2">
@@ -188,11 +191,11 @@ const props = defineProps({
 	},
 	desktopTemplate: {
 		type: String,
-		default: 'table',
+		default: "table",
 	},
 	mobileTemplate: {
 		type: String,
-		default: 'list',
+		default: "list",
 	},
 });
 
@@ -200,7 +203,9 @@ const filters = defineModel();
 const { mobile } = useDisplay();
 
 // Make template reactive with ref instead of computed
-const template = ref(mobile.value ? props.mobileTemplate : props.desktopTemplate);
+const template = ref(
+	mobile.value ? props.mobileTemplate : props.desktopTemplate,
+);
 
 // Watch for changes in mobile state and update template accordingly
 watch(mobile, (newValue) => {
@@ -211,10 +216,20 @@ watch(mobile, (newValue) => {
 const title = ref(props.headers[0]);
 const subtitle = ref(props.headers[1]);
 // data headers are all headers except the title and subtitle
-const data_headers = computed(() => props.headers.slice(2, props.headers.length));
+const data_headers = computed(() =>
+	props.headers.slice(2, props.headers.length),
+);
 // table headers are all headers for now
-const table_headers = computed(() => [...props.headers, { label: 'Actions', key: 'actions', sortable: false, type: 'actions' }]);
-const itemsPerPageOptions = [{value: 10, title: '10'}, {value: 20, title: '20'}, {value: 50, title: '50'}, {value: 100, title: '100'}];
+const table_headers = computed(() => [
+	...props.headers,
+	{ label: "Actions", key: "actions", sortable: false, type: "actions" },
+]);
+const itemsPerPageOptions = [
+	{ value: 10, title: "10" },
+	{ value: 20, title: "20" },
+	{ value: 50, title: "50" },
+	{ value: 100, title: "100" },
+];
 
 const loading = ref(false);
 const itemsLen = ref(10);
