@@ -2,25 +2,16 @@
     <v-card>
         <v-card-title>{{ title }}</v-card-title>
         <v-card-text>
-            <v-list density="compact">
-                <v-list-item 
-                    v-for="(course, index) in courses" 
-                    :key="index"
-                    class="ma-1 pa-2 border"
-                >
+            <v-list>
+                <v-list-item v-for="(course, index) in courses" :key="index"
+                link :to="{ name: 'Course', params: { courseId: course.id } }" class="border">
 					<v-list-item-title>{{ course.name }}</v-list-item-title>
 					<v-list-item-subtitle>
-						{{ course.teacher_details?.user_details?.full_name }}
+						{{ course.code }}
 					</v-list-item-subtitle>
-                    <template v-slot:append>
-                        <v-btn 
-                        :to="{ name: 'Course', params: { courseId: course.id } }"
-                        icon="mdi-arrow-right"
-                        size="small"
-                        variant="text"
-                        class="ma-1 pa-2 border"
-                        ></v-btn>
-                    </template>
+                    <v-list-item-text>
+                        <TeacherChip :teacher="course.main_teacher_details" :label="`Teacher`"/>                           
+                    </v-list-item-text>
                 </v-list-item>
             </v-list>
         </v-card-text>
@@ -30,6 +21,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { getCourses } from "../api";
+import TeacherChip from "../../teachers/components/TeacherChip.vue";
 
 // Props
 const props = defineProps({
