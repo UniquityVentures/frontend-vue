@@ -1,8 +1,8 @@
 <template>
 	<Suspense>
 		<v-app>
-			<v-navigation-drawer app v-model="rightDrawer" color="accent">
-				<v-btn :to="{ name: 'All Apps' }" class="ma-4 d-flex justify-center" color="white">
+			<v-navigation-drawer app location="end" v-model="rightDrawer" color="accent" :temporary="mobile">
+				<v-btn :to="{ name: 'All Apps' }" class="ma-4 d-flex justify-center" color="white" variant="outlined">
 					Go to All Apps
 				</v-btn>
 
@@ -54,3 +54,25 @@ watch(
 );
 
 </script>
+
+<style>
+/* prevent horizontal scrolling */
+html, body {
+  overflow-x: hidden !important;
+  width: 100% !important;
+  position: relative;
+}
+
+.v-application {
+  overflow-x: hidden !important;
+}
+
+.v-application__wrap {
+  overflow-x: hidden !important;
+}
+
+/* Force navigation drawer to stay within viewport */
+.v-navigation-drawer {
+  max-width: 100vw !important;
+}
+</style>

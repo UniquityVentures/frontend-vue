@@ -2,7 +2,7 @@
 	<Suspense>
 		<v-app>
 			<v-navigation-drawer app v-model="leftDrawer"
-				color="secondary" sticky>
+				color="secondary">
 				<v-list dense>
 					<v-list-item>
 						<v-card class="mb-4" 
