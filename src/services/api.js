@@ -4,8 +4,8 @@ import axios from "axios";
 const api = axios.create({
     // TODO: Setup a proper screen or system for setting the api url in mobile
     baseURL: window.__TAURI__
-        ? "https://school.lariv.in/"
-        : "http://school1.localhost:8000",
+        ? "http://192.168.0.118:80/"
+        : "http://school1.localhost:80/",  
     headers: {
         "Content-Type": "application/json",
     },

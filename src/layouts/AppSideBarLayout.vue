@@ -1,7 +1,7 @@
 <template>
 	<Suspense>
 		<v-app>
-			<v-navigation-drawer location="right" v-model="rightDrawer" color="accent">
+			<v-navigation-drawer app v-model="rightDrawer" color="accent">
 				<v-btn :to="{ name: 'All Apps' }" class="ma-4 d-flex justify-center" color="white">
 					Go to All Apps
 				</v-btn>

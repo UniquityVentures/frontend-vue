@@ -1,7 +1,7 @@
 <template>
 	<!-- List template -->
 	<v-data-table-server v-if="template === 'list'" :items-length="itemsLen" :headers="[]" :items="items"
-		@update:options="fetchData" :search="JSON.stringify(filters)" :loading="loading">
+		@update:options="fetchData" :search="JSON.stringify(filters)" :loading="loading" :items-per-page-options="itemsPerPageOptions">
 		<template #headers={}></template>
 		<template #default>
 			<v-list density="compact" v-if="template === 'list'">
@@ -52,7 +52,7 @@
 
 	<!-- Card template -->
 	<v-data-table-server v-if="template === 'card'" :items-length="itemsLen" :headers="[]" :items="items"
-		@update:options="fetchData" :search="JSON.stringify(filters)" :loading="loading" class="body-container">
+		@update:options="fetchData" :search="JSON.stringify(filters)" :loading="loading" class="body-container" :items-per-page-options="itemsPerPageOptions">
 		<template #default>
 			<div class="body-grid-container">
 				<v-row no-gutters class="ma-1 pa-0">
@@ -110,7 +110,7 @@
 	</v-data-table-server>
 	<!-- Table template -->
 	<v-data-table-server v-if="template === 'table'" :items-length="itemsLen" :headers="table_headers" :items="items"
-		@update:options="fetchData" :search="JSON.stringify(filters)" :loading="loading">
+		@update:options="fetchData" :search="JSON.stringify(filters)" :loading="loading" :items-per-page-options="itemsPerPageOptions">
 		<template #headers>
 			<tr>
 				<th v-for="header in table_headers" :key="header.key"
@@ -214,6 +214,7 @@ const subtitle = ref(props.headers[1]);
 const data_headers = computed(() => props.headers.slice(2, props.headers.length));
 // table headers are all headers for now
 const table_headers = computed(() => [...props.headers, { label: 'Actions', key: 'actions', sortable: false, type: 'actions' }]);
+const itemsPerPageOptions = [{value: 10, title: '10'}, {value: 20, title: '20'}, {value: 50, title: '50'}, {value: 100, title: '100'}];
 
 const loading = ref(false);
 const itemsLen = ref(10);
