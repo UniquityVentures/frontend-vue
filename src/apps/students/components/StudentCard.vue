@@ -14,11 +14,11 @@
 
     <!-- Student Info with Subtitle -->
     <v-card-subtitle>
-      Student No: {{ student.student_no }} | Roll No: {{ student.roll_no }}
+      Student No: {{ student.student_no }}
     </v-card-subtitle>
 
     <v-card-text>
-      <div class="text-subtitle-2 mb-1">Contact Information: </div>
+      <div class="text-subtitle-2">Contact Information: </div>
       
       <v-chip color="grey" prepend-icon="mdi-email" :href="`mailto:${student.user_details.email}`">
         Email: {{ student.user_details.email }}
@@ -26,7 +26,7 @@
     </v-card-text>
 
     <v-card-text>
-      <div class="text-subtitle-2 mb-1">Status: </div>
+      <div class="text-subtitle-2">Status: </div>
       <!-- Status Chips -->
       <v-chip :color="student.user_details.is_approved ? 'success' : 'warning'">
         {{ student.user_details.is_approved ? 'Approved' : 'Pending Approval' }}
@@ -35,6 +35,17 @@
       <v-chip :color="student.user_details.is_active ? 'success' : 'error'">
         {{ student.user_details.is_active ? 'Active' : 'Inactive' }}
       </v-chip>
+    </v-card-text>
+
+    <v-card-text>
+      <div class="text-subtitle-2">Batch: </div>
+      <v-list-item link class="border" :to="{ name: 'Batch', params: { batchId: student.batch_details?.id }}" variant="tonal">
+          <v-list-item-title>{{ student.batch_details?.name }}</v-list-item-title>
+          <v-list-item-subtitle>Roll Number: {{ student.roll_no }}</v-list-item-subtitle>
+          <v-list-item-text>
+            <TeacherChip v-if="student.batch_details?.class_teacher_details" :teacher="student.batch_details?.class_teacher_details" :label="`Teacher`"/>
+          </v-list-item-text>
+        </v-list-item>
     </v-card-text>
     
     <v-card-actions>
@@ -52,7 +63,6 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 
 const props = defineProps({
 	student: {

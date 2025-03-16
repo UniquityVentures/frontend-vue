@@ -56,13 +56,13 @@
 		<template #default>
 			<div class="body-grid-container">
 				<v-row no-gutters class="ma-1 pa-0">
-					<v-col v-for="item in items" :key="item.id" cols="6" md="3" lg="2" class="pa-2">
+					<v-col v-for="item in items" :key="item.id" cols="6" :md="props.forceMobile ? 6 : 3" :lg="props.forceMobile ? 6 : 2" class="pa-2">
 						<slot name="card-item-slot" :item="item">
 							<v-card height="100%" link :to="getToFunction(item)" variant="flat" class="border">
 								<v-img 
 									v-for="header in headers.filter((a) => a.type === 'image')"
 									:src="item[header.key]" max-height="256" max-width="256"></v-img>
-								<v-card-title>
+								<v-card-title class="text-subtitle-1">
 									{{ keyHandler(item, title) }}
 								</v-card-title>
 								<v-card-subtitle>
@@ -197,6 +197,12 @@ const props = defineProps({
 	mobileTemplate: {
 		type: String,
 		default: "list",
+	},
+	forceMobile: {
+		// list is already mobile friendly, table will never be used in mobile.
+		// this setting is for the card template to set up the columns properly
+		type: Boolean,
+		default: false,
 	},
 });
 

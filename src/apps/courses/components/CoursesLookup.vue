@@ -1,96 +1,64 @@
 <template>
-  <v-card variant="flat">
-    <v-card-title>
-      <FilterCard 
-        :fields="fields"
-        :exportFunction="exportCourses"
-      /> 
-    </v-card-title>
-    <ResponsiveDataTable 
-      :getToFunction="(item) => ({name: 'Course', params: {courseId: item.id}})" 
-      :headers="headers" 
-      :fetch="getCourses" 
-      v-model="filters"
-      :forceMobile="forceMobile"
-    />
-  </v-card>
+    <v-card variant="flat">
+        <v-card-title>
+            {{ title }}
+        </v-card-title>
+        <v-card-subtitle>
+            {{ subtitle }}
+        </v-card-subtitle>
+
+		<FilterCard 
+                :fields="fields"
+                :exportFunction="exportCourses"
+            /> 
+        <ResponsiveDataTable 
+            :getToFunction="(item) => ({name: 'Course', params: {courseId: item.id}})" 
+            :headers="courseDefaultHeaders" 
+            :fetch="getCourses" 
+            v-model="filters"
+            desktopTemplate="card"
+            mobileTemplate="card"
+        />
+    </v-card>
 </template>
 
 <script setup>
 import FilterCard from "@/components/FilterCard.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { computed, ref } from "vue";
-import { exportCourses, getCourses } from "../api";
-
-const defaultFields = [
-	{
-		label: "Search by name",
-		type: "string",
-		key: "name",
-		value: "",
-		defaultValue: "",
-	},
-	{
-		label: "Batch",
-		type: "batch",
-		key: "batch",
-		value: null,
-	},
-	{
-		label: "Teacher",
-		type: "teacher",
-		key: "teacher",
-		value: null,
-	},
-];
+import { getCourses, exportCourses } from "../api";
+import { courseDefaultHeaders, courseDefaultFilterFields } from "../config";
 
 const props = defineProps({
-	forceMobile: {
-		type: Boolean,
-		default: false,
-	},
-	initialFields: {
-		type: Array,
-		default: () => [],
-	},
+    title: {
+        type: String,
+        default: () => 'Courses',
+    },
+    subtitle: {
+        type: String,
+        default: () => 'Courses Master List',
+    },
 });
 
-// Initialize fields with any overrides from props
-const fields = ref(
-	defaultFields.map((defaultField) => {
-		const override = props.initialFields.find(
-			(f) => f.key === defaultField.key,
-		);
-		return override ? { ...defaultField, ...override } : defaultField;
-	}),
-);
-
-// Replace the filters ref with computed property
-const filters = computed(() => {
-	return fields.value.reduce((acc, field) => {
-		if (Array.isArray(field.key)) {
-			field.key.forEach((k, i) => {
-				acc[k] = field.value?.[i] ?? null;
-			});
-		} else {
-			acc[field.key] = field.value;
-		}
-		return acc;
-	}, {});
-});
-
-const headers = [
-	{ title: "Name", key: "name" },
-	{
-		title: "Batch",
-		key: "batch_details",
-		formatFunc: (batch) => batch?.name || "-",
-	},
-	{
-		title: "Teacher",
-		key: "teacher_details",
-		formatFunc: (teacher) => teacher?.user_details?.full_name || "-",
-	},
-	{ title: "Actions", key: "actions", sortable: false },
+const customFields = [
+    // Add your custom field overrides here if needed
 ];
-</script> 
+
+const fields = ref(courseDefaultFilterFields.map(defaultField => {
+    const override = customFields.find(f => f.key === defaultField.key);
+    return override ? { ...defaultField, ...override } : defaultField;
+}));
+
+const filters = computed(() => {
+    return fields.value.reduce((acc, field) => {
+        if (Array.isArray(field.key)) {
+            field.key.forEach((k, i) => {
+                acc[k] = field.value?.[i] ?? null;
+            });
+        } else {
+            acc[field.key] = field.value;
+        }
+        return acc;
+    }, {});
+});
+</script>

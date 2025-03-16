@@ -1,9 +1,9 @@
 <template>
 	<v-container>
-		<CoursesCard />
+		<CoursesLookup />
 	</v-container>
 </template>
 
 <script setup>
-import CoursesCard from "@/apps/courses/components/CoursesCard.vue";
+import CoursesLookup from "@/apps/courses/components/CoursesLookup.vue";
 </script>
