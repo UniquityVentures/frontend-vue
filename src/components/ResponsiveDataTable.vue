@@ -175,7 +175,7 @@ import CourseChip from "@/apps/courses/components/CourseChip.vue";
 const props = defineProps({
 	headers: {
 		type: Array,
-		required: true,
+		default: () => [],
 	},
 	fetch: {
 		type: Function,

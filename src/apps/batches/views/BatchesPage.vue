@@ -1,31 +1,9 @@
 <template>
     <v-container>
-        <v-row>
-            <v-col lg="4">
-                <v-text-field
-                    v-model="search"
-                    label="Search by batch name"
-                    @update:model-value="updateFilter"
-                    clearable
-                />
-            </v-col>
-        </v-row>
-        <BatchesCard :filter="filter" />
+        <BatchesLookup :overrideFields="[{label: 'Search by batch name', key: 'name', type: 'string'}]" />
     </v-container>
 </template>
 
 <script setup>
-import BatchesCard from "@/apps/batches/components/BatchesCard.vue";
-import { reactive, ref } from "vue";
-
-const search = ref("");
-const filter = reactive({});
-
-const updateFilter = (value) => {
-	if (value) {
-		filter.name = value;
-	} else {
-		filter.name = undefined;
-	}
-};
+import BatchesLookup from "@/apps/batches/components/BatchesLookup.vue";
 </script>

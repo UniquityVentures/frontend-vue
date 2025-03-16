@@ -22,7 +22,7 @@ const props = defineProps({
   },
   label: {
     type: String,
-    default: ''
+    default: null,
   },
 });
 </script>

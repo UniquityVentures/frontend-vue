@@ -73,3 +73,16 @@ export const toHeaderCase = (str) => {
 const isAlphabet = (str) =>
     (str.codePointAt(0) > 64 && str.codePointAt(0) < 91) ||
     (str.codePointAt(0) > 96 && str.codePointAt(0) < 123);
+
+export const fieldsToFilters = (fields) => {
+    return fields.reduce((acc, field) => {
+        if (Array.isArray(field.key)) {
+            field.key.forEach((k, i) => {
+                acc[k] = field.value?.[i] ?? null;
+        });
+    } else {
+            acc[field.key] = field.value;
+        }
+        return acc;
+    }, {});
+};
