@@ -33,12 +33,9 @@
 									{{ `${header.label}: ${header.formatFunc(item[header.key])}` }}
 								</v-chip>
 								<!-- Custom Chips -->
-								<TeacherChip v-else-if="header.type === 'teacher'" :teacher="keyHandler(item, header)"
-									:label="header.label" />
-								<BatchChip v-else-if="header.type === 'batch'" :batch="keyHandler(item, header)"
-									:label="header.label" />
-								<CourseChip v-else-if="header.type === 'course'" :course="keyHandler(item, header)"
-									:label="header.label" />
+								<TeacherChip v-else-if="header.type === 'teacher'" :teacher="keyHandler(item, header)"/>
+								<BatchChip v-else-if="header.type === 'batch'" :batch="keyHandler(item, header)"/>
+								<CourseChip v-else-if="header.type === 'course'" :course="keyHandler(item, header)"/>
 								<v-chip v-else>
 									{{ `${header.label}: ${keyHandler(item, header)}` }}
 								</v-chip>
@@ -94,12 +91,9 @@
 											{{ header.formatFunc(item[header.key]) }}
 										</v-chip>
 										<!-- Custom Chips -->
-										<TeacherChip v-else-if="header.type === 'teacher'"
-											:teacher="keyHandler(item, header)" :label="header.label" />
-										<BatchChip v-else-if="header.type === 'batch'" :batch="keyHandler(item, header)"
-											:label="header.label" />
-										<CourseChip v-else-if="header.type === 'course'"
-											:course="keyHandler(item, header)" :label="header.label" />
+										<TeacherChip v-else-if="header.type === 'teacher'" :teacher="keyHandler(item, header)"/>
+										<BatchChip v-else-if="header.type === 'batch'" :batch="keyHandler(item, header)"/>
+										<CourseChip v-else-if="header.type === 'course'" :course="keyHandler(item, header)"/>
 										<v-chip v-else>
 											{{ `${header.label}: ${keyHandler(item, header)}` }}
 										</v-chip>
