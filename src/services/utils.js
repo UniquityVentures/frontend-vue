@@ -70,6 +70,39 @@ export const toHeaderCase = (str) => {
     return outputString;
 };
 
+export const formatErrorMessage = (error) => {
+	if (error.response) {
+		const { status, data } = error.response;
+		// Handle 400 Bad Request
+		if (status === 400) {
+			if (typeof data === "object") {
+				// Format field-specific errors
+				const errors = objToString(data);
+				return errors;
+			}
+			return data.detail || "Invalid data submitted";
+		}
+		// Handle other status codes
+		return data.detail || `Server returned ${status}`;
+	}
+	return "Failed to submit form";
+};
+
+export const objToString = (data) => {
+	if (Array.isArray(data)) {
+		return data.join(", ");
+	}
+	if (typeof data === "string") {
+		return data;
+	}
+	if (typeof data === "object") {
+		return Object.entries(data).map(
+			([field, message]) => `${field}: ${objToString(message)}`,
+		);
+	}
+	return data;
+};
+
 const isAlphabet = (str) =>
     (str.codePointAt(0) > 64 && str.codePointAt(0) < 91) ||
     (str.codePointAt(0) > 96 && str.codePointAt(0) < 123);

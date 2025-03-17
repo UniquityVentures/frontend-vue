@@ -18,5 +18,12 @@ const createAttachment = async (formObj) => {
 const getAttachments = attachmentViewset.list;
 const getAttachment = attachmentViewset.retrieve;
 const getAttachmentStats = attachmentViewset.stats;
+const deleteAttachment = attachmentViewset.delete;
 
-export { createAttachment, getAttachments, getAttachment, getAttachmentStats };
+export {
+    createAttachment,
+    getAttachments,
+    getAttachment,
+    getAttachmentStats,
+    deleteAttachment,
+};
