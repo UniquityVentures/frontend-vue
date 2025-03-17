@@ -7,8 +7,12 @@
 						<v-card variant="flat">
 							<v-img :src="attachment?.file" max-width="512" max-height="512"></v-img>
 							<v-card-title>{{ attachment?.name }}</v-card-title>
-							<v-card-text>{{ attachment?.file }}</v-card-text>
-							<DeleteButton :action="() => deleteAttachment(attachment?.id)" :name="'attachment ' + attachment?.name" />
+							<v-card-actions>
+								<v-btn :href="attachment?.file" color="success">
+									Download
+								</v-btn>
+								<DeleteButton :action="() => deleteAttachment(attachment?.id)" :name="'attachment ' + attachment?.name" />
+							</v-card-actions>
 						</v-card>
 					</v-col>
 					<v-col lg="4">

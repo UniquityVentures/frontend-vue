@@ -3,7 +3,13 @@
 		@click="dialogOpen = true"
 		variant="outlined"
 		prepend-icon="mdi-delete"
-		color="error">Delete</v-btn>
+		:loading="isSubmitting"
+		:disabled="isSubmitting"
+		:append-icon="isSuccess ? 'mdi-check' : (error ? 'mdi-alert' : '')"
+		:color="error ? 'error' : 'primary'"
+		color="error">
+		{{ isSuccess ? 'Deleted!' : (error ? 'Failed!' : label) }}
+	</v-btn>
 
 	<v-dialog max-width="500" v-model='dialogOpen'>
 		<v-card title="Dialog">
@@ -42,6 +48,10 @@ import { formatErrorMessage } from "@/services/utils";
 const props = defineProps({
 	action: Function,
 	name: String,
+	label: {
+		type: String,
+		default: "Delete"
+	}
 });
 const router = useRouter();
 
