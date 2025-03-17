@@ -12,6 +12,9 @@ export const createViewset = (baseUrl, filename = "export") => ({
 	// Get single record by ID
 	retrieve: async (id) => (await api.get(`${baseUrl}/${id}`)).data,
 
+	// Get single record by ID
+	delete: async (id) => (await api.delete(`${baseUrl}/${id}/`)).data,
+
 	// Create new record
 	create: async (data) => (await api.post(`${baseUrl}/create/`, data)).data,
 
