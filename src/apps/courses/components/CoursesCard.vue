@@ -10,11 +10,21 @@
             :getToFunction="(item) => ({name: 'Course', params: {courseId: item.id}})" 
             :headers="courseDefaultHeaders" 
             :fetch="getCourses" 
-            v-model="filter"
+            v-model="props.filter"
             desktopTemplate="card"
             mobileTemplate="card"
-            forceMobile="true"
-        />
+            forceMobile="true">
+            <template #card-item-slot="{ item }">
+                <v-card class="border" variant="flat" :to="{name: 'Course', params: {courseId: item.id}}">
+                    <v-card-title class="text-subtitle-1">
+                        {{ item.name }}
+                    </v-card-title>
+                    <v-card-subtitle>
+                        {{ item.code }}
+                    </v-card-subtitle>
+                </v-card>
+            </template>
+        </ResponsiveDataTable>
     </v-card>
 </template>
 
@@ -39,5 +49,4 @@ const props = defineProps({
     },
 });
 
-const filter = ref(props.filter);
 </script>

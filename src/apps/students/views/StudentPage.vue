@@ -2,8 +2,8 @@
   <v-container class="columns-container">
     <StudentCard class="column-item" :student="student" v-if="student?.user_details" />
     <StudentGuardiansCard class="column-item" :student="student" v-if="student?.user_details" />
-    <CoursesCard class="column-item" :filter="{ batches: student.batch_details?.id }" 
-    :title="`Courses Taken`" :subtitle="`Courses Taken by ${student.user_details?.full_name}`"/>
+    <CoursesCard class="column-item" :filter="{ batches: batch.id }" 
+    :title="`Courses Taken`" :subtitle="`Courses in ${batch.name} (for now)`"/>
   </v-container>
 </template>
 
