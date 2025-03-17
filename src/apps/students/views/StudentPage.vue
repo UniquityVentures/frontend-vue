@@ -2,13 +2,8 @@
   <v-container class="columns-container">
     <StudentCard class="column-item" :student="student" v-if="student?.user_details" />
     <StudentGuardiansCard class="column-item" :student="student" v-if="student?.user_details" />
-    <v-card class="column-item">
-      <v-card-title>Batch</v-card-title>
-      <v-card-text>
-        
-      </v-card-text>
-    </v-card>
-    <CoursesCard class="column-item" :filters="{ students: student.id }" :title="`Courses Taken`" :subtitle="`Courses Taken by ${student.user_details?.full_name}`"/>
+    <CoursesCard class="column-item" :filter="{ batches: student.batch_details?.id }" 
+    :title="`Courses Taken`" :subtitle="`Courses Taken by ${student.user_details?.full_name}`"/>
   </v-container>
 </template>
 
@@ -19,7 +14,6 @@ import StudentGuardiansCard from "@/apps/students/components/StudentGuardiansCar
 import { onMounted, ref } from "vue";
 import CoursesCard from "@/apps/courses/components/CoursesCard.vue";
 import { getBatch } from "@/apps/batches/api";
-import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 
 const student = ref({});
 const batch = ref({});

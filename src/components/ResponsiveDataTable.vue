@@ -65,7 +65,6 @@
 								<v-card-subtitle>
 									{{ `${subtitle.label}: ${keyHandler(item, subtitle)}` }}
 								</v-card-subtitle>
-								{{console.log(data_headers)}}
 								<v-card-text>
 									<div v-for="header in data_headers">
 										<div v-if="header.type === 'longstring'" class="mb-2">
