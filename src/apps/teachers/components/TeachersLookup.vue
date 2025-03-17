@@ -16,7 +16,7 @@
 		>
 			<template #card-item-slot="{ item }">
 				<v-card height="100%" link :to="{ name: 'Teacher', params: { teacherId: item.id }}" variant="flat" class="border">
-					<v-card-title>{{ item.user_details.full_name }}</v-card-title>
+					<v-card-title class="text-subtitle-1">{{ item.user_details.full_name }}</v-card-title>
 					<v-card-subtitle>{{ item.identifier }}</v-card-subtitle>
 					<v-card-text>
 						<v-chip prepend-icon="mdi-email" color="primary">
