@@ -80,7 +80,7 @@ import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
 import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
 
 import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 
 const props = defineProps({
 	// Array of field objects, each containing:
@@ -179,4 +179,27 @@ const handleExport = async () => {
 		isExporting.value = false;
 	}
 };
+
+// Add model management
+const filtersModel = defineModel('filters', { required: true });
+
+// Compute filters from fields
+const computedFilters = computed(() => {
+	return props.fields.reduce((acc, field) => {
+		if (Array.isArray(field.key)) {
+			field.key.forEach((k, i) => {
+				acc[k] = field.value?.[i] ?? null;
+			});
+		} else {
+			acc[field.key] = field.value;
+		}
+		return acc;
+	}, {});
+});
+
+// Sync computed filters to model
+watch(computedFilters, (newVal) => {
+	filtersModel.value = newVal;
+}, { immediate: true, deep: true });
+
 </script>

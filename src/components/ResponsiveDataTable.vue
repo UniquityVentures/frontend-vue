@@ -199,7 +199,7 @@ const props = defineProps({
 	},
 });
 
-const filters = defineModel();
+const filters = defineModel('filters');
 const { mobile } = useDisplay();
 
 // Make template reactive with ref instead of computed

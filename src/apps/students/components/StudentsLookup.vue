@@ -7,15 +7,15 @@
 			{{ subtitle }}
 		</v-card-subtitle>
 
-		<FilterCard :fields="fields" :exportFunction="exportStudents" />
+		<FilterCard :fields="fields" :exportFunction="exportStudents" v-model:filters="filters" />
 		<ResponsiveDataTable :getToFunction="(item) => ({ name: 'Student', params: { studentId: item.id } })"
-			:headers="studentDefaultHeaders" :fetch="getStudents" v-model="filters" :desktopTemplate="props.overrideDesktopTemplate"
+			:headers="studentDefaultHeaders" :fetch="getStudents" v-model:filters="filters" :desktopTemplate="props.overrideDesktopTemplate"
 			mobileTemplate="list" />
 	</v-card>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { getStudents, exportStudents } from "../api";
 import { studentDefaultHeaders, studentDefaultFilterFields } from "../config";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
@@ -40,17 +40,5 @@ const props = defineProps({
 });
 
 const fields = ref(props.overrideFields ? props.overrideFields : studentDefaultFilterFields)
-
-const filters = computed(() => {
-	return fields.value.reduce((acc, field) => {
-		if (Array.isArray(field.key)) {
-			field.key.forEach((k, i) => {
-				acc[k] = field.value?.[i] ?? null;
-			});
-		} else {
-			acc[field.key] = field.value;
-		}
-		return acc;
-	}, {});
-});
+const filters = ref({})
 </script>

@@ -10,12 +10,13 @@
 		<FilterCard 
                 :fields="fields"
                 :exportFunction="exportCourses"
+                v-model:filters="filters"
             /> 
         <ResponsiveDataTable 
             :getToFunction="(item) => ({name: 'Course', params: {courseId: item.id}})" 
             :headers="courseDefaultHeaders" 
             :fetch="getCourses" 
-            v-model="filters"
+            v-model:filters="filters"
             desktopTemplate="card"
             mobileTemplate="card"
         />
@@ -40,25 +41,7 @@ const props = defineProps({
     },
 });
 
-const customFields = [
-    // Add your custom field overrides here if needed
-];
+const fields = ref(courseDefaultFilterFields);
+const filters = ref({})
 
-const fields = ref(courseDefaultFilterFields.map(defaultField => {
-    const override = customFields.find(f => f.key === defaultField.key);
-    return override ? { ...defaultField, ...override } : defaultField;
-}));
-
-const filters = computed(() => {
-    return fields.value.reduce((acc, field) => {
-        if (Array.isArray(field.key)) {
-            field.key.forEach((k, i) => {
-                acc[k] = field.value?.[i] ?? null;
-            });
-        } else {
-            acc[field.key] = field.value;
-        }
-        return acc;
-    }, {});
-});
 </script>

@@ -4,12 +4,13 @@
 			<FilterCard 
 				:fields="fields"
 				:exportFunction="teacherViewset.export"
+				v-model:filters="filters"
 			/>
 		</v-card-title>
 		<ResponsiveDataTable
 			:headers="teacherDefaultHeaders"
 			:fetch="getTeachers"
-			v-model="filters"
+			v-model:filters="filters"
 			:getToFunction="(item) => ({name: 'Teacher', params: {teacherId: item.id}})"
 			desktopTemplate="card"
 			mobileTemplate="card"
@@ -59,16 +60,5 @@ const fields = ref(
 	}),
 );
 
-const filters = computed(() => {
-	return fields.value.reduce((acc, field) => {
-		if (Array.isArray(field.key)) {
-			field.key.forEach((k, i) => {
-				acc[k] = field.value?.[i] ?? null;
-			});
-		} else {
-			acc[field.key] = field.value;
-		}
-		return acc;
-	}, {});
-});
+const filters = ref({})
 </script>

@@ -7,6 +7,7 @@ import financesRoutes from "@/apps/finances/routes";
 import studentsRoutes from "@/apps/students/routes";
 import coursesRoutes from "@/apps/courses/routes";
 import teachersRoutes from "@/apps/teachers/routes";
+import attendanceRoutes from "@/apps/attendance/routes";
 
 export default [
 	...batchesRoutes,
@@ -18,4 +19,5 @@ export default [
 	...attachmentRoutes,
 	...calendarRoutes,
 	...financesRoutes,
+	...attendanceRoutes,
 ];
