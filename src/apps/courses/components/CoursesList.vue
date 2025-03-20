@@ -7,7 +7,7 @@
                 <v-list-item v-for="course in limitedItems" :key="course.id"
                     :to="{ name: 'Course', params: { courseId: course.id } }" link class="border">
                     <v-list-item-title>{{ course.name }}</v-list-item-title>
-                    <v-list-item-subtitle>{{ course.subject }} | {{ course.main_teacher_details?.user_details?.full_name || "Loading..." }}</v-list-item-subtitle>
+                    <v-list-item-subtitle>{{ course.main_teacher_details?.user_details?.full_name || "Loading..." }}</v-list-item-subtitle>
                     <template v-slot:append>
                         <v-chip v-if="course.is_active" color="success" size="small">Active</v-chip>
                         <v-chip v-else color="error" size="small">Inactive</v-chip>

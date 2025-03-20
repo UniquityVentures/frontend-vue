@@ -15,9 +15,7 @@ const createCourse = courseViewset.create;
 
 const getCourseInfoFromObj = (item) => ({
 	title: item.name,
-	subtitle: item.batch_details
-		? item.batch_details.name
-		: "batch loading...",
+	subtitle: item.code,
 	value: item.id,
 });
 

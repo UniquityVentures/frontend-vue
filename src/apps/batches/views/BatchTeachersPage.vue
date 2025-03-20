@@ -4,7 +4,7 @@
             <v-card-title>Teachers</v-card-title>
             <v-card-text>
                 <div class="text-subtitle-1">Head Teacher</div>
-                <TeacherListItem :teacher="batch.class_teacher_details" />
+                <TeacherListItem :teacher="batch.main_teacher_details" />
             </v-card-text>
             <v-card-text v-if="other_teachers.length > 0">
                 <div class="text-subtitle-1">Assistant Teachers</div>

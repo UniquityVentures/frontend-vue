@@ -5,7 +5,7 @@
           v-if="teacher?.batches_leading?.length > 0"
           class="column-item" 
           :title="'Leading Batches'" 
-          :filters="{ class_teacher: props.teacherId }" />
+          :filters="{ main_teacher: props.teacherId }" />
         <BatchesCard 
           v-if="teacher?.batches_assisting?.length > 0"
           class="column-item" 

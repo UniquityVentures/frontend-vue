@@ -5,8 +5,8 @@
             {{ batch.name }}
         </v-card-title>
         <v-card-text>
-            <span class="text-primary">Class Teacher:</span><br>
-            <TeacherChip :teacher="batch.class_teacher_details" />
+            <span class="text-primary">Head Teacher:</span><br>
+            <TeacherChip :teacher="batch.main_teacher_details" />
         </v-card-text>
         <v-card-text v-if="otherTeachers.length">
             <span class="text-primary">Other Teachers:</span><br>

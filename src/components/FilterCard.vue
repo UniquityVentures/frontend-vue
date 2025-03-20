@@ -2,44 +2,60 @@
 	<v-container rounded="lg" ref="containerRef">
 		<v-row>
 			<v-col :cols="isNarrow ? 12 : 6" :md="isNarrow ? 12 : 3" :lg="isNarrow ? 12 : 2" v-for="field in fields" v-show="!field.hidden" class="pa-2">
-				<v-text-field v-if="field.type === 'string'" :label="field.label" v-model="field.value"
-					hide-details :disabled="field.disabled"></v-text-field>
-				<v-number-input v-if="field.type === 'integer'" :label="field.label" v-model="field.value"
-					hide-details :disabled="field.disabled"></v-number-input>
-				<ServerAutocomplete v-if="field.type === 'batch'" v-model="field.value" :clearable="!field.disabled"
+				
+				<v-text-field v-if="field.type === FIELD_TYPES.STRING" :label="field.label" v-model="field.value"
+					hide-details :disabled="field.disabled" />
+				
+				<v-number-input v-if="field.type === FIELD_TYPES.INTEGER" :label="field.label" v-model="field.value"
+					hide-details :disabled="field.disabled" />
+				
+				<v-textarea v-if="field.type === FIELD_TYPES.LONGSTRING" :label="field.label" v-model="field.value"
+					hide-details :disabled="field.disabled" />
+				
+				<ServerAutocomplete v-if="field.type === FIELD_TYPES.BATCH" v-model="field.value" :clearable="!field.disabled"
 					:fetch="getBatches" :getInfo="getBatchInfoFromObj" :searchField="field.searchField || 'name'"
 					:label="field.label" :disabled="field.disabled" />
-				<ServerAutocomplete v-if="field.type === 'course'" v-model="field.value" :clearable="!field.disabled"
+				
+				<ServerAutocomplete v-if="field.type === FIELD_TYPES.COURSE" v-model="field.value" :clearable="!field.disabled"
 					:fetch="getCourses" :getInfo="getCourseInfoFromObj" :searchField="field.searchField || 'name'"
 					:label="field.label" :disabled="field.disabled" />
-				<ServerAutocomplete v-if="field.type === 'teacher'" v-model="field.value" :clearable="!field.disabled"
+				
+				<ServerAutocomplete v-if="field.type === FIELD_TYPES.TEACHER" v-model="field.value" :clearable="!field.disabled"
 					:fetch="getTeachers" :getInfo="getTeacherInfoFromObj" :searchField="field.searchField || 'name'"
 					:label="field.label" :disabled="field.disabled" />
-				<ServerAutocomplete v-if="field.type === 'student'" v-model="field.value" :clearable="!field.disabled"
+				
+				<ServerAutocomplete v-if="field.type === FIELD_TYPES.STUDENT" v-model="field.value" :clearable="!field.disabled"
 					:fetch="getStudents" :getInfo="getStudentInfoFromObj" :searchField="field.searchField || 'name'"
 					:label="field.label" :disabled="field.disabled" />
-				<ServerAutocomplete v-if="field.type === 'payment_purpose'" v-model="field.value"
+				
+				<ServerAutocomplete v-if="field.type === FIELD_TYPES.PAYMENT_PURPOSE" v-model="field.value"
 					:clearable="!field.disabled" :fetch="getTransactionPurposes" :getInfo="getTransactionPurposeInfoFromObj"
 					:searchField="field.searchField || 'name'" :label="field.label"
 					:disabled="field.disabled" />
-				<ServerAutocomplete v-if="field.type === 'number'" v-model="field.value" :clearable="!field.disabled"
+				
+				<ServerAutocomplete v-if="field.type === FIELD_TYPES.NUMBER" v-model="field.value" :clearable="!field.disabled"
 					:fetch="field.fetchOptions" :getInfo="field.fetchOptionsInfo"
 					:searchField="field.searchField || 'name'" :label="field.label"
 					:disabled="field.disabled" />
-				<ServerAutocomplete v-if="field.type === 'payee'" v-model="field.value" :clearable="!field.disabled"
+				
+				<ServerAutocomplete v-if="field.type === FIELD_TYPES.PAYEE" v-model="field.value" :clearable="!field.disabled"
 					:fetch="getPayees" :getInfo="getPayeeInfoFromObj" :searchField="field.searchField || 'name'"
 					:label="field.label" :disabled="field.disabled" />
-				<v-checkbox v-if="field.type === 'boolean'" :label="field.label" v-model="field.value"></v-checkbox>
-				<ServerAutocomplete v-if="field.type === 'array'" v-model="field.value" clearable
+				
+				<v-checkbox v-if="field.type === FIELD_TYPES.BOOLEAN" :label="field.label" v-model="field.value"></v-checkbox>
+				
+				<ServerAutocomplete v-if="field.type === FIELD_TYPES.MULTI_SELECT" v-model="field.value" clearable
 					:fetch="field.fetchOptions" :getInfo="field.fetchOptionsInfo"
-					:searchField="field.searchField || 'name'" :label="field.label" :multiple='true'
-					/>
-				<v-select v-if="field.type === 'n_nary'" v-model="field.value" :items="field.fetchOptions()"
-					:label="field.label" hide-details></v-select>
-				<v-date-input v-if="field.type === 'dates'" color="primary" :label="field.label" v-model="field.value"
-					:multiple="Array.isArray(field.key) ? 'range' : false" clearable
-					:disabled="field.disabled" @update:modelValue="(value) => updateDates(value, field)">
-				</v-date-input>
+					:searchField="field.searchField || 'name'" :label="field.label" :multiple='true'/>
+				
+				<v-select v-if="field.type === FIELD_TYPES.SELECT" v-model="field.value" :items="field.fetchOptions()"
+					:label="field.label" hide-details :disabled="field.disabled" />
+				
+				<v-date-input v-if="field.type === FIELD_TYPES.DATE" color="primary" :label="field.label" v-model="field.value"
+					clearable :disabled="field.disabled" />
+				
+				<v-date-input v-if="field.type === FIELD_TYPES.DATE_RANGE" color="primary" :label="field.label" v-model="field.value"
+					multiple="range" clearable :disabled="field.disabled" @update:modelValue="(value) => updateDates(value, field)" />
 			</v-col>
 			<v-col cols="12" md="4" lg="3">
 				<v-btn color="primary" @click="clearFilters">
@@ -81,24 +97,14 @@ import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
 
 import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
 import { ref, onMounted, computed, watch } from "vue";
+import { FIELD_TYPES, getDefaultEmptyValue } from "./FieldTypeDefinitions";
 
 const props = defineProps({
 	// Array of field objects, each containing:
 	// - label: String (display label for the field)
-	// - type: String - One of:
-	//   - 'string'
-	//   - 'integer'
-	//   - 'number'
-	//   - 'boolean'
-	//   - 'array'
-	//   - 'n_nary'
-	//   - 'batch'
-	//   - 'course'
-	//   - 'teacher'
-	//   - 'student'
-	//   - 'payment_purpose'
-	//   - 'dates'
+	// - type: String - One of FIELD_TYPES constants
 	// - value: any (current value of the field)
+	// - key: String or Array (for date ranges)
 	// - defaultValue?: any (value to reset to when clearing)
 	// - disabled?: boolean
 	// - fetchOptions?: Function (for custom number/array types)
@@ -133,12 +139,8 @@ const clearFilters = () => {
 
 		if ("defaultValue" in field) {
 			field.value = field.defaultValue;
-		} else if (Array.isArray(field.value)) {
-			field.value = [];
-		} else if (field.type === "string") {
-			field.value = "";
 		} else {
-			field.value = null;
+			field.value = getDefaultEmptyValue(field.type);
 		}
 	}
 };

@@ -18,7 +18,7 @@
                 <template #card-item-slot="{ item }">
                     <v-card height="100%" link :to="{ name: 'Batch', params: { batchId: item.id }}" variant="flat" class="border">
                         <v-card-title>{{ item.name }}</v-card-title>
-                        <v-card-subtitle>{{ item.class_teacher_details?.user_details?.full_name || "Loading..." }}</v-card-subtitle>
+                        <v-card-subtitle>{{ item.main_teacher_details?.user_details?.full_name || "Loading..." }}</v-card-subtitle>
                     </v-card>
                 </template>
             </ResponsiveDataTable>

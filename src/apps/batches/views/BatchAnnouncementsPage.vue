@@ -2,7 +2,8 @@
     <v-container>
         <AnnouncementsLookup 
             :overrideFields="overrideFields"
-            :title="`Announcements for ${batch?.name}`"
+            :title="`Announcements List`"
+            :subtitle="`All announcements for ${batch?.name}`"
         />
     </v-container>
 </template>

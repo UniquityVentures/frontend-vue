@@ -7,7 +7,7 @@
                 <v-list-item v-for="batch in limitedItems" :key="batch.id"
                     :to="{ name: 'Batch', params: { batchId: batch.id } }" link class="border">
                     <v-list-item-title>{{ batch.name }}</v-list-item-title>
-                    <v-list-item-subtitle>{{ batch.class_teacher_details?.user_details?.full_name || "Loading..." }}</v-list-item-subtitle>
+                    <v-list-item-subtitle>{{ batch.main_teacher_details?.user_details?.full_name || "Loading..." }}</v-list-item-subtitle>
                     <template v-slot:append>
                         <v-chip v-if="batch.is_active" color="success" size="small">Active</v-chip>
                         <v-chip v-else color="error" size="small">Inactive</v-chip>

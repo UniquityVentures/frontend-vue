@@ -1,15 +1,23 @@
 <template>
     <v-card>
-        <v-card-title>
-            <FilterCard :fields="fields" :exportFunction="exportAnnouncements" v-model:filters="filters" />
+        <v-card-title v-if="title">
+            {{ title }}
         </v-card-title>
-        <ResponsiveDataTable :getToFunction="(item) => ({ name: 'Announcement', params: { announcementId: item.id } })"
+        <v-card-subtitle v-if="subtitle">
+            {{ subtitle }}
+        </v-card-subtitle>
+        <v-card-text>
+            <FilterCard :fields="fields" :exportFunction="exportAnnouncements" v-model:filters="filters" />
+        </v-card-text>
+        <v-card-text>
+            <ResponsiveDataTable :getToFunction="(item) => ({ name: 'Announcement', params: { announcementId: item.id } })"
             :headers="defaultHeaders" :fetch="getAnnouncements" v-model:filters="filters" />
+        </v-card-text>
     </v-card>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { getAnnouncements, exportAnnouncements } from "../api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import FilterCard from "@/components/FilterCard.vue";
@@ -17,6 +25,14 @@ import FilterCard from "@/components/FilterCard.vue";
 const props = defineProps({
     overrideFields: {
         type: Array,
+        default: null,
+    },
+    title: {
+        type: String,
+        default: null,
+    },
+    subtitle: {
+        type: String,
         default: null,
     },
 });
@@ -46,7 +62,12 @@ const defaultFields = [
     { label: "Expiry Date Range", type: "dates", key: ["expired_start", "expired_end"], value: null },
 ];
 
-const fields = ref(props.overrideFields ? props.overrideFields : defaultFields);
-const filters = ref({}); 
+const fields = ref(props.overrideFields || defaultFields);
+const filters = ref({});
 
+onMounted(() => {
+    if (props.overrideFields) {
+        fields.value = JSON.parse(JSON.stringify(props.overrideFields));
+    }
+});
 </script>

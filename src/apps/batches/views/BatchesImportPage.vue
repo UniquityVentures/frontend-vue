@@ -8,7 +8,7 @@
           entityName="Batches"
           :dryRunFunction="importBatches.dryRun"
           :finalizeFunction="importBatches.finalize"
-          :templateFields="['name', 'standard', 'section', 'class_teacher', 'is_active']"
+          :templateFields="['name', 'standard', 'section', 'main_teacher', 'is_active']"
         />
       </v-card-text>
     </v-card>
