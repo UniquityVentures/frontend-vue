@@ -1,21 +1,19 @@
 <template>
     <v-card>
         <v-card-title>
-            <FilterCard :fields="fields" />
+            {{ title }}
         </v-card-title>
+        <v-card-subtitle>
+            {{ subtitle }}
+        </v-card-subtitle>
+        <FilterCard :fields="fields" :exportFunction="exportBatches" v-model:filters="filters" />
         <ResponsiveDataTable :getToFunction="(item) => ({ name: 'Batch', params: { batchId: item.id } })"
-            :headers="batchDefaultHeaders" :fetch="getBatches" v-model="filters" desktopTemplate="card" mobileTemplate="card" >
+            :headers="defaultHeaders" :fetch="getBatches" v-model:filters="filters" 
+            desktopTemplate="card" mobileTemplate="card" >
             <template #card-item-slot="{ item }">
                 <v-card height="100%" link :to="{ name: 'Batch', params: { batchId: item.id }}" variant="flat" class="border">
-                    <v-img 
-                        :src="getBatchImage()" 
-                        class="custom-img"
-                    ></v-img>
                     <v-card-title>{{ item.name }}</v-card-title>
                     <v-card-subtitle>{{ item.class_teacher_details?.user_details?.full_name || "Loading..." }}</v-card-subtitle>
-                    <!-- <v-card-actions class="d-flex justify-center">
-                        <v-btn :to="{ name: 'Batch', params: { batchId: item.id }}">Enter</v-btn>
-                    </v-card-actions> -->
                 </v-card>
             </template>
         </ResponsiveDataTable>
@@ -25,23 +23,42 @@
 <script setup>
 import FilterCard from "@/components/FilterCard.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
-import { computed } from "vue";
-import { getBatches, getBatchImage } from "../api";
-import { batchDefaultHeaders, batchDefaultFilterFields } from "../config";
-import { fieldsToFilters } from "@/services/utils";
+import { ref } from "vue";
+import { getBatches, exportBatches } from "../api";
 
 const props = defineProps({
     overrideFields: {
         type: Array,
         default: null,
     },
+    title: {
+        type: String,
+        default: "Batches",
+    },
+    subtitle: {
+        type: String,
+        default: "Batches Master List",
+    }
 });
 
-const fields = computed(() => {
-    return props.overrideFields ? props.overrideFields : batchDefaultFilterFields;
-});
+const defaultHeaders = [
+    { label: "Name", key: "name" },
+    { label: "Class Teacher", key: "class_teacher_details.user_details.full_name" },
+    { label: "Standard", key: "standard" },
+    { label: "Section", key: "section" },
+    { label: "Active", key: "is_active", type: "boolean" }
+];
 
-const filters = computed(() => {
-    return fieldsToFilters(fields.value);
-});
+const defaultFilterFields = [
+    { label: "Search by name", type: "string", key: "name", value: "", defaultValue: "" },
+    { label: "Class Teacher", type: "teacher", key: "class_teacher", value: null },
+    { label: "Status", type: "n_nary", key: "is_active", value: null, fetchOptions: () => [
+        { title: "All Classes", value: null },
+        { title: "Active Only", value: "True" },
+        { title: "Inactive Only", value: "False" },
+    ]},
+];
+
+const fields = ref(props.overrideFields || defaultFilterFields);
+const filters = ref({});
 </script>

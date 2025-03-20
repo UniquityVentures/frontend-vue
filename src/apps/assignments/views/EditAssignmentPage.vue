@@ -4,7 +4,7 @@
 			v-if="assignment"
 			title="Assignment"
 			actionName="Update"
-			:model="model"
+			:formFields="formFields"
 			:action="updateAssignment"
 		/>
 	</v-container>
@@ -14,7 +14,6 @@
 import FormCard from "@/components/FormCard.vue";
 import { onMounted, ref } from "vue";
 import { getAssignment, updateAssignment } from "../api";
-import { assignmentDefaultFormFields } from "../config";
 import { apiToFormDateTime } from "@/services/utils";
 
 const props = defineProps({
@@ -25,15 +24,24 @@ const props = defineProps({
 });
 
 const assignment = ref(null);
-const model = ref([]);
+
+const formFields = ref([
+    { label: "Title", type: "string", key: "title", required: true },
+    { label: "Description", type: "longstring", key: "description", required: true },
+    { label: "Course", type: "course", key: "course", required: true },
+    { label: "Due Date", type: "datetime", key: "due_date", required: true },
+    { label: "Attachments", type: "attachment_list", key: "attachments", defaultValue: null },
+    { label: "Maximum Score", type: "number", key: "max_score", defaultValue: 100 },
+    { label: "Passing Score", type: "number", key: "passing_score", defaultValue: 40 },
+]);
 
 onMounted(async () => {
 	assignment.value = await getAssignment(props.assignmentId);
 	// Update model with default values from the existing assignment
-	model.value = assignmentDefaultFormFields.map((field) => ({
+	formFields.value = formFields.value.map((field) => ({
 		...field,
 		defaultValue:
-			field.key === "release_at" || field.key === "expiry_at"
+			field.key === "due_date"
 				? apiToFormDateTime(assignment.value[field.key])
 				: assignment.value[field.key],
 	}));

@@ -10,7 +10,7 @@
             :getToFunction="(item) => ({name: 'Course', params: {courseId: item.id}})" 
             :headers="courseDefaultHeaders" 
             :fetch="getCourses" 
-            v-model="props.filter"
+            v-model:filters="props.filters"
             desktopTemplate="card"
             mobileTemplate="card"
             forceMobile="true">
@@ -35,7 +35,7 @@ import { getCourses } from "../api";
 import { courseDefaultHeaders } from "../config";
 
 const props = defineProps({
-    filter: {
+    filters: {
         type: Object,
         default: () => ({}),
     },

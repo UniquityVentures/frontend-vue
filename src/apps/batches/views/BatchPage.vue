@@ -1,24 +1,22 @@
 <template> 
 	<v-container class="columns-container" v-if="batch">
-		<BatchCard class="column-item" :batchId=batchId />
+		<BatchCard class="column-item" :batchId="batchId" />
 		
-		<GenericList 
+		<CoursesList 
 			class="column-item"
 			:fetchFunction="getCourses"
 			:filter="{ batches: batch.id }"
-			:title="'Courses'"
-			:viewAllRoute="'BatchCourses'"
-			:config="courseListConfig"
+			title="Courses"
+			:viewAll="{ route: { name: 'BatchCourses' }, label: 'View All Courses' }"
 			:limit="10"
 		/>
 		
-		<GenericList 
+		<AnnouncementsList 
 			class="column-item"
 			:fetchFunction="getAnnouncements"
 			:filter="{ batch: batch.id }"
-			:title="'Announcements'"
-			:viewAllRoute="'BatchAnnouncements'"
-			:config="announcementListConfig"
+			title="Announcements"
+			:viewAll="{ route: { name: 'BatchAnnouncements' }, label: 'View All Announcements' }"
 		/>
 	</v-container>
 </template>
@@ -28,10 +26,9 @@ import { ref } from "vue";
 import { getBatch } from "@/apps/batches/api";
 import { getCourses } from "@/apps/courses/api";
 import { getAnnouncements } from "@/apps/announcements/api";
-import { courseListConfig } from "@/apps/courses/config";
-import { announcementListConfig } from "@/apps/announcements/config";
-import GenericList from "@/components/GenericList.vue";
 import BatchCard from "@/apps/batches/components/BatchCard.vue";
+import CoursesList from "@/apps/courses/components/CoursesList.vue";
+import AnnouncementsList from "@/apps/announcements/components/AnnouncementsList.vue";
 
 const props = defineProps({
 	batchId: Number,

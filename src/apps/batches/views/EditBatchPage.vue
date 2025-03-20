@@ -2,8 +2,8 @@
 	<v-container>
 		<FormCard
 			v-if="batch"
-			:title="`Class: ${batch.name}`"
-			actionName="Edit Class"
+			title="Batch"
+			actionName="Update"
 			:formFields="formFields"
 			:action="updateBatch"
 		/>
@@ -14,7 +14,6 @@
 import FormCard from "@/components/FormCard.vue";
 import { onMounted, ref } from "vue";
 import { getBatch, updateBatch } from "../api";
-import { batchDefaultFormFields } from "../config";
 
 const props = defineProps({
 	batchId: {
@@ -24,7 +23,15 @@ const props = defineProps({
 });
 
 const batch = ref(null);
-const formFields = ref(batchDefaultFormFields);
+
+const formFields = ref([
+    { label: "Name", type: "string", key: "name", required: true },
+    { label: "Standard", type: "string", key: "standard", required: true },
+    { label: "Section", type: "string", key: "section", required: true },
+    { label: "Class Teacher", type: "teacher", key: "class_teacher", required: true },
+    { label: "Other Teachers", type: "teacher", key: "other_teachers", multiple: true, defaultValue: [] },
+    { label: "Is Active", type: "boolean", key: "is_active", defaultValue: true },
+]);
 
 onMounted(async () => {
 	batch.value = await getBatch(props.batchId);

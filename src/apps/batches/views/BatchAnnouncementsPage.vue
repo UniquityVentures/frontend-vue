@@ -1,24 +1,16 @@
 <template>
     <v-container>
-        <v-card variant="flat">
-            <v-card-title>Announcements for {{ batch?.name }}</v-card-title>
-            <ResponsiveDataTable
-            :getToFunction="(item) => ({ name: 'Announcement', params: { announcementId: item.id } })"
-            :headers="announcementDefaultHeaders"
-            :fetch="getAnnouncements"
-            v-model="filters"
-            :desktopTemplate="'list'"
-            />
-        </v-card>
+        <AnnouncementsLookup 
+            :overrideFields="overrideFields"
+            :title="`Announcements for ${batch?.name}`"
+        />
     </v-container>
 </template>
 
 <script setup>
-import { getAnnouncements } from "@/apps/announcements/api";
-import { announcementDefaultHeaders } from "@/apps/announcements/config";
-import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { getBatch } from "@/apps/batches/api";
+import AnnouncementsLookup from "@/apps/announcements/components/AnnouncementsLookup.vue";
 
 const props = defineProps({
 	batchId: {
@@ -27,14 +19,13 @@ const props = defineProps({
 	}
 });
 
-const filters = ref({
-	batch: props.batchId,
-});
-
 const batch = ref(null);
+batch.value = await getBatch(props.batchId);
 
-onMounted(async () => {
-	batch.value = await getBatch(props.batchId);
-});
-
+const overrideFields = ref([
+    { label: "Search by title", type: "string", key: "title", value: "", defaultValue: "" },
+    { label: "Filter by batch", type: "batch", key: "batch", value: props.batchId, disabled: true, hidden: true },
+    { label: "Is Released", type: "boolean", key: "is_released", value: null },
+    { label: "Is Expired", type: "boolean", key: "is_expired", value: null },
+])
 </script>

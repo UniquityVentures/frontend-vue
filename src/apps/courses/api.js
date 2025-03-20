@@ -6,7 +6,7 @@ const getCourseImage = () => {
 	return images[index];
 };
 
-const courseViewset = createViewset("api/allocation/courses");
+const courseViewset = createViewset("api/allocation/courses", "courses");
 
 // Get base methods
 const getCourses = courseViewset.list;

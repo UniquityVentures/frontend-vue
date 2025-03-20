@@ -1,12 +1,12 @@
-import CreateCoursePage from "@/apps/courses/views/CreateCoursePage.vue";
-import EditCoursePage from "@/apps/courses/views/EditCoursePage.vue";
-import CoursePage from "@/apps/courses/views/CoursePage.vue";
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
-import { api } from "@/services/api";
-import { getCourse } from "./api";
-import CourseAssignmentsPage from "./views/CourseAssignmentsPage.vue";
+
+import CoursePage from "./views/CoursePage.vue";
 import CoursesPage from "./views/CoursesPage.vue";
+import CreateCoursePage from "./views/CreateCoursePage.vue";
+import EditCoursePage from "./views/EditCoursePage.vue";
+import CoursesImportPage from "./views/CoursesImportPage.vue";
+import CoursesExportPage from "./views/CoursesExportPage.vue";
 
 export default [
 	{
@@ -25,51 +25,60 @@ export default [
 					title: "Create Course",
 					to: { name: "CreateCourse" },
 				},
+				{
+					title: "Import Courses",
+					to: { name: "ImportCourses" },
+				},
+				{
+					title: "Export Courses",
+					to: { name: "ExportCourses" },
+				},
 			],
 			icon: "mdi-book-open-variant",
 		},
 		children: [
 			{
-				path: "create/",
-				name: "CreateCourse",
-				component: CreateCoursePage,
-				meta: {
-					getDisplayName: () => "Create Course",
-					defaultRoute: "CreateBatch",
-				},
-			},
-			{
-				path: "all/",
+				path: "",
 				component: CoursesPage,
 				name: "Courses",
 			},
 			{
+				path: "create/",
+				component: CreateCoursePage,
+				name: "CreateCourse",
+			},
+			{
+				path: "import/",
+				component: CoursesImportPage,
+				name: "ImportCourses",
+			},
+			{
+				path: "export/",
+				component: CoursesExportPage,
+				name: "ExportCourses",
+			},
+			{
 				path: ":courseId/",
 				component: EmptyLayout,
+				props: true,
 				meta: {
 					defaultRoute: "Course",
-					getDisplayName: async (props) => {
-						const course = await getCourse(props.courseId);
-						return `${course.name}`;
-					},
-					getMenu: (props) => [
+					getDisplayName: () => "View",
+					getMenu: (params) => [
 						{
 							title: "View Course",
-							to: { name: "Course", props },
+							to: { name: "Course", params },
 						},
 						{
 							title: "Edit Course",
-							to: { name: "EditCourse", props },
-						},
-						{
-							title: "Assignments",
-							to: { name: "CourseAssignments", props },
+							to: { name: "EditCourse", params },
 						},
 					],
+					icon: "mdi-book-open-variant",
 				},
 				children: [
 					{
-						path: "view/",
+						path: "",
 						component: CoursePage,
 						name: "Course",
 						props: true,
@@ -78,12 +87,6 @@ export default [
 						path: "edit/",
 						component: EditCoursePage,
 						name: "EditCourse",
-						props: true,
-					},
-					{
-						path: "assignments/",
-						component: CourseAssignmentsPage,
-						name: "CourseAssignments",
 						props: true,
 					},
 				],

@@ -1,6 +1,6 @@
 <template>
 	<v-container>
-		<v-row>
+		<v-row v-if="assignment">
 			<v-col>
 				<v-row class="ma-2 flex justify-center">
 					<v-col lg="8">
@@ -76,25 +76,31 @@
 				</v-row>
 			</v-col>
 		</v-row>
+		<v-skeleton-loader v-else type="card, card-heading, card-text" />
 	</v-container>
 </template>
 
 <script setup>
 import { useAuthStore } from "@/stores/auth";
-import { onMounted, ref } from "vue";
+import { ref, onMounted } from "vue";
 import { getAssignment } from "../api";
 import { formatDateTime } from "@/services/utils";
 
-const assignment = ref({});
+const assignment = ref(null);
 const authStore = useAuthStore();
 
 const props = defineProps({
-	assignmentId: Number,
+	assignmentId: {
+		type: [Number, String],
+		required: true,
+	},
 });
 
-const fetchDetails = async () => {
-	assignment.value = await getAssignment(props.assignmentId);
-};
-
-onMounted(fetchDetails);
+onMounted(async () => {
+	try {
+		assignment.value = await getAssignment(props.assignmentId);
+	} catch (error) {
+		console.error("Failed to load assignment:", error);
+	}
+});
 </script>

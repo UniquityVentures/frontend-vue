@@ -5,5 +5,5 @@
 </template>
 
 <script setup>
-import CoursesLookup from "@/apps/courses/components/CoursesLookup.vue";
+import CoursesLookup from "../components/CoursesLookup.vue";
 </script>

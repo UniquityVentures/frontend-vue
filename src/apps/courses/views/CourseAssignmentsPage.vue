@@ -1,29 +1,14 @@
 <template>
     <v-container>
-        <v-card variant="flat">
-            <v-card-title>
-                Assignments for {{ course?.name }}
-            </v-card-title>
-            <v-card-text>
-                <FilterCard :fields="fields" />
-                <ResponsiveDataTable
-                    :getToFunction="(item) => ({ name: 'Assignment', params: { assignmentId: item.id } })"
-                    :headers="assignmentDefaultHeaders"
-                    :fetch="getAssignments"
-                    v-model="filters"
-                />
-            </v-card-text>
-        </v-card>
+        <AssignmentsLookup :title="`Assignments`" :subtitle="`Assignments for ${course?.name} - ${course?.code}`" 
+		:overrideFields="fields" />
     </v-container>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { getCourse } from "@/apps/courses/api";
-import { getAssignments } from "@/apps/assignments/api";
-import { assignmentDefaultHeaders, assignmentDefaultFilterFields } from "@/apps/assignments/config";
-import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
-import FilterCard from "@/components/FilterCard.vue";
+import AssignmentsLookup from "@/apps/assignments/components/AssignmentsLookup.vue";
 
 const props = defineProps({
 	courseId: {
@@ -34,25 +19,13 @@ const props = defineProps({
 
 const course = ref(null);
 
-const fields = ref(assignmentDefaultFilterFields.map(field => ({
-	...field,
-	disabled: field.key === 'course',
-	hidden: field.key === 'course',
-	value: field.key === 'course' ? Number(props.courseId) : field.value,
-})));
-
-const filters = computed(() => {
-	return fields.value.reduce((acc, field) => {
-		if (Array.isArray(field.key)) {
-			field.key.forEach((k, i) => {
-				acc[k] = field.value?.[i] ?? null;
-			});
-		} else {
-			acc[field.key] = field.value;
-		}
-		return acc;
-	}, {});
-});
+const fields = ref([
+	{ label: "Title", type: "string", key: "title", required: true },
+	{ label: "Description", type: "string", key: "description", required: true },
+	{ label: "Course", type: "course", key: "course", required: true, value: Number(props.courseId), disabled: true, hidden: true },
+	{ label: "Release Date", type: "dates", key: ["release_start", "release_end"], required: true },
+	{ label: "Expiry Date", type: "dates", key: ["expiry_start", "expiry_end"], required: true },
+]);
 
 onMounted(async () => {
 	course.value = await getCourse(props.courseId);

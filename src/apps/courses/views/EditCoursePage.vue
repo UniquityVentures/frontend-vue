@@ -5,7 +5,7 @@
 			title="Course"
 			actionName="Update"
 			:formFields="formFields"
-			:action="handleUpdate"
+			:action="updateCourse"
 		/>
 	</v-container>
 </template>
@@ -14,7 +14,6 @@
 import FormCard from "@/components/FormCard.vue";
 import { onMounted, ref } from "vue";
 import { getCourse, updateCourse } from "../api";
-import { courseDefaultFormFields } from "@/apps/courses/config";
 
 const props = defineProps({
 	courseId: {
@@ -24,23 +23,21 @@ const props = defineProps({
 });
 
 const course = ref(null);
-const formFields = ref(courseDefaultFormFields);
 
-const handleUpdate = async (formData) => {
-	try {
-		await updateCourse(props.courseId, formData);
-		return { success: true };
-	} catch (error) {
-		console.error("Failed to update course:", error);
-		return { success: false, error };
-	}
-};
+const formFields = ref([
+    { label: "Name", type: "string", key: "name", required: true },
+    { label: "Description", type: "longstring", key: "description" },
+    { label: "Subject", type: "string", key: "subject", required: true },
+    { label: "Main Teacher", type: "teacher", key: "main_teacher", required: true },
+    { label: "Other Teachers", type: "teacher", key: "other_teachers", multiple: true, defaultValue: [] },
+    { label: "Batches", type: "batch", key: "batches", multiple: true, required: true },
+    { label: "Is Active", type: "boolean", key: "is_active", defaultValue: true },
+]);
 
 onMounted(async () => {
 	course.value = await getCourse(props.courseId);
-	
-	// Use the default form fields from config but add default values from the existing course
-	formFields.value = courseDefaultFormFields.map((field) => ({
+	// Update model with default values from the existing course
+	formFields.value = formFields.value.map((field) => ({
 		...field,
 		defaultValue: course.value[field.key],
 	}));

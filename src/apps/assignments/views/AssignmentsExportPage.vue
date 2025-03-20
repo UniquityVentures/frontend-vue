@@ -6,4 +6,4 @@
 
 <script setup>
 import AssignmentsLookup from "../components/AssignmentsLookup.vue";
-</script>
+</script> 

@@ -9,7 +9,7 @@
         <v-card-text>
             <ResponsiveDataTable
                 :fetch="getBatches"
-                v-model="filter"
+                v-model:filters="props.filters"
                 :getToFunction="(batch) => ({ name: 'Batch', params: { batchId: batch.id }})"
                 desktopTemplate="card"
                 mobileTemplate="card"
@@ -27,12 +27,11 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { getBatchImage, getBatches } from "../api";
+import { getBatches } from "../api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 
 const props = defineProps({
-	filter: {
+	filters: {
 		type: Object,
 		default: () => ({}),
 	},
@@ -45,8 +44,6 @@ const props = defineProps({
         default: null,
     }
 });
-
-const filter = ref(props.filter);
 </script>
 
 <style>
@@ -55,11 +52,6 @@ const filter = ref(props.filter);
 	object-fit: cover;
 	width: 100%;
 	height: auto;
-}
-
-.body-grid-container {
-	width: 100%;
-	overflow: hidden;
 }
 </style>
   

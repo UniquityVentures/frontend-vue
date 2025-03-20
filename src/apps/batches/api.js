@@ -8,7 +8,7 @@ import batch3 from "@/assets/batches/batch3.png";
 
 const images = [batch1, batch2, batch3];
 
-const batchViewset = createViewset("api/allocation/batches");
+const batchViewset = createViewset("api/allocation/batches", "batches");
 
 // Get base methods
 const getBatches = (filter = {}) =>
@@ -20,8 +20,10 @@ const getBatch = batchViewset.retrieve;
 const updateBatch = batchViewset.update;
 const createBatch = batchViewset.create;
 const exportBatches = batchViewset.export;
-const importBatchesDryRun = batchViewset.import.dryRun;
-const importBatchesFinalize = batchViewset.import.finalize;
+const importBatches = {
+    dryRun: batchViewset.import.dryRun,
+    finalize: batchViewset.import.finalize,
+};
 
 // Custom methods
 const getBatchImage = () => getRandomImage(images);
@@ -33,13 +35,12 @@ const getBatchInfoFromObj = (item) => ({
 });
 
 export {
-    getBatch,
     getBatches,
+    getBatch,
     updateBatch,
     getBatchImage,
     getBatchInfoFromObj,
     createBatch,
     exportBatches,
-    importBatchesDryRun,
-    importBatchesFinalize,
+    importBatches,
 };

@@ -35,7 +35,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import TeacherListItem from '@/apps/teachers/components/TeacherListItem.vue';
 import { getBatch } from '@/apps/batches/api';
 import { getTeachers, getTeacher } from '@/apps/teachers/api';
@@ -75,4 +75,5 @@ onMounted(async () => {
     await fetchOtherTeachers();
     await fetchCourseTeachers();
 });
+
 </script>

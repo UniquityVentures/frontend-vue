@@ -3,7 +3,6 @@
     <v-chip
       v-for="(room, index) in batch"
       :key="room.id"
-      v-bind="chipProps"
       color="info"
       link
       :to="{ name: 'Batch', params: { batchId: room.id } }"
@@ -15,7 +14,6 @@
   
   <v-chip
     v-else-if="batch?.id"
-    v-bind="chipProps"
     class="batch-chip"
     color="info"
     link
@@ -37,9 +35,5 @@ const props = defineProps({
     type: String,
     default: ''
   },
-  chipProps: {
-    type: Object,
-    default: () => ({})
-  }
 });
 </script>

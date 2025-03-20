@@ -1,10 +1,9 @@
 <template>
     <v-container>
-        <GenericList 
+        <CoursesList 
             :fetchFunction="getCourses"
             :filter="filter"
-            :title="'Courses'"
-            :config="courseListConfig"
+            title="Courses"
             :limit="25"
         />
     </v-container>
@@ -13,8 +12,7 @@
 <script setup>
 import { ref } from "vue";
 import { getCourses } from "@/apps/courses/api";
-import { courseListConfig } from "@/apps/courses/config";
-import GenericList from "@/components/GenericList.vue";
+import CoursesList from "@/apps/courses/components/CoursesList.vue";
 
 const props = defineProps({
     batchId: {

@@ -1,33 +1,21 @@
 <template>
     <v-card v-if="batch">
-        <!-- Batch Image -->
         <v-img :src="getBatchImage()" class="custom-img"></v-img>
-
-        <!-- Batch Title -->
         <v-card-title>
             {{ batch.name }}
         </v-card-title>
-
-        <!-- Batch Info -->
         <v-card-text>
             <span class="text-primary">Class Teacher:</span><br>
             <TeacherChip :teacher="batch.class_teacher_details" />
         </v-card-text>
-
         <v-card-text v-if="otherTeachers.length">
             <span class="text-primary">Other Teachers:</span><br>
             <TeacherChip v-for="teacher in otherTeachers" :key="teacher.id" :teacher="teacher"/>
         </v-card-text>
-
         <v-card-text>
-            <!-- Grade -->
-            <!-- Grade -->
             <v-chip color="primary" size="small" label>Grade: {{ batch.standard }}</v-chip>
-            <!-- Number of Students -->
             <v-chip color="primary" size="small" variant="outlined" label>Number of Students: {{ batch.students.length }}</v-chip>
-            <!-- Is Active Status -->
             <v-chip :color="batch.is_active ? 'success' : 'error'" size="small" label>Status: {{ batch.is_active ? 'Active' : 'Inactive' }}</v-chip>
-            <!-- Join Code -->
             <v-chip color="success" label variant="outlined">Join Code: {{ batch.join_code }}</v-chip>
         </v-card-text>
     </v-card>
