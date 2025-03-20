@@ -1,10 +1,6 @@
 <template>
 <v-chip
-    v-bind="props"
-    class="teacher-chip"
-    variant="outlined"
     color="primary"
-    size="small"
     link
     :to="{ name: 'Teacher', params: { teacherId: teacher.id } }"
 >

@@ -26,10 +26,4 @@ export const courseDefaultFilterFields = [
     { label: "Search by name", type: "string", key: "name", value: "", defaultValue: "" },
     { label: "Batch", type: "batch", key: "batches", value: null },
     { label: "Main Teacher", type: "teacher", key: "main_teacher", value: null },
-    { label: "Is Active", type: "n_nary", key: "is_active", value: null, fetchOptions: () => [
-            { title: "All Courses", value: null },
-            { title: "Active Only", value: "True" },
-            { title: "Inactive Only", value: "False" },
-        ],
-    },
 ];

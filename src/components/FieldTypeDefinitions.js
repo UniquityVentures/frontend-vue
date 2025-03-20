@@ -41,6 +41,7 @@ export const FIELD_TYPES = {
   FILE: "file",
   ATTACHMENT: "attachment",
   ATTACHMENT_LIST: "attachment_list",
+  N_NARY: "n_nary"
 };
 
 // Field width patterns

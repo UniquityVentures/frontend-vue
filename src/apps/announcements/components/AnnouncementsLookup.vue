@@ -21,6 +21,7 @@ import { ref, onMounted } from "vue";
 import { getAnnouncements, exportAnnouncements } from "../api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import FilterCard from "@/components/FilterCard.vue";
+import { FIELD_TYPES } from "@/components/FieldTypeDefinitions";
 
 const props = defineProps({
     overrideFields: {
@@ -46,26 +47,30 @@ const defaultHeaders = [
 ];
 
 const defaultFields = [
-    { label: "Search by title", type: "string", key: "title", value: "", defaultValue: "" },
-    { label: "Filter by batch", type: "batch", key: "batch", value: null },
-    { label: "Filter by course", type: "course", key: "course", value: null },
-    { label: "Filter by signer", type: "teacher", key: "signed_by", value: null },
-    { label: "Is School Wide", type: "n_nary", key: "is_school_wide", value: null, fetchOptions: () => [
+    { label: "Search by title", type: FIELD_TYPES.STRING, key: "title", value: "", defaultValue: "" },
+    { label: "Filter by batch", type: FIELD_TYPES.BATCH, key: "batch", value: null },
+    { label: "Filter by course", type: FIELD_TYPES.COURSE, key: "course", value: null },
+    { label: "Filter by signer", type: FIELD_TYPES.TEACHER, key: "signed_by", value: null },
+    { label: "Is School Wide", type: FIELD_TYPES.N_NARY, key: "is_school_wide", value: null, fetchOptions: () => [
         { title: "All Announcements", value: null },
         { title: "School Wide Only", value: "True" },
         { title: "Non-School Wide Only", value: "False" },
-    ],
-    },
-    { label: "Is Released", type: "boolean", key: "is_released", value: null },
-    { label: "Is Expired", type: "boolean", key: "is_expired", value: null },
-    { label: "Release Date Range", type: "dates", key: ["released_start", "released_end"], value: null },
-    { label: "Expiry Date Range", type: "dates", key: ["expired_start", "expired_end"], value: null },
+    ]},
+    { label: "Is Released", type: FIELD_TYPES.BOOLEAN, key: "is_released", value: null },
+    { label: "Is Expired", type: FIELD_TYPES.BOOLEAN, key: "is_expired", value: null },
+    { label: "Release Date Range", type: FIELD_TYPES.DATE_RANGE, key: ["released_start", "released_end"], value: null },
+    { label: "Expiry Date Range", type: FIELD_TYPES.DATE_RANGE, key: ["expired_start", "expired_end"], value: null },
 ];
 
+// Initialize fields with proper reactivity handling
 const fields = ref(props.overrideFields || defaultFields);
+
+// Initialize filters object to receive the values from FilterCard
 const filters = ref({});
 
+// Make sure to update fields when overrideFields changes
 onMounted(() => {
+    // Force reactivity update for fields if coming from props
     if (props.overrideFields) {
         fields.value = JSON.parse(JSON.stringify(props.overrideFields));
     }

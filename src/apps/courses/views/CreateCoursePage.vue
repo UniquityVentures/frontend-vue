@@ -4,7 +4,7 @@
 			title="Course"
 			actionName="Create"
 			:formFields="formFields"
-			:action="createCourse"
+			:action="handleCreateCourse"
 		/>
 	</v-container>
 </template>
@@ -12,15 +12,30 @@
 <script setup>
 import { ref } from "vue";
 import FormCard from "@/components/FormCard.vue";
-import { createCourse } from "@/apps/courses/api";
+import { createCourse } from "../api";
+import { FIELD_TYPES } from "@/components/FieldTypeDefinitions";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const formFields = ref([
-    { label: "Name", type: "string", key: "name", required: true },
-    { label: "Description", type: "longstring", key: "description" },
-    { label: "Subject", type: "string", key: "subject", required: true },
-    { label: "Main Teacher", type: "teacher", key: "main_teacher", required: true },
-    { label: "Other Teachers", type: "teacher", key: "other_teachers", multiple: true, defaultValue: [] },
-    { label: "Batches", type: "batch", key: "batches", multiple: true, required: true },
-    { label: "Is Active", type: "boolean", key: "is_active", defaultValue: true },
+	{ label: "Name", type: FIELD_TYPES.STRING, key: "name", required: true },
+	{ label: "Description", type: FIELD_TYPES.LONGSTRING, key: "description" },
+	{ label: "Teachers", type: FIELD_TYPES.TEACHERS, key: "teachers", required: false },
+	{ label: "Batches", type: FIELD_TYPES.BATCHES, key: "batches", required: false },
+	{ label: "Is Active", type: FIELD_TYPES.BOOLEAN, key: "is_active", defaultValue: true },
 ]);
+
+const handleCreateCourse = async (courseData) => {
+	try {
+		const response = await createCourse(courseData);
+		if (response && response.id) {
+			router.push({ name: 'Course', params: { courseId: response.id } });
+		}
+		return { success: true };
+	} catch (error) {
+		console.error("Failed to create course:", error);
+		return { success: false, error };
+	}
+};
 </script>

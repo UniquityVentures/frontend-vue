@@ -1,7 +1,7 @@
 <template>
 	<v-container rounded="lg" ref="containerRef">
 		<v-row>
-			<v-col :cols="isNarrow ? 12 : 6" :md="isNarrow ? 12 : 3" :lg="isNarrow ? 12 : 2" v-for="field in fields" v-show="!field.hidden" class="pa-2">
+			<v-col :cols="forceMobile ? 12 : 6" :md="forceMobile ? 12 : 3" :lg="forceMobile ? 12 : 2" v-for="field in fields" v-show="!field.hidden" class="pa-2">
 				
 				<v-text-field v-if="field.type === FIELD_TYPES.STRING" :label="field.label" v-model="field.value"
 					hide-details :disabled="field.disabled" />
@@ -56,6 +56,18 @@
 				
 				<v-date-input v-if="field.type === FIELD_TYPES.DATE_RANGE" color="primary" :label="field.label" v-model="field.value"
 					multiple="range" clearable :disabled="field.disabled" @update:modelValue="(value) => updateDates(value, field)" />
+				
+				<v-select
+					v-if="field.type === FIELD_TYPES.N_NARY"
+					:label="field.label"
+					v-model="field.value"
+					:items="field.fetchOptions ? field.fetchOptions() : []"
+					:item-title="'title'"
+					:item-value="'value'"
+					hide-details
+					:disabled="field.disabled"
+					clearable
+				/>
 			</v-col>
 			<v-col cols="12" md="4" lg="3">
 				<v-btn color="primary" @click="clearFilters">
@@ -94,7 +106,6 @@ import { getPayeeInfoFromObj, getPayees, getTransactionPurposeInfoFromObj, getTr
 import { getStudentInfoFromObj, getStudents } from "@/apps/students/api";
 import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
 import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
-
 import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
 import { ref, onMounted, computed, watch } from "vue";
 import { FIELD_TYPES, getDefaultEmptyValue } from "./FieldTypeDefinitions";
@@ -117,26 +128,16 @@ const props = defineProps({
 		type: Function,
 		default: null,
 	},
-});
-
-// Width-based responsiveness
-const containerRef = ref(null);
-const isNarrow = ref(false);
-const BREAKPOINT = 768; // pixels
-
-onMounted(() => {
-	// Check component width once on mount
-	if (containerRef.value) {
-		const width = containerRef.value.$el.getBoundingClientRect().width;
-		isNarrow.value = width < BREAKPOINT;
-	}
+	forceMobile: {
+		type: Boolean,
+		default: false,
+	},
 });
 
 const clearFilters = () => {
 	console.log("Clearing filters");
 	for (const field of props.fields) {
 		if (field.disabled) continue;
-
 		if ("defaultValue" in field) {
 			field.value = field.defaultValue;
 		} else {
@@ -173,7 +174,7 @@ const handleExport = async () => {
 
 	try {
 		isExporting.value = true;
-		await props.exportFunction(filters.value);
+		await props.exportFunction(computedFilters.value);
 		showDialog.value = false;
 	} catch (error) {
 		console.error("Export failed:", error);
@@ -188,12 +189,16 @@ const filtersModel = defineModel('filters', { required: true });
 // Compute filters from fields
 const computedFilters = computed(() => {
 	return props.fields.reduce((acc, field) => {
-		if (Array.isArray(field.key)) {
-			field.key.forEach((k, i) => {
-				acc[k] = field.value?.[i] ?? null;
-			});
-		} else {
-			acc[field.key] = field.value;
+		if (field.value !== undefined && field.value !== null && field.value !== "") {
+			if (Array.isArray(field.key)) {
+				field.key.forEach((key, index) => {
+					if (field.value && field.value[index] !== undefined) {
+						acc[key] = field.value[index];
+					}
+				});
+			} else {
+				acc[field.key] = field.value;
+			}
 		}
 		return acc;
 	}, {});
