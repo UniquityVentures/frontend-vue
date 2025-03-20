@@ -12,7 +12,14 @@ const teacherViewset = createViewset("api/accounts/teachers");
 // Get base methods
 const getTeachers = teacherViewset.list;
 const getTeacher = teacherViewset.retrieve;
+const updateTeacher = teacherViewset.update;
+const createTeacher = teacherViewset.create;
+const exportTeachers = teacherViewset.export;
 const getTeacherStats = teacherViewset.stats;
+const importTeachers = {
+    dryRun: teacherViewset.import.dryRun,
+    finalize: teacherViewset.import.finalize,
+};
 
 const getTeacherInfoFromObj = (item) => ({
     title: `${item.user_details?.full_name}`,
@@ -23,8 +30,11 @@ const getTeacherInfoFromObj = (item) => ({
 export {
     getTeachers,
     getTeacher,
-    getTeacherInfoFromObj,
+    updateTeacher,
+    createTeacher,
+    exportTeachers,
+    importTeachers,
     getTeacherStats,
+    getTeacherInfoFromObj,
     getPortraitImage,
-    teacherViewset,
 };

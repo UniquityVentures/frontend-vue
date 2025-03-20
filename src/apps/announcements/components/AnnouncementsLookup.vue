@@ -46,7 +46,7 @@ const defaultHeaders = [
     { label: "Signed By", key: "signed_by_details", type: "teacher" },
 ];
 
-const defaultFields = [
+const defaultFilterFields = [
     { label: "Search by title", type: FIELD_TYPES.STRING, key: "title", value: "", defaultValue: "" },
     { label: "Filter by batch", type: FIELD_TYPES.BATCH, key: "batch", value: null },
     { label: "Filter by course", type: FIELD_TYPES.COURSE, key: "course", value: null },
@@ -63,7 +63,7 @@ const defaultFields = [
 ];
 
 // Initialize fields with proper reactivity handling
-const fields = ref(props.overrideFields || defaultFields);
+const fields = ref(props.overrideFields || defaultFilterFields);
 
 // Initialize filters object to receive the values from FilterCard
 const filters = ref({});

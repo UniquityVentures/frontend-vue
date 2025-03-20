@@ -7,23 +7,26 @@ const getStudents = studentViewset.list;
 const getStudent = studentViewset.retrieve;
 const updateStudent = studentViewset.update;
 const createStudent = studentViewset.create;
-const getStudentStats = studentViewset.stats;
 const exportStudents = studentViewset.export;
-const importStudents = studentViewset.import;
+const getStudentStats = studentViewset.stats;
+const importStudents = {
+	dryRun: studentViewset.import.dryRun,
+	finalize: studentViewset.import.finalize,
+};
 
 const getStudentInfoFromObj = (item) => ({
-	title: `${item.user_details.full_name}`,
-	subtitle: item.identifier,
+	title: `${item.user_details?.full_name}`,
+	subtitle: item.student_no,
 	value: item.id,
 });
 
 export {
-    getStudents,
-    getStudent,
-    getStudentInfoFromObj,
-    updateStudent,
-    createStudent,
-    getStudentStats,
-    exportStudents,
-    importStudents,
+	getStudents,
+	getStudent,
+	updateStudent,
+	createStudent,
+	exportStudents,
+	importStudents,
+	getStudentStats,
+	getStudentInfoFromObj,
 };
