@@ -24,13 +24,13 @@ const attachmentDefaultFilterFields = [
     },
     {
         label: "Creation Date Range",
-        type: "dates",
+        type: "date_range",
         key: ["created_at_start", "created_at_end"],
         value: null,
     },
     {
         label: "Updation Date Range",
-        type: "dates",
+        type: "date_range",
         key: ["updated_at_start", "updated_at_end"],
         value: null,
     },

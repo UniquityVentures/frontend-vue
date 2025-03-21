@@ -99,7 +99,7 @@ const defaultFilterFields = [
             { title: "Failed", value: "F" },
         ],
     },
-    { label: "Filter by purpose", type: FIELD_TYPES.TRANSACTION_PURPOSE, key: "purpose" },
+    { label: "Filter by purpose", type: FIELD_TYPES.PAYMENT_PURPOSE, key: "purpose" },
     { label: "Filter by payee", type: FIELD_TYPES.PAYEE, key: "payee" },
 ];
 

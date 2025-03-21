@@ -86,12 +86,12 @@ import { ref, onMounted } from "vue";
 import { getAssignment } from "../api";
 import { formatDateTime } from "@/services/utils";
 
-const assignment = ref(null);
+const assignment = ref({});
 const authStore = useAuthStore();
 
 const props = defineProps({
 	assignmentId: {
-		type: [Number, String],
+		type: Number,
 		required: true,
 	},
 });
