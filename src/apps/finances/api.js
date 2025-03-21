@@ -6,6 +6,7 @@ const payeeViewset = createViewset("api/finances/payee");
 
 // Get base methods
 const getTransactions = transactionViewset.list;
+const getTransaction = transactionViewset.retrieve;
 const getTransactionPurposes = purposeViewset.list;
 const getPayees = payeeViewset.list;
 
@@ -33,6 +34,7 @@ const getPayeeInfoFromObj = (item) => ({
 export {
 	getTransactions,
 	getTransactionPurposes,
+	getTransaction,
 	getTransactionPurposeInfoFromObj,
 	getTransactionInfoFromObj,
 	getPayees,

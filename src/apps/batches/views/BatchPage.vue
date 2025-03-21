@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted  } from "vue";
 import { getBatch } from "@/apps/batches/api";
 import { getCourses } from "@/apps/courses/api";
 import { getAnnouncements } from "@/apps/announcements/api";
@@ -34,8 +34,10 @@ const props = defineProps({
 	batchId: Number,
 });
 
-const batch = ref(null);
+const batch = ref({});
 
 // Fetch batch data
-batch.value = await getBatch(props.batchId);
+onMounted(async () => {
+	batch.value = await getBatch(props.batchId);
+});
 </script>

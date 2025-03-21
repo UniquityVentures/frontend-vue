@@ -13,7 +13,7 @@
             v-model:filters="props.filters"
             desktopTemplate="card"
             mobileTemplate="card"
-            forceMobile="true">
+            forceMobile>
             <template #card-item-slot="{ item }">
                 <v-card class="border" variant="flat" :to="{name: 'Course', params: {courseId: item.id}}">
                     <v-card-title class="text-subtitle-1">

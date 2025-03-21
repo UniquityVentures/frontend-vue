@@ -15,10 +15,8 @@
 				<template #list-item-slot="{ item }">
 					<v-list-item-title>{{ item.title }}</v-list-item-title>
 					<v-list-item-subtitle>{{ item.description }}</v-list-item-subtitle>
-					<v-list-item-text>
-						<v-chip color="blue">{{ `Start: ${formatDateTime(item.start)}` }}</v-chip>
-						<v-chip color="red">{{ `End: ${formatDateTime(item.end)}` }}</v-chip>
-					</v-list-item-text>
+					<v-chip color="blue">{{ `Start: ${formatDateTime(item.start)}` }}</v-chip>
+					<v-chip color="red">{{ `End: ${formatDateTime(item.end)}` }}</v-chip>
 				</template>
 			</ResponsiveDataTable>
 		</v-card-text>

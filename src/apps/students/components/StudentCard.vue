@@ -37,14 +37,14 @@
       </v-chip>
     </v-card-text>
 
-    <v-card-text>
+    <v-card-text v-if="student?.batch">
       <div class="text-subtitle-2">Batch: </div>
-      <v-list-item link class="border" :to="{ name: 'Batch', params: { batchId: student.batch_details?.id }}" variant="tonal">
+      <v-list-item link class="border" :to="{ name: 'Batch', params: { batchId: student.batch?.id }}" variant="tonal">
           <v-list-item-title>{{ student.batch_details?.name }}</v-list-item-title>
           <v-list-item-subtitle>Roll Number: {{ student.roll_no }}</v-list-item-subtitle>
-          <v-list-item-text>
-            <TeacherChip v-if="student.batch_details?.main_teacher_details" :teacher="student.batch_details?.main_teacher_details" :label="`Teacher`"/>
-          </v-list-item-text>
+
+				<TeacherChip v-if="student.batch_details?.main_teacher_details" :teacher="student.batch_details?.main_teacher_details" :label="`Teacher`"/>
+
         </v-list-item>
     </v-card-text>
     
@@ -63,6 +63,7 @@
 </template>
 
 <script setup>
+import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 
 const props = defineProps({
 	student: {

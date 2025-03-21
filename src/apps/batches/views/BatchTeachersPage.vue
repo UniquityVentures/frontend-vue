@@ -22,11 +22,9 @@
                     :title="teacher.teacher?.user_details?.full_name"
                     :subtitle="teacher.teacher?.user_details?.email"
                     :to="{ name: 'Teacher', params: { teacherId: teacher?.teacher.user_details?.id } }">
-                        <v-list-item-text>
-                            <v-chip color="primary">
-                                Leading Course: {{ teacher.course.name }} ({{ teacher.course.code }})
-                            </v-chip>
-                        </v-list-item-text>
+						<v-chip color="primary">
+							Leading Course: {{ teacher.course.name }} ({{ teacher.course.code }})
+						</v-chip>
                     </v-list-item>
                 </v-list>
             </v-card-text>
@@ -35,14 +33,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import TeacherListItem from '@/apps/teachers/components/TeacherListItem.vue';
-import { getBatch } from '@/apps/batches/api';
-import { getTeachers, getTeacher } from '@/apps/teachers/api';
-import { getCourse } from '@/apps/courses/api';
+import { ref, onMounted } from "vue";
+import TeacherListItem from "@/apps/teachers/components/TeacherListItem.vue";
+import { getBatch } from "@/apps/batches/api";
+import { getTeachers, getTeacher } from "@/apps/teachers/api";
+import { getCourse } from "@/apps/courses/api";
 
 const props = defineProps({
-    batchId: String,
+	batchId: Number,
 });
 
 const batch = ref({});
@@ -52,28 +50,27 @@ const other_teachers = ref([]);
 const course_teachers = ref([]);
 
 const fetchOtherTeachers = async () => {
-    for (const teacherId of batch.value.other_teachers) {
-        const teacher = await getTeacher(teacherId);
-        other_teachers.value.push(teacher);
-    }
+	for (const teacherId of batch.value.other_teachers) {
+		const teacher = await getTeacher(teacherId);
+		other_teachers.value.push(teacher);
+	}
 };
 
 const fetchCourseTeachers = async () => {
-    for (const courseId of batch.value.courses) {
-        const course = await getCourse(courseId);
-        const teachers = await getTeachers({ 'courses_leading': courseId });
-        course_teachers.value.push({
-            course: course,
-            teacher: teachers.results[0],
-        });
-    }
+	for (const courseId of batch.value.courses) {
+		const course = await getCourse(courseId);
+		const teachers = await getTeachers({ courses_leading: courseId });
+		course_teachers.value.push({
+			course: course,
+			teacher: teachers.results[0],
+		});
+	}
 };
 
 // Ensure proper data fetching sequence
 onMounted(async () => {
-    batch.value = await getBatch(props.batchId);
-    await fetchOtherTeachers();
-    await fetchCourseTeachers();
+	batch.value = await getBatch(props.batchId);
+	await fetchOtherTeachers();
+	await fetchCourseTeachers();
 });
-
 </script>
