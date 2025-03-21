@@ -250,7 +250,6 @@ const convertFiltersForBackend = (filters) => {
 
 const fetchData = async ({ page, itemsPerPage, search }) => {
 	loading.value = true;
-
 	try {
 		const filterParams = {
 			...convertFiltersForBackend(
@@ -264,7 +263,7 @@ const fetchData = async ({ page, itemsPerPage, search }) => {
 		items.value = results;
 		itemsLen.value = total_records;
 	} catch (error) {
-		console.error("Error fetching items:", error);
+		console.error("Error in RDT fetchData: ", error);
 		items.value = [];
 		itemsLen.value = 0;
 	} finally {
