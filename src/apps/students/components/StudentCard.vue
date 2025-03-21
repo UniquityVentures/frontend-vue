@@ -39,7 +39,7 @@
 
     <v-card-text v-if="student?.batch">
       <div class="text-subtitle-2">Batch: </div>
-      <v-list-item link class="border" :to="{ name: 'Batch', params: { batchId: student.batch?.id }}" variant="tonal">
+      <v-list-item link class="border" :to="{ name: 'Batch', params: { batchId: student.batch}}" variant="tonal">
           <v-list-item-title>{{ student.batch_details?.name }}</v-list-item-title>
           <v-list-item-subtitle>Roll Number: {{ student.roll_no }}</v-list-item-subtitle>
 

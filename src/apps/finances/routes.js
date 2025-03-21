@@ -34,7 +34,7 @@ export default [
 				meta: {
 					defaultRoute: "Transaction",
 					getDisplayName: async (params) =>
-						(await api.get(`api/finances/transaction/${params.transactionId}/`)).data.id,
+						(await api.get(`api/finances/transaction/${params.transactionId}/`)).data.order_id,
 					getMenu: (props) => [
 						{
 							title: "View Transaction",

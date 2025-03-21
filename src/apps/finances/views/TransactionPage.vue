@@ -1,29 +1,36 @@
 <template>
 	<v-container>
 		<v-row>
-			<v-col lg="8">
+			<v-col>
+				<StudentCard class="column-item" :student="transaction?.student_details"  />
+			</v-col>
+			<v-col>
 				<v-card variant="flat">
 					<v-card-title>{{ transaction?.purpose_details?.name }}</v-card-title>
 					<v-card-subtitle>{{ transaction?.purpose_details?.description }}</v-card-subtitle>
 					<v-card-text>
-						<h4 class="text-subtitle-1 mt-4">
-							Amount: ₹{{ transaction?.amount / 100 }} 
-						</h4>
-						{{ formatDate(transaction?.datetime) }}
+						<v-row>
+							<v-col>
+								Order ID: {{ transaction?.order_id }}
+							</v-col>
+						</v-row>
+						<v-row>
+							<v-chip color="primary">
+								Amount: ₹{{ transaction?.amount / 100 }} 
+							</v-chip>
+						</v-row>
+						<v-row>
+							<v-chip color="info">
+								Transaction Date: {{ transaction?.datetime ? formatDate(transaction?.datetime) : "Loading" }}
+							</v-chip>
+						</v-row>
+
 					</v-card-text>
 				</v-card>
 			</v-col>
-			<v-col lg="8">
+			<v-col>
 				<v-card variant="flat">
 					<v-card-title>Payee Details</v-card-title>
-					<v-card-subtitle>{{transaction?.payee_details?.name}}</v-card-subtitle>
-					<v-card-text>{{transaction?.payee_details?.email}}
-					</v-card-text>
-				</v-card>
-			</v-col>
-			<v-col lg="8">
-				<v-card variant="flat">
-					<v-card-title>Student Details</v-card-title>
 					<v-card-subtitle>{{transaction?.payee_details?.name}}</v-card-subtitle>
 					<v-card-text>{{transaction?.payee_details?.email}}
 					</v-card-text>
@@ -37,6 +44,7 @@
 import { ref, onMounted } from "vue";
 import { getTransaction } from "../api";
 import { formatDate } from "@/services/utils";
+import StudentCard from "@/apps/students/components/StudentCard.vue";
 
 const transaction = ref({});
 
@@ -49,6 +57,5 @@ const props = defineProps({
 
 onMounted(async () => {
 	transaction.value = await getTransaction(props.transactionId);
-	console.log(transaction.value);
 });
 </script>

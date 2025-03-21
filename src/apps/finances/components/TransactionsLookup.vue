@@ -17,7 +17,7 @@
                         <v-icon :color="getStatusColor(item.transaction_status)">
                             {{ getStatusIcon(item.transaction_status) }}
                         </v-icon>
-                        {{ item.student_details?.name || "Unknown Student" }}
+                        {{ item.student_details?.user_details?.full_name || "Unknown Student" }}
                     </v-list-item-title>
                     <v-list-item-subtitle>
                         Amount: ₹{{ item.amount / 100 }} - {{ formatDate(item.datetime) }}
