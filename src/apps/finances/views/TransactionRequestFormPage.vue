@@ -12,10 +12,7 @@ import { createTransaction } from "../api";
 import { ref } from "vue";
 
 const preprocessRequest = (data) => {
-	data.amount *= 100;
-	if (data.amount > 0) {
-		data.amount = -data.amount;
-	}
+	data.amount *= -100;
 	return data;
 };
 
