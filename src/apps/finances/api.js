@@ -9,6 +9,7 @@ const getTransactions = transactionViewset.list;
 const getTransaction = transactionViewset.retrieve;
 const getTransactionPurposes = purposeViewset.list;
 const getPayees = payeeViewset.list;
+const createTransaction = transactionViewset.create;
 
 const exportTransactions = transactionViewset.export;
 
@@ -31,6 +32,7 @@ const getPayeeInfoFromObj = (item) => ({
 	value: item.id,
 });
 
+
 export {
 	getTransactions,
 	getTransactionPurposes,
@@ -39,5 +41,6 @@ export {
 	getTransactionInfoFromObj,
 	getPayees,
 	getPayeeInfoFromObj,
+	createTransaction,
 	exportTransactions,
 };

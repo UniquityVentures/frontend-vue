@@ -3,6 +3,7 @@ import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import { api } from "@/services/api";
 import TransactionPage from "./views/TransactionPage.vue";
 import TransactionsPage from "./views/TransactionsPage.vue";
+import TransactionRequestFormPage from "./views/TransactionRequestFormPage.vue";
 
 export default [
 	{
@@ -18,6 +19,10 @@ export default [
 					title: "All Transactions",
 					to: { name: "Transactions", params: props },
 				},
+				{
+					title: "Request Transactions",
+					to: { name: "TransactionRequest", params: props },
+				},
 			],
 			icon: "mdi-credit-card-outline",
 		},
@@ -26,6 +31,11 @@ export default [
 				path: "all/",
 				component: TransactionsPage,
 				name: "Transactions",
+			},
+			{
+				path: "request/",
+				component: TransactionRequestFormPage,
+				name: "TransactionRequest",
 			},
 			{
 				path: ":transactionId",

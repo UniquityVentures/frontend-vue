@@ -57,6 +57,13 @@
 						:label="field.label" :required="field.required"
 						:multiple="false"
 						:rules="[v => !field.required || !!v || `${field.label} is required`]" />
+
+					<ServerAutocomplete v-if="field.type === FIELD_TYPES.PAYMENT_PURPOSE" v-model="newValue[field.key]"
+						:fetch="getTransactionPurposes" :getInfo="getTransactionPurposeInfoFromObj" :searchField="field.searchField || 'name'"
+						:label="field.label" :required="field.required"
+						:multiple="false"
+						:rules="[v => !field.required || !!v || `${field.label} is required`]" />
+						
 						
 					<!-- Multiple entity types (plural) -->
 					<ServerAutocomplete v-if="field.type === FIELD_TYPES.BATCHES" v-model="newValue[field.key]"
@@ -88,7 +95,7 @@
 						:label="field.label" :required="field.required"
 						:multiple="true"
 						:rules="[v => !field.required || !!v || `${field.label} is required`]" />
-						
+
 					<!-- Other field types -->
 					<v-checkbox v-if="field.type === FIELD_TYPES.BOOLEAN" :label="field.label" v-model="newValue[field.key]"
 						:required="field.required"></v-checkbox>
@@ -120,9 +127,17 @@ import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
 import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
 import { getPayeeInfoFromObj, getPayees } from "@/apps/finances/api";
 import { getStudentInfoFromObj, getStudents } from "@/apps/students/api";
-import { getTransactionPurposeInfoFromObj, getTransactionPurposes } from "@/apps/finances/api";
+import {
+	getTransactionPurposeInfoFromObj,
+	getTransactionPurposes,
+} from "@/apps/finances/api";
+import AttachmentForm from "@/apps/attachments/components/AttachmentForm.vue";
 import { formToApiDateTime } from "@/services/utils";
-import { FIELD_TYPES, getFieldWidth, getDefaultEmptyValue } from "./FieldTypeDefinitions";
+import {
+	FIELD_TYPES,
+	getFieldWidth,
+	getDefaultEmptyValue,
+} from "./FieldTypeDefinitions";
 
 const props = defineProps({
 	title: {
@@ -141,13 +156,17 @@ const props = defineProps({
 		type: Function,
 		required: true,
 	},
+	preprocess: {
+		type: Function,
+		default: (x) => x,
+	},
 });
 
 // Initialize form values with proper empty values based on field type
 const newValue = ref(
 	props?.formFields?.reduce((acc, field) => {
 		const { key, defaultValue, type } = field;
-		
+
 		// Initialize the field with appropriate default value
 		if (defaultValue !== undefined) {
 			acc[key] = defaultValue;
@@ -163,40 +182,50 @@ const handleAction = async () => {
 		// Format and normalize values before sending to API
 		const formattedValue = Object.fromEntries(
 			Object.entries(newValue.value).map(([key, value]) => {
-				const field = props.formFields.find(f => f.key === key);
-				
+				const field = props.formFields.find((f) => f.key === key);
+
 				// Handle datetime formatting
 				if (field?.type === FIELD_TYPES.DATETIME) {
 					return [key, formToApiDateTime(value)];
 				}
-				
+
 				// For entity types that are plural, ensure we map to IDs
-				if ([
-					FIELD_TYPES.BATCHES, 
-					FIELD_TYPES.COURSES, 
-					FIELD_TYPES.TEACHERS, 
-					FIELD_TYPES.STUDENTS, 
-					FIELD_TYPES.PAYEES
-				].includes(field?.type) && Array.isArray(value)) {
-					return [key, value.map(item => typeof item === 'object' ? item.id : item)];
+				if (
+					[
+						FIELD_TYPES.BATCHES,
+						FIELD_TYPES.COURSES,
+						FIELD_TYPES.TEACHERS,
+						FIELD_TYPES.STUDENTS,
+						FIELD_TYPES.PAYEES,
+					].includes(field?.type) &&
+					Array.isArray(value)
+				) {
+					return [
+						key,
+						value.map((item) => (typeof item === "object" ? item.id : item)),
+					];
 				}
-				
+
 				// For single entity types, get the ID if it's an object
-				if ([
-					FIELD_TYPES.BATCH, 
-					FIELD_TYPES.COURSE, 
-					FIELD_TYPES.TEACHER, 
-					FIELD_TYPES.STUDENT, 
-					FIELD_TYPES.PAYEE
-				].includes(field?.type) && value && typeof value === 'object') {
+				if (
+					[
+						FIELD_TYPES.BATCH,
+						FIELD_TYPES.COURSE,
+						FIELD_TYPES.TEACHER,
+						FIELD_TYPES.STUDENT,
+						FIELD_TYPES.PAYEE,
+					].includes(field?.type) &&
+					value &&
+					typeof value === "object"
+				) {
 					return [key, value.id];
 				}
-				
+
 				return [key, value];
-			})
+			}),
 		);
 
-		await props.action(formattedValue);
+		await props.action(props.preprocess(formattedValue));
 		return { success: true };
 	} catch (error) {
 		console.error(`Failed to ${props.actionName} ${props.title}:`, error);
