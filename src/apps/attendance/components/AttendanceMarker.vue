@@ -123,33 +123,6 @@ const defaultHeaders = [
 const defaultFilterFields = [
     { label: "Search by name", type: FIELD_TYPES.STRING, key: "name", value: "", defaultValue: "" },
     { label: "Filter by batch", type: FIELD_TYPES.BATCH, key: "batch", value: null },
-    {
-        label: "Filter by grade level", type: FIELD_TYPES.N_NARY, key: "grade_level", value: null,
-        fetchOptions: () => [
-            { title: "All Grades", value: null },
-            { title: "Grade 1", value: "1" },
-            { title: "Grade 2", value: "2" },
-            { title: "Grade 3", value: "3" },
-            { title: "Grade 4", value: "4" },
-            { title: "Grade 5", value: "5" },
-            { title: "Grade 6", value: "6" },
-            { title: "Grade 7", value: "7" },
-            { title: "Grade 8", value: "8" },
-            { title: "Grade 9", value: "9" },
-            { title: "Grade 10", value: "10" },
-            { title: "Grade 11", value: "11" },
-            { title: "Grade 12", value: "12" },
-        ]
-    },
-    {
-        label: "Filter by status", type: FIELD_TYPES.N_NARY, key: "status", value: null,
-        fetchOptions: () => [
-            { title: "All Students", value: null },
-            { title: "Active", value: "active" },
-            { title: "Inactive", value: "inactive" },
-            { title: "Pending", value: "pending" },
-        ]
-    },
 ];
 
 // Initialize fields with proper reactivity handling
