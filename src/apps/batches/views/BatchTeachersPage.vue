@@ -1,7 +1,7 @@
 <template>
     <v-container class="columns-container" v-if="batch">
         <v-card class="column-item">
-            <v-card-title>Teachers</v-card-title>
+            <v-card-title>Teachers List</v-card-title>
             <v-card-text>
                 <div class="text-subtitle-1">Head Teacher</div>
                 <TeacherListItem :teacher="batch.main_teacher_details" />
@@ -10,21 +10,16 @@
                 <div class="text-subtitle-1">Assistant Teachers</div>
                 <TeacherListItem v-for="teacher in other_teachers" :key="teacher.id" :teacher="teacher" />
             </v-card-text>
-        </v-card>
-        <v-card class="column-item" v-if="course_teachers.length > 0">
-            <v-card-title>Course Teachers</v-card-title>
             <v-card-text>
+                <div class="text-subtitle-1">Course Teachers</div>
                 <v-list>
                     <v-list-item 
                     class="border"
                     rounded="lg"
                     v-for="(teacher, index) in course_teachers" :key="index"
                     :title="teacher.teacher?.user_details?.full_name"
-                    :subtitle="teacher.teacher?.user_details?.email"
+                    :subtitle="`Leading Course: ${teacher.course.name} (${teacher.course.code})`"
                     :to="{ name: 'Teacher', params: { teacherId: teacher?.teacher.user_details?.id } }">
-						<v-chip color="primary">
-							Leading Course: {{ teacher.course.name }} ({{ teacher.course.code }})
-						</v-chip>
                     </v-list-item>
                 </v-list>
             </v-card-text>

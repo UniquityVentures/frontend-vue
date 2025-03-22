@@ -11,8 +11,8 @@
 		</v-card-text>
 		<v-card-text>
 			<ResponsiveDataTable :getToFunction="(item) => ({ name: 'Student', params: { studentId: item.id } })"
-				:headers="defaultHeaders" :fetch="getStudents" v-model:filters="filters" :desktopTemplate="props.overrideDesktopTemplate"
-				mobileTemplate="list" />
+				:headers="defaultHeaders" :fetch="getStudents" v-model:filters="filters" desktopTemplate="card"
+				mobileTemplate="card" />
 		</v-card-text>
 	</v-card>
 </template>
@@ -36,10 +36,6 @@ const props = defineProps({
 	overrideFields: {
 		type: Array,
 		default: null,
-	},
-	overrideDesktopTemplate: {
-		type: String,
-		default: 'card',
 	},
 });
 

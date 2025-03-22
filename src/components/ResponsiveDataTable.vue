@@ -1,7 +1,8 @@
 <template>
 	<!-- List template -->
 	<v-data-table-server v-if="template === 'list'" :items-length="itemsLen" :headers="[]" :items="items"
-		@update:options="fetchData" :search="filters ? JSON.stringify(filters) : ''" :loading="loading" :items-per-page-options="itemsPerPageOptions">
+		@update:options="fetchData" :search="filters ? JSON.stringify(filters) : ''" :loading="loading" 
+		:items-per-page-options="itemsPerPageOptions" :hide-default-footer="hideFooter">
 		<template #headers={}></template>
 		<template #default>
 			<v-list density="compact" v-if="template === 'list'">
@@ -49,7 +50,8 @@
 
 	<!-- Card template -->
 	<v-data-table-server v-if="template === 'card'" :items-length="itemsLen" :headers="[]" :items="items"
-		@update:options="fetchData" :search="filters ? JSON.stringify(filters) : ''" :loading="loading" class="body-container" :items-per-page-options="itemsPerPageOptions">
+		@update:options="fetchData" :search="filters ? JSON.stringify(filters) : ''" :loading="loading" 
+		class="body-container" :items-per-page-options="itemsPerPageOptions" :hide-default-footer="hideFooter">
 		<template #default>
 			<div class="body-grid-container">
 				<v-row no-gutters class="ma-1 pa-0">
@@ -107,7 +109,8 @@
 	</v-data-table-server>
 	<!-- Table template -->
 	<v-data-table-server v-if="template === 'table'" :items-length="itemsLen" :headers="table_headers" :items="items"
-		@update:options="fetchData" :search="JSON.stringify(filters)" :loading="loading" :items-per-page-options="itemsPerPageOptions">
+		@update:options="fetchData" :search="JSON.stringify(filters)" :loading="loading" 
+		:items-per-page-options="itemsPerPageOptions" :hide-default-footer="hideFooter">
 		<template #headers>
 			<tr>
 				<th v-for="header in table_headers" :key="header.key"
@@ -197,33 +200,37 @@ const props = defineProps({
 		type: Boolean,
 		default: false,
 	},
+	hideFooter: {
+		type: Boolean,
+		default: false,
+	},	
 });
 
-const filters = defineModel('filters');
+// Template Handling
 const { mobile } = useDisplay();
-
-// Make template reactive with ref instead of computed
 const template = ref(
 	mobile.value ? props.mobileTemplate : props.desktopTemplate,
 );
-
 // Watch for changes in mobile state and update template accordingly
 watch(mobile, (newValue) => {
 	template.value = newValue ? props.mobileTemplate : props.desktopTemplate;
 });
 
-// first header is the title and the second header is the subtitle
+// Header Handling
+// first header is the title and the second header is the subtitle for card and list templates
 const title = ref(props.headers[0]);
 const subtitle = ref(props.headers[1]);
 // data headers are all headers except the title and subtitle
 const data_headers = computed(() =>
 	props.headers.slice(2, props.headers.length),
 );
-// table headers are all headers for now
+// table headers are all headers + actions header
 const table_headers = computed(() => [
 	...props.headers,
 	{ label: "Actions", key: "actions", sortable: false, type: "actions" },
 ]);
+
+// Removed 'all' from items per page options
 const itemsPerPageOptions = [
 	{ value: 10, title: "10" },
 	{ value: 20, title: "20" },
@@ -235,6 +242,8 @@ const loading = ref(false);
 const itemsLen = ref(10);
 const items = ref([]);
 
+// Filters Handling
+const filters = defineModel('filters');
 const convertFiltersForBackend = (filters) => {
 	return Object.fromEntries(
 		Object.entries(filters)
@@ -248,27 +257,19 @@ const convertFiltersForBackend = (filters) => {
 	);
 };
 
+// Fetch Data
 const fetchData = async ({ page, itemsPerPage, search }) => {
 	loading.value = true;
-	try {
-		const filterParams = {
-			...convertFiltersForBackend(
-				typeof search === "string" ? JSON.parse(search) : search.value,
-			),
-			page_size: itemsPerPage || 10,
-			page: page || 1,
-		};
-
-		const { results, total_records } = await props.fetch(filterParams);
-		items.value = results;
-		itemsLen.value = total_records;
-	} catch (error) {
-		console.error("Error in RDT fetchData: ", error);
-		items.value = [];
-		itemsLen.value = 0;
-	} finally {
-		loading.value = false;
-	}
+	const filterParams = {
+		...convertFiltersForBackend(
+			typeof search === "string" ? JSON.parse(search) : search.value,
+		),
+		page_size: itemsPerPage || 10,
+		page: page || 1,
+	};
+	const { results, total_records } = await props.fetch(filterParams);
+	items.value = results;
+	itemsLen.value = total_records;
 };
 
 onMounted(() => {
