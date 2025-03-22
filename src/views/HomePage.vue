@@ -16,8 +16,17 @@
   </v-container>
 </template>
 
-<script>
-export default {
-	name: "HomePage",
-};
+<script setup>
+import { useAuthStore } from "@/stores/auth";
+import { onMounted } from "vue";
+import { useRouter } from "vue-router";
+
+const authStore = useAuthStore();
+const router = useRouter();
+
+onMounted(() => {
+	if (authStore.isAuth) {
+		router.push({name: "Dashboard"})
+	}
+})
 </script>

@@ -5,8 +5,7 @@
       <v-card-text>
         <ImportForm
           entityName="Assignments"
-          :dryRunFunction="importAssignments.dryRun"
-          :finalizeFunction="importAssignments.finalize"
+          :import="importAssignments"
         />
       </v-card-text>
     </v-card>
