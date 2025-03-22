@@ -5,8 +5,7 @@
       <v-card-text>
         <ImportForm
           entityName="Courses"
-          :dryRunFunction="importCourses.dryRun"
-          :finalizeFunction="importCourses.finalize"
+          :import="importCourses"
           :templateFields="['name', 'subject', 'description', 'main_teacher', 'batches', 'is_active']"
         />
       </v-card-text>
