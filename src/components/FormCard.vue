@@ -9,6 +9,7 @@
 		<v-card-text>
 			<v-row class="pa-2">
 				<v-col v-for="field in formFields" v-bind="getFieldWidth(field.type)" class="pa-2">
+					<span v-if="!field.hidden">
 					<!-- Basic field types -->
 					<v-text-field v-if="field.type === FIELD_TYPES.STRING" :label="field.label" v-model="newValue[field.key]"
 						:rules="[v => !field.required || !!v || `${field.label} is required`]" :required="field.required"></v-text-field>
@@ -110,7 +111,7 @@
 						
 					<AttachmentsForm v-if="field.type === FIELD_TYPES.ATTACHMENT_LIST"
 						@update:attachments="(v) => newValue[field.key] = v" :required="field.required" v-model="newValue[field.key]" />
-						
+					</span>
 				</v-col>
 			</v-row>
 			<SubmitButton v-if="action" :onSubmit="handleAction" :submitText="actionName" />

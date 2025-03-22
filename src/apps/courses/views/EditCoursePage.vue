@@ -29,16 +29,29 @@ const props = defineProps({
 const course = ref(null);
 const formFields = ref([
 	{ label: "Name", type: FIELD_TYPES.STRING, key: "name", required: true },
+	{ label: "Course Code", type: FIELD_TYPES.STRING, key: "code" },
 	{ label: "Description", type: FIELD_TYPES.LONGSTRING, key: "description" },
-	{ label: "Teachers", type: FIELD_TYPES.TEACHERS, key: "teachers", required: false },
-	{ label: "Batches", type: FIELD_TYPES.BATCHES, key: "batches", required: false },
+	{
+		label: "Teachers",
+		type: FIELD_TYPES.TEACHERS,
+		key: "teachers",
+		required: false,
+	},
+	{
+		label: "Batches",
+		type: FIELD_TYPES.BATCHES,
+		key: "batches",
+		required: false,
+	},
 	{ label: "Is Active", type: FIELD_TYPES.BOOLEAN, key: "is_active" },
+	{ hidden: true, type: FIELD_TYPES.INTEGER, key: "id" },
 ]);
 
 const handleUpdateCourse = async (courseData) => {
 	try {
-		await updateCourse(props.courseId, courseData);
-		router.push({ name: 'Course', params: { courseId: props.courseId } });
+		courseData.id = props.courseId;
+		await updateCourse(courseData);
+		router.push({ name: "Course", params: { courseId: props.courseId } });
 		return { success: true };
 	} catch (error) {
 		console.error("Failed to update course:", error);
@@ -49,7 +62,7 @@ const handleUpdateCourse = async (courseData) => {
 onMounted(async () => {
 	try {
 		course.value = await getCourse(props.courseId);
-		
+
 		// Update model with default values from the existing course
 		formFields.value = formFields.value.map((field) => {
 			return {
