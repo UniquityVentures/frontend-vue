@@ -4,7 +4,7 @@
 			v-if="student && user"
 			title="Student"
 			actionName="Update"
-			:model="model"
+			:formFields="formFields"
 			:action="handleUpdate"
 		/>
 	</v-container>
@@ -15,6 +15,7 @@ import { getUser, updateUser } from "@/apps/users/api";
 import FormCard from "@/components/FormCard.vue";
 import { onMounted, ref } from "vue";
 import { getStudent, updateStudent } from "../api";
+import { FIELD_TYPES } from "@/components/FieldTypeDefinitions";
 
 const props = defineProps({
 	studentId: {
@@ -26,33 +27,33 @@ const props = defineProps({
 const student = ref(null);
 const user = ref(null);
 
-const model = ref([
+const formFields = ref([
 	{
 		label: "First Name",
 		key: "first_name",
-		type: "string",
+		type: FIELD_TYPES.STRING,
 	},
 	{
 		label: "Last Name",
 		key: "last_name",
-		type: "string",
+		type: FIELD_TYPES.STRING,
 	},
 	{
 		label: "E-Mail",
 		key: "email",
-		type: "string",
+		type: FIELD_TYPES.STRING,
 	},
 	{
 		label: "Is Active",
 		key: "is_active",
-		type: "boolean",
+		type: FIELD_TYPES.BOOLEAN,
 	},
 	{
 		label: "Is Approved",
 		key: "is_approved",
-		type: "boolean",
+		type: FIELD_TYPES.BOOLEAN,
 	},
-]);
+])
 
 const handleUpdate = async (formData) => {
 	try {
@@ -61,7 +62,7 @@ const handleUpdate = async (formData) => {
 			...user.value,
 			...formData,
 		});
-		await updateStudent(student.value);
+		await updateStudent({ ...student.value, formData });
 		return { success: true };
 	} catch (error) {
 		console.error("Failed to update student:", error);
@@ -73,7 +74,7 @@ onMounted(async () => {
 	student.value = await getStudent(props.studentId);
 	user.value = await getUser(student.value.user);
 	// Update model with default values from the existing user data
-	model.value = model.value.map((field) => ({
+	formFields.value = formFields.value.map((field) => ({
 		...field,
 		defaultValue: user.value[field.key],
 	}));
