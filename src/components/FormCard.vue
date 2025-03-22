@@ -1,14 +1,14 @@
 <template>
 	<v-card>
 		<v-card-title>
-			{{ actionName }}
+			{{ title }}
 		</v-card-title>
 		<v-card-subtitle>
-			{{ title }}
+			{{ subtitle }}
 		</v-card-subtitle>
 		<v-card-text>
-			<v-row class="pa-2">
-				<v-col v-for="field in formFields" v-bind="getFieldWidth(field.type)" class="pa-2">
+			<v-row v-for="field in formFields">
+				<v-col>
 					<span v-if="!field.hidden">
 					<!-- Basic field types -->
 					<v-text-field v-if="field.type === FIELD_TYPES.STRING" :label="field.label" v-model="newValue[field.key]"
@@ -24,9 +24,9 @@
 						:items="field.items" :required="field.required"
 						:rules="[v => !field.required || !!v || `${field.label} is required`]"></v-select>
 						
-					<v-text-field v-if="field.type === FIELD_TYPES.DATETIME" :label="field.label" type="datetime-local"
+					<v-date-input v-if="field.type === FIELD_TYPES.DATETIME" :label="field.label" type="datetime-local"
 						v-model="newValue[field.key]" :rules="[v => !field.required || !!v || `${field.label} is required`]"
-						:required="field.required" ></v-text-field>
+						:required="field.required" ></v-date-input>
 						
 					<!-- Single entity types -->
 					<ServerAutocomplete v-if="field.type === FIELD_TYPES.BATCH" v-model="newValue[field.key]"
@@ -128,27 +128,18 @@ import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
 import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
 import { getPayeeInfoFromObj, getPayees } from "@/apps/finances/api";
 import { getStudentInfoFromObj, getStudents } from "@/apps/students/api";
-import {
-	getTransactionPurposeInfoFromObj,
-	getTransactionPurposes,
-} from "@/apps/finances/api";
+import { getTransactionPurposeInfoFromObj, getTransactionPurposes } from "@/apps/finances/api";
 import AttachmentForm from "@/apps/attachments/components/AttachmentForm.vue";
 import AttachmentsForm from "@/apps/attachments/components/AttachmentsForm.vue";
 import { formToApiDateTime } from "@/services/utils";
-import {
-	FIELD_TYPES,
-	getFieldWidth,
-	getDefaultEmptyValue,
-} from "./FieldTypeDefinitions";
+import { FIELD_TYPES, getDefaultEmptyValue } from "./FieldTypeDefinitions";
 
 const props = defineProps({
 	title: {
 		type: String,
-		required: true,
 	},
-	actionName: {
+	subtitle: {
 		type: String,
-		required: true,
 	},
 	formFields: {
 		type: Array,
@@ -168,7 +159,6 @@ const props = defineProps({
 const newValue = ref(
 	props?.formFields?.reduce((acc, field) => {
 		const { key, defaultValue, type } = field;
-
 		// Initialize the field with appropriate default value
 		if (defaultValue !== undefined) {
 			acc[key] = defaultValue;
