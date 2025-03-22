@@ -7,17 +7,23 @@
 			{{ subtitle }}
 		</v-card-subtitle>
 
-		<v-row>
-			<v-col>
-				<FilterCard :fields="fields" />
-			</v-col>
+		<v-row> 
 			<v-col>
 				<StatsCard :fetchStats="getAttachmentStats" title="Attachments" />
 			</v-col>
 		</v-row>
 		<v-row>
-			<ResponsiveDataTable :getToFunction="(item) => ({ name: 'Attachment', params: { attachmentId: item.id } })"
-				:headers="attachmentDefaultHeaders" :fetch="getAttachments" v-model="filters" :desktopTemplate="props.overrideDesktopTemplate"
+			<v-col>
+				<FilterCard :fields="fields" />
+			</v-col>
+		</v-row>
+		<v-row>
+			<ResponsiveDataTable 
+				:getToFunction="(item) => ({ name: 'Attachment', params: { attachmentId: item.id } })"
+				:headers="attachmentDefaultHeaders" 
+				:fetch="getAttachments" 
+				v-model:filters="filters" 
+				:desktopTemplate="props.overrideDesktopTemplate"
 				mobileTemplate="card" />
 		</v-row>
 	</v-card>

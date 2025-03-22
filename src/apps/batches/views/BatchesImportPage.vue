@@ -6,8 +6,7 @@
       <v-card-text>
         <ImportForm
           entityName="Batches"
-          :dryRunFunction="importBatches.dryRun"
-          :finalizeFunction="importBatches.finalize"
+          :import="importBatches"
           :templateFields="['name', 'standard', 'section', 'main_teacher', 'is_active']"
         />
       </v-card-text>

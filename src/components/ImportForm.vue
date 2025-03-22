@@ -24,12 +24,12 @@
 
                 <!-- Step 2: Validation Results -->
                 <div v-if="step === 2" class="my-4">
-                    <v-alert type="success" v-if="validationResults?.success">
-                        Validation successful! {{ validationResults?.count || 0 }} {{ entityName.toLowerCase() }} ready
+                    <v-alert type="success" v-if="!validationResults.errors">
+                        Validation successful! {{ validationResults?.row_count || 0 }} {{ entityName.toLowerCase() }} ready
                         to import.
                     </v-alert>
 
-                    <v-alert type="error" v-if="validationResults?.errors?.length">
+                    <v-alert type="error" v-if="validationResults?.error?.length">
                         <p>Validation failed with the following errors:</p>
                         <ul>
                             <li v-for="(error, index) in validationResults.errors" :key="index">
@@ -46,7 +46,7 @@
                         Back
                     </v-btn>
 
-                    <v-btn v-if="validationResults?.success" color="success" @click="finalizeImport" :loading="loading"
+                    <v-btn v-if="!validationResults?.errors" color="success" @click="finalizeImport" :loading="loading"
                         class="mt-4 ml-4">
                         <v-icon left>mdi-check</v-icon>
                         Finalize Import
@@ -85,12 +85,8 @@ const props = defineProps({
         type: String,
         required: true
     },
-    dryRunFunction: {
-        type: Function,
-        required: true
-    },
-    finalizeFunction: {
-        type: Function,
+    import: {
+		type: {dryRun: Function, finalize: Function},
         required: true
     },
     templateFields: {
@@ -129,14 +125,12 @@ const handleSubmit = async () => {
         loading.value = true;
         error.value = '';
 
-        // Create FormData
-        const formData = new FormData();
-        formData.append('file', file.value);
-
         // Call dry run API function
-        const response = await props.dryRunFunction(formData);
+        const response = await props.import.dryRun(file.value);
         validationResults.value = response;
         step.value = 2;
+		console.log('response', response);
+		console.log(step.value);
     } catch (err) {
         error.value = err.message || 'An error occurred during validation';
         console.error('Validation error:', err);
@@ -152,9 +146,7 @@ const finalizeImport = async () => {
         error.value = '';
 
         // Call finalize API function
-        const response = await props.finalizeFunction({
-            import_id: validationResults.value.import_id
-        });
+        const response = await props.import.finalize(file.value);
 
         importResults.value = response;
         step.value = 3;

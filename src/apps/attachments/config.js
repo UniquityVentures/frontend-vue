@@ -1,25 +1,27 @@
+import { FIELD_TYPES } from "@/components/FieldTypeDefinitions";
+
 const attachmentDefaultHeaders = [
-	{label: "name", key: "name"},
-	// The link refer to something other than an image, might or might not want to handle that as well
-	{label: "link", key: "file", type: "image"},
-]
+    { label: "name", key: "name" },
+    // The link might refer to something other than an image, might or might not want to handle that as well
+    { label: "link", key: "file", type: "image" },
+];
 
 const attachmentDefaultFilterFields = [
     {
         label: "Search by name",
-        type: "string",
+        type: FIELD_TYPES.STRING,
         key: "name",
         value: "",
         defaultValue: "",
     },
     {
         label: "Is Active",
-        type: "n_nary",
+        type: FIELD_TYPES.N_NARY,
         key: "is_active",
         fetchOptions: () => [
             { title: "All", value: null },
-            { title: "Active", value: "true" },
-            { title: "Inactive", value: "false" },
+            { title: "Active", value: true },
+            { title: "Inactive", value: false },
         ],
     },
     {

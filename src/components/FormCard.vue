@@ -108,7 +108,7 @@
 						@update:attachment="(v) => newValue[field.key] = v?.id" :required="field.required" show-size
 						:rules="[v => !field.required || !!v || `${field.label} is required`]" />
 						
-					<AttachmentListForm v-if="field.type === FIELD_TYPES.ATTACHMENT_LIST"
+					<AttachmentsForm v-if="field.type === FIELD_TYPES.ATTACHMENT_LIST"
 						@update:attachments="(v) => newValue[field.key] = v" :required="field.required" v-model="newValue[field.key]" />
 						
 				</v-col>
@@ -132,6 +132,7 @@ import {
 	getTransactionPurposes,
 } from "@/apps/finances/api";
 import AttachmentForm from "@/apps/attachments/components/AttachmentForm.vue";
+import AttachmentsForm from "@/apps/attachments/components/AttachmentsForm.vue";
 import { formToApiDateTime } from "@/services/utils";
 import {
 	FIELD_TYPES,
