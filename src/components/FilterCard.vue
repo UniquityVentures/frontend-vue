@@ -57,47 +57,17 @@
 				<v-date-input v-if="field.type === FIELD_TYPES.DATE_RANGE" color="primary" :label="field.label" v-model="field.value"
 					multiple="range" clearable :disabled="field.disabled" @update:modelValue="(value) => updateDates(value, field)" />
 				
-				<v-select
-					v-if="field.type === FIELD_TYPES.N_NARY"
-					:label="field.label"
-					v-model="field.value"
-					:items="field.fetchOptions ? field.fetchOptions() : []"
-					:item-title="'title'"
-					:item-value="'value'"
-					hide-details
-					:disabled="field.disabled"
-					clearable
-				/>
+				<v-select v-if="field.type === FIELD_TYPES.N_NARY" :label="field.label" v-model="field.value"
+					:items="field.fetchOptions ? field.fetchOptions() : []" :item-title="'title'" :item-value="'value'"
+					hide-details :disabled="field.disabled" clearable />
 			</v-col>
 			<v-col cols="12" md="4" lg="3">
 				<v-btn color="primary" @click="clearFilters">
 					Clear
 				</v-btn>
-				<v-btn v-if="exportFunction" color="success" :loading="isExporting" @click="showExportDialog">
-					Export
-				</v-btn>
 			</v-col>
 		</v-row>
 	</v-container>
-
-	<!-- Add dialog component -->
-	<v-dialog v-model="showDialog" max-width="400">
-		<v-card>
-			<v-card-title>Confirm Export</v-card-title>
-			<v-card-text>
-				Are you sure you want to export this data?
-			</v-card-text>
-			<v-card-actions>
-				<v-spacer></v-spacer>
-				<v-btn color="grey-darken-1" variant="text" @click="showDialog = false">
-					Cancel
-				</v-btn>
-				<v-btn color="success" variant="text" :loading="isExporting" @click="handleExport">
-					Confirm Export
-				</v-btn>
-			</v-card-actions>
-		</v-card>
-	</v-dialog>
 </template>
 
 <script setup>
@@ -107,7 +77,7 @@ import { getStudentInfoFromObj, getStudents } from "@/apps/students/api";
 import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
 import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
 import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
-import { ref, onMounted, computed, watch } from "vue";
+import { ref, computed, watch } from "vue";
 import { FIELD_TYPES, getDefaultEmptyValue } from "./FieldTypeDefinitions";
 
 const props = defineProps({
