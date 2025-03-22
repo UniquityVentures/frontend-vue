@@ -20,6 +20,7 @@ const router = useRouter();
 
 const formFields = ref([
 	{ label: "Name", type: FIELD_TYPES.STRING, key: "name", required: true },
+	{ label: "Course Code", type: FIELD_TYPES.STRING, key: "code" },
 	{ label: "Description", type: FIELD_TYPES.LONGSTRING, key: "description" },
 	{ label: "Teachers", type: FIELD_TYPES.TEACHERS, key: "teachers", required: false },
 	{ label: "Batches", type: FIELD_TYPES.BATCHES, key: "batches", required: false },
@@ -29,7 +30,7 @@ const formFields = ref([
 const handleCreateCourse = async (courseData) => {
 	try {
 		const response = await createCourse(courseData);
-		if (response && response.id) {
+		if (response?.id) {
 			router.push({ name: 'Course', params: { courseId: response.id } });
 		}
 		return { success: true };

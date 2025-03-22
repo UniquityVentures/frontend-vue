@@ -38,19 +38,13 @@ const isSubmitting = ref(false);
 const isSuccess = ref(false);
 const error = ref(null);
 
-
 const handleSubmit = async () => {
 	isSubmitting.value = true;
 	isSuccess.value = false;
 	error.value = null;
 
 	try {
-		const result = await props.onSubmit();
-		if (result.success) {
-			isSuccess.value = true;
-		} else {
-			error.value = formatErrorMessage(result.error);
-		}
+		props.onSubmit();
 		isSubmitting.value = false;
 	} catch (err) {
 		error.value = formatErrorMessage({ success: false, err });

@@ -20,10 +20,7 @@ const getCourseInfoFromObj = (item) => ({
 });
 
 // Custom update method due to special data cleaning needs
-const updateCourse = async (course) => {
-    const { batch, teacher, ...cleanCourse } = JSON.parse(JSON.stringify(course));
-    await courseViewset.update(cleanCourse);
-};
+const updateCourse = async (course) => courseViewset.update(course);
 
 // Add export and import functionality
 const exportCourses = courseViewset.export;
