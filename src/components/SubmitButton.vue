@@ -21,7 +21,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { formatErrorMessage } from "@/services/utils";
+import { formatErrorMessage, objToString } from "@/services/utils";
 
 const props = defineProps({
 	submitText: {
@@ -43,11 +43,22 @@ const handleSubmit = async () => {
 	isSuccess.value = false;
 	error.value = null;
 
-	try {
-		props.onSubmit();
-		isSubmitting.value = false;
-	} catch (err) {
-		error.value = formatErrorMessage({ success: false, err });
-	}
+	props
+		.onSubmit()
+		.then((response) => {
+			if (
+				(typeof response.success === "boolean" && !response.success) |
+				response.error |
+				response.errors
+			) {
+				isSuccess.value = response.false;
+				error.value = formatErrorMessage(response.error);
+			}
+			isSubmitting.value = false;
+		})
+		.catch((err) => {
+			error.value = formatErrorMessage(err);
+			isSubmitting.value = false;
+		});
 };
 </script>
