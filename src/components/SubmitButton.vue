@@ -15,13 +15,20 @@
 		class="mt-2"
 		density="compact"
 	>
-		{{ error }}
+		<span v-if="typeof error === 'string'">
+			{{ error }}
+		</span>
+		<span v-else>
+			<ul>
+				<li v-for="err in error">{{ err }}</li>
+			</ul>
+		</span>
 	</v-alert>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import { formatErrorMessage, objToString } from "@/services/utils";
+import { formatErrorMessage } from "@/services/utils";
 
 const props = defineProps({
 	submitText: {
@@ -53,6 +60,7 @@ const handleSubmit = async () => {
 			) {
 				isSuccess.value = response.false;
 				error.value = formatErrorMessage(response.error);
+				console.log(error.value);
 			}
 			isSubmitting.value = false;
 		})
