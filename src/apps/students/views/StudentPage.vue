@@ -3,7 +3,7 @@
     <StudentCard class="column-item" :student="student" v-if="student?.user_details" />
     <StudentGuardiansCard class="column-item" :student="student" v-if="student?.user_details" />
     <span v-if="student?.batch">
-      <CoursesCard  class="column-item" :filter="{ batches: student?.batch }" 
+      <CoursesCard  class="column-item" :filters="{ batches: batch.id }" 
         :title="`Courses Taken`" :subtitle="`Courses in ${batch.name} (for now)`"/>
     </span>
   </v-container>
@@ -29,6 +29,8 @@ const fetchDetails = async () => {
 	if (student.value?.batch) {
 		batch.value = await getBatch(student.value?.batch);
 	}
+	console.log(student.value)
+	console.log(batch.value)
 };
 
 onMounted(fetchDetails);

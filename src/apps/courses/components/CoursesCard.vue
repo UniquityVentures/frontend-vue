@@ -30,23 +30,26 @@
 
 <script setup>
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
-import { ref } from "vue";
 import { getCourses } from "../api";
+import { onMounted } from "vue";
 import { courseDefaultHeaders } from "../config";
 
 const props = defineProps({
-    filters: {
-        type: Object,
-        default: () => ({}),
-    },
-    title: {
-        type: String,
-        default: () => 'Courses',
-    },
-    subtitle: {
-        type: String,
-        default: () => 'Courses',
-    },
+	filters: {
+		type: Object,
+		default: {},
+	},
+	title: {
+		type: String,
+		default: "Courses",
+	},
+	subtitle: {
+		type: String,
+		default: "Courses",
+	},
 });
 
+onMounted(() => {
+	console.log(props.filters);
+});
 </script>
