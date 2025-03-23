@@ -1,78 +1,36 @@
 <template>
-    <v-card>
-        <v-card-title v-if="title">
-            {{ title }}
-        </v-card-title>
-        <v-card-subtitle v-if="subtitle">
-            {{ subtitle }}
-        </v-card-subtitle>
-        <v-card-text>
-            <FilterCard :fields="fields" :exportFunction="exportAnnouncements" v-model:filters="filters" />
-        </v-card-text>
-        <v-card-text>
-            <ResponsiveDataTable :getToFunction="(item) => ({ name: 'Announcement', params: { announcementId: item.id } })"
-            :headers="defaultHeaders" :fetch="getAnnouncements" v-model:filters="filters" />
-        </v-card-text>
-    </v-card>
+    <ResponsiveDataTable :fetch="getAnnouncements" v-model:filters="filters"
+    title="Announcements" subtitle="Announcements Master List">
+        <template #filters-slot>
+            <v-row >
+                <v-col cols="12" sm="6" md="3" lg="2">
+                    <v-text-field label="Search by title" v-model="filters.title" />
+                </v-col>
+                <v-col cols="12" sm="12" md="6" lg="4">
+                    <v-text-field label="Search by description" v-model="filters.description" />
+                </v-col>
+                <v-col cols="12" sm="6" md="3" lg="2">
+                    <TeacherSelect v-model="filters.signed_by" label="Signed by" />
+                </v-col>
+            </v-row>
+        </template>
+        <template #list-slot="{ items }">
+            <v-list density="compact" lines="two">
+                <v-list-item v-for="item in items" :key="item.id" class="border" link
+                :to="{ name: 'Announcement', params: { announcementId: item.id } }" >
+                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    <v-list-item-subtitle>{{ item.description }}</v-list-item-subtitle>
+                </v-list-item>
+            </v-list>
+        </template>
+    </ResponsiveDataTable>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { getAnnouncements, exportAnnouncements } from "../api";
+import { ref } from "vue";
+import { getAnnouncements } from "../api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
-import FilterCard from "@/components/FilterCard.vue";
-import { FIELD_TYPES } from "@/components/FieldTypeDefinitions";
-
-const props = defineProps({
-    overrideFields: {
-        type: Array,
-        default: null,
-    },
-    title: {
-        type: String,
-        default: null,
-    },
-    subtitle: {
-        type: String,
-        default: null,
-    },
-});
-
-const defaultHeaders = [
-    { label: "Title", key: "title" },
-    { label: "Description", key: "description", type: "longstring" },
-    { label: "Release Date", key: "release_at", type: "date" },
-    { label: "Expiry Date", key: "expiry_at", type: "date" },
-    { label: "Signed By", key: "signed_by_details", type: "teacher" },
-];
-
-const defaultFilterFields = [
-    { label: "Search by title", type: FIELD_TYPES.STRING, key: "title", value: "", defaultValue: "" },
-    { label: "Filter by batch", type: FIELD_TYPES.BATCH, key: "batch", value: null },
-    { label: "Filter by course", type: FIELD_TYPES.COURSE, key: "course", value: null },
-    { label: "Filter by signer", type: FIELD_TYPES.TEACHER, key: "signed_by", value: null },
-    { label: "Is School Wide", type: FIELD_TYPES.N_NARY, key: "is_school_wide", value: null, fetchOptions: () => [
-        { title: "All Announcements", value: null },
-        { title: "School Wide Only", value: "True" },
-        { title: "Non-School Wide Only", value: "False" },
-    ]},
-    { label: "Is Released", type: FIELD_TYPES.BOOLEAN, key: "is_released", value: null },
-    { label: "Is Expired", type: FIELD_TYPES.BOOLEAN, key: "is_expired", value: null },
-    { label: "Release Date Range", type: FIELD_TYPES.DATE_RANGE, key: ["released_start", "released_end"], value: null },
-    { label: "Expiry Date Range", type: FIELD_TYPES.DATE_RANGE, key: ["expired_start", "expired_end"], value: null },
-];
-
-// Initialize fields with proper reactivity handling
-const fields = ref(props.overrideFields || defaultFilterFields);
-
-// Initialize filters object to receive the values from FilterCard
+import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
 const filters = ref({});
 
-// Make sure to update fields when overrideFields changes
-onMounted(() => {
-    // Force reactivity update for fields if coming from props
-    if (props.overrideFields) {
-        fields.value = JSON.parse(JSON.stringify(props.overrideFields));
-    }
-});
 </script>

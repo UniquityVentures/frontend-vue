@@ -1,20 +1,9 @@
 <template>
-	<v-btn 
-		@click="handleSubmit" 
-		color="primary"
-		:loading="isSubmitting"
-		:disabled="isSubmitting"
-		:append-icon="isSuccess ? 'mdi-check' : (error ? 'mdi-alert' : '')"
-		:color="error ? 'error' : 'primary'"
-	>
+	<v-btn @click="handleSubmit" color="primary" :loading="isSubmitting" :disabled="isSubmitting"
+		:append-icon="isSuccess ? 'mdi-check' : (error ? 'mdi-alert' : '')" :color="error ? 'error' : 'primary'">
 		{{ isSuccess ? 'Updated!' : (error ? 'Failed!' : submitText) }}
 	</v-btn>
-	<v-alert
-		v-if="error"
-		type="error"
-		class="align-center"
-		density="compact"
-	>
+	<v-alert v-if="error" type="error" class="align-center" density="compact">
 		<span v-if="typeof error === 'string'">
 			{{ error }}
 		</span>

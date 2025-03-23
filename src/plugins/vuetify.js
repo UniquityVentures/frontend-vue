@@ -63,6 +63,8 @@ const vuetify = createVuetify({
 		VTimePicker: { density: 'compact', variant: 'outlined' },
 		VList: { density: 'default' },
 		VListItem: { density: 'default' },
+		VRow: { dense: true },
+		VCol: { dense: true },
 	}
 });
 

@@ -24,9 +24,8 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 
-// Replace modelValue prop and update:modelValue emit with defineModel
 const model = defineModel();
 
 const props = defineProps({
@@ -80,15 +79,14 @@ const onSearchUpdate = () => {
 
 // Fetch results
 const fetchResults = async () => {
+
 	if (loading.value || !hasMore.value) return;
-	
 	filters.value[props.searchField] = query.value;
 	loading.value = true;
 
 	try {
 		const listing = await props.fetch(filters.value);
 		results.value = [...results.value, ...listing.results];
-		
 		// Update pagination state
 		hasMore.value = filters.value.page < listing.total_pages;
 		if (hasMore.value) {
@@ -96,7 +94,7 @@ const fetchResults = async () => {
 		}
 	} catch (error) {
 		hasMore.value = false;
-		console.error("API Error:", error);
+		console.error("ServerAutocomplete fetch function failed:", error);
 	} finally {
 		loading.value = false;
 	}
