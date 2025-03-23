@@ -14,9 +14,9 @@
 			<TeacherChip v-if="course.main_teacher_details" :teacher="course.main_teacher_details" />
 		</v-card-text>
 
-		<v-card-text v-if="otherTeachers && otherTeachers.length">
+		<v-card-text v-if="course?.other_teachers?.length">
 			<span class="text-primary">Other Teachers:</span><br>
-			<TeacherChip v-for="teacher in otherTeachers" :key="teacher.id" :teacher="teacher"/>
+			<TeacherChip v-for="teacher in teachers" :key="teacher.id" :teacher="teacher"/>
 		</v-card-text>
 
 		<v-card-text>
@@ -30,32 +30,23 @@
 
 
 <script setup>
-import { getCourse, getCourseImage } from "@/apps/courses/api";
-import { onMounted, ref } from "vue";
+import { getCourseImage } from "@/apps/courses/api";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 import { getTeacher } from "@/apps/teachers/api";
+import { watch, ref } from "vue";
 
 const props = defineProps({
 	course: {
 		type: Object,
-		required: true
-	}
+		required: true,
+	},
 });
 
-const otherTeachers = ref([]);
+const teachers = ref([]);
 
-const fetchOtherTeachers = async () => {
-	if (props.course.other_teachers) {
-		for (const teacherId of props.course.other_teachers) {
-			const teacher = await getTeacher(teacherId);
-			otherTeachers.value.push(teacher);
-		}
-	}
-}
-
-onMounted(async () => {
-	await fetchOtherTeachers();
-});
+watch(props, async ({course}) => {
+	teachers.value = await Promise.all(course.other_teachers.map(getTeacher));
+}, true);
 </script>
 
 <style scoped>
