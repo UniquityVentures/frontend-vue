@@ -12,10 +12,17 @@
 	<v-alert
 		v-if="error"
 		type="error"
-		class="mt-2"
+		class="align-center"
 		density="compact"
 	>
-		{{ error }}
+		<span v-if="typeof error === 'string'">
+			{{ error }}
+		</span>
+		<span v-else>
+			<ul>
+				<li v-for="err in error">{{ err }}</li>
+			</ul>
+		</span>
 	</v-alert>
 </template>
 
@@ -43,11 +50,23 @@ const handleSubmit = async () => {
 	isSuccess.value = false;
 	error.value = null;
 
-	try {
-		props.onSubmit();
-		isSubmitting.value = false;
-	} catch (err) {
-		error.value = formatErrorMessage({ success: false, err });
-	}
+	props
+		.onSubmit()
+		.then((response) => {
+			if (
+				(typeof response.success === "boolean" && !response.success) |
+				response.error |
+				response.errors
+			) {
+				isSuccess.value = response.false;
+				error.value = formatErrorMessage(response.error);
+				console.log(error.value);
+			}
+			isSubmitting.value = false;
+		})
+		.catch((err) => {
+			error.value = formatErrorMessage(err);
+			isSubmitting.value = false;
+		});
 };
 </script>

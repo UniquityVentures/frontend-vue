@@ -24,6 +24,7 @@ import { ref } from "vue";
 import { createStudent } from "../api";
 import { createUser } from "@/apps/users/api";
 import { FIELD_TYPES } from "@/components/FieldTypeDefinitions";
+import { useRouter } from "vue-router";
 
 const stage = ref(1);
 
@@ -128,8 +129,12 @@ const handleCreateUser = async (userData) => {
 	return user.value;
 };
 
+const router = useRouter();
+
 const handleCreateStudent = async (studentData) => {
-	console.log({ studentData, user: user.value.id });
-	return createStudent({studentData, user: user.value.id});
+	const student = await createStudent({ ...studentData, user: user.value.id });
+	console.log(student)
+	router.push({ name: "Student", params: { studentId: student.id } });
+	return student;
 };
 </script>

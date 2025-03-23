@@ -2,6 +2,8 @@ import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.v
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import { api } from "@/services/api";
 import TeacherPage from "./views/TeacherPage.vue";
+import EditTeacherPage from "./views/EditTeacherPage.vue";
+import CreateTeacherPage from "./views/CreateTeacherPage.vue";
 import TeachersPage from "./views/TeachersPage.vue";
 
 export default [
@@ -18,6 +20,10 @@ export default [
 					title: "View Teachers",
 					to: { name: "Teachers", params: props },
 				},
+				{
+					title: "Create Teacher",
+					to: { name: "CreateTeacher", params: props },
+				},
 			],
 			icon: "mdi-account-tie",
 		},
@@ -28,9 +34,14 @@ export default [
 				name: "Teachers",
 			},
 			{
+				path: "create/",
+				component: CreateTeacherPage,
+				name: "CreateTeacher",
+			},
+			{
 				path: ":teacherId",
 				props: true,
-				component: TeacherPage,
+				component: EmptyLayout,
 				meta: {
 					defaultRoute: "Teacher",
 					getDisplayName: async (params) =>
@@ -51,14 +62,14 @@ export default [
 				children: [
 					{
 						path: "view/",
-						component: EmptyLayout,
+						component: TeacherPage,
 						//component: StudentPage,
 						name: "Teacher",
 						props: true,
 					},
 					{
 						path: "edit/",
-						component: EmptyLayout,
+						component: EditTeacherPage,
 						name: "EditTeacher",
 						props: true,
 					},

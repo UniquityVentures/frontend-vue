@@ -32,9 +32,15 @@ const formFields = ref([
 	{ label: "Course Code", type: FIELD_TYPES.STRING, key: "code" },
 	{ label: "Description", type: FIELD_TYPES.LONGSTRING, key: "description" },
 	{
+		label: "Main Teacher",
+		type: FIELD_TYPES.TEACHER,
+		key: "main_teacher",
+		required: false,
+	},
+	{
 		label: "Teachers",
 		type: FIELD_TYPES.TEACHERS,
-		key: "teachers",
+		key: "other_teachers",
 		required: false,
 	},
 	{

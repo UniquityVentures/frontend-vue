@@ -75,12 +75,8 @@ export const formatErrorMessage = (error) => {
 		const { status, data } = error.response;
 		// Handle 400 Bad Request
 		if (status === 400) {
-			if (typeof data === "object") {
-				// Format field-specific errors
 				const errors = objToString(data);
 				return errors;
-			}
-			return data.detail || "Invalid data submitted";
 		}
 		// Handle other status codes
 		return data.detail || `Server returned ${status}`;

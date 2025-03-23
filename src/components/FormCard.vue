@@ -149,6 +149,10 @@ const props = defineProps({
 		type: Function,
 		required: true,
 	},
+	actionName: {
+		type: String,
+		required: true,
+	},
 	preprocess: {
 		type: Function,
 		default: (x) => x,

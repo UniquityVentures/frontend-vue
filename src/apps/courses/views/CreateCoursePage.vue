@@ -22,7 +22,8 @@ const formFields = ref([
 	{ label: "Name", type: FIELD_TYPES.STRING, key: "name", required: true },
 	{ label: "Course Code", type: FIELD_TYPES.STRING, key: "code" },
 	{ label: "Description", type: FIELD_TYPES.LONGSTRING, key: "description" },
-	{ label: "Teachers", type: FIELD_TYPES.TEACHERS, key: "teachers", required: false },
+	{ label: "Main Teacher", type: FIELD_TYPES.TEACHER, key: "main_teachers", required: false },
+	{ label: "Teachers", type: FIELD_TYPES.TEACHERS, key: "other_teachers", required: false },
 	{ label: "Batches", type: FIELD_TYPES.BATCHES, key: "batches", required: false },
 	{ label: "Is Active", type: FIELD_TYPES.BOOLEAN, key: "is_active", defaultValue: true },
 ]);
