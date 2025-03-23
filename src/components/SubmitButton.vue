@@ -12,7 +12,7 @@
 	<v-alert
 		v-if="error"
 		type="error"
-		class="mt-2"
+		class="align-center"
 		density="compact"
 	>
 		<span v-if="typeof error === 'string'">
