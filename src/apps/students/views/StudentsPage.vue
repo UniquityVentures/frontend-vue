@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <StudentsLookup :overrideFields="customFields" />
+    <StudentsLookup />
   </v-container>
 </template>
 

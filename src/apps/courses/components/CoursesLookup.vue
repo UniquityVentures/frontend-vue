@@ -1,78 +1,46 @@
 <template>
-    <v-card>
-        <v-card-title v-if="title">
-            {{ title }}
-        </v-card-title>
-        <v-card-subtitle v-if="subtitle">
-            {{ subtitle }}
-        </v-card-subtitle>
-        <v-card-text>
-		    <FilterCard 
-                :fields="fields"
-                :exportFunction="exportCourses"
-                v-model:filters="filters"
-            /> 
-        </v-card-text>
-        <v-card-text>
-            <ResponsiveDataTable 
-                :getToFunction="(item) => ({name: 'Course', params: {courseId: item.id}})" 
-                :headers="defaultHeaders" 
-                :fetch="getCourses" 
-                v-model:filters="filters"
-                desktopTemplate="card"
-                mobileTemplate="card"
-            />
-        </v-card-text>
-    </v-card>
+    <ResponsiveDataTable :fetch="getCourses" v-model:filters="filters"
+        title="Courses" subtitle="Courses Master List" :templates="{ desktop: 'card', mobile: 'card' }">
+        <template #filters-slot>
+            <v-row>
+                <v-col cols="12" sm="6" md="3" lg="2">
+                    <v-text-field label="Search by name" v-model="filters.name" />
+                </v-col>
+                <v-col cols="12" sm="6" md="3" lg="2">
+                    <TeacherSelect v-model="filters.main_teacher" label="Main Teacher" />
+                </v-col>
+                <v-col cols="12" sm="6" md="3" lg="2">
+                    <BatchSelect v-model="filters.batch" label="Batch" />
+                </v-col>
+            </v-row>
+        </template>
+        <template #cards-slot="{ items }">
+            <v-row>
+                <v-col cols="6" md="3" lg="2" v-for="item in items" :key="item.id">
+                    <v-card link :to="{ name: 'Course', params: { courseId: item.id }}" variant="flat" class="border">
+                        <v-card-title class="text-subtitle-1">{{ item.name }}</v-card-title>
+                        <v-card-subtitle>{{ item.code }}</v-card-subtitle>
+                        <v-card-text>
+                            <v-chip v-if="item.is_active" color="success">Active</v-chip>
+                            <v-chip v-else color="error">Inactive</v-chip>
+                            <BatchChip :batchId="item.batches" />
+                            <TeacherChip :teacherId="item.main_teacher" />
+                        </v-card-text>
+                    </v-card>
+                </v-col>
+            </v-row>
+        </template>
+    </ResponsiveDataTable>
 </template>
 
 <script setup>
-import FilterCard from "@/components/FilterCard.vue";
+import { ref } from "vue";
+import { getCourses } from "../api";
+import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
+import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
-import { ref, onMounted } from "vue";
-import { getCourses, exportCourses } from "../api";
-import { FIELD_TYPES } from "@/components/FieldTypeDefinitions";
+import BatchChip from "@/apps/batches/components/BatchChip.vue";
+import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 
-const props = defineProps({
-    title: {
-        type: String,
-        default: null,
-    },
-    subtitle: {
-        type: String,
-        default: null,
-    },
-    overrideFields: {
-        type: Array,
-        default: null,
-    },
-});
-
-// Define default headers inline instead of importing from config
-const defaultHeaders = [
-    { label: "Name", key: "name" },
-    { label: "Course Code", key: "code", type: "string" },
-    { label: "Teacher", key: "main_teacher_details", type: 'teacher' },
-    { label: "Status", key: "is_active", type: 'is_active' },
-    { label: "Batches", key: "batches_details", type: 'batch' },
-];
-
-// Define default filter fields inline instead of importing from config
-const defaultFilterFields = [
-    { label: "Search by name", type: FIELD_TYPES.STRING, key: "name", value: "", defaultValue: "" },
-    { label: "Filter by teacher", type: FIELD_TYPES.TEACHER, key: "main_teacher", value: null },
-    { label: "Filter by batch", type: FIELD_TYPES.BATCH, key: "batches", value: null }
-];
-
-// Initialize fields with proper reactivity handling
-const fields = ref(props.overrideFields || defaultFilterFields);
 const filters = ref({});
-
-// Make sure to update fields when overrideFields changes
-onMounted(() => {
-    // Force reactivity update for fields if coming from props
-    if (props.overrideFields) {
-        fields.value = JSON.parse(JSON.stringify(props.overrideFields));
-    }
-});
 </script>

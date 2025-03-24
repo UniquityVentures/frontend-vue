@@ -1,35 +1,51 @@
 <template>
-	<v-card>
-		<v-card-title v-if="title">
-			{{ title }}
-		</v-card-title>
-		<v-card-subtitle v-if="subtitle">
-			{{ subtitle }}
-		</v-card-subtitle>
-		<v-card-text>
-			<FilterCard :fields="fields" v-model:filters="filters" />
-		</v-card-text>
-		<v-card-text>
-			<ResponsiveDataTable :getToFunction="(item) => ({ name: 'Event', params: { eventId: item.id } })"
-				:headers="defaultHeaders" :fetch="getEvents" v-model:filters="filters">
-				<template #list-item-slot="{ item }">
+	<ResponsiveDataTable :fetch="getEvents" v-model:filters="filters"
+		title="Events" subtitle="Events Master List">
+		<template #filters-slot>
+			<v-row>
+				<v-col cols="12" sm="6" md="3" lg="2">
+					<v-text-field label="Search by title" v-model="filters.title" />
+				</v-col>
+				<v-col cols="12" sm="6" md="3" lg="2">
+					<v-text-field label="Search by location" v-model="filters.location" />
+				</v-col>
+				<v-col cols="12" sm="6" md="3" lg="2">
+					<BatchSelect v-model="filters.batch" label="Filter by batch" />
+				</v-col>
+				<v-col cols="12" sm="6" md="4" lg="3">
+					<DateRangeSelect
+						:filters="filters"
+						start-key="start_start"
+						end-key="start_end"
+						label="Date Range"
+					/>
+				</v-col>
+				<v-col cols="12" sm="6" md="3" lg="2">
+					<TeacherSelect v-model="filters.created_by" label="Created By" />
+				</v-col>
+			</v-row>
+		</template>
+		<template #list-slot="{ items }">
+			<v-list>
+				<v-list-item v-for="item in items" :key="item.id" link :to="{ name: 'Event', params: { eventId: item.id } }" class="border">
 					<v-list-item-title>{{ item.title }}</v-list-item-title>
 					<v-list-item-subtitle>{{ item.description }}</v-list-item-subtitle>
 					<v-chip color="blue">{{ `Start: ${formatDateTime(item.start)}` }}</v-chip>
 					<v-chip color="red">{{ `End: ${formatDateTime(item.end)}` }}</v-chip>
-				</template>
-			</ResponsiveDataTable>
-		</v-card-text>
-	</v-card>
+				</v-list-item>
+			</v-list>
+		</template>
+	</ResponsiveDataTable>
 </template>
 
 <script setup>
-import FilterCard from "@/components/FilterCard.vue";
-import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { getEvents } from "../api";
+import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
+import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
+import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
+import DateRangeSelect from "@/components/DateRangeSelect.vue";
 import { formatDateTime } from "@/services/utils";
-import { FIELD_TYPES } from "@/components/FieldTypeDefinitions";
 
 const props = defineProps({
 	title: {
@@ -46,34 +62,5 @@ const props = defineProps({
 	},
 });
 
-// Define default headers inline
-const defaultHeaders = [
-	{ label: "Title", key: "title" },
-	{ label: "Description", key: "description", type: "longstring" }, 
-	{ label: "Start", key: "start", type: "datetime" },
-	{ label: "End", key: "end", type: "datetime" },
-	{ label: "Location", key: "location" },
-	{ label: "Created By", key: "created_by_details", type: "teacher" }
-];
-
-// Define default filter fields inline
-const defaultFilterFields = [
-	{ label: "Search by title", type: FIELD_TYPES.STRING, key: "title", value: "", defaultValue: "" },
-	{ label: "Search by location", type: FIELD_TYPES.STRING, key: "location", value: "", defaultValue: "" },
-	{ label: "Filter by batch", type: FIELD_TYPES.BATCH, key: "batch", value: null },
-	{ label: "Date Range", type: FIELD_TYPES.DATE_RANGE, key: ["start_start", "start_end"], value: null },
-	{ label: "Created By", type: FIELD_TYPES.TEACHER, key: "created_by", value: null }
-];
-
-// Initialize fields with proper reactivity handling
-const fields = ref(props.overrideFields || defaultFilterFields);
 const filters = ref({});
-
-// Make sure to update fields when overrideFields changes
-onMounted(() => {
-	// Force reactivity update for fields if coming from props
-	if (props.overrideFields) {
-		fields.value = JSON.parse(JSON.stringify(props.overrideFields));
-	}
-});
 </script>

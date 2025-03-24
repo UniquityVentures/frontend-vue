@@ -12,6 +12,25 @@
                 <v-col cols="12" sm="6" md="3" lg="2">
                     <TeacherSelect v-model="filters.signed_by" label="Signed by" />
                 </v-col>
+                <v-col cols="12" sm="6" md="3" lg="2">
+                    <BatchSelect v-model="filters.batch" label="Batch" />
+                </v-col>
+                <v-col cols="12" sm="6" md="4" lg="3">
+                    <DateRangeSelect 
+                        :filters="filters"
+                        start-key="released_start"
+                        end-key="released_end"
+                        label="Release Date Range" 
+                    />
+                </v-col>
+                <v-col cols="12" sm="6" md="4" lg="3">
+                    <DateRangeSelect 
+                        :filters="filters"
+                        start-key="expired_start"
+                        end-key="expired_end"
+                        label="Expiry Date Range" 
+                    />
+                </v-col>
             </v-row>
         </template>
         <template #list-slot="{ items }">
@@ -31,6 +50,9 @@ import { ref } from "vue";
 import { getAnnouncements } from "../api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
+import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
+import DateRangeSelect from "../../../components/DateRangeSelect.vue";
+
 const filters = ref({});
 
 </script>
