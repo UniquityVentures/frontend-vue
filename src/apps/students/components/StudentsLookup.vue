@@ -18,7 +18,7 @@
 						<v-card-title class="text-subtitle-1">{{ item.user_details.full_name }}</v-card-title>
 						<v-card-subtitle>{{ item.student_no }}</v-card-subtitle>
 						<v-card-text>
-							<BatchChip :batch="item.batch_details" /><br>
+							<BatchChip :batchId="item.batch" /><br>
 							<v-chip>Roll No: {{ item.roll_no }}</v-chip>
 						</v-card-text>
 					</v-card>
