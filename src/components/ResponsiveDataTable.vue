@@ -29,6 +29,11 @@
 				class="body-container" :items-per-page-options="itemsPerPageOptions" :hide-default-footer="hideFooter">
 				<template #default>
 					<slot name="cards-slot" :items="items">
+						<v-row>
+							<v-col cols="12" md="4" lg="3" v-for="item in items" :key="item.id">
+								<slot name="card-slot" :item="item" />
+							</v-col>
+						</v-row>
 						<!-- cards slot -->
 					</slot>
 				</template>

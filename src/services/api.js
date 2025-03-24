@@ -1,32 +1,18 @@
 import { useAuthStore } from "@/stores/auth";
 import axios from "axios";
 
+const baseURL = window.__TAURI__
+    ? "http://192.168.0.118:80/"
+    : "http://school1.localhost:8000/";
+
 const api = axios.create({
     // TODO: Setup a proper screen or system for setting the api url in mobile
-    baseURL: window.__TAURI__
-        ? "http://192.168.0.118:80/"
-        : "http://school1.localhost:8000/",  
+    baseURL: baseURL,
     headers: {
         "Content-Type": "application/json",
     },
     withCredentials: true,
 });
-
-api.getListing = async (app, filter) =>
-    (
-        await api.get(`api/${app}/all`, {
-            params: filter,
-        })
-    ).data;
-
-api.getDetail = async (app, id) => (await api.get(`api/${app}/${id}`)).data;
-
-api.createItem = async (app, item) => await api.post(`api/${app}/`, item);
-
-api.updateItem = async (app, item) =>
-    await api.put(`api/${app}/${item.id}/`, item);
-
-api.deleteItem = async (app, id) => await api.delete(`api/${app}/${id}/`);
 
 api.interceptors.request.use(
     (config) => {
@@ -45,6 +31,7 @@ api.interceptors.response.use(
         return response;
     },
     async (error) => {
+        console.log(error);
         const authStore = useAuthStore();
         const original_request = error.config;
         if (
@@ -56,9 +43,13 @@ api.interceptors.response.use(
             const refresh = authStore.getRefresh;
             if (refresh) {
                 try {
-                    const response = await axios.post("/api/token/refresh/", {
-                        refresh: refresh,
-                    });
+                    // Using axios instead of api to avoid infinite recursion in case of token refresh failure
+                    const response = await axios.post(
+                        `${baseURL}api/token/refresh/`,
+                        {
+                            refresh: refresh,
+                        },
+                    );
                     authStore.refreshTokens({
                         access: response.data.access,
                         refresh: response.data.refresh,
@@ -66,7 +57,7 @@ api.interceptors.response.use(
                     original_request.headers.Authorization = `Bearer ${response.data.access}`;
                     return api(original_request);
                 } catch (refresh_error) {
-                    console.error("Token refresh failed ", refresh_error);
+                    console.error("Token refresh failed ", refresh_error.request);
                     authStore.logout();
                     window.location.href = "/login";
                 }
