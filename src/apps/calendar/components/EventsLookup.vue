@@ -15,8 +15,8 @@
 				<v-col cols="12" sm="6" md="4" lg="3">
 					<DateRangeSelect
 						:filters="filters"
-						start-key="start_start"
-						end-key="start_end"
+						start-key="start_date"
+						end-key="end_date"
 						label="Date Range"
 					/>
 				</v-col>

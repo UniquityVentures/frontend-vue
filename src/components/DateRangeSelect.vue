@@ -61,13 +61,9 @@ const handleDateUpdate = (value) => {
     if (Array.isArray(value) && value.length >= 2) {
         const dates = [...value].sort((a, b) => new Date(a) - new Date(b));
 
-        // Format the dates for the backend (YYYY-MM-DD)
-        const formattedStartDate = dates[0].substring(0, 10);
-        const formattedEndDate = dates[1].substring(0, 10);
-
         // Update both date filters directly on the parent's filters object
-        props.filters[props.startKey] = formattedStartDate;
-        props.filters[props.endKey] = formattedEndDate;
+        props.filters[props.startKey] = dates[0];
+        props.filters[props.endKey] = dates[dates.length - 1];
     }
 };
 </script>
