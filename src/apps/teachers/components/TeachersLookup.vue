@@ -17,18 +17,7 @@
 		<template #cards-slot="{ items }">
 			<v-row>
 				<v-col cols="12" md="4" lg="3" v-for="item in items" :key="item.id">
-					<v-card height="100%" link :to="{ name: 'Teacher', params: { teacherId: item.id }}" variant="flat" class="border">
-						<v-card-title class="text-subtitle-1">{{ item.user_details.full_name }}</v-card-title>
-						<v-card-subtitle>{{ item.identifier }}</v-card-subtitle>
-						<v-card-text>
-							<v-chip prepend-icon="mdi-email" color="primary">
-								{{ item.user_details.email }}
-							</v-chip><br>
-							<v-chip prepend-icon="mdi-whatsapp" color="green">
-								{{ item.whatsapp }}
-							</v-chip>
-						</v-card-text>
-					</v-card>
+					<TeacherSmallCard :teacher="item" />
 				</v-col>
 			</v-row>
 		</template>
@@ -41,5 +30,6 @@ import { getTeachers } from "../api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
 import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
+import TeacherSmallCard from "./TeacherSmallCard.vue";
 const filters = ref({});
 </script>
