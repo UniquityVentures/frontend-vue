@@ -14,14 +14,7 @@
 		<template #cards-slot="{ items }">
 			<v-row>
 				<v-col cols="6" md="3" lg="2" v-for="item in items" :key="item.id">
-					<v-card link :to="{ name: 'Student', params: { studentId: item.id }}" variant="flat" class="border">
-						<v-card-title class="text-subtitle-1">{{ item.user_details.full_name }}</v-card-title>
-						<v-card-subtitle>{{ item.student_no }}</v-card-subtitle>
-						<v-card-text>
-							<BatchChip :batchId="item.batch" /><br>
-							<v-chip>Roll No: {{ item.roll_no }}</v-chip>
-						</v-card-text>
-					</v-card>
+					<StudentSmallCard :student="item" />
 				</v-col>
 			</v-row>
 		</template>
@@ -32,7 +25,7 @@
 import { ref } from "vue";
 import { getStudents } from "../api";
 import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
-import BatchChip from "@/apps/batches/components/BatchChip.vue";
+import StudentSmallCard from "./StudentSmallCard.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 
 const filters = ref({});

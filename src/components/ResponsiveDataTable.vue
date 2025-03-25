@@ -2,8 +2,8 @@
 	<v-card>
 		<v-card-title v-if="title">{{ title }}</v-card-title>
 		<v-card-subtitle v-if="subtitle">{{ subtitle }}</v-card-subtitle>
-		<v-card-text>
-			<v-card variant="flat" class="border">
+		<v-card-text v-if="!hideFilters">
+			<v-card variant="flat">
 				<v-card-text class="mt-2">
 					<slot name="filters-slot" :filters="filters">
 						<!-- filters slot -->
@@ -72,7 +72,7 @@ const props = defineProps({
 	templates: {
 		type: Object,
 		default: () => ({
-			desktop: "list",
+			desktop: "card",
 			mobile: "list",
 		}),
 	},
@@ -80,6 +80,10 @@ const props = defineProps({
 		type: Boolean,
 		default: false,
 	},	
+	hideFilters: {
+		type: Boolean,
+		default: false,
+	},
 });
 
 //

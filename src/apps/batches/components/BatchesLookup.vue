@@ -11,18 +11,7 @@
         <template #cards-slot="{ items }">
             <v-row>
                 <v-col cols="12" sm="6" md="3" lg="2" v-for="item in items" :key="item.id">
-                    <v-card height="100%" link :to="{ name: 'Batch', params: { batchId: item.id }}" variant="flat" class="border">
-                        <v-card-title>{{ item.name }}</v-card-title>
-                        <v-card-subtitle>{{ item.main_teacher_details?.user_details?.full_name || "Loading..." }}</v-card-subtitle>
-                        <v-card-text>
-                            <v-chip prepend-icon="mdi-account-group" color="primary">
-                                No of Students: {{ item.students.length }}
-                            </v-chip>
-                            <v-chip prepend-icon="mdi-book-open-variant" color="blue">
-                                No. of Courses: {{ item.courses.length }}
-                            </v-chip>
-                        </v-card-text>
-                    </v-card>
+                    <BatchSmallCard :batch="item" />
                 </v-col>
             </v-row>
         </template>
@@ -32,7 +21,7 @@
 <script setup>
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { ref } from "vue";
-import { getBatches, exportBatches } from "../api";
-
+import { getBatches } from "../api";
+import BatchSmallCard from "./BatchSmallCard.vue";
 const filters = ref({});
 </script>

@@ -27,8 +27,7 @@ import { onMounted, ref } from "vue";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 import { getTeacher } from "@/apps/teachers/api";
 
-const batch = ref(null);
-const props = defineProps({ batchId: Number });
+const props = defineProps({ batchId: [Number, String], batch: Object });
 const otherTeachers = ref([]);
 
 const fetchOtherTeachers = async () => {
@@ -38,9 +37,15 @@ const fetchOtherTeachers = async () => {
     }
 }
 
+const batch = ref(null);
+
 onMounted(async () => {
+  if (props.batchId) {
     batch.value = await getBatch(props.batchId);
-    await fetchOtherTeachers();
+  } else {
+    batch.value = props.batch;
+  }
+  await fetchOtherTeachers();
 });
 </script>
 

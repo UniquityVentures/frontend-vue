@@ -82,6 +82,7 @@
 
 /* Ensure rows behave predictably across the app */
 .v-row {
-    width: 100%;
+    width: 100% !important;
     margin: 0 !important;
+    flex-wrap: wrap;
 }

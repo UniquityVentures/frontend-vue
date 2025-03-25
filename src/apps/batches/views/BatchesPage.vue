@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <BatchesLookup :overrideFields="[{label: 'Search by batch name', key: 'name', type: 'string'}]" />
+        <BatchesLookup />
     </v-container>
 </template>
 

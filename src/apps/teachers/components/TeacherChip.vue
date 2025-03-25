@@ -51,7 +51,7 @@ onMounted(async () => {
       teachers.value = [await getTeacher(props.teacherId)];
     }
   } else {
-    teachers.value = props.teacher ? (Array.isArray(props.teacher) ? props.teacher : [props.teacher]) : [];
+    teachers.value = props.teacher;
   }
 });
 </script>
