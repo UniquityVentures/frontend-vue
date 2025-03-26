@@ -86,3 +86,18 @@
     margin: 0 !important;
     flex-wrap: wrap;
 }
+
+.v-field__input input {
+    font-size: 0.95rem !important; /* 14px */
+}
+
+.v-field__input,
+.v-autocomplete__selection,
+.v-select__selection,
+.v-combobox__selection {
+    font-size: 0.95rem !important; /* 14px */
+}
+
+.v-label {
+    font-size: 0.95rem !important; /* 14px */
+}

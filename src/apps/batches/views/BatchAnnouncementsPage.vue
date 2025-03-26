@@ -1,9 +1,14 @@
 <template>
     <v-container v-if="batch">
-        <ResponsiveDataTable :fetch="getAnnouncements" v-model:filters="filters"
-        title="Announcements" :subtitle="`Announcements for ${batch.name}`">
+        <v-btn prepend-icon="mdi-plus" color="primary" :to="{ name: 'CreateAnnouncement' }">
+            Create New Announcement</v-btn>
+        <v-btn prepend-icon="mdi-view-list" color="grey-darken-2" :to="{ name: 'Announcements' }">
+            View All Announcements</v-btn>
+        <v-divider/>
+        <ResponsiveDataTable :fetch="getAnnouncements" v-model:filters="filters" title="Announcements"
+            :subtitle="`Announcements for ${batch.name}`">
             <template #filters-slot>
-                <v-row >
+                <v-row>
                     <v-col cols="12" sm="6" md="3" lg="2">
                         <v-text-field label="Search by title" v-model="filters.title" />
                     </v-col>
@@ -44,7 +49,7 @@ const props = defineProps({
 });
 
 const batch = ref(null);
-const filters = ref({batch: props.batchId});
+const filters = ref({ batch: props.batchId });
 
 onMounted(async () => {
     batch.value = await getBatch(props.batchId);

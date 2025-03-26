@@ -2,6 +2,7 @@
 	<v-autocomplete
 		v-model="model"
 		chips
+		closable-chips
 		:items="results"
 		:loading="loading"
 		:search-input.sync="query"
@@ -10,6 +11,7 @@
 		:multiple="multiple"
 		@update:search="onSearchUpdate"
 		:clearable="true"
+		:density="density"
 	>
 		<!-- Infinite Scrolling Slot -->
 		<template v-slot:append-item>
@@ -49,6 +51,10 @@ const props = defineProps({
 		type: Boolean,
 		default: false,
 	},
+	density: {
+		type: String,
+		default: "compact",
+	},
 });
 
 // Query and filter setup
@@ -63,14 +69,9 @@ const hasMore = ref(true);
 // Search handling with debounce
 let debounceTimeout = null;
 const onSearchUpdate = () => {
-	// Clear previous timeout
 	if (debounceTimeout) clearTimeout(debounceTimeout);
-	
-	// Reset search state
 	hasMore.value = true;
 	filters.value.page = 1;
-	
-	// Debounce the search
 	debounceTimeout = setTimeout(() => {
 		results.value = []; // Clear results only after debounce
 		fetchResults();
@@ -86,7 +87,8 @@ const fetchResults = async () => {
 
 	try {
 		const listing = await props.fetch(filters.value);
-		results.value = [...results.value, ...listing.results];
+		const newItems = listing.results.filter(item => !results.value.some(r => r.id === item.id));
+		results.value = [...results.value, ...newItems];
 		// Update pagination state
 		hasMore.value = filters.value.page < listing.total_pages;
 		if (hasMore.value) {
@@ -107,5 +109,22 @@ const fetchMoreResults = () => {
 	}
 };
 
-onMounted(fetchResults);
+onMounted(async () => {
+  // Load initial dropdown data
+  await fetchResults();
+
+  // Ensure selected model values (if any) are in results
+  if (model.value) {
+	if (Array.isArray(model.value)) {
+		for (const id of model.value) {
+			const selectedItems = await props.fetch({ id: id });
+			results.value = [...selectedItems.results, ...results.value];
+		}
+	} else {
+		const selectedItems = await props.fetch({ id: model.value });
+		results.value = [...selectedItems.results, ...results.value];
+	}
+  }
+});
+
 </script>
