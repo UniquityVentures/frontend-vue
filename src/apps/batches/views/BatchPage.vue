@@ -18,11 +18,23 @@
 			title="Announcements"
 			:viewAll="{ route: { name: 'BatchAnnouncements' }, label: 'View All Announcements' }"
 		/>
+
+		<v-card class="column-item">
+			<v-card-title>Join Code</v-card-title>
+			<v-card-subtitle>Join Code for this batch</v-card-subtitle>
+            <v-card-text>
+                <v-text-field label="Join Code" :value="batch.join_code" readonly persistent-placeholder>
+                    <template #append>
+                        <v-btn color="green" size="small">Copy</v-btn>
+                    </template>
+                </v-text-field>
+            </v-card-text>
+		</v-card>
 	</v-container>
 </template>
 
 <script setup>
-import { ref, onMounted  } from "vue";
+import { ref, onMounted } from "vue";
 import { getBatch } from "@/apps/batches/api";
 import { getCourses } from "@/apps/courses/api";
 import { getAnnouncements } from "@/apps/announcements/api";

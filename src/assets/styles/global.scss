@@ -16,9 +16,10 @@
 }
 
 .v-card-actions {
-    padding: 0px;
+    padding: 0px !important;
     border-top: 1px solid rgba(0, 0, 0, 0.12);
     background-color: rgb(var(--v-theme-background));
+    min-height: 0px !important;
 }
 
 // v-list styles

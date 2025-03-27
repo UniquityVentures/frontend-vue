@@ -28,7 +28,7 @@ const props = defineProps({
     },
     label: {
         type: String,
-        default: "Select Student",
+        default: "Select Student/s",
     }
 });
 </script>
