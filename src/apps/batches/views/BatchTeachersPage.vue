@@ -24,6 +24,42 @@
                 </v-list>
             </v-card-text>
         </v-card>
+        <v-card class="column-item">
+            <v-card-title>Add Teachers to Batch</v-card-title>
+            <v-card-subtitle color="error">Select teachers to add to this batch</v-card-subtitle>
+            <v-card-text>
+                <TeacherSelect multiple />
+            </v-card-text>
+            <v-card-actions>
+                <v-btn color="primary">Add Selected Teachers to Batch</v-btn>
+            </v-card-actions>
+        </v-card>
+        <v-card class="column-item">
+            <v-card-title>Remove Teachers from Batch</v-card-title>
+            <v-card-subtitle color="error">Select teachers to remove from this batch</v-card-subtitle>
+            <v-card-text>
+                <TeacherSelect multiple :filters="{ batches: props.batchId }"/>
+            </v-card-text>
+            <v-card-actions>
+                <v-btn color="error">Remove Selected Teachers from Batch</v-btn>
+            </v-card-actions>
+        </v-card>
+        <v-card class="column-item">
+            <v-card-title>Teacher Join Requests</v-card-title>
+            <v-card-subtitle>Teachers who have requested to join this batch</v-card-subtitle>
+            <v-card-text>
+                <v-list>
+                    <v-list-item class="border">
+                        <v-list-item-title>Teacher Name</v-list-item-title>
+                        <v-list-item-subtitle>Teacher - Teacher Number</v-list-item-subtitle>
+                        <template #append>
+                            <v-btn color="green" size="small">Approve</v-btn>
+                            <v-btn color="error" size="small">Reject</v-btn>
+                        </template>
+                    </v-list-item>
+                </v-list>
+            </v-card-text>
+        </v-card>
     </v-container>
 </template>
 
@@ -33,6 +69,7 @@ import TeacherListItem from "@/apps/teachers/components/TeacherListItem.vue";
 import { getBatch } from "@/apps/batches/api";
 import { getTeachers, getTeacher } from "@/apps/teachers/api";
 import { getCourse } from "@/apps/courses/api";
+import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
 
 const props = defineProps({
 	batchId: Number,

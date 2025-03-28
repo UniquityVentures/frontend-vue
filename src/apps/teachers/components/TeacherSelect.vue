@@ -6,6 +6,7 @@
         :multiple="multiple"
         :rules="rules"
         :label="label"
+        :filters="filters"
     />
 </template>
 
@@ -29,6 +30,10 @@ const props = defineProps({
     label: {
         type: String,
         default: "Select Teacher",
+    },
+    filters: {
+        type: Object,
+        default: () => {},
     }
 });
 

@@ -49,6 +49,11 @@
 				</template>
 			</v-data-table-server>
 		</v-card-text>
+		<v-card-actions>
+			<slot name="actions-slot">
+				<!-- actions slot -->
+			</slot>
+		</v-card-actions>
 	</v-card>
 </template>
 

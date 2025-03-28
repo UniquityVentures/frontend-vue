@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 
 const model = defineModel();
 
@@ -55,11 +55,15 @@ const props = defineProps({
 		type: String,
 		default: "compact",
 	},
+	filters: {
+		type: Object,
+		default: () => {},
+	},
 });
 
 // Query and filter setup
 const query = ref("");
-const filters = ref({ page_size: 10, page: 1 });
+const filters = ref({ page_size: 10, page: 1, ...props.filters });
 
 // Results and loading state
 const results = ref([]);
@@ -126,5 +130,6 @@ onMounted(async () => {
 	}
   }
 });
+
 
 </script>
