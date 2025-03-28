@@ -1,5 +1,32 @@
 <template>
-    <v-card class="mb-4">
+    <ResponsiveDataTable :fetch="getStudents" class="column-item"
+        v-model:filters="filters" title="Select Absentees" subtitle="Select students who are absent"
+        :templates="{ desktop: 'card', mobile: 'card' }">
+        <template #filters-slot>
+            <v-text-field label="Search" v-model="filters.name" />
+        </template>
+        <template #cards-slot="{ items }">
+            <v-row>
+                <v-col cols="12" sm="6" md="4" lg="3" v-for="item in items" :key="item.id">
+                    <v-card height="100%" :variant="isStudentSelected(item) ? 'tonal' : 'flat'"
+                        :class="['border', { 'selected-student': isStudentSelected(item) }]"
+                        @click="toggleStudentSelection(item)" style="cursor: pointer">
+                        <v-card-title class="text-subtitle-1">
+                            {{ item.name || item.user_details?.full_name }}
+                        </v-card-title>
+                        <v-card-subtitle>
+                            Student No: {{ item.student_no }}
+                        </v-card-subtitle>
+                        <v-card-text>
+                            <BatchChip v-if="item.batch || item.batch_details"
+                                :batchId="item.batch || item.batch_details" />
+                        </v-card-text>
+                    </v-card>
+                </v-col>
+            </v-row>
+        </template>
+    </ResponsiveDataTable>
+    <v-card>
         <v-card-title v-if="title">
             {{ title }}
         </v-card-title>
@@ -38,43 +65,6 @@
             </v-card>
         </v-card-text>
     </v-card>
-
-    <v-card>
-        <v-card-title>
-            Select Absentees
-        </v-card-title>
-        <v-card-subtitle>
-            Select students who are absent
-        </v-card-subtitle>
-
-        <!-- Filters -->
-        <v-card-text>
-            <FilterCard :fields="fields" :exportFunction="exportStudents" v-model:filters="filters" />
-        </v-card-text>
-
-        <!-- Student List -->
-        <v-card-text>
-            <ResponsiveDataTable :getToFunction="getToFunction" :headers="defaultHeaders" :fetch="getStudents"
-                v-model:filters="filters" desktopTemplate="card" mobileTemplate="card">
-                <template #card-item-slot="{ item }">
-                    <v-card height="100%" :variant="isStudentSelected(item) ? 'tonal' : 'flat'"
-                        :class="['border', { 'selected-student': isStudentSelected(item) }]"
-                        @click="toggleStudentSelection(item)" style="cursor: pointer">
-                        <v-card-title class="text-subtitle-1">
-                            {{ item.name || item.user_details?.full_name }}
-                        </v-card-title>
-                        <v-card-subtitle>
-                            Student No: {{ item.student_no }}
-                        </v-card-subtitle>
-                        <v-card-text>
-                            <BatchChip v-if="item.batch || item.batch_details"
-                                :batch="item.batch || item.batch_details" />
-                        </v-card-text>
-                    </v-card>
-                </template>
-            </ResponsiveDataTable>
-        </v-card-text>
-    </v-card>
 </template>
 
 <script setup>
@@ -86,7 +76,6 @@ import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import FilterCard from "@/components/FilterCard.vue";
 import BatchChip from "@/apps/batches/components/BatchChip.vue";
 import SubmitButton from "@/components/SubmitButton.vue";
-import { FIELD_TYPES } from "@/components/FieldTypeDefinitions";
 
 const props = defineProps({
     title: {
@@ -112,21 +101,6 @@ const attendanceDate = ref(new Date().toISOString().substr(0, 10));
 const courses = ref([]);
 const selectedCourse = ref(null);
 
-// Default student headers
-const defaultHeaders = [
-    { label: "Name", key: "user_details.full_name" },
-    { label: "Roll Number", key: "roll_no", type: "string" },
-    { label: "Batch", key: "batch_details", type: "batch" },
-];
-
-// Default filter fields
-const defaultFilterFields = [
-    { label: "Search by name", type: FIELD_TYPES.STRING, key: "name", value: "", defaultValue: "" },
-    { label: "Filter by batch", type: FIELD_TYPES.BATCH, key: "batch", value: null },
-];
-
-// Initialize fields with proper reactivity handling
-const fields = ref(props.overrideFields || defaultFilterFields);
 const filters = ref({});
 const selectedStudents = ref([]);
 
@@ -206,3 +180,9 @@ onMounted(() => {
     fetchCourses();
 });
 </script>
+
+<style scoped>
+.selected-student {
+    background-color: rgba(244, 67, 54, 0.2) !important; /* Light red with transparency */
+}
+</style>
