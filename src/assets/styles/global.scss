@@ -23,6 +23,12 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    
+    // Style buttons to look like tonal variant instead of trying to set the variant property
+    .v-btn {
+        opacity: 0.8;
+        border: 1px solid rgba(0, 0, 0, 0.25) !important;
+    }
 }
 
 // v-list styles
@@ -104,4 +110,32 @@
 
 .v-label {
     font-size: 0.95rem !important; /* 14px */
+}
+
+// Simplified expandable checkbox with color highlighting
+.v-checkbox {
+  width: 100%;
+  
+  .v-selection-control {
+    width: 100%;
+    min-height: 40px;
+    border: thin solid rgba(0, 0, 0, 0.38);
+    border-radius: 4px;
+    padding: 0 12px;
+    
+    // Unchecked state - red background
+    &:not(.v-selection-control--dirty) {
+      background-color: rgba(var(--v-theme-error), 0.1);
+    }
+    
+    // Checked state - green background
+    &.v-selection-control--dirty {
+      background-color: rgba(var(--v-theme-success), 0.1);
+    }
+  }
+  
+  // Add space between checkbox and label
+  .v-selection-control__input {
+    margin-right: 8px;
+  }
 }

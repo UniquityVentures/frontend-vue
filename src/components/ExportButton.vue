@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-btn color="success" :loading="isExporting" @click="showExportDialog">
-      Export
+      {{ title }}
     </v-btn>
 
     <!-- Export confirmation dialog -->
@@ -32,6 +32,10 @@ const props = defineProps({
   exportFunction: {
     type: Function,
     required: true,
+  },
+  title: {
+    type: String,
+    default: "Export",
   }
 });
 

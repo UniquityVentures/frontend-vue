@@ -49,7 +49,11 @@ const vuetify = createVuetify({
 		VSelect: { density: 'compact', variant: 'outlined' },
 		VCombobox: { density: 'compact', variant: 'outlined' },
 		VAutocomplete: { density: 'compact', variant: 'outlined' },
-		VCheckbox: { density: 'compact', variant: 'outlined' },
+		VCheckbox: { 
+			density: 'compact', 
+			color: 'primary',
+			hideDetails: true,
+		},
 		VRadio: { density: 'compact', variant: 'outlined' },
 		VSwitch: { density: 'compact', variant: 'outlined' },
 		VTextarea: { density: 'compact', variant: 'outlined' },
@@ -65,7 +69,8 @@ const vuetify = createVuetify({
 		VListItem: { density: 'default' },
 		VRow: { dense: true },
 		VCol: { dense: true },
-	}
+		VBtn: { variant: 'tonal' },
+	},
 });
 
 export default vuetify;

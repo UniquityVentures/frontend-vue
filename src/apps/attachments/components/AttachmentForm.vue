@@ -1,18 +1,14 @@
 <template>
-	<FormCard
-		:title="title"
-		actionName="Add"
-		:formFields="model"
-		:action="handleCreateAttachment"
-		class="border mb-4"
-		variant="flat"
-	/>
+	<v-file-input v-model="attachment" :label="title" :required="required" show-size counter
+		:rules="[v => !required || !!v || `${title} is required`]"></v-file-input>
 </template>
 
 <script setup>
-import { createAttachment } from "@/apps/attachments/api";
-import FormCard from "@/components/FormCard.vue";
+// This component takes a file, uploads it to the server and 
+// emits the attachment object. 
+
 import { ref } from "vue";
+import { createAttachment } from "@/apps/attachments/api";
 
 const props = defineProps({
 	title: {
@@ -25,7 +21,6 @@ const props = defineProps({
 });
 
 const attachment = ref(null);
-
 const emit = defineEmits(["update:attachment"]);
 
 async function handleCreateAttachment(data) {
@@ -33,20 +28,4 @@ async function handleCreateAttachment(data) {
 	emit("update:attachment", attachment?.value);
 	attachment.value = null; // Reset the attachment after emitting
 }
-
-const model = ref([
-	{
-		label: "Name",
-		key: "name",
-		type: "string",
-		value: "",
-	},
-	{
-		label: "File",
-		key: "file",
-		type: "file",
-		required: props.required,
-		value: null,
-	},
-]);
 </script>

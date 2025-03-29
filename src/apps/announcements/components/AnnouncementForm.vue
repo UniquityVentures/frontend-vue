@@ -18,15 +18,7 @@
         </v-col>
         
         <v-col cols="12" md="6">
-          <ServerAutocomplete 
-            label="Signed By"
-            v-model="formData.signed_by"
-            :fetch="getTeachers" 
-            :getInfo="getTeacherInfoFromObj" 
-            searchField="name"
-            required
-            :rules="[v => !!v || 'Signed By is required']"
-          />
+          <TeacherSelect v-model="formData.signed_by" label="Signed By" />
         </v-col>
       </v-row>
 
@@ -37,6 +29,7 @@
             v-model="formData.description"
             :rules="[v => !!v || 'Description is required']" 
             required
+            rows="10"
           ></v-textarea>
         </v-col>
       </v-row>
@@ -85,52 +78,34 @@
       </v-row>
 
       <v-row>
-        <v-col cols="12" md="6">
-          <ServerAutocomplete 
-            label="Batches"
-            v-model="formData.batches"
-            :fetch="getBatches" 
-            :getInfo="getBatchInfoFromObj" 
-            searchField="name"
-            multiple
-          />
-        </v-col>
-        
-        <v-col cols="12" md="6">
-          <ServerAutocomplete 
-            label="Courses"
-            v-model="formData.courses"
-            :fetch="getCourses" 
-            :getInfo="getCourseInfoFromObj" 
-            searchField="name"
-            multiple
-          />
+        <v-col cols="12">
+          <v-radio-group v-model="batchesOrCourses" label="Announce to Batches or Courses?" inline class="border rounded-lg pt-2">
+            <v-radio label="Batches" value="batches"></v-radio>
+            <v-radio label="Courses" value="courses"></v-radio>
+          </v-radio-group>
+          <BatchSelect v-if="batchesOrCourses === 'batches'" v-model="formData.batches" label="Batches" />
+          <CourseSelect v-if="batchesOrCourses === 'courses'" v-model="formData.courses" label="Courses" />
         </v-col>
       </v-row>
 
       <v-row>
         <v-col cols="12">
-          <AttachmentsForm 
-            v-model="formData.attachments"
-            @update:attachments="v => formData.attachments = v" 
-          />
+          <AttachmentsInput v-model="formData.attachments" required />
         </v-col>
       </v-row>
       
-      <SubmitButton :onSubmit="handleSubmit" :submitText="actionName" />
+      <SubmitButton :onSubmit="props.action" :submitText="actionName" />
     </v-card-text>
   </v-card>
 </template>
 
 <script setup>
 import SubmitButton from "@/components/SubmitButton.vue";
-import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
 import { ref, onMounted } from "vue";
-import { getBatchInfoFromObj, getBatches } from "@/apps/batches/api";
-import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
-import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
-import AttachmentsForm from "@/apps/attachments/components/AttachmentsForm.vue";
-import { formToApiDateTime, apiToFormDateTime } from "@/services/utils";
+import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
+import AttachmentsInput from "@/apps/attachments/components/AttachmentsInput.vue";
+import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
+import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
 
 const props = defineProps({
   announcement: {
@@ -155,6 +130,8 @@ const props = defineProps({
   }
 });
 
+const batchesOrCourses = ref('batches');
+
 // Initialize form data with default values
 const formData = ref({
   title: "",
@@ -176,41 +153,5 @@ onMounted(async () => {
   }
 });
 
-const handleSubmit = async () => {
-  try {
-    // Create a new object for the formatted data
-    const formattedValue = {};
-    
-    // Format datetime fields
-    formattedValue.title = formData.value.title;
-    formattedValue.description = formData.value.description;
-    formattedValue.priority = formData.value.priority;
-    formattedValue.is_active = formData.value.is_active;
-    formattedValue.is_school_wide = formData.value.is_school_wide;
-    formattedValue.release_at = formToApiDateTime(formData.value.release_at);
-    formattedValue.expiry_at = formToApiDateTime(formData.value.expiry_at);
-    formattedValue.attachments = formData.value.attachments;
-    
-    // Handle single entity: signed_by
-    formattedValue.signed_by = typeof formData.value.signed_by === 'object' 
-      ? formData.value.signed_by.id 
-      : formData.value.signed_by;
-    
-    // Handle batches array (extract IDs if objects)
-    formattedValue.batches = Array.isArray(formData.value.batches) 
-      ? formData.value.batches.map(item => typeof item === 'object' ? item.id : item)
-      : [];
-    
-    // Handle courses array (extract IDs if objects)
-    formattedValue.courses = Array.isArray(formData.value.courses)
-      ? formData.value.courses.map(item => typeof item === 'object' ? item.id : item)
-      : [];
 
-    await props.action(formattedValue);
-    return { success: true };
-  } catch (error) {
-    console.error(`Failed to ${props.actionName} announcement:`, error);
-    return { success: false, error };
-  }
-};
 </script> 

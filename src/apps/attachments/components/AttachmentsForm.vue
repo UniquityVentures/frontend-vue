@@ -4,8 +4,8 @@
 			<AttachmentForm :required="required" :title="title" @update:attachment="attachmentAdded" />
 		</v-col>
 		<v-col cols="12" lg="6">
-			<v-list density="compact" class="mt-2" v-if="attachments.length > 0">
-				Added Attachments:
+			<v-list density="compact" class="mt-2">
+				<div class="text-subtitle-1">Added Attachments:</div>
 				<v-list-item
 					v-for="item in attachments"
 					:key="item.id"

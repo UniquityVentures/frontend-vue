@@ -57,17 +57,22 @@
                 </v-list-item>
             </v-list>
         </template>
+        <template #actions-slot>
+            <ExportButton :exportFunction="exportAnnouncements" title="Export Data in this Table" v-model:filters="filters" />
+            <v-btn variant="text" color="primary" :to="{ name: 'CreateAnnouncement' }">Create New Announcement</v-btn>
+        </template>
     </ResponsiveDataTable>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import { getAnnouncements } from "../api";
+import { getAnnouncements, exportAnnouncements } from "../api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
 import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
 import DateRangeSelect from "../../../components/DateRangeSelect.vue";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
+import ExportButton from "@/components/ExportButton.vue";
 
 const filters = ref({});
 
