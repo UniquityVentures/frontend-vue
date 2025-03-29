@@ -2,8 +2,8 @@
 - ~Export~
 - ~Import~
     - ~Import Error improvement~
-- Announcement Filtering
-- Course Filtering
+- ~Announcement Filtering on Startup~
+- ~Course Filtering on Startup~
 - Edit
 - Prefill Announcement
 - Add Courses to Batch

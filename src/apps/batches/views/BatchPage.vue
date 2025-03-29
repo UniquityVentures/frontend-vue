@@ -3,15 +3,16 @@
 		<BatchCard class="column-item" :batchId="batchId" />
 		
 		<CoursesList 
+			v-if="batch.id"
 			class="column-item"
-			:fetchFunction="getCourses"
-			:filter="{ batches: batch.id }"
+			:filter="{ batches: batch.id || batch.id === 0 }"
 			title="Courses"
 			:viewAll="{ route: { name: 'BatchCourses' }, label: 'View All Courses' }"
 			:limit="10"
 		/>
 		
 		<AnnouncementsList 
+			v-if="batch.id || batch.id === 0"
 			class="column-item"
 			:fetchFunction="getAnnouncements"
 			:filter="{ batch: batch.id }"
