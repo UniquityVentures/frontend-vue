@@ -7,8 +7,8 @@
 - ~Edit~
 - ~Prefill Announcement~
     - ~Properly show batches~
-- Add Courses to Batch
-- Remove Courses from Batch
+- ~Add Courses to Batch~
+- ~Remove Courses from Batch~
 - Add teachers to batch
 - Remove teachers from batch
 - Teachers join request
