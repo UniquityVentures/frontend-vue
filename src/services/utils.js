@@ -81,12 +81,12 @@ export const formatErrorMessage = (error) => {
 		// Handle other status codes
 		return data.detail || `Server returned ${status}`;
 	}
-	return "Failed to submit form";
+	return error.message;
 };
 
 export const objToString = (data) => {
 	if (Array.isArray(data)) {
-		return data.join(", ");
+		return data.map(objToString).join(", ");
 	}
 	if (typeof data === "string") {
 		return data;

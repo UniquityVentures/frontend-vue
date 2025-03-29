@@ -7,7 +7,7 @@
 					<v-text-field label="Search by title" v-model="filters.title" />
 				</v-col>
 				<v-col cols="12" sm="6" md="3" lg="2">
-					<v-text-field label="Search by location" v-model="filters.location" />
+					<v-text-field label="Search by description" v-model="filters.description" />
 				</v-col>
 				<v-col cols="12" sm="6" md="3" lg="2">
 					<BatchSelect v-model="filters.batch" label="Filter by batch" />
