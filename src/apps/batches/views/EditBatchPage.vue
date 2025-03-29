@@ -40,9 +40,9 @@ const props = defineProps({
 
 const batch = ref(null);
 
-const handleUpdateBatch = async (batchData) => {
+const handleUpdateBatch = async () => {
 	try {
-		await updateBatch(props.batchId, batchData);
+		await updateBatch(batch.value);
 		return { success: true };
 	} catch (error) {
 		console.error("Failed to update batch:", error);

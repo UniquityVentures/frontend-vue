@@ -4,7 +4,7 @@
     - ~Import Error improvement~
 - ~Announcement Filtering on Startup~
 - ~Course Filtering on Startup~
-- Edit
+- ~Edit~
 - Prefill Announcement
 - Add Courses to Batch
 - Remove Courses from Batch
