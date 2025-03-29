@@ -1,32 +1,19 @@
 <template>
 	<v-container>
-		<FormCard
-			title="Course"
-			actionName="Create"
-			:formFields="formFields"
+		<CourseForm
 			:action="handleCreateCourse"
+			actionName="Create"
+			title="Course"
 		/>
 	</v-container>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import FormCard from "@/components/FormCard.vue";
-import { createCourse } from "../api";
-import { FIELD_TYPES } from "@/components/FieldTypeDefinitions";
 import { useRouter } from "vue-router";
+import CourseForm from "../components/CourseForm.vue";
+import { createCourse } from "../api";
 
 const router = useRouter();
-
-const formFields = ref([
-	{ label: "Name", type: FIELD_TYPES.STRING, key: "name", required: true },
-	{ label: "Course Code", type: FIELD_TYPES.STRING, key: "code" },
-	{ label: "Description", type: FIELD_TYPES.LONGSTRING, key: "description" },
-	{ label: "Main Teacher", type: FIELD_TYPES.TEACHER, key: "main_teachers", required: false },
-	{ label: "Teachers", type: FIELD_TYPES.TEACHERS, key: "other_teachers", required: false },
-	{ label: "Batches", type: FIELD_TYPES.BATCHES, key: "batches", required: false },
-	{ label: "Is Active", type: FIELD_TYPES.BOOLEAN, key: "is_active", defaultValue: true },
-]);
 
 const handleCreateCourse = async (courseData) => {
 	try {

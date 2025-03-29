@@ -1,31 +1,19 @@
 <template>
 	<v-container>
-		<FormCard
-			title="Batch"
+		<BatchForm
+			:action="handleCreateBatch"
 			actionName="Create"
-			:formFields="formFields"
-			:action="createBatch"
+			title="Batch"
 		/>
 	</v-container>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import FormCard from "@/components/FormCard.vue";
+import BatchForm from "../components/BatchForm.vue";
 import { createBatch } from "../api";
-import { FIELD_TYPES } from "@/components/FieldTypeDefinitions";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-
-const formFields = ref([
-	{ label: "Name", type: FIELD_TYPES.STRING, key: "name", required: true },
-	{ label: "Standard", type: FIELD_TYPES.STRING, key: "standard", required: true },
-	{ label: "Main Teacher", type: FIELD_TYPES.TEACHER, key: "main_teacher", required: false },
-	{ label: "Other Teachers", type: FIELD_TYPES.TEACHERS, key: "other_teachers", required: false },
-	{ label: "Courses", type: FIELD_TYPES.COURSES, key: "courses", required: false },
-	{ label: "Is Active", type: FIELD_TYPES.BOOLEAN, key: "is_active", defaultValue: true },
-]);
 
 const handleCreateBatch = async (batchData) => {
 	try {
