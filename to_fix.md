@@ -5,7 +5,7 @@
 - ~Announcement Filtering on Startup~
 - ~Course Filtering on Startup~
 - ~Edit~
-- Prefill Announcement
+- ~Prefill Announcement~
 - Add Courses to Batch
 - Remove Courses from Batch
 - Add teachers to batch

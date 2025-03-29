@@ -1,6 +1,7 @@
 <template>
 	<v-container>
 		<AnnouncementForm
+			:announcement = "$route.query"
 			actionName="Create"
 			:action="createAnnouncement"
 		/>
