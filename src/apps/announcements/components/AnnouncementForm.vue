@@ -133,84 +133,89 @@ import AttachmentsForm from "@/apps/attachments/components/AttachmentsForm.vue";
 import { formToApiDateTime, apiToFormDateTime } from "@/services/utils";
 
 const props = defineProps({
-  announcement: {
-    type: Object,
-    default: null
-  },
-  action: {
-    type: Function,
-    required: true
-  },
-  actionName: {
-    type: String,
-    default: "Save"
-  },
-  title: {
-    type: String,
-    default: ""
-  },
-  subtitle: {
-    type: String,
-    default: ""
-  }
+	announcement: {
+		type: Object,
+		default: null,
+	},
+	action: {
+		type: Function,
+		required: true,
+	},
+	actionName: {
+		type: String,
+		default: "Save",
+	},
+	title: {
+		type: String,
+		default: "",
+	},
+	subtitle: {
+		type: String,
+		default: "",
+	},
 });
 
 // Initialize form data with default values
 const formData = ref({
-  title: "",
-  description: "",
-  priority: "low",
-  is_active: true,
-  is_school_wide: false,
-  signed_by: null,
-  release_at: null,
-  expiry_at: null,
-  batches: [],
-  courses: [],
-  attachments: null
+	title: "",
+	description: "",
+	priority: "low",
+	is_active: true,
+	is_school_wide: false,
+	signed_by: null,
+	release_at: null,
+	expiry_at: null,
+	batches: [],
+	courses: [],
+	attachments: null,
 });
 
 onMounted(async () => {
-  if (props.announcement) {
-    formData.value = props.announcement;
-  }
+	if (props.announcement) {
+		formData.value = props.announcement;
+	}
 });
 
 const handleSubmit = async () => {
-  try {
-    // Create a new object for the formatted data
-    const formattedValue = {};
-    
-    // Format datetime fields
-    formattedValue.title = formData.value.title;
-    formattedValue.description = formData.value.description;
-    formattedValue.priority = formData.value.priority;
-    formattedValue.is_active = formData.value.is_active;
-    formattedValue.is_school_wide = formData.value.is_school_wide;
-    formattedValue.release_at = formToApiDateTime(formData.value.release_at);
-    formattedValue.expiry_at = formToApiDateTime(formData.value.expiry_at);
-    formattedValue.attachments = formData.value.attachments;
-    
-    // Handle single entity: signed_by
-    formattedValue.signed_by = typeof formData.value.signed_by === 'object' 
-      ? formData.value.signed_by.id 
-      : formData.value.signed_by;
-    
-    // Handle batches array (extract IDs if objects)
-    formattedValue.batches = Array.isArray(formData.value.batches) 
-      ? formData.value.batches.map(item => typeof item === 'object' ? item.id : item)
-      : [];
-    
-    // Handle courses array (extract IDs if objects)
-    formattedValue.courses = Array.isArray(formData.value.courses)
-      ? formData.value.courses.map(item => typeof item === 'object' ? item.id : item)
-      : [];
+	try {
+		// Create a new object for the formatted data
+		const formattedValue = {};
 
-    await props.action(formattedValue);
-    return { success: true };
-  } catch (error) {
-    console.error(`Failed to ${props.actionName} announcement:`, error);
-    return { success: false, error };
-  }
+		// Format datetime fields
+		formattedValue.title = formData.value.title;
+		formattedValue.description = formData.value.description;
+		formattedValue.priority = formData.value.priority;
+		formattedValue.is_active = formData.value.is_active;
+		formattedValue.is_school_wide = formData.value.is_school_wide;
+		formattedValue.release_at = formToApiDateTime(formData.value.release_at);
+		formattedValue.expiry_at = formToApiDateTime(formData.value.expiry_at);
+		formattedValue.attachments = formData.value.attachments;
+
+		// Handle single entity: signed_by
+		formattedValue.signed_by =
+			typeof formData.value.signed_by === "object"
+				? formData.value.signed_by.id
+				: formData.value.signed_by;
+
+		// Handle batches array (extract IDs if objects)
+		formattedValue.batches = Array.isArray(formData.value.batches)
+			? formData.value.batches.map((item) =>
+					typeof item === "object" ? item.id : item,
+				)
+			: [];
+
+		// Handle courses array (extract IDs if objects)
+		formattedValue.courses = Array.isArray(formData.value.courses)
+			? formData.value.courses.map((item) =>
+					typeof item === "object" ? item.id : item,
+				)
+			: [];
+
+		await props.action(formattedValue);
+		return { success: true };
+	} catch (error) {
+		console.error(`Failed to ${props.actionName} announcement:`, error);
+		return { success: false, error };
+	}
 };
 </script> 
