@@ -108,49 +108,49 @@ import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
 import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
 
 const props = defineProps({
-  announcement: {
-    type: Object,
-    default: null
-  },
-  action: {
-    type: Function,
-    required: true
-  },
-  actionName: {
-    type: String,
-    default: "Save"
-  },
-  title: {
-    type: String,
-    default: ""
-  },
-  subtitle: {
-    type: String,
-    default: ""
-  }
+	announcement: {
+		type: Object,
+		default: null,
+	},
+	action: {
+		type: Function,
+		required: true,
+	},
+	actionName: {
+		type: String,
+		default: "Save",
+	},
+	title: {
+		type: String,
+		default: "",
+	},
+	subtitle: {
+		type: String,
+		default: "",
+	},
 });
 
 const batchesOrCourses = ref('batches');
 
 // Initialize form data with default values
 const formData = ref({
-  title: "",
-  description: "",
-  priority: "low",
-  is_active: true,
-  is_school_wide: false,
-  signed_by: null,
-  release_at: null,
-  expiry_at: null,
-  batches: [],
-  courses: [],
-  attachments: null
+	title: "",
+	description: "",
+	priority: "low",
+	is_active: true,
+	is_school_wide: false,
+	signed_by: null,
+	release_at: null,
+	expiry_at: null,
+	batches: [],
+	courses: [],
+	attachments: null,
 });
 
 onMounted(async () => {
-  if (props.announcement) {
-    formData.value = props.announcement;
-  }
+	if (props.announcement) {
+		formData.value = props.announcement;
+	}
 });
 
 

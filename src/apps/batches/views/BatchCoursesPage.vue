@@ -35,20 +35,36 @@
             <v-card-title>Add Courses to Batch</v-card-title>
             <v-card-subtitle color="error">Select courses to add to this batch</v-card-subtitle>
             <v-card-text>
-                <CourseSelect multiple />
+				<ServerAutocomplete
+					v-model="newCourses"
+					:fetch="getCourses"
+					:getInfo="getCourseInfoFromObj"
+					:searchField="name"
+					:multiple="true"
+					:rules="[]"
+					label="Select Course"
+				/>
             </v-card-text>
             <v-card-actions>
-                <v-btn color="primary">Add Selected Courses to Batch</v-btn>
+                <SubmitButton submitText="Add Selected Courses to Batch" :onSubmit="addCourses" color="primary" />
             </v-card-actions>
         </v-card>
         <v-card class="column-item">
             <v-card-title>Remove Courses from Batch</v-card-title>
             <v-card-subtitle color="error">Select courses to remove from this batch</v-card-subtitle>
             <v-card-text>
-                <CourseSelect multiple :filters="{ batches: props.batchId }"/>
+				<ServerAutocomplete
+					v-model="victimCourses"
+					:fetch="getBatchCourses"
+					:getInfo="getCourseInfoFromObj"
+					:searchField="name"
+					:multiple="true"
+					:rules="[]"
+					label="Select Course"
+				/>
             </v-card-text>
             <v-card-actions>
-                <v-btn color="error">Remove Selected Courses from Batch</v-btn>
+                <SubmitButton submitText="Remove Selected Courses from Batch" :onSubmit="removeCourses" color="error" />
             </v-card-actions>
         </v-card>
     </v-container>
@@ -56,23 +72,50 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { getCourses } from "@/apps/courses/api";
-import { getBatch } from "@/apps/batches/api";
+import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
+import { getBatch, updateBatch } from "@/apps/batches/api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
+import SubmitButton from "@/components/SubmitButton.vue";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
-import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
+import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
 
 const props = defineProps({
-    batchId: {
-        type: String,
-        required: true,
-    },
+	batchId: {
+		type: String,
+		required: true,
+	},
 });
 
+const newCourses = ref([]);
+const victimCourses = ref([]);
 const batch = ref(null);
+
+const addCourses = async () => {
+	batch.value.courses = [...batch.value.courses, ...newCourses.value];
+	const response = await updateBatch(batch.value);
+	newCourses.value = [];
+	filters.value = props.batchId;
+	return response;
+};
+
+// So stupid
+const removeCourses = async () => {
+	batch.value.courses = batch.value.courses.filter(
+		(course) => !victimCourses.value.includes(course),
+	);
+	const response = await updateBatch(batch.value);
+	victimCourses.value = [];
+	filters.value = props.batchId;
+	return response;
+};
+
 const filters = ref({ batches: props.batchId });
 
+const getBatchCourses = async (filter) => {
+	return getCourses({ ...filter, batches: props.batchId });
+}
+
 onMounted(async () => {
-    batch.value = await getBatch(props.batchId);
+	batch.value = await getBatch(props.batchId);
 });
 </script>

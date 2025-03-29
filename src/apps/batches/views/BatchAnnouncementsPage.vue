@@ -1,6 +1,6 @@
 <template>
     <v-container v-if="batch">
-        <v-btn prepend-icon="mdi-plus" color="primary" :to="{ name: 'CreateAnnouncement' }">
+		<v-btn prepend-icon="mdi-plus" color="primary" :to="{ name: 'CreateAnnouncement', query: {batches: [batch.id]} }">
             Create New Announcement</v-btn>
         <v-btn prepend-icon="mdi-view-list" color="grey-darken-2" :to="{ name: 'Announcements' }">
             View All Announcements</v-btn>
@@ -42,17 +42,16 @@ import AnnouncementSmallCard from "@/apps/announcements/components/AnnouncementS
 import AnnouncementListItem from "@/apps/announcements/components/AnnouncementListItem.vue";
 
 const props = defineProps({
-    batchId: {
-        type: String,
-        required: true,
-    },
+	batchId: {
+		type: String,
+		required: true,
+	},
 });
 
 const batch = ref(null);
 const filters = ref({ batch: props.batchId });
 
 onMounted(async () => {
-    batch.value = await getBatch(props.batchId);
+	batch.value = await getBatch(props.batchId);
 });
-
 </script>

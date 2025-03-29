@@ -1,6 +1,6 @@
 <template>
-	<v-btn @click="handleSubmit" color="primary" :loading="isSubmitting" :disabled="isSubmitting"
-		:append-icon="isSuccess ? 'mdi-check' : (error ? 'mdi-alert' : '')" :color="error ? 'error' : 'primary'">
+	<v-btn @click="handleSubmit" :loading="isSubmitting" :disabled="isSubmitting"
+		:append-icon="isSuccess ? 'mdi-check' : (error ? 'mdi-alert' : '')" :color="error ? 'error' : color">
 		{{ isSuccess ? 'Updated!' : (error ? 'Failed!' : submitText) }}
 	</v-btn>
 	<v-alert v-if="error" type="error" class="align-center" density="compact">
@@ -28,6 +28,10 @@ const props = defineProps({
 		type: Function,
 		required: true,
 	},
+	color: {
+		type: String,
+		default: "primary",
+	},
 });
 
 const isSubmitting = ref(false);
@@ -47,11 +51,12 @@ const handleSubmit = async () => {
 				response.error |
 				response.errors
 			) {
-				isSuccess.value = response.false;
+				isSuccess.value = false;
 				error.value = formatErrorMessage(response.error);
 				console.log(error.value);
 			}
 			isSubmitting.value = false;
+			isSuccess.value = true;
 		})
 		.catch((err) => {
 			error.value = formatErrorMessage(err);

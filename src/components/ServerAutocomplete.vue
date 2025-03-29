@@ -121,11 +121,11 @@ onMounted(async () => {
   if (model.value) {
 	if (Array.isArray(model.value)) {
 		for (const id of model.value) {
-			const selectedItems = await props.fetch({ id: id });
+			const selectedItems = await props.fetch({ id: Number(id) });
 			results.value = [...selectedItems.results, ...results.value];
 		}
 	} else {
-		const selectedItems = await props.fetch({ id: model.value });
+		const selectedItems = await props.fetch({ id: Number(model.value) });
 		results.value = [...selectedItems.results, ...results.value];
 	}
   }

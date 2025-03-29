@@ -18,35 +18,47 @@
                     </v-btn>
                 </div>
 
-                <v-alert v-if="error" type="error" class="my-4">
-                    {{ error }}
-                </v-alert>
+				<v-alert type="error" v-if="error?.length">
+					<p>Validation failed with the following errors:</p>
+
+					<ul v-if="Array.isArray(error)">
+						<li v-for="(e, index) in error" :key="index">
+							{{ e }}
+						</li>
+					</ul>
+					<span v-else>
+						{{error}}
+					</span>
+				</v-alert>
 
                 <!-- Step 2: Validation Results -->
                 <div v-if="step === 2" class="my-4">
-                    <v-alert type="success" v-if="!validationResults.errors">
+                    <v-alert type="success" v-if="!error">
                         Validation successful! {{ validationResults?.row_count || 0 }} {{ entityName.toLowerCase() }} ready
                         to import.
                     </v-alert>
 
-                    <v-alert type="error" v-if="validationResults?.error?.length">
+                    <v-alert type="error" v-if="error?.length">
                         <p>Validation failed with the following errors:</p>
-                        <ul>
-                            <li v-for="(error, index) in validationResults.errors" :key="index">
-                                {{ error }}
+                        <ul v-if="Array.isArray(error)">
+                            <li v-for="(e, index) in error" :key="index">
+                                {{ e }}
                             </li>
                         </ul>
+						<span v-else>
+							{{error}}
+						</span>
                     </v-alert>
 
-                    <v-data-table v-if="validationResults?.preview?.length" :headers="previewHeaders"
-                        :items="validationResults.preview" class="my-4" dense></v-data-table>
+                    <v-data-table v-if="preview" 
+                        :items="preview" class="my-4" dense></v-data-table>
 
                     <v-btn @click="step = 1" class="mt-4">
                         <v-icon left>mdi-arrow-left</v-icon>
                         Back
                     </v-btn>
 
-                    <v-btn v-if="!validationResults?.errors" color="success" @click="finalizeImport" :loading="loading"
+                    <v-btn v-if="!error" color="success" @click="finalizeImport" :loading="loading"
                         class="mt-4 ml-4">
                         <v-icon left>mdi-check</v-icon>
                         Finalize Import
@@ -78,123 +90,124 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref } from "vue";
+import { formatErrorMessage } from "@/services/utils";
 
 const props = defineProps({
-    entityName: {
-        type: String,
-        required: true
-    },
-    import: {
-		type: {dryRun: Function, finalize: Function},
-        required: true
-    },
-    templateFields: {
-        type: Array,
-        required: true
-    }
+	entityName: {
+		type: String,
+		required: true,
+	},
+	import: {
+		type: { dryRun: Function, finalize: Function },
+		required: true,
+	},
+	templateFields: {
+		type: Array,
+		required: true,
+	},
 });
+
+const preview = ref(null);
 
 // Form state
 const step = ref(1);
 const file = ref(null);
-const fileError = ref('');
+const fileError = ref("");
 const loading = ref(false);
-const error = ref('');
+const error = ref("");
 const validationResults = ref(null);
 const importResults = ref(null);
 
-// Generate headers for preview table
-const previewHeaders = computed(() => {
-    if (!validationResults.value?.preview?.length) return [];
-
-    return Object.keys(validationResults.value.preview[0]).map(key => ({
-        text: key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
-        value: key
-    }));
-});
-
 // Handle form submission (validation step)
 const handleSubmit = async () => {
-    if (!file.value) {
-        fileError.value = 'Please select a file to import';
-        return;
-    }
+	if (!file.value) {
+		fileError.value = "Please select a file to import";
+		return;
+	}
 
-    try {
-        loading.value = true;
-        error.value = '';
+	try {
+		loading.value = true;
+		error.value = "";
 
-        // Call dry run API function
-        const response = await props.import.dryRun(file.value);
-        validationResults.value = response;
-        step.value = 2;
-		console.log('response', response);
-		console.log(step.value);
-    } catch (err) {
-        error.value = err.message || 'An error occurred during validation';
-        console.error('Validation error:', err);
-    } finally {
-        loading.value = false;
-    }
+		// Call dry run API function
+		const response = await props.import.dryRun(file.value);
+		validationResults.value = response;
+		preview.value = validationResults.value?.preview?.map((row) => {
+			return Object.fromEntries(
+				row.map((value, index) => [validationResults.value.headers[index], value]),
+			);
+		});
+		step.value = 2;
+		error.value = null;
+	} catch (err) {
+		error.value = formatErrorMessage(err);
+		console.error("Validation error:", err);
+	} finally {
+		loading.value = false;
+	}
 };
 
 // Finalize the import
 const finalizeImport = async () => {
-    try {
-        loading.value = true;
-        error.value = '';
+	try {
+		loading.value = true;
+		error.value = "";
 
-        // Call finalize API function
-        const response = await props.import.finalize(file.value);
+		// Call finalize API function
+		console.log(file.value);
+		const response = await props.import.finalize(file.value);
 
-        importResults.value = response;
-        step.value = 3;
-    } catch (err) {
-        error.value = err.message || 'An error occurred during import';
-        console.error('Import error:', err);
-    } finally {
-        loading.value = false;
-    }
+		importResults.value = response;
+		step.value = 3;
+	} catch (err) {
+		error.value = formatErrorMessage(err);
+		console.error("Import error:", err);
+	} finally {
+		loading.value = false;
+	}
 };
 
 // Reset the form to start over
 const resetForm = () => {
-    step.value = 1;
-    file.value = null;
-    fileError.value = '';
-    validationResults.value = null;
-    importResults.value = null;
-    error.value = '';
+	step.value = 1;
+	file.value = null;
+	fileError.value = "";
+	validationResults.value = null;
+	importResults.value = null;
+	error.value = "";
 };
 
 // Download a template CSV file
 const downloadTemplate = () => {
-    // Create CSV header row
-    const header = props.templateFields.join(',');
+	// Create CSV header row
+	const header = props.templateFields.join(",");
 
-    // Create an empty CSV with just the header
-    const csvContent = `${header}\n`;
+	// Create an empty CSV with just the header
+	const csvContent = `${header}\n`;
 
-    // Create a Blob containing the CSV data
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+	// Create a Blob containing the CSV data
+	const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
 
-    // Create a temporary URL for the Blob
-    const url = URL.createObjectURL(blob);
+	// Create a temporary URL for the Blob
+	const url = URL.createObjectURL(blob);
 
-    // Create a temporary link element
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', `${props.entityName.toLowerCase()}_template.csv`);
+	// Create a temporary link element
+	const link = document.createElement("a");
+	link.href = url;
+	link.setAttribute(
+		"download",
+		`${props.entityName.toLowerCase()}_template.csv`,
+	);
 
-    // Append the link to the document body
-    document.body.appendChild(link);
+	// Append the link to the document body
+	document.body.appendChild(link);
 
-    // Trigger the download
-    link.click();
+	// Trigger the download
+	link.click();
 
-    // Clean up
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+	// Clean up
+	document.body.removeChild(link);
+	URL.revokeObjectURL(url);
 };
 </script>
