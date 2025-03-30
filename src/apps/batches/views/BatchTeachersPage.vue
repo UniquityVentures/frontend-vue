@@ -28,20 +28,36 @@
             <v-card-title>Add Teachers to Batch</v-card-title>
             <v-card-subtitle color="error">Select teachers to add to this batch</v-card-subtitle>
             <v-card-text>
-                <TeacherSelect multiple />
+				<ServerAutocomplete
+					v-model="newTeachers"
+					:fetch="getTeachers"
+					:getInfo="getTeacherInfoFromObj"
+					searchField="name"
+					:multiple="true"
+					:rules="[]"
+					label="Select Teachers"
+				/>
             </v-card-text>
             <v-card-actions>
-                <v-btn color="primary">Add Selected Teachers to Batch</v-btn>
+                <SubmitButton submitText="Add Selected Teachers to Batch" :onSubmit="addTeachers" color="primary" />
             </v-card-actions>
         </v-card>
         <v-card class="column-item">
             <v-card-title>Remove Teachers from Batch</v-card-title>
             <v-card-subtitle color="error">Select teachers to remove from this batch</v-card-subtitle>
             <v-card-text>
-                <TeacherSelect multiple :filters="{ batches: props.batchId }"/>
+				<ServerAutocomplete
+					v-model="victimTeachers"
+					:fetch="getBatchTeachers"
+					:getInfo="getTeacherInfoFromObj"
+					searchField="name"
+					:multiple="true"
+					:rules="[]"
+					label="Select Teachers"
+				/>
             </v-card-text>
             <v-card-actions>
-                <v-btn color="error">Remove Selected Teachers from Batch</v-btn>
+                <SubmitButton submitText="Remove Selected Teachers from Batch" :onSubmit="removeTeachers" color="error" />
             </v-card-actions>
         </v-card>
         <v-card class="column-item">
@@ -66,20 +82,49 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import TeacherListItem from "@/apps/teachers/components/TeacherListItem.vue";
-import { getBatch } from "@/apps/batches/api";
-import { getTeachers, getTeacher } from "@/apps/teachers/api";
+import { getBatch, updateBatch } from "@/apps/batches/api";
+import { getTeachers, getTeacher, getTeacherInfoFromObj } from "@/apps/teachers/api";
 import { getCourse } from "@/apps/courses/api";
 import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
+import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
+import SubmitButton from "@/components/SubmitButton.vue";
 
 const props = defineProps({
-	batchId: Number,
+	batchId: String,
 });
 
 const batch = ref({});
 const loading = ref(true);
 
+const newTeachers = ref([]);
+const victimTeachers = ref([]);
+
 const other_teachers = ref([]);
 const course_teachers = ref([]);
+
+
+const addTeachers = async () => {
+	batch.value.other_teachers = [...batch.value.other_teachers, ...newTeachers.value];
+	const response = await updateBatch(batch.value);
+	newTeachers.value = [];
+	batch.value = response
+	await fetchOtherTeachers();
+	await fetchCourseTeachers();
+	return response;
+};
+
+// So stupid
+const removeTeachers = async () => {
+	batch.value.other_teachers = batch.value.other_teachers.filter(
+		(teacher) => !victimTeachers.value.includes(teacher),
+	);
+	const response = await updateBatch(batch.value);
+	victimTeachers.value = [];
+	batch.value = response
+	await fetchOtherTeachers();
+	await fetchCourseTeachers();
+	return response;
+};
 
 const fetchOtherTeachers = async () => {
 	for (const teacherId of batch.value.other_teachers) {
@@ -98,6 +143,10 @@ const fetchCourseTeachers = async () => {
 		});
 	}
 };
+
+const getBatchTeachers = async (filter) => {
+	return getTeachers({ ...filter, batches: props.batchId });
+}
 
 // Ensure proper data fetching sequence
 onMounted(async () => {

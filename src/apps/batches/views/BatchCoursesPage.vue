@@ -24,9 +24,7 @@
                     <v-list-item v-for="item in items" :key="item.id" class="border">
                         <v-list-item-title>{{ item.name }}</v-list-item-title>
                         <v-list-item-subtitle class="text-wrap">{{ item.code }}</v-list-item-subtitle>
-                        <v-list-item-text>
-                            <TeacherChip label="Main Teacher" :teacher="item.main_teacher_details" v-if="item.main_teacher_details" />
-                        </v-list-item-text>
+						<TeacherChip label="Main Teacher" :teacher="item.main_teacher_details" v-if="item.main_teacher_details" />
                     </v-list-item>
                 </v-list>
             </template>
@@ -39,7 +37,7 @@
 					v-model="newCourses"
 					:fetch="getCourses"
 					:getInfo="getCourseInfoFromObj"
-					:searchField="name"
+					searchField="name"
 					:multiple="true"
 					:rules="[]"
 					label="Select Course"
@@ -57,7 +55,7 @@
 					v-model="victimCourses"
 					:fetch="getBatchCourses"
 					:getInfo="getCourseInfoFromObj"
-					:searchField="name"
+					searchField="name"
 					:multiple="true"
 					:rules="[]"
 					label="Select Course"

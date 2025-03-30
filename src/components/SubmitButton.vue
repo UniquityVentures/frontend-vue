@@ -9,7 +9,7 @@
 		</span>
 		<span v-else>
 			<ul>
-				<li v-for="err in error">{{ err }}</li>
+				<li v-for="err in error" :key="err" >{{ err }}</li>
 			</ul>
 		</span>
 	</v-alert>
@@ -59,6 +59,7 @@ const handleSubmit = async () => {
 			isSuccess.value = true;
 		})
 		.catch((err) => {
+			console.log(err);
 			error.value = formatErrorMessage(err);
 			isSubmitting.value = false;
 		});

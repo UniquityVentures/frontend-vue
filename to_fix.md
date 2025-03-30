@@ -6,9 +6,9 @@
 - ~Course Filtering on Startup~
 - ~Edit~
 - ~Prefill Announcement~
-    - ~Properly show batches~
+    - Properly show batches
 - ~Add Courses to Batch~
 - ~Remove Courses from Batch~
-- Add teachers to batch
-- Remove teachers from batch
+- ~Add teachers to batch~
+- ~Remove teachers from batch~
 - Teachers join request

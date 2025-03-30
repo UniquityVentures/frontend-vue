@@ -28,25 +28,28 @@ importers:
         version: 3.0.5
       lottie-web-vue:
         specifier: ^2.0.7
-        version: 2.0.7
+        version: 2.0.7(typescript@5.8.2)
       pinia:
         specifier: ^2.3.0
-        version: 2.3.1(vue@3.5.13)
+        version: 2.3.1(typescript@5.8.2)(vue@3.5.13(typescript@5.8.2))
       pinia-plugin-persistedstate:
         specifier: ^4.2.0
-        version: 4.2.0(pinia@2.3.1(vue@3.5.13))
+        version: 4.2.0(pinia@2.3.1(typescript@5.8.2)(vue@3.5.13(typescript@5.8.2)))
       roboto-fontface:
         specifier: ^0.10.0
         version: 0.10.0
+      typescript:
+        specifier: ^5.8.2
+        version: 5.8.2
       vue:
         specifier: ^3.5.13
-        version: 3.5.13
+        version: 3.5.13(typescript@5.8.2)
       vue-router:
         specifier: ^4.5.0
-        version: 4.5.0(vue@3.5.13)
+        version: 4.5.0(vue@3.5.13(typescript@5.8.2))
       vuetify:
         specifier: ^3.7.6
-        version: 3.7.16(vue@3.5.13)
+        version: 3.7.16(typescript@5.8.2)(vue@3.5.13(typescript@5.8.2))
       webfontloader:
         specifier: ^1.6.28
         version: 1.6.28
@@ -59,7 +62,7 @@ importers:
         version: 2.3.1
       '@vitejs/plugin-vue':
         specifier: ^5.2.1
-        version: 5.2.1(vite@6.2.1(jiti@2.4.2)(sass@1.85.1))(vue@3.5.13)
+        version: 5.2.1(vite@6.2.1(jiti@2.4.2)(sass@1.85.1))(vue@3.5.13(typescript@5.8.2))
       sass:
         specifier: ^1.85.1
         version: 1.85.1
@@ -974,6 +977,11 @@ packages:
     resolution: {integrity: sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==}
     engines: {node: '>=8.0'}
 
+  typescript@5.8.2:
+    resolution: {integrity: sha512-aJn6wq13/afZp/jT9QZmwEjDqqvSGp1VT5GVg+f/t6/oVyrgXM6BY1h9BRh/O5p3PlUPAe+WuiEZOmb/49RqoQ==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
   ufo@1.5.4:
     resolution: {integrity: sha512-UsUk3byDzKd04EyoZ7U4DOlxQaD14JUKQl6/P7wiX4FNvUfm3XL246n9W5AmqwW5RSFJ27NAuM0iLscAOYUiGQ==}
 
@@ -1395,10 +1403,10 @@ snapshots:
 
   '@types/estree@1.0.6': {}
 
-  '@vitejs/plugin-vue@5.2.1(vite@6.2.1(jiti@2.4.2)(sass@1.85.1))(vue@3.5.13)':
+  '@vitejs/plugin-vue@5.2.1(vite@6.2.1(jiti@2.4.2)(sass@1.85.1))(vue@3.5.13(typescript@5.8.2))':
     dependencies:
       vite: 6.2.1(jiti@2.4.2)(sass@1.85.1)
-      vue: 3.5.13
+      vue: 3.5.13(typescript@5.8.2)
 
   '@vue/compiler-core@3.5.13':
     dependencies:
@@ -1448,11 +1456,11 @@ snapshots:
       '@vue/shared': 3.5.13
       csstype: 3.1.3
 
-  '@vue/server-renderer@3.5.13(vue@3.5.13)':
+  '@vue/server-renderer@3.5.13(vue@3.5.13(typescript@5.8.2))':
     dependencies:
       '@vue/compiler-ssr': 3.5.13
       '@vue/shared': 3.5.13
-      vue: 3.5.13
+      vue: 3.5.13(typescript@5.8.2)
 
   '@vue/shared@3.5.13': {}
 
@@ -1706,11 +1714,11 @@ snapshots:
       pkg-types: 2.1.0
       quansync: 0.2.8
 
-  lottie-web-vue@2.0.7:
+  lottie-web-vue@2.0.7(typescript@5.8.2):
     dependencies:
       lottie-web: 5.12.2
       path: 0.12.7
-      vue: 3.5.13
+      vue: 3.5.13(typescript@5.8.2)
     transitivePeerDependencies:
       - typescript
 
@@ -1776,22 +1784,24 @@ snapshots:
 
   picomatch@4.0.2: {}
 
-  pinia-plugin-persistedstate@4.2.0(pinia@2.3.1(vue@3.5.13)):
+  pinia-plugin-persistedstate@4.2.0(pinia@2.3.1(typescript@5.8.2)(vue@3.5.13(typescript@5.8.2))):
     dependencies:
       '@nuxt/kit': 3.16.0
       deep-pick-omit: 1.2.1
       defu: 6.1.4
       destr: 2.0.3
     optionalDependencies:
-      pinia: 2.3.1(vue@3.5.13)
+      pinia: 2.3.1(typescript@5.8.2)(vue@3.5.13(typescript@5.8.2))
     transitivePeerDependencies:
       - magicast
 
-  pinia@2.3.1(vue@3.5.13):
+  pinia@2.3.1(typescript@5.8.2)(vue@3.5.13(typescript@5.8.2)):
     dependencies:
       '@vue/devtools-api': 6.6.4
-      vue: 3.5.13
-      vue-demi: 0.14.10(vue@3.5.13)
+      vue: 3.5.13(typescript@5.8.2)
+      vue-demi: 0.14.10(vue@3.5.13(typescript@5.8.2))
+    optionalDependencies:
+      typescript: 5.8.2
     transitivePeerDependencies:
       - '@vue/composition-api'
 
@@ -1894,6 +1904,8 @@ snapshots:
     dependencies:
       is-number: 7.0.0
 
+  typescript@5.8.2: {}
+
   ufo@1.5.4: {}
 
   unctx@2.4.1:
@@ -1954,26 +1966,30 @@ snapshots:
       jiti: 2.4.2
       sass: 1.85.1
 
-  vue-demi@0.14.10(vue@3.5.13):
+  vue-demi@0.14.10(vue@3.5.13(typescript@5.8.2)):
     dependencies:
-      vue: 3.5.13
+      vue: 3.5.13(typescript@5.8.2)
 
-  vue-router@4.5.0(vue@3.5.13):
+  vue-router@4.5.0(vue@3.5.13(typescript@5.8.2)):
     dependencies:
       '@vue/devtools-api': 6.6.4
-      vue: 3.5.13
+      vue: 3.5.13(typescript@5.8.2)
 
-  vue@3.5.13:
+  vue@3.5.13(typescript@5.8.2):
     dependencies:
       '@vue/compiler-dom': 3.5.13
       '@vue/compiler-sfc': 3.5.13
       '@vue/runtime-dom': 3.5.13
-      '@vue/server-renderer': 3.5.13(vue@3.5.13)
+      '@vue/server-renderer': 3.5.13(vue@3.5.13(typescript@5.8.2))
       '@vue/shared': 3.5.13
+    optionalDependencies:
+      typescript: 5.8.2
 
-  vuetify@3.7.16(vue@3.5.13):
+  vuetify@3.7.16(typescript@5.8.2)(vue@3.5.13(typescript@5.8.2)):
     dependencies:
-      vue: 3.5.13
+      vue: 3.5.13(typescript@5.8.2)
+    optionalDependencies:
+      typescript: 5.8.2
 
   webfontloader@1.6.28: {}
 

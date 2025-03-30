@@ -44,7 +44,7 @@ import CoursesList from "@/apps/courses/components/CoursesList.vue";
 import AnnouncementsList from "@/apps/announcements/components/AnnouncementsList.vue";
 
 const props = defineProps({
-	batchId: Number,
+	batchId: String,
 });
 
 const batch = ref({});

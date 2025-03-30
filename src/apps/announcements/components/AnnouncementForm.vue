@@ -102,10 +102,11 @@
 <script setup>
 import SubmitButton from "@/components/SubmitButton.vue";
 import { ref, onMounted } from "vue";
-import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
-import AttachmentsInput from "@/apps/attachments/components/AttachmentsInput.vue";
-import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
-import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
+import { getBatchInfoFromObj, getBatches } from "@/apps/batches/api";
+import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
+import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
+import AttachmentsForm from "@/apps/attachments/components/AttachmentsForm.vue";
+import { formToApiDateTime } from "@/services/utils";
 
 const props = defineProps({
 	announcement: {
@@ -149,7 +150,11 @@ const formData = ref({
 
 onMounted(async () => {
 	if (props.announcement) {
-		formData.value = props.announcement;
+		for (const [key, value] of Object.entries(formData.value)) {
+			if (props.announcement[key] !== undefined) {
+				formData.value[key] = value.constructor(props.announcement[key]);
+			}
+		}
 	}
 });
 

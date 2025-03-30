@@ -5,7 +5,7 @@
 		closable-chips
 		:items="results"
 		:loading="loading"
-		:search-input.sync="query"
+		v-model:search-input="query"
 		:label="label"
 		:item-props="getInfo"
 		:multiple="multiple"
@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted } from "vue";
 
 const model = defineModel();
 
@@ -84,14 +84,16 @@ const onSearchUpdate = () => {
 
 // Fetch results
 const fetchResults = async () => {
-
 	if (loading.value || !hasMore.value) return;
 	filters.value[props.searchField] = query.value;
 	loading.value = true;
 
 	try {
 		const listing = await props.fetch(filters.value);
-		const newItems = listing.results.filter(item => !results.value.some(r => r.id === item.id));
+		console.log(listing)
+		const newItems = listing.results.filter(
+			(item) => !results.value.some((r) => r.id === item.id),
+		);
 		results.value = [...results.value, ...newItems];
 		// Update pagination state
 		hasMore.value = filters.value.page < listing.total_pages;
@@ -113,23 +115,5 @@ const fetchMoreResults = () => {
 	}
 };
 
-onMounted(async () => {
-  // Load initial dropdown data
-  await fetchResults();
-
-  // Ensure selected model values (if any) are in results
-  if (model.value) {
-	if (Array.isArray(model.value)) {
-		for (const id of model.value) {
-			const selectedItems = await props.fetch({ id: Number(id) });
-			results.value = [...selectedItems.results, ...results.value];
-		}
-	} else {
-		const selectedItems = await props.fetch({ id: Number(model.value) });
-		results.value = [...selectedItems.results, ...results.value];
-	}
-  }
-});
-
-
+onMounted(fetchResults);
 </script>

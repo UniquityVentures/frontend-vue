@@ -23,8 +23,6 @@ onMounted(async () => {
     <v-list-item class="border" v-if="announcement">
         <v-list-item-title>{{ announcement.title }}</v-list-item-title>
         <v-list-item-subtitle class="text-wrap">{{ announcement.description }}</v-list-item-subtitle>
-        <v-list-item-text>
-            <TeacherChip label="Signed by" :teacher="announcement.signed_by_details" v-if="announcement.signed_by_details" />
-        </v-list-item-text>
+		<TeacherChip label="Signed by" :teacher="announcement.signed_by_details" v-if="announcement.signed_by_details" />
     </v-list-item>
 </template>
