@@ -11,6 +11,7 @@ import DashboardPage from "@/views/DashboardPage.vue";
 // Pages
 import HomePage from "@/views/HomePage.vue";
 import LoginPage from "@/views/LoginPage.vue";
+import TestPage from "@/views/TestPage.vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
@@ -34,6 +35,11 @@ const routes = [
 		path: "/access_denied",
 		name: "Access Denied",
 		component: AccessDeniedPage,
+	},
+	{
+		path: "/test",
+		name: "test_area",
+		component: TestPage,
 	},
 	{
 		path: "/app/",

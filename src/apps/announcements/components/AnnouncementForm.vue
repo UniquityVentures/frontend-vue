@@ -18,7 +18,13 @@
         </v-col>
         
         <v-col cols="12" md="6">
-          <TeacherSelect v-model="formData.signed_by" label="Signed By" />
+          <ServerAutocomplete
+            :fetch="getTeachers"
+            :getInfo="getTeacherInfoFromObj"
+            searchField="name"
+            label="Signed By"
+            v-model="formData.signed_by"
+          />
         </v-col>
       </v-row>
 
@@ -83,8 +89,24 @@
             <v-radio label="Batches" value="batches"></v-radio>
             <v-radio label="Courses" value="courses"></v-radio>
           </v-radio-group>
-          <BatchSelect v-if="batchesOrCourses === 'batches'" v-model="formData.batches" label="Batches" />
-          <CourseSelect v-if="batchesOrCourses === 'courses'" v-model="formData.courses" label="Courses" />
+          <ServerAutocomplete
+            v-if="batchesOrCourses === 'batches'" 
+            :fetch="getBatches"
+            :getInfo="getBatchInfoFromObj"
+            searchField="name"
+            :multiple="true"
+            label="Batches"
+            v-model="formData.batches"
+          />
+          <ServerAutocomplete
+            v-if="batchesOrCourses === 'courses'"
+            :fetch="getCourses"
+            :getInfo="getCoursesInfoFromObj"
+            searchField="name"
+            :multiple="true"
+            label="Courses"
+            v-model="formData.courses"
+          />
         </v-col>
       </v-row>
 
@@ -106,6 +128,7 @@ import { getBatchInfoFromObj, getBatches } from "@/apps/batches/api";
 import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
 import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
 import AttachmentsForm from "@/apps/attachments/components/AttachmentsForm.vue";
+import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
 import { formToApiDateTime } from "@/services/utils";
 
 const props = defineProps({

@@ -1,12 +1,4 @@
 <template>
-    <ServerAutocomplete
-        :fetch="getBatches"
-        :getInfo="getBatchInfoFromObj"
-        :searchField="searchField"
-        :multiple="multiple"
-        :rules="rules"
-        :label="label"
-    />
 </template>
 
 <script setup>
