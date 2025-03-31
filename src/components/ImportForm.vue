@@ -68,7 +68,7 @@
                 <!-- Step 3: Import Results -->
                 <div v-if="step === 3" class="my-4">
                     <v-alert type="success" v-if="importResults?.success">
-                        Successfully imported {{ importResults?.count || 0 }} {{ entityName.toLowerCase() }}!
+                        Successfully imported {{ importResults?.row_count || 0 }} {{ entityName.toLowerCase() }}!
                     </v-alert>
 
                     <v-alert type="error" v-if="importResults?.errors?.length">

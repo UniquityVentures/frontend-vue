@@ -54,7 +54,7 @@
         <v-col cols="12">
           <ServerAutocomplete
             :fetch="getCourses"
-            :getInfo="getCoursesInfoFromObj"
+            :getInfo="getCourseInfoFromObj"
             searchField="name"
             :multiple="true"
             label="Courses"
