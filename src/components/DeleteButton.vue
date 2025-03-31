@@ -7,7 +7,7 @@
 		:disabled="isSubmitting"
 		:append-icon="isSuccess ? 'mdi-check' : (error ? 'mdi-alert' : '')"
 		:color="error ? 'error' : 'primary'"
-		color="error">
+		>
 		{{ isSuccess ? 'Deleted!' : (error ? 'Failed!' : label) }}
 	</v-btn>
 
@@ -79,7 +79,7 @@ const deleteItem = async () => {
 		}
 		isSubmitting.value = false;
 	} catch (err) {
-		console.log(err);
+		console.error(err);
 		error.value = formatErrorMessage({ success: false, err });
 	}
 };

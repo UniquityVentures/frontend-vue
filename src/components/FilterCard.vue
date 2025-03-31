@@ -105,7 +105,6 @@ const props = defineProps({
 });
 
 const clearFilters = () => {
-	console.log("Clearing filters");
 	for (const field of props.fields) {
 		if (field.disabled) continue;
 		if ("defaultValue" in field) {

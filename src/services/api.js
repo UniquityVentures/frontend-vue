@@ -31,7 +31,7 @@ api.interceptors.response.use(
         return response;
     },
     async (error) => {
-        console.log(error);
+        console.error(error);
         const authStore = useAuthStore();
         const original_request = error.config;
         if (

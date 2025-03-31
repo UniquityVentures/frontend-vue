@@ -90,7 +90,7 @@ const fetchSelected = async () => {
 	if (model.value && (!selected.value || selected.value.id !== model.value)) {
 		if (Array.isArray(model.value)) {
 			if (model.value.length) {
-				selected.value = await Promise.all(model.value.map(async (v) => {console.log({id: v});return (await props.fetch({id: v})).results[0]}))
+				selected.value = await Promise.all(model.value.map(async (v) => (await props.fetch({id: v})).results[0]))
 				if (typeof model.value[0] !== typeof selected.value[0].id) {
 					const converter = selected.value[0].id.constructor;
 					model.value = model.value.map(converter);
@@ -125,9 +125,7 @@ const fetchResults = async () => {
 				listing.results.push(selected.value);
 			}
 		}
-		console.log("results.value", results.value)
 		results.value = dedup([...results.value, ...listing.results], (e) => e.id);
-		console.log(results.value)
 		// Update pagination state
 		hasMore.value = filters.value.page < listing.total_pages;
 		if (hasMore.value) {

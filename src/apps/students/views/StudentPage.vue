@@ -29,8 +29,6 @@ const fetchDetails = async () => {
 	if (student.value?.batch) {
 		batch.value = await getBatch(student.value?.batch);
 	}
-	console.log(student.value)
-	console.log(batch.value)
 };
 
 onMounted(fetchDetails);

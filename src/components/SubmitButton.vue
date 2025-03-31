@@ -53,13 +53,13 @@ const handleSubmit = async () => {
 			) {
 				isSuccess.value = false;
 				error.value = formatErrorMessage(response.error);
-				console.log(error.value);
+				console.error(error.value);
 			}
 			isSubmitting.value = false;
 			isSuccess.value = true;
 		})
 		.catch((err) => {
-			console.log(err);
+			console.error(err);
 			error.value = formatErrorMessage(err);
 			isSubmitting.value = false;
 		});

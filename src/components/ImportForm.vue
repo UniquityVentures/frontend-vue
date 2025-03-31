@@ -155,7 +155,6 @@ const finalizeImport = async () => {
 		error.value = "";
 
 		// Call finalize API function
-		console.log(file.value);
 		const response = await props.import.finalize(file.value);
 
 		importResults.value = response;

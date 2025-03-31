@@ -17,7 +17,6 @@ const router = useRouter();
 
 const handleCreateCourse = async (courseData) => {
 	try {
-		console.log(courseData)
 		const response = await createCourse(courseData);
 		if (response?.id) {
 			router.push({ name: 'Course', params: { courseId: response.id } });
