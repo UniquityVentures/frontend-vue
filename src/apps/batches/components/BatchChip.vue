@@ -16,7 +16,7 @@ const props = defineProps({
     type: [Object],
   },
   batchId: {
-    type: [String, Number],
+	type: [String, Number],
   },
   label: {
     type: String,

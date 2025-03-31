@@ -23,7 +23,7 @@
                         <v-card-text>
                             <v-chip v-if="item.is_active" color="success">Active</v-chip>
                             <v-chip v-else color="error">Inactive</v-chip>
-                            <BatchChip :batchId="item.batches" />
+                            <BatchChip v-for="batchId in item.batches" v-bind:key="batchId" :batchId="batchId" />
                             <TeacherChip :teacherId="item.main_teacher" />
                         </v-card-text>
                     </v-card>
