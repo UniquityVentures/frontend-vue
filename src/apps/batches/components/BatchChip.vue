@@ -5,6 +5,7 @@
     <v-avatar size="24" icon="mdi-school" />
     {{ batch.name }}
   </v-chip>
+  <v-skeleton-loader v-else type="chip" />
 </template>
 
 <script setup>

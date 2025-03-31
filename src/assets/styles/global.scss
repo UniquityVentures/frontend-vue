@@ -56,8 +56,8 @@
     border-color: rgba(0, 0, 0, 1) !important;
 }
 
-.v-chip {
-    margin: 2px;
+.v-chip, .v-skeleton-loader__chip {
+    margin: 2px !important;
 }
 
 .v-btn {

@@ -7,7 +7,7 @@
         </template>
         <template #cards-slot="{ items }">
             <v-row>
-                <v-col cols="12" sm="6" md="4" lg="3" v-for="item in items" :key="item.id">
+                <v-col cols="12" sm="6" md="3" lg="2" v-for="item in items" :key="item.id">
                     <v-card height="100%" :variant="isStudentSelected(item) ? 'tonal' : 'flat'"
                         :class="['border', { 'selected-student': isStudentSelected(item) }]"
                         @click="toggleStudentSelection(item)" style="cursor: pointer">
@@ -70,8 +70,7 @@
 <script setup>
 import BatchChip from "@/apps/batches/components/BatchChip.vue";
 import { getCourses } from "@/apps/courses/api";
-import { exportStudents, getStudents } from "@/apps/students/api";
-import FilterCard from "@/components/FilterCard.vue";
+import { getStudents } from "@/apps/students/api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import SubmitButton from "@/components/SubmitButton.vue";
 import { onMounted, ref } from "vue";
