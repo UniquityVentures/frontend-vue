@@ -26,7 +26,7 @@ const router = useRouter();
 
 onMounted(() => {
 	if (authStore.isAuth) {
-		router.push({name: "Dashboard"})
+		router.push({ name: "Dashboard" });
 	}
-})
+});
 </script>

@@ -11,9 +11,9 @@
 </template>
 
 <script setup>
-import AssignmentForm from "../components/AssignmentForm.vue";
 import { onMounted, ref } from "vue";
 import { getAssignment, updateAssignment } from "../api";
+import AssignmentForm from "../components/AssignmentForm.vue";
 
 const props = defineProps({
 	assignmentId: {

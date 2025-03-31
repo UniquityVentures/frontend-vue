@@ -16,8 +16,8 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import { formatErrorMessage } from "@/services/utils";
+import { ref } from "vue";
 
 const props = defineProps({
 	submitText: {

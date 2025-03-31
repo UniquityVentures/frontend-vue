@@ -14,7 +14,7 @@
 
 <script setup>
 const props = defineProps({
-    teacher: Object,
-    chips: Array,
+	teacher: Object,
+	chips: Array,
 });
 </script>

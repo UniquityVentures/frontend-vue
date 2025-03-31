@@ -4,11 +4,11 @@
 </template>
 
 <script setup>
-// This component takes a file, uploads it to the server and 
-// emits the attachment object. 
+// This component takes a file, uploads it to the server and
+// emits the attachment object.
 
-import { ref } from "vue";
 import { createAttachment } from "@/apps/attachments/api";
+import { ref } from "vue";
 
 const props = defineProps({
 	title: {

@@ -10,9 +10,9 @@
 </template>
 
 <script setup>
-import AnnouncementForm from "../components/AnnouncementForm.vue";
 import { onMounted, ref } from "vue";
 import { getAnnouncement, updateAnnouncement } from "../api";
+import AnnouncementForm from "../components/AnnouncementForm.vue";
 
 const props = defineProps({
 	announcementId: {

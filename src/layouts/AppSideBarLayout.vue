@@ -33,7 +33,7 @@
 <script setup>
 import RecursiveList from "@/components/RecursiveList.vue";
 import { currentRouteMeta } from "@/router/menu";
-import { ref, watch, computed } from "vue";
+import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useDisplay } from "vuetify/lib/framework.mjs";
 
@@ -50,9 +50,8 @@ watch(
 	async () => {
 		routes.value = await currentRouteMeta(currentRoute);
 	},
-	{ immediate: true }
+	{ immediate: true },
 );
-
 </script>
 
 <style>

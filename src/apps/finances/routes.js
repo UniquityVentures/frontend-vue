@@ -2,8 +2,8 @@ import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.v
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import { api } from "@/services/api";
 import TransactionPage from "./views/TransactionPage.vue";
-import TransactionsPage from "./views/TransactionsPage.vue";
 import TransactionRequestFormPage from "./views/TransactionRequestFormPage.vue";
+import TransactionsPage from "./views/TransactionsPage.vue";
 
 export default [
 	{
@@ -44,7 +44,8 @@ export default [
 				meta: {
 					defaultRoute: "Transaction",
 					getDisplayName: async (params) =>
-						(await api.get(`api/finances/transaction/${params.transactionId}/`)).data.order_id,
+						(await api.get(`api/finances/transaction/${params.transactionId}/`))
+							.data.order_id,
 					getMenu: (props) => [
 						{
 							title: "View Transaction",

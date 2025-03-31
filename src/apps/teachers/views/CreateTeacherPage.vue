@@ -22,11 +22,11 @@
 </template>
 
 <script setup>
-import TeacherForm from "../components/TeacherForm.vue";
-import { ref } from "vue";
-import { createTeacher } from "../api";
 import { createUser } from "@/apps/users/api";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { createTeacher } from "../api";
+import TeacherForm from "../components/TeacherForm.vue";
 
 const router = useRouter();
 const stage = ref(1);
@@ -45,7 +45,10 @@ const handleCreateUser = async (userData) => {
 
 const handleCreateTeacher = async (teacherData) => {
 	try {
-		const teacher = await createTeacher({ ...teacherData, user: user.value.id });
+		const teacher = await createTeacher({
+			...teacherData,
+			user: user.value.id,
+		});
 		router.push({ name: "Teacher", params: { teacherId: teacher.id } });
 		return { success: true };
 	} catch (error) {

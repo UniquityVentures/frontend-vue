@@ -10,25 +10,28 @@
 </template>
 
 <script setup>
+import {
+	getTransactionPurposeInfoFromObj,
+	getTransactionPurposes,
+} from "@/apps/finances/api";
 import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
-import { getTransactionPurposeInfoFromObj, getTransactionPurposes } from "@/apps/finances/api";
 
 const props = defineProps({
-    multiple: {
-        type: Boolean,
-        default: false,
-    },
-    searchField: {
-        type: String,
-        default: "name",
-    },
-    rules: {
-        type: Array,
-        default: () => [],
-    },
-    label: {
-        type: String,
-        default: "Select Payment Purpose",
-    }
+	multiple: {
+		type: Boolean,
+		default: false,
+	},
+	searchField: {
+		type: String,
+		default: "name",
+	},
+	rules: {
+		type: Array,
+		default: () => [],
+	},
+	label: {
+		type: String,
+		default: "Select Payment Purpose",
+	},
 });
 </script>

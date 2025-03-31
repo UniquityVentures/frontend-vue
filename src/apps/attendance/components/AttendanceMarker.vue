@@ -68,32 +68,32 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { getStudents, exportStudents } from "@/apps/students/api";
-import { getCourses } from "@/apps/courses/api";
-import { bulkUpdateAttendance } from "../api";
-import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
-import FilterCard from "@/components/FilterCard.vue";
 import BatchChip from "@/apps/batches/components/BatchChip.vue";
+import { getCourses } from "@/apps/courses/api";
+import { exportStudents, getStudents } from "@/apps/students/api";
+import FilterCard from "@/components/FilterCard.vue";
+import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import SubmitButton from "@/components/SubmitButton.vue";
+import { onMounted, ref } from "vue";
+import { bulkUpdateAttendance } from "../api";
 
 const props = defineProps({
-    title: {
-        type: String,
-        default: "Attendance Marker",
-    },
-    subtitle: {
-        type: String,
-        default: "Select Date for marking attendance",
-    },
-    overrideFields: {
-        type: Array,
-        default: null,
-    },
-    getToFunction: {
-        type: Function,
-        default: () => ({}),
-    }
+	title: {
+		type: String,
+		default: "Attendance Marker",
+	},
+	subtitle: {
+		type: String,
+		default: "Select Date for marking attendance",
+	},
+	overrideFields: {
+		type: Array,
+		default: null,
+	},
+	getToFunction: {
+		type: Function,
+		default: () => ({}),
+	},
 });
 
 // Data for date and course selection
@@ -106,78 +106,82 @@ const selectedStudents = ref([]);
 
 // Methods
 const isStudentSelected = (student) => {
-    return selectedStudents.value.some(s => s.id === student.id);
+	return selectedStudents.value.some((s) => s.id === student.id);
 };
 
 const toggleStudentSelection = (student) => {
-    if (isStudentSelected(student)) {
-        removeStudent(student);
-    } else {
-        selectedStudents.value.push(student);
-    }
+	if (isStudentSelected(student)) {
+		removeStudent(student);
+	} else {
+		selectedStudents.value.push(student);
+	}
 };
 
 const removeStudent = (student) => {
-    selectedStudents.value = selectedStudents.value.filter(s => s.id !== student.id);
+	selectedStudents.value = selectedStudents.value.filter(
+		(s) => s.id !== student.id,
+	);
 };
 
 const clearSelection = () => {
-    selectedStudents.value = [];
+	selectedStudents.value = [];
 };
 
 const fetchCourses = async () => {
-    try {
-        const response = await getCourses();
-        courses.value = response.results;
-    } catch (error) {
-        console.error('Failed to fetch courses:', error);
-    }
+	try {
+		const response = await getCourses();
+		courses.value = response.results;
+	} catch (error) {
+		console.error("Failed to fetch courses:", error);
+	}
 };
 
 const submitAttendance = async () => {
-    try {
-        if (!attendanceDate.value) {
-            return { success: false, error: 'Please select a date' };
-        }
+	try {
+		if (!attendanceDate.value) {
+			return { success: false, error: "Please select a date" };
+		}
 
-        if (selectedStudents.value.length === 0) {
-            return { success: false, error: 'Please select at least one student' };
-        }
+		if (selectedStudents.value.length === 0) {
+			return { success: false, error: "Please select at least one student" };
+		}
 
-        // Get selected student IDs
-        const selectedStudentIds = selectedStudents.value.map(student => student.id);
+		// Get selected student IDs
+		const selectedStudentIds = selectedStudents.value.map(
+			(student) => student.id,
+		);
 
-        // Build attendance data payload
-        const attendanceData = selectedStudentIds.map(id => ({
-            student: id,
-            status: 'absent',
-            reason: ''
-        }));
+		// Build attendance data payload
+		const attendanceData = selectedStudentIds.map((id) => ({
+			student: id,
+			status: "absent",
+			reason: "",
+		}));
 
-        // API request payload
-        const payload = {
-            date: attendanceDate.value,
-            course: selectedCourse.value,
-            attendance_data: attendanceData,
-            mark_others_present: true  // Tell backend to mark others as present
-        };
+		// API request payload
+		const payload = {
+			date: attendanceDate.value,
+			course: selectedCourse.value,
+			attendance_data: attendanceData,
+			mark_others_present: true, // Tell backend to mark others as present
+		};
 
-        await bulkUpdateAttendance(payload);
-        clearSelection();
+		await bulkUpdateAttendance(payload);
+		clearSelection();
 
-        return { success: true, message: 'Attendance marked successfully' };
-    } catch (error) {
-        console.error('Error submitting attendance:', error);
-        return {
-            success: false,
-            error: error.message || 'Failed to submit attendance'
-        };
-    }
+		return { success: true, message: "Attendance marked successfully" };
+	} catch (error) {
+		console.error("Error submitting attendance:", error);
+		return {
+			success: false,
+			error: error.message || "Failed to submit attendance",
+		};
+	}
 };
 
 // Initialize
 onMounted(() => {
-    fetchCourses();
+	fetchCourses();
 });
 </script>
 

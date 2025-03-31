@@ -41,17 +41,17 @@
 </template>
 
 <script setup>
+import { formatErrorMessage } from "@/services/utils";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { formatErrorMessage } from "@/services/utils";
 
 const props = defineProps({
 	action: Function,
 	name: String,
 	label: {
 		type: String,
-		default: "Delete"
-	}
+		default: "Delete",
+	},
 });
 const router = useRouter();
 

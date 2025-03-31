@@ -1,24 +1,24 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import { getTeacher } from '../api';
+import { onMounted, ref } from "vue";
+import { getTeacher } from "../api";
 
 const props = defineProps({
-    teacher: {
-        type: Object,
-    },
-    teacherId: {
-        type: [Number, String],
-    },
+	teacher: {
+		type: Object,
+	},
+	teacherId: {
+		type: [Number, String],
+	},
 });
 
 const teacher = ref(null);
 
 onMounted(async () => {
-    if (props.teacherId) {
-        teacher.value = await getTeacher(props.teacherId);
-    } else {
-        teacher.value = props.teacher;
-    }
+	if (props.teacherId) {
+		teacher.value = await getTeacher(props.teacherId);
+	} else {
+		teacher.value = props.teacher;
+	}
 });
 </script>
 

@@ -122,14 +122,14 @@
 </template>
 
 <script setup>
-import SubmitButton from "@/components/SubmitButton.vue";
-import { ref, onMounted } from "vue";
+import AttachmentsForm from "@/apps/attachments/components/AttachmentsForm.vue";
 import { getBatchInfoFromObj, getBatches } from "@/apps/batches/api";
 import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
 import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
-import AttachmentsForm from "@/apps/attachments/components/AttachmentsForm.vue";
 import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
+import SubmitButton from "@/components/SubmitButton.vue";
 import { formToApiDateTime } from "@/services/utils";
+import { onMounted, ref } from "vue";
 
 const props = defineProps({
 	announcement: {
@@ -154,7 +154,7 @@ const props = defineProps({
 	},
 });
 
-const batchesOrCourses = ref('batches');
+const batchesOrCourses = ref("batches");
 
 // Initialize form data with default values
 const formData = ref({
@@ -180,6 +180,4 @@ onMounted(async () => {
 		}
 	}
 });
-
-
 </script> 

@@ -11,10 +11,10 @@
 </template>
 
 <script setup>
-import CourseForm from "../components/CourseForm.vue";
-import { ref, onMounted } from "vue";
-import { getCourse, updateCourse } from "../api";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import { getCourse, updateCourse } from "../api";
+import CourseForm from "../components/CourseForm.vue";
 
 const router = useRouter();
 const props = defineProps({

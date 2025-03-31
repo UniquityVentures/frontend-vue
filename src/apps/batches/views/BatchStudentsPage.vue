@@ -25,22 +25,21 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { getBatch } from '@/apps/batches/api';
-import StudentSmallCard from '@/apps/students/components/StudentSmallCard.vue';
-import ResponsiveDataTable from '@/components/ResponsiveDataTable.vue';
-import { getStudents } from '@/apps/students/api';
-import StudentSelect from '@/apps/students/components/StudentSelect.vue';
+import { getBatch } from "@/apps/batches/api";
+import { getStudents } from "@/apps/students/api";
+import StudentSelect from "@/apps/students/components/StudentSelect.vue";
+import StudentSmallCard from "@/apps/students/components/StudentSmallCard.vue";
+import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
+import { onMounted, ref } from "vue";
 
 const props = defineProps({
-    batchId: [Number, String],
+	batchId: [Number, String],
 });
 
 const batch = ref(null);
 const filters = ref({ batch: props.batchId });
 
 onMounted(async () => {
-    batch.value = await getBatch(props.batchId);
+	batch.value = await getBatch(props.batchId);
 });
-
 </script>

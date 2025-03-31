@@ -54,9 +54,9 @@
 
 <script setup>
 const props = defineProps({
-  student: {
-    type: Object,
-    required: true,
-  },
+	student: {
+		type: Object,
+		required: true,
+	},
 });
 </script>

@@ -73,10 +73,10 @@
 <script setup>
 import { getBatch } from "@/apps/batches/api";
 import { getCourse } from "@/apps/courses/api";
+import TeacherListItem from "@/apps/teachers/components/TeacherListItem.vue";
+import { formatDateTime } from "@/services/utils";
 import { onMounted, ref } from "vue";
 import { getAnnouncement } from "../api";
-import { formatDateTime } from "@/services/utils";
-import TeacherListItem from "@/apps/teachers/components/TeacherListItem.vue";
 
 const announcement = ref({});
 const batchDetails = ref([]);
@@ -84,7 +84,6 @@ const courseDetails = ref([]);
 const props = defineProps({
 	announcementId: Number,
 });
-
 
 const fetchDetails = async () => {
 	announcement.value = await getAnnouncement(props.announcementId);

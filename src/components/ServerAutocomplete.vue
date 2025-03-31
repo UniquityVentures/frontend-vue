@@ -26,10 +26,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from "vue";
-import {dedup} from "@/services/utils.js"
+import { dedup } from "@/services/utils.js";
+import { onMounted, ref, watch } from "vue";
 
-const model = defineModel({required: true});
+const model = defineModel({ required: true });
 
 const props = defineProps({
 	getInfo: {
@@ -62,7 +62,6 @@ const props = defineProps({
 	},
 });
 
-
 // Query and filter setup
 const query = ref("");
 const filters = ref({ page_size: 10, page: 1, ...props.filters });
@@ -84,30 +83,33 @@ const onSearchUpdate = () => {
 	}, 300);
 };
 
-const selected = ref(null)
+const selected = ref(null);
 
 const fetchSelected = async () => {
 	if (model.value && (!selected.value || selected.value.id !== model.value)) {
 		if (Array.isArray(model.value)) {
 			if (model.value.length) {
-				selected.value = await Promise.all(model.value.map(async (v) => (await props.fetch({id: v})).results[0]))
+				selected.value = await Promise.all(
+					model.value.map(
+						async (v) => (await props.fetch({ id: v })).results[0],
+					),
+				);
 				if (typeof model.value[0] !== typeof selected.value[0].id) {
 					const converter = selected.value[0].id.constructor;
 					model.value = model.value.map(converter);
 				}
 			}
 		} else {
-			selected.value = (await props.fetch({id: model.value[0]})).results[0];
+			selected.value = (await props.fetch({ id: model.value[0] })).results[0];
 			if (typeof model.value !== typeof selected.value.id) {
 				const converter = selected.value.id.constructor;
 				model.value = converter(model.value);
 			}
 		}
 	}
-}
+};
 
 watch(model, fetchSelected);
-
 
 // Fetch results
 const fetchResults = async () => {
@@ -116,7 +118,7 @@ const fetchResults = async () => {
 	loading.value = true;
 
 	try {
-		await fetchSelected()
+		await fetchSelected();
 		const listing = await props.fetch(filters.value);
 		if (selected.value) {
 			if (Array.isArray(selected.value)) {

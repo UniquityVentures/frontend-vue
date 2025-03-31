@@ -49,13 +49,12 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { getAssignments } from "../api";
-import { formatDateTime } from "@/services/utils";
-import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
+import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
+import { formatDateTime } from "@/services/utils";
+import { ref } from "vue";
+import { getAssignments } from "../api";
 
 const filters = ref({});
-
 </script>

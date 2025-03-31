@@ -59,46 +59,58 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { getTransactions } from "../api";
-import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import StudentSelect from "@/apps/students/components/StudentSelect.vue";
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
+import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { formatDate } from "@/services/utils";
+import { ref } from "vue";
+import { getTransactions } from "../api";
 
 const filters = ref({});
 const transactionTypes = [
-    { title: "UPI", value: "upi" },
-    { title: "Netbanking", value: "netbanking" },
-    { title: "Credit/Debit Card", value: "card" },
-    { title: "Digital Wallet", value: "wallet" },
+	{ title: "UPI", value: "upi" },
+	{ title: "Netbanking", value: "netbanking" },
+	{ title: "Credit/Debit Card", value: "card" },
+	{ title: "Digital Wallet", value: "wallet" },
 ];
 
 // Helper functions for transaction status display
 const getStatusColor = (status) => {
-    switch (status) {
-        case 'S': return 'success';
-        case 'P': return 'warning';
-        case 'F': return 'error';
-        default: return 'grey';
-    }
+	switch (status) {
+		case "S":
+			return "success";
+		case "P":
+			return "warning";
+		case "F":
+			return "error";
+		default:
+			return "grey";
+	}
 };
 
 const getStatusText = (status) => {
-    switch (status) {
-        case 'S': return 'Success';
-        case 'P': return 'Pending';
-        case 'F': return 'Failed';
-        default: return 'Unknown';
-    }
+	switch (status) {
+		case "S":
+			return "Success";
+		case "P":
+			return "Pending";
+		case "F":
+			return "Failed";
+		default:
+			return "Unknown";
+	}
 };
 
 const getStatusIcon = (status) => {
-    switch (status) {
-        case 'S': return 'mdi-check-circle';
-        case 'P': return 'mdi-clock-outline';
-        case 'F': return 'mdi-alert-circle';
-        default: return 'mdi-help-circle';
-    }
+	switch (status) {
+		case "S":
+			return "mdi-check-circle";
+		case "P":
+			return "mdi-clock-outline";
+		case "F":
+			return "mdi-alert-circle";
+		default:
+			return "mdi-help-circle";
+	}
 };
 </script>

@@ -5,5 +5,5 @@
 </template>
 
 <script setup>
-import AttendanceMarker from '../components/AttendanceMarker.vue';
+import AttendanceMarker from "../components/AttendanceMarker.vue";
 </script> 

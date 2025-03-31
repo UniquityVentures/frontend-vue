@@ -10,8 +10,8 @@
 
 <script setup>
 import { useRouter } from "vue-router";
-import CourseForm from "../components/CourseForm.vue";
 import { createCourse } from "../api";
+import CourseForm from "../components/CourseForm.vue";
 
 const router = useRouter();
 
@@ -19,7 +19,7 @@ const handleCreateCourse = async (courseData) => {
 	try {
 		const response = await createCourse(courseData);
 		if (response?.id) {
-			router.push({ name: 'Course', params: { courseId: response.id } });
+			router.push({ name: "Course", params: { courseId: response.id } });
 		}
 		return { success: true };
 	} catch (error) {

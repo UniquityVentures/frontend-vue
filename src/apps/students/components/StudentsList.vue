@@ -28,19 +28,22 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
-import { getStudents } from "@/apps/students/api";
 import BatchChip from "@/apps/batches/components/BatchChip.vue";
+import { getStudents } from "@/apps/students/api";
+import { computed, onMounted, ref } from "vue";
 
 const props = defineProps({
-    title: String,
-    subtitle: String,
-    filter: { type: Object, default: () => ({}) },
-    viewAll: { 
-        type: Object, 
-        default: () => ({ route: { name: 'Students' }, label: 'View All Students' }) 
-    },
-    limit: { type: Number, default: 5 },
+	title: String,
+	subtitle: String,
+	filter: { type: Object, default: () => ({}) },
+	viewAll: {
+		type: Object,
+		default: () => ({
+			route: { name: "Students" },
+			label: "View All Students",
+		}),
+	},
+	limit: { type: Number, default: 5 },
 });
 
 const items = ref([]);
@@ -48,14 +51,14 @@ const loading = ref(true);
 const limitedItems = computed(() => items.value.slice(0, props.limit));
 
 onMounted(async () => {
-    try {
-        loading.value = true;
-        const response = await getStudents(props.filter);
-        items.value = response?.results || [];
-    } catch (error) {
-        console.error("Failed to fetch students:", error);
-    } finally {
-        loading.value = false;
-    }
+	try {
+		loading.value = true;
+		const response = await getStudents(props.filter);
+		items.value = response?.results || [];
+	} catch (error) {
+		console.error("Failed to fetch students:", error);
+	} finally {
+		loading.value = false;
+	}
 });
 </script> 

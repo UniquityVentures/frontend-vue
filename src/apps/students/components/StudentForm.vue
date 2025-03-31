@@ -103,89 +103,91 @@
 </template>
 
 <script setup>
-import SubmitButton from "@/components/SubmitButton.vue";
-import { ref, onMounted, computed } from "vue";
 import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
+import SubmitButton from "@/components/SubmitButton.vue";
+import { computed, onMounted, ref } from "vue";
 
 const props = defineProps({
-  student: {
-    type: Object,
-    default: null,
-  },
-  user: {
-    type: Object,
-    default: null,
-  },
-  isUserForm: {
-    type: Boolean,
-    default: false,
-  },
-  action: {
-    type: Function,
-    required: true,
-  },
-  actionName: {
-    type: String,
-    default: "Save",
-  },
-  title: {
-    type: String,
-    default: "Student",
-  },
-  subtitle: {
-    type: String,
-    default: "",
-  },
+	student: {
+		type: Object,
+		default: null,
+	},
+	user: {
+		type: Object,
+		default: null,
+	},
+	isUserForm: {
+		type: Boolean,
+		default: false,
+	},
+	action: {
+		type: Function,
+		required: true,
+	},
+	actionName: {
+		type: String,
+		default: "Save",
+	},
+	title: {
+		type: String,
+		default: "Student",
+	},
+	subtitle: {
+		type: String,
+		default: "",
+	},
 });
 
 // Initialize form data with default values
 const formData = ref({
-  first_name: "",
-  last_name: "",
-  email: "",
-  username: "",
-  is_active: true,
-  is_approved: false,
-  // Student-specific fields
-  identifier: "",
-  batch: null,
-  phone: "",
-  whatsapp: "",
+	first_name: "",
+	last_name: "",
+	email: "",
+	username: "",
+	is_active: true,
+	is_approved: false,
+	// Student-specific fields
+	identifier: "",
+	batch: null,
+	phone: "",
+	whatsapp: "",
 });
 
 const submitForm = async () => {
-  try {
-    // Call the action passed from parent
-    return await props.action(formData.value);
-  } catch (error) {
-    console.error("Error submitting form:", error);
-    return { success: false, error };
-  }
+	try {
+		// Call the action passed from parent
+		return await props.action(formData.value);
+	} catch (error) {
+		console.error("Error submitting form:", error);
+		return { success: false, error };
+	}
 };
 
 onMounted(() => {
-  if (props.user) {
-    // Copy user data to form data
-    formData.value = { 
-      ...formData.value,
-      first_name: props.user.first_name || "",
-      last_name: props.user.last_name || "",
-      email: props.user.email || "",
-      username: props.user.username || "",
-      is_active: props.user.is_active !== undefined ? props.user.is_active : true,
-      is_approved: props.user.is_approved !== undefined ? props.user.is_approved : false,
-    };
-  }
-  
-  if (props.student) {
-    // Copy student data to form data
-    formData.value = {
-      ...formData.value,
-      identifier: props.student.identifier || "",
-      batch: props.student.batch || null,
-      phone: props.student.phone || "",
-      whatsapp: props.student.whatsapp || "",
-    };
-  }
+	if (props.user) {
+		// Copy user data to form data
+		formData.value = {
+			...formData.value,
+			first_name: props.user.first_name || "",
+			last_name: props.user.last_name || "",
+			email: props.user.email || "",
+			username: props.user.username || "",
+			is_active:
+				props.user.is_active !== undefined ? props.user.is_active : true,
+			is_approved:
+				props.user.is_approved !== undefined ? props.user.is_approved : false,
+		};
+	}
+
+	if (props.student) {
+		// Copy student data to form data
+		formData.value = {
+			...formData.value,
+			identifier: props.student.identifier || "",
+			batch: props.student.batch || null,
+			phone: props.student.phone || "",
+			whatsapp: props.student.whatsapp || "",
+		};
+	}
 });
 </script> 

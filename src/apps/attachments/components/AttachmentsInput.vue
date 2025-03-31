@@ -39,27 +39,29 @@
 import AttachmentInput from "@/apps/attachments/components/AttachmentInput.vue";
 
 const props = defineProps({
-  title: {
-    type: String,
-    default: "Attachments",
-  },
-  required: {
-    type: Boolean,
-    default: false,
-  }
+	title: {
+		type: String,
+		default: "Attachments",
+	},
+	required: {
+		type: Boolean,
+		default: false,
+	},
 });
 
 // Define model for attachments array
-const attachments = defineModel('attachments', {
-  default: () => []
+const attachments = defineModel("attachments", {
+	default: () => [],
 });
 
 function attachmentAdded(attachment) {
-  // Add to existing attachments
-  attachments.value = [...attachments.value, attachment];
+	// Add to existing attachments
+	attachments.value = [...attachments.value, attachment];
 }
 
 function removeAttachment(item) {
-  attachments.value = attachments.value.filter(attachment => attachment.id !== item.id);
+	attachments.value = attachments.value.filter(
+		(attachment) => attachment.id !== item.id,
+	);
 }
 </script> 

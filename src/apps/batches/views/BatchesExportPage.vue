@@ -24,10 +24,10 @@
 </template>
 
 <script setup>
-import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import ExportButton from "@/components/ExportButton.vue";
+import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { ref } from "vue";
-import { getBatches, exportBatches } from "../api";
+import { exportBatches, getBatches } from "../api";
 import BatchSmallCard from "../components/BatchSmallCard.vue";
 const filters = ref({});
 </script>

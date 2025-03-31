@@ -10,25 +10,25 @@
 </template>
 
 <script setup>
-import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
 import { getPayeeInfoFromObj, getPayees } from "@/apps/finances/api";
+import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
 
 const props = defineProps({
-    multiple: {
-        type: Boolean,
-        default: false,
-    },
-    searchField: {
-        type: String,
-        default: "name",
-    },
-    rules: {
-        type: Array,
-        default: () => [],
-    },
-    label: {
-        type: String,
-        default: "Select Payee",
-    }
+	multiple: {
+		type: Boolean,
+		default: false,
+	},
+	searchField: {
+		type: String,
+		default: "name",
+	},
+	rules: {
+		type: Array,
+		default: () => [],
+	},
+	label: {
+		type: String,
+		default: "Select Payee",
+	},
 });
 </script>

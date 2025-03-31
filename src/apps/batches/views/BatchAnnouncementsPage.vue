@@ -34,12 +34,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
 import { getAnnouncements } from "@/apps/announcements/api";
-import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
-import { getBatch } from "@/apps/batches/api";
-import AnnouncementSmallCard from "@/apps/announcements/components/AnnouncementSmallCard.vue";
 import AnnouncementListItem from "@/apps/announcements/components/AnnouncementListItem.vue";
+import AnnouncementSmallCard from "@/apps/announcements/components/AnnouncementSmallCard.vue";
+import { getBatch } from "@/apps/batches/api";
+import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
+import { onMounted, ref } from "vue";
 
 const props = defineProps({
 	batchId: {

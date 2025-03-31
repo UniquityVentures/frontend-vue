@@ -18,4 +18,12 @@ const importEvents = {
 const getCalendar = async (filter) =>
 	(await api.get("api/events/calendar/", { params: { ...filter } })).data;
 
-export { getEvents, getEvent, updateEvent, createEvent, exportEvents, importEvents, getCalendar };
+export {
+	getEvents,
+	getEvent,
+	updateEvent,
+	createEvent,
+	exportEvents,
+	importEvents,
+	getCalendar,
+};

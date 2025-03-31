@@ -35,13 +35,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { getBatch } from "@/apps/batches/api";
-import { getCourses } from "@/apps/courses/api";
 import { getAnnouncements } from "@/apps/announcements/api";
-import BatchCard from "@/apps/batches/components/BatchCard.vue";
-import CoursesList from "@/apps/courses/components/CoursesList.vue";
 import AnnouncementsList from "@/apps/announcements/components/AnnouncementsList.vue";
+import { getBatch } from "@/apps/batches/api";
+import BatchCard from "@/apps/batches/components/BatchCard.vue";
+import { getCourses } from "@/apps/courses/api";
+import CoursesList from "@/apps/courses/components/CoursesList.vue";
+import { onMounted, ref } from "vue";
 
 const props = defineProps({
 	batchId: String,

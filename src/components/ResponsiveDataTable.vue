@@ -84,7 +84,7 @@ const props = defineProps({
 	hideFooter: {
 		type: Boolean,
 		default: false,
-	},	
+	},
 	hideFilters: {
 		type: Boolean,
 		default: false,
@@ -92,11 +92,13 @@ const props = defineProps({
 });
 
 //
-const filters = defineModel('filters');
+const filters = defineModel("filters");
 
 // Template Handling
 const { mobile } = useDisplay();
-const template = ref(mobile.value ? props.templates.mobile : props.templates.desktop);
+const template = ref(
+	mobile.value ? props.templates.mobile : props.templates.desktop,
+);
 
 // Watch for changes in mobile state and update template accordingly
 watch(mobile, (newValue) => {
@@ -129,9 +131,13 @@ const fetchData = async ({ page, itemsPerPage }) => {
 	loading.value = false;
 };
 
-watch(filters, () => {
-	fetchData({ page: 1, itemsPerPage: 10 });
-}, { deep: true });
+watch(
+	filters,
+	() => {
+		fetchData({ page: 1, itemsPerPage: 10 });
+	},
+	{ deep: true },
+);
 
 onMounted(() => {
 	fetchData({ page: 1, itemsPerPage: 10 });

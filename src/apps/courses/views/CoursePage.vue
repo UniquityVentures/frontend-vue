@@ -7,8 +7,8 @@
 <script setup>
 import CourseCard from "@/apps/courses/components/CourseCard.vue";
 import { getTeachers } from "@/apps/teachers/api";
-import { getCourse } from "../api";
 import { onMounted, ref } from "vue";
+import { getCourse } from "../api";
 
 const props = defineProps({
 	courseId: String,

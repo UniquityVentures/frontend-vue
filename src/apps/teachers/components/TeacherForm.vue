@@ -97,85 +97,87 @@
 
 <script setup>
 import SubmitButton from "@/components/SubmitButton.vue";
-import { ref, onMounted } from "vue";
+import { onMounted, ref } from "vue";
 
 const props = defineProps({
-  teacher: {
-    type: Object,
-    default: null,
-  },
-  user: {
-    type: Object,
-    default: null,
-  },
-  isUserForm: {
-    type: Boolean,
-    default: false,
-  },
-  action: {
-    type: Function,
-    required: true,
-  },
-  actionName: {
-    type: String,
-    default: "Save",
-  },
-  title: {
-    type: String,
-    default: "Teacher",
-  },
-  subtitle: {
-    type: String,
-    default: "",
-  },
+	teacher: {
+		type: Object,
+		default: null,
+	},
+	user: {
+		type: Object,
+		default: null,
+	},
+	isUserForm: {
+		type: Boolean,
+		default: false,
+	},
+	action: {
+		type: Function,
+		required: true,
+	},
+	actionName: {
+		type: String,
+		default: "Save",
+	},
+	title: {
+		type: String,
+		default: "Teacher",
+	},
+	subtitle: {
+		type: String,
+		default: "",
+	},
 });
 
 // Initialize form data with default values
 const formData = ref({
-  first_name: "",
-  last_name: "",
-  email: "",
-  username: "",
-  is_active: true,
-  is_approved: false,
-  // Teacher-specific fields
-  identifier: "",
-  phone: "",
-  whatsapp: "",
+	first_name: "",
+	last_name: "",
+	email: "",
+	username: "",
+	is_active: true,
+	is_approved: false,
+	// Teacher-specific fields
+	identifier: "",
+	phone: "",
+	whatsapp: "",
 });
 
 const submitForm = async () => {
-  try {
-    // Call the action passed from parent
-    return await props.action(formData.value);
-  } catch (error) {
-    console.error("Error submitting form:", error);
-    return { success: false, error };
-  }
+	try {
+		// Call the action passed from parent
+		return await props.action(formData.value);
+	} catch (error) {
+		console.error("Error submitting form:", error);
+		return { success: false, error };
+	}
 };
 
 onMounted(() => {
-  if (props.user) {
-    // Copy user data to form data
-    formData.value = { 
-      ...formData.value,
-      first_name: props.user.first_name || "",
-      last_name: props.user.last_name || "",
-      email: props.user.email || "",
-      username: props.user.username || "",
-      is_active: props.user.is_active !== undefined ? props.user.is_active : true,
-      is_approved: props.user.is_approved !== undefined ? props.user.is_approved : false,
-    };
-  }
-  
-  if (props.teacher) {
-    // Copy teacher data to form data
-    formData.value = {
-      ...formData.value,
-      identifier: props.teacher.identifier || "",
-      phone: props.teacher.phone || "",
-      whatsapp: props.teacher.whatsapp || "",
-    };
-  }
+	if (props.user) {
+		// Copy user data to form data
+		formData.value = {
+			...formData.value,
+			first_name: props.user.first_name || "",
+			last_name: props.user.last_name || "",
+			email: props.user.email || "",
+			username: props.user.username || "",
+			is_active:
+				props.user.is_active !== undefined ? props.user.is_active : true,
+			is_approved:
+				props.user.is_approved !== undefined ? props.user.is_approved : false,
+		};
+	}
+
+	if (props.teacher) {
+		// Copy teacher data to form data
+		formData.value = {
+			...formData.value,
+			identifier: props.teacher.identifier || "",
+			phone: props.teacher.phone || "",
+			whatsapp: props.teacher.whatsapp || "",
+		};
+	}
 });
 </script> 

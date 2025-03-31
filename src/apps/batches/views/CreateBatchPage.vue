@@ -9,9 +9,9 @@
 </template>
 
 <script setup>
-import BatchForm from "../components/BatchForm.vue";
-import { createBatch } from "../api";
 import { useRouter } from "vue-router";
+import { createBatch } from "../api";
+import BatchForm from "../components/BatchForm.vue";
 
 const router = useRouter();
 
@@ -20,7 +20,7 @@ const handleCreateBatch = async (batchData) => {
 		const response = await createBatch(batchData);
 		// Navigate to the newly created batch
 		if (response?.id) {
-			router.push({ name: 'Batch', params: { batchId: response.id } });
+			router.push({ name: "Batch", params: { batchId: response.id } });
 		}
 		return { success: true };
 	} catch (error) {

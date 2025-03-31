@@ -29,17 +29,17 @@
 
 <script setup>
 const props = defineProps({
-  course: {
-    type: [Object, Array],
-    required: true,
-  },
-  label: {
-    type: String,
-    default: ''
-  },
-  chipProps: {
-    type: Object,
-    default: () => ({})
-  }
+	course: {
+		type: [Object, Array],
+		required: true,
+	},
+	label: {
+		type: String,
+		default: "",
+	},
+	chipProps: {
+		type: Object,
+		default: () => ({}),
+	},
 });
 </script>

@@ -47,14 +47,12 @@
 </template>
 
 <script setup>
-import {
-	attachmentDefaultHeaders,
-} from "../config";
-import { getAttachments } from "../api";
-import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
+import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { formatDateTime } from "@/services/utils";
 import { ref } from "vue";
+import { getAttachments } from "../api";
+import { attachmentDefaultHeaders } from "../config";
 
 const props = defineProps({
 	title: {

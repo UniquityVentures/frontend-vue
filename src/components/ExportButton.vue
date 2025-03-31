@@ -29,36 +29,36 @@
 import { ref } from "vue";
 
 const props = defineProps({
-  exportFunction: {
-    type: Function,
-    required: true,
-  },
-  title: {
-    type: String,
-    default: "Export",
-  }
+	exportFunction: {
+		type: Function,
+		required: true,
+	},
+	title: {
+		type: String,
+		default: "Export",
+	},
 });
 
 // Use defineModel to access filters from parent
-const filters = defineModel('filters', { required: true });
+const filters = defineModel("filters", { required: true });
 
 // Exporting Logic
 const isExporting = ref(false);
 const showDialog = ref(false);
 
 const showExportDialog = () => {
-  showDialog.value = true;
+	showDialog.value = true;
 };
 
 const handleExport = async () => {
-  try {
-    isExporting.value = true;
-    await props.exportFunction(filters.value);
-    showDialog.value = false;
-  } catch (error) {
-    console.error("Export failed:", error);
-  } finally {
-    isExporting.value = false;
-  }
+	try {
+		isExporting.value = true;
+		await props.exportFunction(filters.value);
+		showDialog.value = false;
+	} catch (error) {
+		console.error("Export failed:", error);
+	} finally {
+		isExporting.value = false;
+	}
 };
 </script> 

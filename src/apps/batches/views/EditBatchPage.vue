@@ -11,9 +11,9 @@
 </template>
 
 <script setup>
-import BatchForm from "../components/BatchForm.vue";
 import { onMounted, ref } from "vue";
 import { getBatch, updateBatch } from "../api";
+import BatchForm from "../components/BatchForm.vue";
 
 const props = defineProps({
 	batchId: {

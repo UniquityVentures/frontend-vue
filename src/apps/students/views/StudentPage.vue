@@ -10,12 +10,12 @@
 </template>
 
 <script setup>
+import { getBatch } from "@/apps/batches/api";
+import CoursesCard from "@/apps/courses/components/CoursesCard.vue";
 import { getStudent } from "@/apps/students/api";
 import StudentCard from "@/apps/students/components/StudentCard.vue";
 import StudentGuardiansCard from "@/apps/students/components/StudentGuardiansCard.vue";
 import { onMounted, ref } from "vue";
-import CoursesCard from "@/apps/courses/components/CoursesCard.vue";
-import { getBatch } from "@/apps/batches/api";
 
 const student = ref({});
 const batch = ref({});

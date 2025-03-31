@@ -31,9 +31,9 @@
 
 <script setup>
 import { getCourseImage } from "@/apps/courses/api";
-import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 import { getTeacher } from "@/apps/teachers/api";
-import { watch, ref } from "vue";
+import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
+import { ref, watch } from "vue";
 
 const props = defineProps({
 	course: {
@@ -44,9 +44,13 @@ const props = defineProps({
 
 const teachers = ref([]);
 
-watch(props, async ({course}) => {
-	teachers.value = await Promise.all(course.other_teachers.map(getTeacher));
-}, true);
+watch(
+	props,
+	async ({ course }) => {
+		teachers.value = await Promise.all(course.other_teachers.map(getTeacher));
+	},
+	true,
+);
 </script>
 
 <style scoped>

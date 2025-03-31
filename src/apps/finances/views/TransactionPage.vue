@@ -41,10 +41,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { getTransaction } from "../api";
-import { formatDate } from "@/services/utils";
 import StudentCard from "@/apps/students/components/StudentCard.vue";
+import { formatDate } from "@/services/utils";
+import { onMounted, ref } from "vue";
+import { getTransaction } from "../api";
 
 const transaction = ref({});
 

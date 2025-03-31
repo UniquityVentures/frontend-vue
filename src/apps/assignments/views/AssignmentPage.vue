@@ -81,10 +81,10 @@
 </template>
 
 <script setup>
-import { useAuthStore } from "@/stores/auth";
-import { ref, onMounted } from "vue";
-import { getAssignment } from "../api";
 import { formatDateTime } from "@/services/utils";
+import { useAuthStore } from "@/stores/auth";
+import { onMounted, ref } from "vue";
+import { getAssignment } from "../api";
 
 const assignment = ref({});
 const authStore = useAuthStore();

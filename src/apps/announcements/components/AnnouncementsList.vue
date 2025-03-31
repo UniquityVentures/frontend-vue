@@ -15,16 +15,19 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
 import { getAnnouncements } from "@/apps/announcements/api";
+import { computed, onMounted, ref } from "vue";
 import AnnouncementListItem from "./AnnouncementListItem.vue";
 
 const props = defineProps({
-    title: String,
-    subtitle: String,
-    filter: { type: Object, default: () => ({}) },
-    viewAll: { type: Object, default: () => ({ route: { name: 'Announcements' }, label: 'View All' }) },
-    limit: { type: Number, default: 5 },
+	title: String,
+	subtitle: String,
+	filter: { type: Object, default: () => ({}) },
+	viewAll: {
+		type: Object,
+		default: () => ({ route: { name: "Announcements" }, label: "View All" }),
+	},
+	limit: { type: Number, default: 5 },
 });
 
 const items = ref([]);
@@ -32,14 +35,14 @@ const loading = ref(true);
 const limitedItems = computed(() => items.value.slice(0, props.limit));
 
 onMounted(async () => {
-    try {
-        loading.value = true;
-        const response = await getAnnouncements(props.filter);
-        items.value = response?.results || [];
-    } catch (error) {
-        console.error("AnnouncementsList failed to fetch announcements:", error);
-    } finally {
-        loading.value = false;
-    }
+	try {
+		loading.value = true;
+		const response = await getAnnouncements(props.filter);
+		items.value = response?.results || [];
+	} catch (error) {
+		console.error("AnnouncementsList failed to fetch announcements:", error);
+	} finally {
+		loading.value = false;
+	}
 });
 </script>

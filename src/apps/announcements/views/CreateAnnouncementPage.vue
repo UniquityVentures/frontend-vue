@@ -9,6 +9,6 @@
 </template>
 
 <script setup>
-import AnnouncementForm from "../components/AnnouncementForm.vue";
 import { createAnnouncement } from "@/apps/announcements/api";
+import AnnouncementForm from "../components/AnnouncementForm.vue";
 </script>

@@ -34,13 +34,13 @@
 </template>
 
 <script setup>
+import BatchChip from "@/apps/batches/components/BatchChip.vue";
+import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
+import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
+import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
+import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { ref } from "vue";
 import { getCourses } from "../api";
-import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
-import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
-import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
-import BatchChip from "@/apps/batches/components/BatchChip.vue";
-import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 
 const filters = ref({});
 </script>

@@ -16,9 +16,8 @@
 <script setup>
 import { getBatchInfoFromObj, getBatches } from "@/apps/batches/api";
 import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
-const batchesOrCourses = ref('batches');
-import {ref} from "vue";
-
+const batchesOrCourses = ref("batches");
+import { ref } from "vue";
 
 // Initialize form data with default values
 const formData = ref({

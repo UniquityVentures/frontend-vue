@@ -7,8 +7,8 @@
 </template>
 
 <script setup>
+import AnnouncementsList from "@/apps/announcements/components/AnnouncementsList.vue";
 import { getStudentStats } from "@/apps/students/api";
 import { getTeacherStats } from "@/apps/teachers/api";
-import AnnouncementsList from "@/apps/announcements/components/AnnouncementsList.vue";
 import StatsCard from "@/components/StatsCard.vue";
 </script>

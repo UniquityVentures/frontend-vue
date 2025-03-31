@@ -90,8 +90,8 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import { formatErrorMessage } from "@/services/utils";
+import { ref } from "vue";
 
 const props = defineProps({
 	entityName: {
@@ -135,7 +135,10 @@ const handleSubmit = async () => {
 		validationResults.value = response;
 		preview.value = validationResults.value?.preview?.map((row) => {
 			return Object.fromEntries(
-				row.map((value, index) => [validationResults.value.headers[index], value]),
+				row.map((value, index) => [
+					validationResults.value.headers[index],
+					value,
+				]),
 			);
 		});
 		step.value = 2;

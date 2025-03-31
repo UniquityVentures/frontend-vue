@@ -69,13 +69,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
 import { getBatch, updateBatch } from "@/apps/batches/api";
-import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
-import SubmitButton from "@/components/SubmitButton.vue";
+import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
+import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
+import SubmitButton from "@/components/SubmitButton.vue";
+import { onMounted, ref } from "vue";
 
 const props = defineProps({
 	batchId: {
@@ -111,7 +111,7 @@ const filters = ref({ batches: props.batchId });
 
 const getBatchCourses = async (filter) => {
 	return getCourses({ ...filter, batches: props.batchId });
-}
+};
 
 onMounted(async () => {
 	batch.value = await getBatch(props.batchId);

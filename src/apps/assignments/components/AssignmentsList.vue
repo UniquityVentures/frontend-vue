@@ -25,22 +25,22 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
-import { getAssignments } from "../api";
 import { formatDate } from "@/services/utils";
+import { computed, onMounted, ref } from "vue";
+import { getAssignments } from "../api";
 
 const props = defineProps({
-    title: String,
-    subtitle: String,
-    filter: { type: Object, default: () => ({}) },
-    viewAll: { 
-        type: Object, 
-        default: () => ({ 
-            route: { name: 'Assignments' }, 
-            label: 'View All Assignments' 
-        }) 
-    },
-    limit: { type: Number, default: 5 },
+	title: String,
+	subtitle: String,
+	filter: { type: Object, default: () => ({}) },
+	viewAll: {
+		type: Object,
+		default: () => ({
+			route: { name: "Assignments" },
+			label: "View All Assignments",
+		}),
+	},
+	limit: { type: Number, default: 5 },
 });
 
 const items = ref([]);
@@ -48,14 +48,14 @@ const loading = ref(true);
 const limitedItems = computed(() => items.value.slice(0, props.limit));
 
 onMounted(async () => {
-    try {
-        loading.value = true;
-        const response = await getAssignments(props.filter);
-        items.value = response?.results || [];
-    } catch (error) {
-        console.error("Failed to fetch assignments:", error);
-    } finally {
-        loading.value = false;
-    }
+	try {
+		loading.value = true;
+		const response = await getAssignments(props.filter);
+		items.value = response?.results || [];
+	} catch (error) {
+		console.error("Failed to fetch assignments:", error);
+	} finally {
+		loading.value = false;
+	}
 });
 </script>

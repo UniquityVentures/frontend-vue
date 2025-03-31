@@ -63,15 +63,14 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { getAnnouncements, exportAnnouncements } from "../api";
-import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
-import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
 import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
-import DateRangeSelect from "../../../components/DateRangeSelect.vue";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
+import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
 import ExportButton from "@/components/ExportButton.vue";
+import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
+import { ref } from "vue";
+import DateRangeSelect from "../../../components/DateRangeSelect.vue";
+import { exportAnnouncements, getAnnouncements } from "../api";
 
 const filters = ref({});
-
 </script>

@@ -39,13 +39,13 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { getEvents } from "../api";
-import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
 import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
+import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { formatDateTime } from "@/services/utils";
+import { ref } from "vue";
+import { getEvents } from "../api";
 
 const props = defineProps({
 	title: {

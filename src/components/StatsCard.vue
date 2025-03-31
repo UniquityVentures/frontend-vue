@@ -33,8 +33,8 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
 import { toHeaderCase } from "@/services/utils";
+import { onMounted, ref } from "vue";
 
 const stats = ref({});
 const loading = ref(true);

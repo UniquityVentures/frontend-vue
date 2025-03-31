@@ -25,11 +25,11 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { getTeachers } from "../api";
-import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
 import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
+import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
+import { ref } from "vue";
+import { getTeachers } from "../api";
 import TeacherSmallCard from "./TeacherSmallCard.vue";
 const filters = ref({});
 </script>

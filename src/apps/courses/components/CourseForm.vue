@@ -87,49 +87,49 @@
 </template>
 
 <script setup>
-import SubmitButton from "@/components/SubmitButton.vue";
-import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
 import { getBatchInfoFromObj, getBatches } from "@/apps/batches/api";
 import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
-import { ref, onMounted } from "vue";
+import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
+import SubmitButton from "@/components/SubmitButton.vue";
+import { onMounted, ref } from "vue";
 
 const props = defineProps({
-  course: {
-    type: Object,
-    default: null,
-  },
-  action: {
-    type: Function,
-    required: true,
-  },
-  actionName: {
-    type: String,
-    default: "Save",
-  },
-  title: {
-    type: String,
-    default: "Course",
-  },
-  subtitle: {
-    type: String,
-    default: "",
-  },
+	course: {
+		type: Object,
+		default: null,
+	},
+	action: {
+		type: Function,
+		required: true,
+	},
+	actionName: {
+		type: String,
+		default: "Save",
+	},
+	title: {
+		type: String,
+		default: "Course",
+	},
+	subtitle: {
+		type: String,
+		default: "",
+	},
 });
 
 // Initialize form data with default values
 const formData = ref({
-  name: "",
-  code: "",
-  description: "",
-  main_teacher: null,
-  other_teachers: [],
-  batches: [],
-  is_active: true,
+	name: "",
+	code: "",
+	description: "",
+	main_teacher: null,
+	other_teachers: [],
+	batches: [],
+	is_active: true,
 });
 
 onMounted(async () => {
-  if (props.course) {
-    formData.value = props.course;
-  }
+	if (props.course) {
+		formData.value = props.course;
+	}
 });
 </script>

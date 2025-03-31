@@ -8,8 +8,8 @@
 <script setup>
 import { FIELD_TYPES } from "@/components/FieldTypeDefinitions";
 import FormCard from "@/components/FormCard.vue";
-import { createTransaction } from "../api";
 import { ref } from "vue";
+import { createTransaction } from "../api";
 
 const preprocessRequest = (data) => {
 	data.amount *= -100;

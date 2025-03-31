@@ -37,11 +37,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { getAttachment } from "../api";
-import { formatDateTime } from "@/services/utils";
 import { deleteAttachment } from "@/apps/attachments/api";
 import DeleteButton from "@/components/DeleteButton.vue";
+import { formatDateTime } from "@/services/utils";
+import { onMounted, ref } from "vue";
+import { getAttachment } from "../api";
 const attachment = ref({});
 
 const props = defineProps({

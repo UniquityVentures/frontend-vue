@@ -22,11 +22,11 @@
 </template>
 
 <script setup>
+import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
+import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { ref } from "vue";
 import { getStudents } from "../api";
-import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
 import StudentSmallCard from "./StudentSmallCard.vue";
-import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 
 const filters = ref({});
 </script>

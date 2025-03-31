@@ -32,7 +32,6 @@ const getPayeeInfoFromObj = (item) => ({
 	value: item.id,
 });
 
-
 export {
 	getTransactions,
 	getTransactionPurposes,

@@ -1,9 +1,9 @@
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import { api } from "@/services/api";
-import TeacherPage from "./views/TeacherPage.vue";
-import EditTeacherPage from "./views/EditTeacherPage.vue";
 import CreateTeacherPage from "./views/CreateTeacherPage.vue";
+import EditTeacherPage from "./views/EditTeacherPage.vue";
+import TeacherPage from "./views/TeacherPage.vue";
 import TeachersPage from "./views/TeachersPage.vue";
 
 export default [

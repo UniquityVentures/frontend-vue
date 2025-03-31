@@ -17,7 +17,9 @@ const currentRouteMeta = async (route) => {
 	for (const matchedRoute of routes) {
 		if (matchedRoute?.meta) {
 			matchedRoute.meta.menu = await matchedRoute.meta.getMenu?.(route.params);
-			matchedRoute.meta.displayName = await matchedRoute.meta.getDisplayName?.(route.params);
+			matchedRoute.meta.displayName = await matchedRoute.meta.getDisplayName?.(
+				route.params,
+			);
 		}
 	}
 

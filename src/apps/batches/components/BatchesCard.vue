@@ -22,8 +22,8 @@
 </template>
 
 <script setup>
-import { getBatches } from "../api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
+import { getBatches } from "../api";
 import BatchSmallCard from "./BatchSmallCard.vue";
 
 const props = defineProps({
@@ -31,14 +31,14 @@ const props = defineProps({
 		type: Object,
 		default: () => ({}),
 	},
-    title: {
-        type: String,
-        default: null,
-    },
-    subtitle: {
-        type: String,
-        default: null,
-    }
+	title: {
+		type: String,
+		default: null,
+	},
+	subtitle: {
+		type: String,
+		default: null,
+	},
 });
 </script>
 

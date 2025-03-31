@@ -13,9 +13,16 @@ export const transactionDefaultFilterFields = [
 	{ label: "Filter by student", type: "student", key: "student" },
 	{ label: "Filter by minimum amount", type: "integer", key: "amount_start" },
 	{ label: "Filter by maximum amount", type: "integer", key: "amount_end" },
-	{ label: "Filter by Date", type: "dates", key: ["datetime_start", "datetime_end"] },
-	{ label: "Filter by transaction type", type: "n_nary", key: "transaction_type", 
-        fetchOptions: () => [
+	{
+		label: "Filter by Date",
+		type: "dates",
+		key: ["datetime_start", "datetime_end"],
+	},
+	{
+		label: "Filter by transaction type",
+		type: "n_nary",
+		key: "transaction_type",
+		fetchOptions: () => [
 			{ title: "Select", value: null },
 			{ title: "UPI", value: "upi" },
 			{ title: "Netbanking", value: "netbanking" },
@@ -24,7 +31,10 @@ export const transactionDefaultFilterFields = [
 		],
 	},
 	{ label: "Filter by order ID", type: "string", key: "order_id" },
-	{ label: "Filter by transaction status", type: "n_nary", key: "transaction_status",
+	{
+		label: "Filter by transaction status",
+		type: "n_nary",
+		key: "transaction_status",
 		fetchOptions: () => [
 			{ title: "Select", value: null },
 			{ title: "Success", value: "S" },

@@ -72,12 +72,17 @@
 
 <script setup>
 import { getBatchInfoFromObj, getBatches } from "@/apps/batches/api";
-import { getPayeeInfoFromObj, getPayees, getTransactionPurposeInfoFromObj, getTransactionPurposes } from "@/apps/finances/api";
-import { getStudentInfoFromObj, getStudents } from "@/apps/students/api";
 import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
+import {
+	getPayeeInfoFromObj,
+	getPayees,
+	getTransactionPurposeInfoFromObj,
+	getTransactionPurposes,
+} from "@/apps/finances/api";
+import { getStudentInfoFromObj, getStudents } from "@/apps/students/api";
 import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
 import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
-import { ref, computed, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { FIELD_TYPES, getDefaultEmptyValue } from "./FieldTypeDefinitions";
 
 const props = defineProps({
@@ -153,12 +158,16 @@ const handleExport = async () => {
 };
 
 // Add model management
-const filtersModel = defineModel('filters', { required: true });
+const filtersModel = defineModel("filters", { required: true });
 
 // Compute filters from fields
 const computedFilters = computed(() => {
 	return props.fields.reduce((acc, field) => {
-		if (field.value !== undefined && field.value !== null && field.value !== "") {
+		if (
+			field.value !== undefined &&
+			field.value !== null &&
+			field.value !== ""
+		) {
 			if (Array.isArray(field.key)) {
 				field.key.forEach((key, index) => {
 					if (field.value && field.value[index] !== undefined) {
@@ -174,8 +183,11 @@ const computedFilters = computed(() => {
 });
 
 // Sync computed filters to model
-watch(computedFilters, (newVal) => {
-	filtersModel.value = newVal;
-}, { immediate: true, deep: true });
-
+watch(
+	computedFilters,
+	(newVal) => {
+		filtersModel.value = newVal;
+	},
+	{ immediate: true, deep: true },
+);
 </script>

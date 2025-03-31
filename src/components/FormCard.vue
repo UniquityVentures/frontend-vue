@@ -120,19 +120,22 @@
 </template>
 
 <script setup>
-import SubmitButton from "./SubmitButton.vue";
-import ServerAutocomplete from "./ServerAutocomplete.vue";
-import { ref } from "vue";
-import { getBatchInfoFromObj, getBatches } from "@/apps/batches/api";
-import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
-import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
-import { getPayeeInfoFromObj, getPayees } from "@/apps/finances/api";
-import { getStudentInfoFromObj, getStudents } from "@/apps/students/api";
-import { getTransactionPurposeInfoFromObj, getTransactionPurposes } from "@/apps/finances/api";
 import AttachmentForm from "@/apps/attachments/components/AttachmentForm.vue";
 import AttachmentsForm from "@/apps/attachments/components/AttachmentsForm.vue";
+import { getBatchInfoFromObj, getBatches } from "@/apps/batches/api";
+import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
+import { getPayeeInfoFromObj, getPayees } from "@/apps/finances/api";
+import {
+	getTransactionPurposeInfoFromObj,
+	getTransactionPurposes,
+} from "@/apps/finances/api";
+import { getStudentInfoFromObj, getStudents } from "@/apps/students/api";
+import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
 import { formToApiDateTime } from "@/services/utils";
+import { ref } from "vue";
 import { FIELD_TYPES, getDefaultEmptyValue } from "./FieldTypeDefinitions";
+import ServerAutocomplete from "./ServerAutocomplete.vue";
+import SubmitButton from "./SubmitButton.vue";
 
 const props = defineProps({
 	title: {

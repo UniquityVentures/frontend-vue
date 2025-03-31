@@ -1,5 +1,9 @@
+import { getBatch } from "@/apps/batches/api";
 import BatchAnnouncementsPage from "@/apps/batches/views/BatchAnnouncementsPage.vue";
+import BatchCoursesPage from "@/apps/batches/views/BatchCoursesPage.vue";
 import BatchPage from "@/apps/batches/views/BatchPage.vue";
+import BatchStudentsPage from "@/apps/batches/views/BatchStudentsPage.vue";
+import BatchTeachersPage from "@/apps/batches/views/BatchTeachersPage.vue";
 import BatchesExportPage from "@/apps/batches/views/BatchesExportPage.vue";
 import BatchesImportPage from "@/apps/batches/views/BatchesImportPage.vue";
 import BatchesPage from "@/apps/batches/views/BatchesPage.vue";
@@ -7,10 +11,6 @@ import CreateBatchPage from "@/apps/batches/views/CreateBatchPage.vue";
 import EditBatchPage from "@/apps/batches/views/EditBatchPage.vue";
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
-import { getBatch } from "@/apps/batches/api";
-import BatchTeachersPage from "@/apps/batches/views/BatchTeachersPage.vue";
-import BatchCoursesPage from "@/apps/batches/views/BatchCoursesPage.vue";
-import BatchStudentsPage from "@/apps/batches/views/BatchStudentsPage.vue";
 
 export default [
 	{

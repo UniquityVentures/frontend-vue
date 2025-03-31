@@ -16,23 +16,23 @@
 </template>
 
 <script setup>
-import BatchChip from '@/apps/batches/components/BatchChip.vue';
-import { ref, onMounted } from 'vue';
-import { getStudent } from '../api';
+import BatchChip from "@/apps/batches/components/BatchChip.vue";
+import { onMounted, ref } from "vue";
+import { getStudent } from "../api";
 
 const props = defineProps({
-    student: Object,
-    studentId: [Number, String],
+	student: Object,
+	studentId: [Number, String],
 });
 
 const student = ref(null);
 
 onMounted(async () => {
-    if (props.studentId) {
-        student.value = await getStudent(props.studentId);
-    } else {
-        student.value = props.student;
-    }
+	if (props.studentId) {
+		student.value = await getStudent(props.studentId);
+	} else {
+		student.value = props.student;
+	}
 });
 </script>
 

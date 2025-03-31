@@ -51,9 +51,9 @@ const authStore = useAuthStore();
 // Handle form submission directly
 async function handleSubmit() {
 	try {
-		await authStore.login({ 
-			username: username.value, 
-			password: password.value 
+		await authStore.login({
+			username: username.value,
+			password: password.value,
 		});
 		router.push({ name: "Accounts" });
 	} catch (err) {

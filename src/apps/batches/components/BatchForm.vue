@@ -78,59 +78,59 @@
 </template>
 
 <script setup>
-import SubmitButton from "@/components/SubmitButton.vue";
 import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
 import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
-import { ref, onMounted } from "vue";
 import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
+import SubmitButton from "@/components/SubmitButton.vue";
+import { onMounted, ref } from "vue";
 
 const props = defineProps({
-  batch: {
-    type: Object,
-    default: null,
-  },
-  action: {
-    type: Function,
-    required: true,
-  },
-  actionName: {
-    type: String,
-    default: "Save",
-  },
-  title: {
-    type: String,
-    default: "Batch",
-  },
-  subtitle: {
-    type: String,
-    default: "",
-  },
+	batch: {
+		type: Object,
+		default: null,
+	},
+	action: {
+		type: Function,
+		required: true,
+	},
+	actionName: {
+		type: String,
+		default: "Save",
+	},
+	title: {
+		type: String,
+		default: "Batch",
+	},
+	subtitle: {
+		type: String,
+		default: "",
+	},
 });
 
 // Initialize form data with default values
 const formData = ref({
-  name: "",
-  standard: "",
-  main_teacher: null,
-  other_teachers: [],
-  courses: [],
-  is_active: true,
+	name: "",
+	standard: "",
+	main_teacher: null,
+	other_teachers: [],
+	courses: [],
+	is_active: true,
 });
 
 const submitForm = async () => {
-  try {
-    // Call the action passed from parent
-    return await props.action(formData.value);
-  } catch (error) {
-    console.error("Error submitting form:", error);
-    return { success: false, error };
-  }
+	try {
+		// Call the action passed from parent
+		return await props.action(formData.value);
+	} catch (error) {
+		console.error("Error submitting form:", error);
+		return { success: false, error };
+	}
 };
 
 onMounted(() => {
-  if (props.batch) {
-    // Copy batch data to form data
-    formData.value = { ...props.batch };
-  }
+	if (props.batch) {
+		// Copy batch data to form data
+		formData.value = { ...props.batch };
+	}
 });
 </script> 

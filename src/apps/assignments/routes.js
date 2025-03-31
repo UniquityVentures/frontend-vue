@@ -1,11 +1,11 @@
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import AssignmentPage from "./views/AssignmentPage.vue";
+import AssignmentsExportPage from "./views/AssignmentsExportPage.vue";
+import AssignmentsImportPage from "./views/AssignmentsImportPage.vue";
 import AssignmentsPage from "./views/AssignmentsPage.vue";
 import CreateAssignmentPage from "./views/CreateAssignmentPage.vue";
 import EditAssignmentPage from "./views/EditAssignmentPage.vue";
-import AssignmentsImportPage from "./views/AssignmentsImportPage.vue";
-import AssignmentsExportPage from "./views/AssignmentsExportPage.vue";
 
 export default [
 	{

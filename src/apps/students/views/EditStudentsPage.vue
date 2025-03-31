@@ -14,9 +14,9 @@
 
 <script setup>
 import { getUser, updateUser } from "@/apps/users/api";
-import StudentForm from "../components/StudentForm.vue";
 import { onMounted, ref } from "vue";
 import { getStudent, updateStudent } from "../api";
+import StudentForm from "../components/StudentForm.vue";
 
 const props = defineProps({
 	studentId: {

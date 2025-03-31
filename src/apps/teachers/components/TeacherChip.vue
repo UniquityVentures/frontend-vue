@@ -25,33 +25,35 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
-import { getTeacher } from '../api';
+import { onMounted, ref } from "vue";
+import { getTeacher } from "../api";
 
 const props = defineProps({
-  teacher: {
-    type: [Object, Array],
-  },
-  teacherId: {
-    type: [String, Number, Array],
-  },
-  label: {
-    type: String,
-    default: null,
-  },
+	teacher: {
+		type: [Object, Array],
+	},
+	teacherId: {
+		type: [String, Number, Array],
+	},
+	label: {
+		type: String,
+		default: null,
+	},
 });
 
 const teachers = ref([]);
 
 onMounted(async () => {
-  if (props.teacherId) {
-    if (Array.isArray(props.teacherId)) {
-      teachers.value = await Promise.all(props.teacherId.map(id => getTeacher(id)));
-    } else {
-      teachers.value = [await getTeacher(props.teacherId)];
-    }
-  } else {
-    teachers.value = props.teacher;
-  }
+	if (props.teacherId) {
+		if (Array.isArray(props.teacherId)) {
+			teachers.value = await Promise.all(
+				props.teacherId.map((id) => getTeacher(id)),
+			);
+		} else {
+			teachers.value = [await getTeacher(props.teacherId)];
+		}
+	} else {
+		teachers.value = props.teacher;
+	}
 });
 </script>

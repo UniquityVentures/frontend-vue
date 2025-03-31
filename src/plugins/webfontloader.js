@@ -11,7 +11,9 @@ export async function loadFonts() {
 
 	webFontLoader.load({
 		google: {
-			families: ["Roboto Flex:wght@100..900,GRAD@-200..150,XTRA@323..603,YOPQ@25..135&display=swap"],
+			families: [
+				"Roboto Flex:wght@100..900,GRAD@-200..150,XTRA@323..603,YOPQ@25..135&display=swap",
+			],
 		},
 	});
 }

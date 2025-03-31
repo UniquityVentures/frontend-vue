@@ -80,14 +80,18 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import TeacherListItem from "@/apps/teachers/components/TeacherListItem.vue";
 import { getBatch, updateBatch } from "@/apps/batches/api";
-import { getTeachers, getTeacher, getTeacherInfoFromObj } from "@/apps/teachers/api";
 import { getCourse } from "@/apps/courses/api";
+import {
+	getTeacher,
+	getTeacherInfoFromObj,
+	getTeachers,
+} from "@/apps/teachers/api";
+import TeacherListItem from "@/apps/teachers/components/TeacherListItem.vue";
 import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
 import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
 import SubmitButton from "@/components/SubmitButton.vue";
+import { onMounted, ref } from "vue";
 
 const props = defineProps({
 	batchId: String,
@@ -102,12 +106,14 @@ const victimTeachers = ref([]);
 const other_teachers = ref([]);
 const course_teachers = ref([]);
 
-
 const addTeachers = async () => {
-	batch.value.other_teachers = [...batch.value.other_teachers, ...newTeachers.value];
+	batch.value.other_teachers = [
+		...batch.value.other_teachers,
+		...newTeachers.value,
+	];
 	const response = await updateBatch(batch.value);
 	newTeachers.value = [];
-	batch.value = response
+	batch.value = response;
 	await fetchOtherTeachers();
 	await fetchCourseTeachers();
 	return response;
@@ -120,7 +126,7 @@ const removeTeachers = async () => {
 	);
 	const response = await updateBatch(batch.value);
 	victimTeachers.value = [];
-	batch.value = response
+	batch.value = response;
 	await fetchOtherTeachers();
 	await fetchCourseTeachers();
 	return response;
@@ -146,7 +152,7 @@ const fetchCourseTeachers = async () => {
 
 const getBatchTeachers = async (filter) => {
 	return getTeachers({ ...filter, batches: props.batchId });
-}
+};
 
 // Ensure proper data fetching sequence
 onMounted(async () => {
