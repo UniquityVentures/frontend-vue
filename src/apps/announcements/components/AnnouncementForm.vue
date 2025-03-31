@@ -18,10 +18,7 @@
         </v-col>
         
         <v-col cols="12" md="6">
-          <ServerAutocomplete
-            :fetch="getTeachers"
-            :getInfo="getTeacherInfoFromObj"
-            searchField="name"
+          <TeacherSelect
             label="Signed By"
             v-model="formData.signed_by"
           />
@@ -89,22 +86,14 @@
             <v-radio label="Batches" value="batches"></v-radio>
             <v-radio label="Courses" value="courses"></v-radio>
           </v-radio-group>
-          <ServerAutocomplete
+          <BatchSelect
             v-if="batchesOrCourses === 'batches'" 
-            :fetch="getBatches"
-            :getInfo="getBatchInfoFromObj"
-            searchField="name"
-            :multiple="true"
-            label="Batches"
+            multiple
             v-model="formData.batches"
           />
-          <ServerAutocomplete
+          <CourseSelect
             v-if="batchesOrCourses === 'courses'"
-            :fetch="getCourses"
-            :getInfo="getCoursesInfoFromObj"
-            searchField="name"
-            :multiple="true"
-            label="Courses"
+            multiple
             v-model="formData.courses"
           />
         </v-col>
@@ -123,10 +112,9 @@
 
 <script setup>
 import AttachmentsForm from "@/apps/attachments/components/AttachmentsForm.vue";
-import { getBatchInfoFromObj, getBatches } from "@/apps/batches/api";
-import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
-import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
-import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
+import TeacherSelect from "@/apps/teachers/components/TeacherSelect"
+import CourseSelect from "@/apps/courses/components/CourseSelect"
+import BatchSelect from "@/apps/batches/components/BatchSelect"
 import SubmitButton from "@/components/SubmitButton.vue";
 import { formToApiDateTime } from "@/services/utils";
 import { onMounted, ref } from "vue";

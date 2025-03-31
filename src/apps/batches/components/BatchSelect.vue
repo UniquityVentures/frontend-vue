@@ -1,9 +1,19 @@
 <template>
+	<ServerAutocomplete
+		:fetch="getBatches"
+		:getInfo="getBatchInfoFromObj"
+		:searchField="searchField"
+		:multiple="multiple"
+		:label="label"
+		v-model="model"
+	/>
 </template>
 
 <script setup>
 import { getBatchInfoFromObj, getBatches } from "@/apps/batches/api";
 import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
+
+const model = defineModel();
 
 const props = defineProps({
 	multiple: {

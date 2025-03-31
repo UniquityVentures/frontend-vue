@@ -38,9 +38,7 @@
       <v-row>
         
         <v-col cols="12" md="6">
-          <ServerAutocomplete
-            :fetch="getTeachers"
-            :getInfo="getTeacherInfoFromObj"
+          <TeacherSelect
             searchField="name"
             label="Class Teacher"
             v-model="formData.main_teacher"
@@ -48,11 +46,8 @@
         </v-col>
         
         <v-col cols="12" md="6">
-          <ServerAutocomplete
-            :fetch="getTeachers"
-            :getInfo="getTeacherInfoFromObj"
+          <TeacherSelect
 			:multiple="true"
-            searchField="name"
             label="Other Teacher"
             v-model="formData.other_teachers"
           />
@@ -61,12 +56,8 @@
 
       <v-row>
         <v-col cols="12">
-          <ServerAutocomplete
-            :fetch="getBatches"
-            :getInfo="getBatchInfoFromObj"
-            searchField="name"
-            :multiple="true"
-            label="Batches"
+          <BatchSelect
+            multiple
             v-model="formData.batches"
           />
         </v-col>
@@ -87,9 +78,8 @@
 </template>
 
 <script setup>
-import { getBatchInfoFromObj, getBatches } from "@/apps/batches/api";
-import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
-import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
+import TeacherSelect from "@/apps/teachers/components/TeacherSelect"
+import BatchSelect from "@/apps/batches/components/BatchSelect"
 import SubmitButton from "@/components/SubmitButton.vue";
 import { onMounted, ref } from "vue";
 

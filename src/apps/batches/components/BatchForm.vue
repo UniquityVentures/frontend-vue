@@ -29,9 +29,7 @@
 
       <v-row>
         <v-col cols="12" md="6">
-          <ServerAutocomplete
-            :fetch="getTeachers"
-            :getInfo="getTeacherInfoFromObj"
+          <TeacherSelect
             searchField="name"
             label="Class Teacher"
             v-model="formData.main_teacher"
@@ -39,11 +37,8 @@
         </v-col>
         
         <v-col cols="12" md="6">
-          <ServerAutocomplete
-            :fetch="getTeachers"
-            :getInfo="getTeacherInfoFromObj"
+          <TeacherSelect
 			:multiple="true"
-            searchField="name"
             label="Other Teacher"
             v-model="formData.other_teachers"
           />
@@ -52,12 +47,8 @@
 
       <v-row>
         <v-col cols="12">
-          <ServerAutocomplete
-            :fetch="getCourses"
-            :getInfo="getCourseInfoFromObj"
-            searchField="name"
-            :multiple="true"
-            label="Courses"
+          <CourseSelect
+            multiple
             v-model="formData.courses"
           />
         </v-col>
@@ -78,9 +69,8 @@
 </template>
 
 <script setup>
-import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
-import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
-import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
+import CourseSelect from "@/apps/courses/components/CourseSelect"
+import TeacherSelect from "@/apps/teachers/components/TeacherSelect"
 import SubmitButton from "@/components/SubmitButton.vue";
 import { onMounted, ref } from "vue";
 
