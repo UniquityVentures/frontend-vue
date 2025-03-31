@@ -27,6 +27,7 @@
 
 <script setup>
 import { ref, onMounted, watch } from "vue";
+import {dedup} from "@/services/utils.js"
 
 const model = defineModel({required: true});
 
@@ -97,7 +98,10 @@ const fetchSelected = async () => {
 			}
 		} else {
 			selected.value = (await props.fetch({id: model.value[0]})).results[0];
-			model.value = selected.value.id.constructor(model.value);
+			if (typeof model.value !== typeof selected.value.id) {
+				const converter = selected.value.id.constructor;
+				model.value = converter(model.value);
+			}
 		}
 	}
 }
@@ -121,10 +125,8 @@ const fetchResults = async () => {
 				listing.results.push(selected.value);
 			}
 		}
-		const newItems = listing.results.filter(
-			(item) => !results.value.some((r) => r.id === item.id),
-		);
-		results.value = [...results.value, ...newItems];
+		console.log("results.value", results.value)
+		results.value = dedup([...results.value, ...listing.results], (e) => e.id);
 		console.log(results.value)
 		// Update pagination state
 		hasMore.value = filters.value.page < listing.total_pages;

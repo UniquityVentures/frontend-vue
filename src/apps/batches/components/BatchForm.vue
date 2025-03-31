@@ -29,27 +29,36 @@
 
       <v-row>
         <v-col cols="12" md="6">
-          <TeacherSelect 
-            v-model="formData.main_teacher" 
-            label="Main Teacher" 
+          <ServerAutocomplete
+            :fetch="getTeachers"
+            :getInfo="getTeacherInfoFromObj"
+            searchField="name"
+            label="Class Teacher"
+            v-model="formData.main_teacher"
           />
         </v-col>
         
         <v-col cols="12" md="6">
-          <TeacherSelect 
-            v-model="formData.other_teachers" 
-            label="Other Teachers" 
-            multiple
+          <ServerAutocomplete
+            :fetch="getTeachers"
+            :getInfo="getTeacherInfoFromObj"
+			:multiple="true"
+            searchField="name"
+            label="Other Teacher"
+            v-model="formData.other_teachers"
           />
         </v-col>
       </v-row>
 
       <v-row>
         <v-col cols="12">
-          <CourseSelect 
-            v-model="formData.courses" 
+          <ServerAutocomplete
+            :fetch="getCourses"
+            :getInfo="getCoursesInfoFromObj"
+            searchField="name"
+            :multiple="true"
             label="Courses"
-            multiple
+            v-model="formData.courses"
           />
         </v-col>
       </v-row>
@@ -70,9 +79,10 @@
 
 <script setup>
 import SubmitButton from "@/components/SubmitButton.vue";
+import { getCourseInfoFromObj, getCourses } from "@/apps/courses/api";
+import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
 import { ref, onMounted } from "vue";
-import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
-import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
+import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
 
 const props = defineProps({
   batch: {

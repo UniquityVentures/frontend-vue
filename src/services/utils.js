@@ -115,3 +115,11 @@ export const fieldsToFilters = (fields) => {
         return acc;
     }, {});
 };
+
+export const dedup = (arr, keyFn) => {
+	const hashSet = {};
+	for (const e of arr) {
+		hashSet[keyFn(e)] = e;
+	}
+	return Object.values(hashSet)
+}

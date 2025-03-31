@@ -19,7 +19,7 @@ const handleCreateBatch = async (batchData) => {
 	try {
 		const response = await createBatch(batchData);
 		// Navigate to the newly created batch
-		if (response && response.id) {
+		if (response?.id) {
 			router.push({ name: 'Batch', params: { batchId: response.id } });
 		}
 		return { success: true };

@@ -36,28 +36,38 @@
       </v-row>
 
       <v-row>
+        
         <v-col cols="12" md="6">
-          <TeacherSelect 
-            v-model="formData.main_teacher" 
-            label="Main Teacher" 
+          <ServerAutocomplete
+            :fetch="getTeachers"
+            :getInfo="getTeacherInfoFromObj"
+            searchField="name"
+            label="Class Teacher"
+            v-model="formData.main_teacher"
           />
         </v-col>
         
         <v-col cols="12" md="6">
-          <TeacherSelect 
-            v-model="formData.other_teachers" 
-            label="Other Teachers" 
-            multiple
+          <ServerAutocomplete
+            :fetch="getTeachers"
+            :getInfo="getTeacherInfoFromObj"
+			:multiple="true"
+            searchField="name"
+            label="Other Teacher"
+            v-model="formData.other_teachers"
           />
         </v-col>
       </v-row>
 
       <v-row>
         <v-col cols="12">
-          <BatchSelect 
-            v-model="formData.batches" 
+          <ServerAutocomplete
+            :fetch="getBatches"
+            :getInfo="getBatchInfoFromObj"
+            searchField="name"
+            :multiple="true"
             label="Batches"
-            multiple
+            v-model="formData.batches"
           />
         </v-col>
       </v-row>
@@ -71,16 +81,17 @@
         </v-col>
       </v-row>
       
-      <SubmitButton :onSubmit="props.action" :submitText="actionName" />
+      <SubmitButton :onSubmit="() => props.action(formData)" :submitText="actionName" />
     </v-card-text>
   </v-card>
 </template>
 
 <script setup>
 import SubmitButton from "@/components/SubmitButton.vue";
+import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
+import { getBatchInfoFromObj, getBatches } from "@/apps/batches/api";
+import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
 import { ref, onMounted } from "vue";
-import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
-import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
 
 const props = defineProps({
   course: {

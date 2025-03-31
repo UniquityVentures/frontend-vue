@@ -30,7 +30,7 @@ const formData = ref({
 	signed_by: null,
 	release_at: null,
 	expiry_at: null,
-	batches: ["2354"],
+	batches: ["2354", "2"],
 	courses: [],
 	attachments: null,
 });
