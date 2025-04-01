@@ -39,11 +39,21 @@
             required
           />
         </v-col>
+
+        <v-col cols="12" md="6">
+          <v-date-input 
+            label="Release Date" 
+            v-model="formData.release_at"
+            :rules="[v => !!v || 'Release date is required']" 
+            required
+            color="primary"
+          />
+        </v-col>
         
         <v-col cols="12" md="6">
           <v-date-input 
             label="Due Date" 
-            v-model="formData.due_date"
+            v-model="formData.due_at"
             :rules="[v => !!v || 'Due date is required']" 
             required
             color="primary"
@@ -143,6 +153,7 @@ onMounted(() => {
 	if (props.assignment) {
 		// Copy assignment data to form data
 		formData.value = { ...props.assignment };
+		console.log(formData.value);
 
 		// Convert API datetime format to form datetime format
 		if (formData.value.due_date) {

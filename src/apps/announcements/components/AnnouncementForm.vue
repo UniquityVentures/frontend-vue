@@ -105,7 +105,7 @@
         </v-col>
       </v-row>
       
-      <SubmitButton :onSubmit="props.action" :submitText="actionName" />
+      <SubmitButton :onSubmit="() => props.action(formData)" :submitText="actionName" />
     </v-card-text>
   </v-card>
 </template>
@@ -116,6 +116,7 @@ import TeacherSelect from "@/apps/teachers/components/TeacherSelect"
 import CourseSelect from "@/apps/courses/components/CourseSelect"
 import BatchSelect from "@/apps/batches/components/BatchSelect"
 import SubmitButton from "@/components/SubmitButton.vue";
+import AttachmentsInput from "@/apps/attachments/components/AttachmentsInput.vue";
 import { formToApiDateTime } from "@/services/utils";
 import { onMounted, ref } from "vue";
 

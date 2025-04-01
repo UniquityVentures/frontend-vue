@@ -4,7 +4,7 @@
 		:fetch="getTeachers"
 		:getInfo="getTeacherInfoFromObj"
 		:multiple="multiple"
-		:searchField="multiple"
+		:searchField="searchField"
 		:label="label"
 	/>
 </template>

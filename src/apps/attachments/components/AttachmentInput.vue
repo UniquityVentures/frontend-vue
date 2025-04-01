@@ -43,6 +43,8 @@ const props = defineProps({
 const emit = defineEmits(["update:attachment"]);
 const fileInput = ref(null);
 
+const attachment = defineModel()
+
 async function handleFileUpload() {
 	if (!fileInput.value) {
 		return { success: false, error: "No file selected" };
@@ -53,6 +55,7 @@ async function handleFileUpload() {
 			file: fileInput.value,
 		});
 		emit("update:attachment", uploadedAttachment);
+		attachment.value = uploadedAttachment.id;
 		fileInput.value = null;
 		return { success: true };
 	} catch (error) {

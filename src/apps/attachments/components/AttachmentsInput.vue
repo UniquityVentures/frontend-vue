@@ -37,6 +37,7 @@
 
 <script setup>
 import AttachmentInput from "@/apps/attachments/components/AttachmentInput.vue";
+import { watch } from "vue";
 
 const props = defineProps({
 	title: {
@@ -51,8 +52,16 @@ const props = defineProps({
 
 // Define model for attachments array
 const attachments = defineModel("attachments", {
-	default: () => [],
+	default: [],
 });
+
+const attachmentIds = defineModel({
+	default: []
+})
+
+watch(attachments, (v) => {
+	attachmentIds.value = v.map((e) => e.id)
+})
 
 function attachmentAdded(attachment) {
 	// Add to existing attachments
