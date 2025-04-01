@@ -3,7 +3,7 @@
     <StudentCard class="column-item" :student="student" v-if="student?.user_details" />
     <StudentGuardiansCard class="column-item" :student="student" v-if="student?.user_details" />
     <span v-if="student?.batch">
-      <CoursesCard  class="column-item" :filters="{ batches: batch.id }" 
+      <CoursesCard  class="column-item" :filters="{ batches: student.batch }" 
         :title="`Courses Taken`" :subtitle="`Courses in ${batch.name} (for now)`"/>
     </span>
   </v-container>

@@ -7,10 +7,10 @@
 					<v-text-field label="Search by name" v-model="filters.name" />
 				</v-col>
 				<v-col cols="12" sm="6" md="3" lg="2">
-					<BatchSelect v-model="filters.batches" label="Filter by batch" />
+					<BatchSelect multiple v-model="filters.batches" label="Filter by batch" />
 				</v-col>
 				<v-col cols="12" sm="6" md="3" lg="2">
-					<CourseSelect v-model="filters.courses" label="Filter by course" />
+					<CourseSelect multiple  v-model="filters.courses" label="Filter by course" />
 				</v-col>
 			</v-row>
 		</template>

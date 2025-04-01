@@ -11,10 +11,10 @@
             :headers="courseDefaultHeaders" 
             :fetch="getCourses" 
             v-model:filters="props.filters"
-            desktopTemplate="card"
+			:templates="{ desktop: 'card', mobile: 'card' }"
             mobileTemplate="card"
             forceMobile>
-            <template #card-item-slot="{ item }">
+            <template #card-slot="{ item }">
                 <v-card class="border" variant="flat" :to="{name: 'Course', params: {courseId: item.id}}">
                     <v-card-title class="text-subtitle-1">
                         {{ item.name }}
@@ -30,7 +30,6 @@
 
 <script setup>
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
-import { onMounted } from "vue";
 import { getCourses } from "../api";
 import { courseDefaultHeaders } from "../config";
 
@@ -49,7 +48,4 @@ const props = defineProps({
 	},
 });
 
-onMounted(() => {
-	console.log(props.filters);
-});
 </script>

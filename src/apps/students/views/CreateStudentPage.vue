@@ -1,9 +1,9 @@
 <template>
 	<v-container>
-		<StudentForm
+		<UserForm
 			v-if="stage===1"
-			:isUserForm="true"
 			:action="handleCreateUser"
+			v-model="user"
 			actionName="Create User"
 			title="Student User"
 			subtitle="Create a user account for the student"
@@ -12,7 +12,6 @@
 		<StudentForm
 			v-if="stage===2"
 			:user="user"
-			:isUserForm="false"
 			:action="handleCreateStudent"
 			actionName="Create Student"
 			title="Student Details"
@@ -27,6 +26,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { createStudent } from "../api";
 import StudentForm from "../components/StudentForm.vue";
+import UserForm from "@/apps/users/components/UserForm.vue";
 
 const router = useRouter();
 const stage = ref(1);

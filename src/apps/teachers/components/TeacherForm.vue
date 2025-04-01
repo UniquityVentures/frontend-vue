@@ -7,7 +7,7 @@
       {{ subtitle }}
     </v-card-subtitle>
     <v-card-text>
-      <v-row>
+      <v-row v-if="isUserForm">
         <v-col cols="12" md="6">
           <v-text-field 
             label="First Name" 
@@ -27,7 +27,7 @@
         </v-col>
       </v-row>
 
-      <v-row>
+      <v-row v-if="isUserForm">
         <v-col cols="12" md="isUserForm ? 6 : 12">
           <v-text-field 
             label="E-Mail" 
@@ -74,7 +74,7 @@
         </v-col>
       </v-row>
 
-      <v-row>
+      <v-row v-if="!isUserForm">
         <v-col cols="12" md="6">
           <v-checkbox 
             label="Is Active" 

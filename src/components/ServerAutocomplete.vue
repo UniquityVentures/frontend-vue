@@ -86,27 +86,29 @@ const onSearchUpdate = () => {
 const selected = ref(null);
 
 const fetchSelected = async () => {
-	if (model.value && (!selected.value || selected.value.id !== model.value)) {
-		if (Array.isArray(model.value)) {
-			if (model.value.length) {
-				selected.value = await Promise.all(
-					model.value.map(
-						async (v) => (await props.fetch({ id: v })).results[0],
-					),
-				);
-				if (typeof model.value[0] !== typeof selected.value[0].id) {
-					const converter = selected.value[0].id.constructor;
-					model.value = model.value.map(converter);
-				}
+	if (props.multiple) {
+		if (model.value?.length) {
+			selected.value = await Promise.all(
+				model.value.map(
+					async (v) => (await props.fetch({ id: v })).results[0],
+				),
+			);
+			if (typeof model.value[0] !== typeof selected.value[0].id) {
+				const converter = selected.value[0].id.constructor;
+				model.value = model.value.map(converter);
 			}
-		} else {
-			selected.value = (await props.fetch({ id: model.value[0] })).results[0];
+		}
+	} else {
+		if (model.value) {
+			selected.value = (await props.fetch({ id: model.value })).results[0];
 			if (typeof model.value !== typeof selected.value.id) {
 				const converter = selected.value.id.constructor;
 				model.value = converter(model.value);
 			}
 		}
 	}
+	console.log(model.value)
+	console.log(selected.value)
 };
 
 watch(model, fetchSelected);
@@ -121,7 +123,7 @@ const fetchResults = async () => {
 		await fetchSelected();
 		const listing = await props.fetch(filters.value);
 		if (selected.value) {
-			if (Array.isArray(selected.value)) {
+			if (props.multiple) {
 				listing.results = listing.results.concat(selected.value);
 			} else {
 				listing.results.push(selected.value);
