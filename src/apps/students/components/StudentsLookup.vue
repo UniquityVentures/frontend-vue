@@ -28,5 +28,5 @@ import { ref } from "vue";
 import { getStudents } from "../api";
 import StudentSmallCard from "./StudentSmallCard.vue";
 
-const filters = ref({});
+const filters = ref({sort_by: "student_no"});
 </script>

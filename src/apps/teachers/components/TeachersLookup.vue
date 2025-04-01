@@ -31,5 +31,5 @@ import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { ref } from "vue";
 import { getTeachers } from "../api";
 import TeacherSmallCard from "./TeacherSmallCard.vue";
-const filters = ref({});
+const filters = ref({sort_by: "user__first_name"});
 </script>
