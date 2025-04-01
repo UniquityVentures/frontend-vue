@@ -1,4 +1,5 @@
 import { createViewset } from "@/services/viewset";
+import { api } from "@/services/api.js";
 
 const attendanceRecordViewset = createViewset(
 	"api/attendance-records",
@@ -19,7 +20,7 @@ const importAttendanceRecords = {
 // Add bulk update attendance function
 const bulkUpdateAttendance = async (payload) => {
 	try {
-		const response = await fetch("/api/attendance/bulk-update/", {
+		const response = await api.post("/api/attendance/bulk-update/", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",

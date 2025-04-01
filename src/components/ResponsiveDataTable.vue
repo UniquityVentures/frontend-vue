@@ -14,6 +14,7 @@
 		<v-card-text>
 			<!-- List template -->
 			<v-data-table-server v-if="template === 'list'" :items-length="itemsLen" :items="items"
+				v-model:items-per-page="props.page_size"
 				@update:options="fetchData" :loading="loading" 
 				:items-per-page-options="itemsPerPageOptions" :hide-default-footer="hideFooter">
 				<template #default>
@@ -25,6 +26,7 @@
 
 			<!-- Card template -->
 			<v-data-table-server v-if="template === 'card'" :items-length="itemsLen" :items="items"
+				v-model:items-per-page="props.page_size"
 				@update:options="fetchData" :loading="loading" 
 				class="body-container" :items-per-page-options="itemsPerPageOptions" :hide-default-footer="hideFooter">
 				<template #default>
@@ -40,6 +42,7 @@
 			</v-data-table-server>
 			<!-- Table template -->
 			<v-data-table-server v-if="template === 'table'" :items-length="itemsLen" :items="items"
+				v-model:items-per-page="props.page_size"
 				@update:options="fetchData" :loading="loading" 
 				:items-per-page-options="itemsPerPageOptions" :hide-default-footer="hideFooter">
 				<template #default>
@@ -80,6 +83,10 @@ const props = defineProps({
 			desktop: "card",
 			mobile: "list",
 		}),
+	},
+	page_size: {
+		type: Number,
+		default: 11,
 	},
 	hideFooter: {
 		type: Boolean,
@@ -134,12 +141,12 @@ const fetchData = async ({ page, itemsPerPage }) => {
 watch(
 	filters,
 	() => {
-		fetchData({ page: 1, itemsPerPage: 10 });
+		fetchData({ page: 1, itemsPerPage: props.page_size });
 	},
 	{ deep: true },
 );
 
 onMounted(() => {
-	fetchData({ page: 1, itemsPerPage: 10 });
+	fetchData({ page: 1, itemsPerPage: props.page_size });
 });
 </script>
