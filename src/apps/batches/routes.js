@@ -1,5 +1,6 @@
 import { getBatch } from "@/apps/batches/api";
 import BatchAnnouncementsPage from "@/apps/batches/views/BatchAnnouncementsPage.vue";
+import BatchMarkAttendancePage from "@/apps/batches/views/BatchMarkAttendancePage.vue";
 import BatchCoursesPage from "@/apps/batches/views/BatchCoursesPage.vue";
 import BatchPage from "@/apps/batches/views/BatchPage.vue";
 import BatchStudentsPage from "@/apps/batches/views/BatchStudentsPage.vue";
@@ -104,6 +105,10 @@ export default [
 							title: "Students",
 							to: { name: "BatchStudents", props },
 						},
+						{
+							title: "Mark Attendance",
+							to: { name: "BatchMarkAttendance", props },
+						},
 					],
 				},
 				children: [
@@ -146,6 +151,12 @@ export default [
 						props: true,
 						name: "BatchStudents",
 						component: BatchStudentsPage,
+					},
+					{
+						path: "mark-attendance/",
+						props: true,
+						name: "BatchMarkAttendance",
+						component: BatchMarkAttendancePage,
 					},
 				],
 			},

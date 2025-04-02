@@ -1,9 +1,9 @@
 <template>
   <v-container>
-    <AttendanceMarker />
+    IDK what to put here anymore
   </v-container>
 </template>
 
 <script setup>
-import AttendanceMarker from "../components/AttendanceMarker.vue";
+
 </script> 

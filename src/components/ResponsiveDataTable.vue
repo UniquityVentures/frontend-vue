@@ -14,7 +14,7 @@
 		<v-card-text>
 			<!-- List template -->
 			<v-data-table-server v-if="template === 'list'" :items-length="itemsLen" :items="items"
-				v-model:items-per-page="props.page_size"
+				v-model:items-per-page="pageSize"
 				@update:options="fetchData" :loading="loading" 
 				:items-per-page-options="itemsPerPageOptions" :hide-default-footer="hideFooter">
 				<template #default>
@@ -26,7 +26,7 @@
 
 			<!-- Card template -->
 			<v-data-table-server v-if="template === 'card'" :items-length="itemsLen" :items="items"
-				v-model:items-per-page="props.page_size"
+				v-model:items-per-page="pageSize"
 				@update:options="fetchData" :loading="loading" 
 				class="body-container" :items-per-page-options="itemsPerPageOptions" :hide-default-footer="hideFooter">
 				<template #default>
@@ -42,7 +42,7 @@
 			</v-data-table-server>
 			<!-- Table template -->
 			<v-data-table-server v-if="template === 'table'" :items-length="itemsLen" :items="items"
-				v-model:items-per-page="props.page_size"
+				v-model:items-per-page="pageSize"
 				@update:options="fetchData" :loading="loading" 
 				:items-per-page-options="itemsPerPageOptions" :hide-default-footer="hideFooter">
 				<template #default>
@@ -123,6 +123,8 @@ const itemsPerPageOptions = [
 const loading = ref(false);
 const itemsLen = ref(10);
 const items = ref([]);
+
+const pageSize = ref(props.page_size);
 
 // Fetch Data
 const fetchData = async ({ page, itemsPerPage }) => {

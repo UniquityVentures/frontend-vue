@@ -1,32 +1,5 @@
 <template>
-    <ResponsiveDataTable :fetch="getStudents" class="column-item"
-        v-model:filters="filters" title="Select Absentees" subtitle="Select students who are absent"
-        :templates="{ desktop: 'card', mobile: 'card' }">
-        <template #filters-slot>
-            <v-text-field label="Search" v-model="filters.name" />
-        </template>
-        <template #cards-slot="{ items }">
-            <v-row>
-                <v-col cols="12" sm="6" md="3" lg="2" v-for="item in items" :key="item.id">
-                    <v-card height="100%" :variant="isStudentSelected(item) ? 'tonal' : 'flat'"
-                        :class="['border', { 'selected-student': isStudentSelected(item) }]"
-                        @click="toggleStudentSelection(item)" style="cursor: pointer">
-                        <v-card-title class="text-subtitle-1">
-                            {{ item.name || item.user_details?.full_name }}
-                        </v-card-title>
-                        <v-card-subtitle>
-                            Student No: {{ item.student_no }}
-                        </v-card-subtitle>
-                        <v-card-text>
-                            <BatchChip v-if="item.batch || item.batch_details"
-                                :batchId="item.batch || item.batch_details" />
-                        </v-card-text>
-                    </v-card>
-                </v-col>
-            </v-row>
-        </template>
-    </ResponsiveDataTable>
-    <v-card>
+    <v-card class="column-item">
         <v-card-title v-if="title">
             {{ title }}
         </v-card-title>
@@ -65,6 +38,29 @@
             </v-card>
         </v-card-text>
     </v-card>
+    <ResponsiveDataTable :fetch="getStudents" class="column-item"
+        v-model:filters="filters" title="Select Absentees" subtitle="Select students who are absent"
+        :templates="{ desktop: 'card', mobile: 'card' }">
+        <template #filters-slot>
+            <v-text-field label="Search" v-model="filters.name" />
+        </template>
+        <template #cards-slot="{ items }">
+            <v-row>
+                <v-col cols="12" sm="6" md="3" lg="2" v-for="item in items" :key="item.id">
+                    <v-card height="100%" :variant="isStudentSelected(item) ? 'tonal' : 'flat'"
+                        :class="['border', { 'selected-student': isStudentSelected(item) }]"
+                        @click="toggleStudentSelection(item)" style="cursor: pointer">
+                        <v-card-title class="text-subtitle-1">
+                            {{ item.name || item.user_details?.full_name }}
+                        </v-card-title>
+                        <v-card-subtitle>
+                            Roll No: {{ item.roll_no }}
+                        </v-card-subtitle>
+                    </v-card>
+                </v-col>
+            </v-row>
+        </template>
+    </ResponsiveDataTable>
 </template>
 
 <script setup>
@@ -74,7 +70,7 @@ import { getStudents } from "@/apps/students/api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import SubmitButton from "@/components/SubmitButton.vue";
 import { onMounted, ref } from "vue";
-import { bulkUpdateAttendance } from "../api";
+import { bulkUpdateAttendance } from "../../attendance/api";
 
 const props = defineProps({
 	title: {
@@ -85,22 +81,17 @@ const props = defineProps({
 		type: String,
 		default: "Select Date for marking attendance",
 	},
-	overrideFields: {
-		type: Array,
-		default: null,
-	},
-	getToFunction: {
-		type: Function,
-		default: () => ({}),
-	},
+    batch: {
+        type: Object,
+        required: true,
+    }
+
 });
 
 // Data for date and course selection
 const attendanceDate = ref(new Date().toISOString().substr(0, 10));
-const courses = ref([]);
-const selectedCourse = ref(null);
 
-const filters = ref({});
+const filters = ref({ batch: props.batch.id, sort_by: "roll_no" });
 const selectedStudents = ref([]);
 
 // Methods
@@ -160,9 +151,7 @@ const submitAttendance = async () => {
 		// API request payload
 		const payload = {
 			date: attendanceDate.value,
-			course: selectedCourse.value,
 			attendance_data: attendanceData,
-			mark_others_present: true, // Tell backend to mark others as present
 		};
 
 		await bulkUpdateAttendance(payload);
