@@ -20,13 +20,7 @@ const importAttendanceRecords = {
 // Add bulk update attendance function
 const bulkUpdateAttendance = async (payload) => {
 	try {
-		const response = await api.post("/api/attendance/bulk-update/", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(payload),
-		});
+		const response = await api.post("/api/attendance/bulk-update/", payload);
 
 		if (!response.ok) {
 			const errorData = await response.json().catch(() => ({}));
