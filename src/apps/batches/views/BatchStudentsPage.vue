@@ -16,8 +16,7 @@
             <template #cards-slot="{ items }">
                 <v-row>
                     <v-col cols="6" md="3" lg="2" v-for="item in items" :key="item.id">
-                        <StudentSmallCard :student="item" >
-                        </StudentSmallCard>
+                        <StudentSmallCard :student="item" />
                     </v-col>
                 </v-row>
             </template>
@@ -28,7 +27,6 @@
 <script setup>
 import { getBatch } from "@/apps/batches/api";
 import { getStudents } from "@/apps/students/api";
-import StudentSelect from "@/apps/students/components/StudentSelect.vue";
 import StudentSmallCard from "@/apps/students/components/StudentSmallCard.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { onMounted, ref } from "vue";
