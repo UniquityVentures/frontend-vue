@@ -11,7 +11,7 @@ import { onMounted, ref } from "vue";
 
 const props = defineProps({
     batchId: {
-        type: Number,
+        type: [Number, String],
         required: true,
     },
 });

@@ -9,8 +9,8 @@
 
         <!-- Date Selection -->
         <v-card-text>
-            <v-text-field v-model="attendanceDate" label="Attendance Date" type="date" variant="outlined"
-                :rules="[v => !!v || 'Date is required']"></v-text-field>
+            <v-date-input v-model="attendanceDate" label="Attendance Date" 
+                :rules="[v => !!v || 'Date is required']" required></v-date-input>
         </v-card-text>
 
         <!-- Selected Students Section -->
@@ -32,8 +32,7 @@
                 </v-card-text>
                 <v-card-actions>
                     <v-btn color="error" @click="clearSelection">Clear Selection</v-btn>
-                    <SubmitButton submitText="Mark Absent" :onSubmit="submitAttendance"
-                        :disabled="selectedStudents.length === 0 || !attendanceDate" />
+                    <SubmitButton submitText="Mark Absent" :onSubmit="submitAttendance" />
                 </v-card-actions>
             </v-card>
         </v-card-text>
@@ -64,13 +63,12 @@
 </template>
 
 <script setup>
-import BatchChip from "@/apps/batches/components/BatchChip.vue";
-import { getCourses } from "@/apps/courses/api";
 import { getStudents } from "@/apps/students/api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import SubmitButton from "@/components/SubmitButton.vue";
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import { bulkUpdateAttendance } from "../../attendance/api";
+import { apiToFormDateTime } from "@/services/utils";
 
 const props = defineProps({
 	title: {
@@ -89,7 +87,7 @@ const props = defineProps({
 });
 
 // Data for date and course selection
-const attendanceDate = ref(new Date().toISOString().substr(0, 10));
+const attendanceDate = ref(null);
 
 const filters = ref({ batch: props.batch.id, sort_by: "roll_no" });
 const selectedStudents = ref([]);
@@ -115,15 +113,6 @@ const removeStudent = (student) => {
 
 const clearSelection = () => {
 	selectedStudents.value = [];
-};
-
-const fetchCourses = async () => {
-	try {
-		const response = await getCourses();
-		courses.value = response.results;
-	} catch (error) {
-		console.error("Failed to fetch courses:", error);
-	}
 };
 
 const submitAttendance = async () => {
@@ -166,11 +155,6 @@ const submitAttendance = async () => {
 		};
 	}
 };
-
-// Initialize
-onMounted(() => {
-	fetchCourses();
-});
 </script>
 
 <style scoped>
