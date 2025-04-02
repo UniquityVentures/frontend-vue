@@ -36,7 +36,7 @@ const props = defineProps({
 });
 
 const batch = ref(null);
-const filters = ref({ batch: props.batchId });
+const filters = ref({ batch: props.batchId, sort_by: "roll_no" });
 
 onMounted(async () => {
 	batch.value = await getBatch(props.batchId);

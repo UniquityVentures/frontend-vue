@@ -72,5 +72,7 @@ import { ref } from "vue";
 import DateRangeSelect from "../../../components/DateRangeSelect.vue";
 import { exportAnnouncements, getAnnouncements } from "../api";
 
-const filters = ref({});
+const filters = ref({
+	sort_by: "release_at",
+});
 </script>
