@@ -1,18 +1,18 @@
 <template>
 	<v-date-input
-		:model-value="dateModel"
-		@update:model-value="updateDate"
+		v-model="dateModel"
 		:label="label"
 		:hint="hint"
 		persistent-hint
 		:disabled="disabled"
+		display-format="fullDate"
 		prepend-icon="mdi-calendar"
 	/>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { stringToDate, dateToString } from '@/services/utils';
+import { ref, watch} from 'vue';
+import { dateToString } from '@/services/utils';
 
 const props = defineProps({
 	label: {
@@ -27,32 +27,14 @@ const props = defineProps({
 		type: Boolean,
 		default: false,
 	},
-	format: {
-		type: String,
-		default: 'YYYY-MM-DD',
-	}
 });
 
 
-const model = defineModel({default:""}) 
+const dateModel = ref() 
 
-// The key part: computed property for the v-model
-const dateModel = computed(() => {
-	return stringToDate(model.value);
-});
+const model = defineModel()
 
-// Handle date updates
-const updateDate = (newValue) => {
-	if (!newValue) {
-		model.value = "";
-		return;
-	}
-	try {
-		const dateValue = newValue instanceof Date ? newValue : new Date(newValue);
-		const formattedDate = dateToString(dateValue);
-		model.value = formattedDate;
-	} catch (e) {
-		model.value = "";
-	}
-};
+watch(dateModel, (date) => {
+	model.value = dateToString(date);
+})
 </script>
