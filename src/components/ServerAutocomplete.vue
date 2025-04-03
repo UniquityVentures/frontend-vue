@@ -124,9 +124,9 @@ const fetchResults = async () => {
 		const listing = await props.fetch(filters.value);
 		if (selected.value) {
 			if (props.multiple) {
-				listing.results = listing.results.concat(selected.value);
+				listing.results = selected.value.concat(listing.results);
 			} else {
-				listing.results.push(selected.value);
+				listing.results.unshift(selected.value);
 			}
 		}
 		results.value = dedup([...results.value, ...listing.results], (e) => e.id);
@@ -152,7 +152,7 @@ const delay = (delayInms) => {
 };
 
 setInterval(() => {
-	if (isAtBottom.value && !loading.value && hasMore.value) {
+	if (isAtBottom.value === true && !loading.value && hasMore.value) {
 		fetchResults();
 	}
 }, 1000);

@@ -117,11 +117,11 @@ export const fieldsToFilters = (fields) => {
 };
 
 export const dedup = (arr, keyFn) => {
-	const hashSet = {};
+	const m = new Map()
 	for (const e of arr) {
-		hashSet[keyFn(e)] = e;
+		m.set(keyFn(e), e)
 	}
-	return Object.values(hashSet);
+	return m.values();
 };
 
 // Convert YYYY-MM-DD string to Date object
