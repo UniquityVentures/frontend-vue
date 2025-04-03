@@ -2,8 +2,8 @@ import { createViewset } from "@/services/viewset";
 import { api } from "@/services/api.js";
 
 const attendanceRecordViewset = createViewset(
-	"api/attendance-records",
-	"attendance-records",
+	"api/attendance",
+	"attendance",
 );
 
 // Get base methods
@@ -32,6 +32,13 @@ const bulkUpdateAttendance = async (payload) => {
 		console.error("Error submitting attendance:", error);
 		throw error;
 	}
+};
+
+const getStatusColor = (status) => {
+	if (status === "present") return "green";
+	if (status === "absent") return "red";
+	if (status === "late") return "orange";
+	return "gray";
 };
 
 export {

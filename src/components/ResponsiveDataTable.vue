@@ -85,7 +85,7 @@ const props = defineProps({
 		}),
 	},
 	page_size: {
-		type: Number,
+		type: [Number, String],
 		default: 11,
 	},
 	hideFooter: {

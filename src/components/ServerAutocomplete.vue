@@ -107,8 +107,6 @@ const fetchSelected = async () => {
 			}
 		}
 	}
-	console.log(model.value)
-	console.log(selected.value)
 };
 
 watch(model, fetchSelected);
