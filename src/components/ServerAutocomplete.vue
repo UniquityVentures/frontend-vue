@@ -5,7 +5,6 @@
 		closable-chips
 		:items="results"
 		:loading="loading"
-		v-model:search-input="query"
 		:label="label"
 		:item-props="getInfo"
 		:multiple="multiple"
@@ -73,7 +72,8 @@ const hasMore = ref(true);
 
 // Search handling with debounce
 let debounceTimeout = null;
-const onSearchUpdate = () => {
+const onSearchUpdate = (t) => {
+	query.value = t;
 	if (debounceTimeout) clearTimeout(debounceTimeout);
 	hasMore.value = true;
 	filters.value.page = 1;
@@ -119,6 +119,9 @@ watch(model, fetchSelected);
 const fetchResults = async () => {
 	if (loading.value || !hasMore.value) return;
 	filters.value[props.searchField] = query.value;
+	console.log(filters.value)
+	console.log(query.value)
+	console.log(query)
 	loading.value = true;
 
 	try {
