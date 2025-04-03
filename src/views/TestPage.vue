@@ -2,15 +2,8 @@
 	<h1>
 		Area for testing and fixing components
 	</h1>
-          <ServerAutocomplete
-            v-if="batchesOrCourses === 'batches'" 
-            :fetch="getBatches"
-            :getInfo="getBatchInfoFromObj"
-            searchField="name"
-            :multiple="true"
-            label="Batches"
-            v-model="formData.batches"
-          />
+	<StudentSelect/>
+
 </template>
 
 <script setup>

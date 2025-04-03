@@ -11,17 +11,17 @@
 </template>
 
 <script setup>
-import { ref, watch} from 'vue';
-import { dateToString } from '@/services/utils';
+import { ref, watch } from "vue";
+import { dateToString } from "@/services/utils";
 
 const props = defineProps({
 	label: {
 		type: String,
-		default: 'Select Date',
+		default: "Select Date",
 	},
 	hint: {
 		type: String,
-		default: '',
+		default: "",
 	},
 	disabled: {
 		type: Boolean,
@@ -29,12 +29,11 @@ const props = defineProps({
 	},
 });
 
+const dateModel = ref();
 
-const dateModel = ref() 
-
-const model = defineModel()
+const model = defineModel();
 
 watch(dateModel, (date) => {
 	model.value = dateToString(date);
-})
+});
 </script>

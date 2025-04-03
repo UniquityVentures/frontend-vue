@@ -95,17 +95,19 @@ const fetchSelected = async () => {
 				const converter = selected.value[0].id.constructor;
 				model.value = model.value.map(converter);
 			} else {
-				model.value = selected.value?.filter((e) => e).map(((e) => e.id));
+				const temp = model.value;
+				model.value = temp; 
 			}
 		}
 	} else {
-		if (model.value && model.value !== selected.value.id) {
+		if (model.value && model.value !== selected.value?.id) {
 			selected.value = (await props.fetch({ id: model.value })).results[0];
 			if (typeof model.value !== typeof selected.value.id) {
 				const converter = selected.value.id.constructor;
 				model.value = converter(model.value);
 			} else {
-				model.value = selected.value.id;
+				const temp = model.value;
+				model.value = temp; 
 			}
 		}
 	}
