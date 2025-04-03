@@ -4,12 +4,15 @@
 			<v-col>
 				<v-row class="ma-2 flex justify-center">
 					<v-col lg="8">
-						<v-card variant="flat">
+						<v-card>
 							<v-card-title>{{ assignment?.title }}</v-card-title>
-							<v-card-text>
-								{{ assignment?.description }}
 
-								<h4 class="text-subtitle-1 mt-4">Attachments:</h4>
+							<v-card-text>
+								<p>{{ assignment?.description }}</p>
+							</v-card-text>
+
+							<v-card-text>
+								<h4 class="text-subtitle-1">Attachments:</h4>
 								<div v-if="assignment?.attachments?.length > 0">
 									<v-list>
 										<v-list-item v-for="attachment in assignment.attachments" :key="attachment.id"
@@ -22,21 +25,7 @@
 									<v-chip color="info">No attachments</v-chip>
 								</div>
 							</v-card-text>
-							<v-card-actions>
-								<v-btn :to="{ name: 'EditAssignment', params: { assignmentId: assignment.id } }"
-									variant="outlined" prepend-icon="mdi-pencil"
-									v-if="authStore.hasPermission('change_assignment')">
-									Edit
-								</v-btn>
-								<v-btn variant="outlined" prepend-icon="mdi-delete" color="error"
-									v-if="authStore.hasPermission('delete_assignment')">
-									Delete
-								</v-btn>
-							</v-card-actions>
-						</v-card>
-					</v-col>
-					<v-col lg="4">
-						<v-card variant="flat">
+
 							<v-card-text>
 								<h4 class="text-subtitle-1">Course Teacher:</h4>
 								<v-list lines="2">
@@ -44,19 +33,23 @@
 										v-if="assignment?.course_details?.batch_details?.main_teacher_details"
 										:title="assignment?.course_details?.batch_details?.main_teacher_details?.user_details?.full_name"
 										:subtitle="assignment?.course_details?.batch_details?.main_teacher_details?.user_details?.email"
-										variant="flat" rounded="lg" :to="{
+										:to="{
 											name: 'Teacher',
 											params: {
 												teacherId: assignment?.course_details?.batch_details?.main_teacher_details?.id
 											}
 										}" />
 								</v-list>
+							</v-card-text>
 
-								<h4 class="text-subtitle-1 mt-4">Dates:</h4>
+							<v-card-text>
+								<h4 class="text-subtitle-1">Dates:</h4>
 								<v-chip color="primary">Release: {{ formatDateTime(assignment?.release_at) }}</v-chip>
 								<v-chip color="red">Due: {{ formatDateTime(assignment?.due_at) }}</v-chip>
+							</v-card-text>
 
-								<h4 class="text-subtitle-1 mt-4">Submissions:</h4>
+							<v-card-text>
+								<h4 class="text-subtitle-1">Submissions:</h4>
 								<div v-if="assignment?.submissions?.length > 0">
 									<v-list>
 										<v-list-item v-for="submission in assignment.submissions" :key="submission.id"
@@ -71,10 +64,22 @@
 									<v-chip color="warning">No submissions yet</v-chip>
 								</div>
 							</v-card-text>
+
+							<v-card-actions>
+								<v-btn :to="{ name: 'EditAssignment', params: { assignmentId: assignment.id } }"
+									variant="outlined" prepend-icon="mdi-pencil"
+									v-if="authStore.hasPermission('change_assignment')">
+									Edit
+								</v-btn>
+								<v-btn variant="outlined" prepend-icon="mdi-delete" color="error"
+									v-if="authStore.hasPermission('delete_assignment')">
+									Delete
+								</v-btn>
+							</v-card-actions>
 						</v-card>
 					</v-col>
 				</v-row>
-			</v-col>
+			</v-col>	 
 		</v-row>
 		<v-skeleton-loader v-else type="card, card-heading, card-text" />
 	</v-container>

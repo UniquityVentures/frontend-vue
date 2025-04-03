@@ -1,45 +1,35 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row v-if="event">
       <v-col>
         <v-row class="ma-2 flex justify-center">
           <v-col lg="8">
-            <v-card variant="flat">
+            <v-card>
               <v-card-title>{{ event?.title }}</v-card-title>
-              <v-card-text>{{ event?.description }}</v-card-text>
-              <v-card-actions>
-                <v-btn 
-                  to="#"
-                  variant="outlined"
-                  prepend-icon="mdi-pencil"
-                >Edit</v-btn>
-                <v-btn 
-                  variant="outlined" 
-                  prepend-icon="mdi-delete" 
-                  color="error"
-                >Delete</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-          <v-col lg="4">
-            <v-card variant="flat">
+              
+              <v-card-text>
+                <p>{{ event?.description }}</p>
+              </v-card-text>
+              
               <v-card-text>
                 <h4 class="text-subtitle-1">Created by:</h4>
                 <v-list lines="2">
                   <v-list-item 
                     :title="event?.created_by_details?.user_details?.full_name"
                     :subtitle="event?.created_by_details?.user_details?.email"
-                    variant="flat"
-                    rounded="lg"
                     :to="'#'"
                   />
                 </v-list>
+              </v-card-text>
 
-                <h4 class="text-subtitle-1 mt-4">Event Time:</h4>
+              <v-card-text>
+                <h4 class="text-subtitle-1">Event Time:</h4>
                 <v-chip color="primary">Start: {{ formatDate(event?.start) }}</v-chip>
                 <v-chip color="red">End: {{ formatDate(event?.end) }}</v-chip>
+              </v-card-text>
 
-                <h4 class="text-subtitle-1 mt-4">Assigned to:</h4>
+              <v-card-text>
+                <h4 class="text-subtitle-1">Assigned to:</h4>
                 <div v-if="event?.is_school_wide">
                   <v-chip color="success">The whole school</v-chip>
                 </div>
@@ -76,11 +66,25 @@
                   </div>
                 </div>
               </v-card-text>
+              
+              <v-card-actions>
+                <v-btn 
+                  to="#"
+                  variant="outlined"
+                  prepend-icon="mdi-pencil"
+                >Edit</v-btn>
+                <v-btn 
+                  variant="outlined" 
+                  prepend-icon="mdi-delete" 
+                  color="error"
+                >Delete</v-btn>
+              </v-card-actions>
             </v-card>
           </v-col>
         </v-row>
       </v-col>
     </v-row>
+    <v-skeleton-loader v-else type="card, card-heading, card-text" />
   </v-container>
 </template>
 

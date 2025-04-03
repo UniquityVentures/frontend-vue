@@ -1,11 +1,37 @@
 <template>
-  <v-container class="columns-container">
-    <StudentCard class="column-item" :student="student" v-if="student?.user_details" />
-    <StudentGuardiansCard class="column-item" :student="student" v-if="student?.user_details" />
-    <span v-if="student?.batch">
-      <CoursesCard  class="column-item" :filters="{ batches: student.batch }" 
-        :title="`Courses Taken`" :subtitle="`Courses in ${batch.name} (for now)`"/>
-    </span>
+  <v-container>
+    <v-row v-if="student?.user_details">
+      <v-col>
+        <v-row class="ma-2 flex justify-center">
+          <v-col lg="8">
+            <!-- Student Details Card -->
+            <StudentCard :student="student" class="mb-4" />
+            
+            <!-- Student Guardians Section -->
+            <StudentGuardiansCard :student="student" class="mb-4" />
+            
+            <!-- Courses Section (if applicable) -->
+            <CoursesCard 
+              v-if="student?.batch" 
+              :filters="{ batches: student.batch }" 
+              :title="`Courses taken`"
+              :subtitle="`Courses in ${batch?.name || 'Current Batch'}`"
+            />
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
+    <v-row v-else>
+      <v-col>
+        <v-row class="ma-2 flex justify-center">
+          <v-col lg="8">
+            <v-skeleton-loader type="card" class="mb-4" />
+            <v-skeleton-loader type="card" class="mb-4" />
+            <v-skeleton-loader type="card" />
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 

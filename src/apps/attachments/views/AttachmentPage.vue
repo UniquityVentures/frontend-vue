@@ -1,12 +1,24 @@
 <template>
 	<v-container>
-		<v-row>
+		<v-row v-if="attachment">
 			<v-col>
 				<v-row class="ma-2 flex justify-center">
 					<v-col lg="8">
-						<v-card variant="flat">
+						<v-card>
 							<v-img :src="attachment?.file" max-width="512" max-height="512"></v-img>
 							<v-card-title>{{ attachment?.name }}</v-card-title>
+							
+							<v-card-text>
+								<h4 class="text-subtitle-1">Additional Info:</h4>
+								<p>{{attachment?.additional_info}}</p>
+							</v-card-text>
+							
+							<v-card-text>
+								<h4 class="text-subtitle-1">Dates:</h4>
+								<v-chip color="primary">Release: {{ formatDateTime(attachment.created_at) }}</v-chip>
+								<v-chip color="red">Expiry: {{ formatDateTime(attachment.updated_at) }}</v-chip>
+							</v-card-text>
+							
 							<v-card-actions>
 								<v-btn :href="attachment?.file" color="success">
 									Download
@@ -15,24 +27,10 @@
 							</v-card-actions>
 						</v-card>
 					</v-col>
-					<v-col lg="4">
-						<v-card variant="flat">
-							<v-card-text>
-								<v-card-title>Additional Info:</v-card-title>
-								<v-card-text>{{attachment?.additional_info}}</v-card-text>
-							</v-card-text>
-						</v-card>
-						<v-card variant="flat">
-							<v-card-text>
-								<v-card-title>Dates:</v-card-title>
-								<v-chip color="primary">Release: {{ formatDateTime(attachment.created_at) }}</v-chip>
-								<v-chip color="red">Expiry: {{ formatDateTime(attachment.updated_at) }}</v-chip>
-							</v-card-text>
-						</v-card>
-					</v-col>
 				</v-row>
 			</v-col>
 		</v-row>
+		<v-skeleton-loader v-else type="card, card-heading, card-text" />
 	</v-container>
 </template>
 

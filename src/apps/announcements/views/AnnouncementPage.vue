@@ -1,72 +1,84 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row v-if="announcement">
       <v-col>
         <v-row class="ma-2 flex justify-center">
           <v-col lg="8">
-            <v-card variant="flat">
+            <v-card>
               <v-card-title>{{ announcement?.title }}</v-card-title>
-              <v-card-text>{{ announcement?.description }}</v-card-text>
-              <v-card-actions>
-                <v-btn :to="{ name: 'EditAnnouncement', params: { announcementId: announcement.id } }"
-                variant="outlined"
-                prepend-icon="mdi-pencil"
-                >Edit</v-btn>
-                <v-btn variant="outlined" prepend-icon="mdi-delete" color="error">Delete</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-          <v-col lg="4">
-            <v-card variant="flat">
+              
+              <v-card-text>
+                <p>{{ announcement?.description }}</p>
+              </v-card-text>
+              
               <v-card-text>
                 <h4 class="text-subtitle-1">Signed by:</h4>
-                    <TeacherListItem :teacher="announcement?.signed_by_details" />
-                  <h4 class="text-subtitle-1 mt-4">Dates:</h4>
-                  <v-chip color="primary">Release: {{ formatDateTime(announcement.release_at) }}</v-chip>
-                  <v-chip color="red">Expiry: {{ formatDateTime(announcement.expiry_at) }}</v-chip>
-
-                  <h4 class="text-subtitle-1 mt-4">Assigned to:</h4>
-                  <div v-if="announcement?.is_school_wide">
-                    <v-chip color="success">The whole school</v-chip>
-                  </div>
-                  <div v-else>
-                    <div v-if="announcement?.batches?.length > 0">
-                      <h5 class="text-subtitle-2 mt-2">Batches:</h5>
-                      <v-chip-group column>
-                        <v-chip
-                          v-for="batch in batchDetails"
-                          :key="batch.id"
-                          color="primary"
-                          variant="outlined"
-                          :to="{ name: 'Batch', params: { batchId: batch.id }}"
-                          link
-                        >
-                          {{ batch.name }}
-                        </v-chip>
-                      </v-chip-group>
-                    </div>
-                    <div v-if="announcement?.courses?.length > 0">
-                      <h5 class="text-subtitle-2 mt-2">Courses:</h5>
-                      <v-chip-group column>
-                        <v-chip
-                          v-for="course in courseDetails"
-                          :key="course.id"
-                          color="secondary"
-                          variant="outlined"
-                          :to="{ name: 'Course', params: { courseId: course.id }}"
-                          link
-                        >
-                          {{ course.name }} ({{ course.batch_details?.name }})
-                        </v-chip>
-                      </v-chip-group>
-                    </div>
-                  </div>
+                <TeacherListItem :teacher="announcement?.signed_by_details" />
               </v-card-text>
+              
+              <v-card-text>
+                <h4 class="text-subtitle-1">Dates:</h4>
+                <v-chip color="primary">Release: {{ formatDateTime(announcement.release_at) }}</v-chip>
+                <v-chip color="red">Expiry: {{ formatDateTime(announcement.expiry_at) }}</v-chip>
+              </v-card-text>
+
+              <v-card-text>
+                <h4 class="text-subtitle-1">Assigned to:</h4>
+                <div v-if="announcement?.is_school_wide">
+                  <v-chip color="success">The whole school</v-chip>
+                </div>
+                <div v-else>
+                  <div v-if="announcement?.batches?.length > 0">
+                    <h5 class="text-subtitle-2 mt-2">Batches:</h5>
+                    <v-chip-group column>
+                      <v-chip
+                        v-for="batch in batchDetails"
+                        :key="batch.id"
+                        color="primary"
+                        variant="outlined"
+                        :to="{ name: 'Batch', params: { batchId: batch.id }}"
+                        link
+                      >
+                        {{ batch.name }}
+                      </v-chip>
+                    </v-chip-group>
+                  </div>
+                  <div v-if="announcement?.courses?.length > 0">
+                    <h5 class="text-subtitle-2 mt-2">Courses:</h5>
+                    <v-chip-group column>
+                      <v-chip
+                        v-for="course in courseDetails"
+                        :key="course.id"
+                        color="secondary"
+                        variant="outlined"
+                        :to="{ name: 'Course', params: { courseId: course.id }}"
+                        link
+                      >
+                        {{ course.name }} ({{ course.batch_details?.name }})
+                      </v-chip>
+                    </v-chip-group>
+                  </div>
+                </div>
+              </v-card-text>
+              
+              <v-card-actions>
+                <v-btn 
+                  :to="{ name: 'EditAnnouncement', params: { announcementId: announcement.id } }"
+                  variant="outlined"
+                  prepend-icon="mdi-pencil"
+                >
+                  Edit
+                </v-btn>
+                <v-btn variant="outlined" prepend-icon="mdi-delete" color="error">
+                  Delete
+                </v-btn>
+              </v-card-actions>
             </v-card>
           </v-col>
         </v-row>
       </v-col>
     </v-row>
+    <v-skeleton-loader v-else type="card, card-heading, card-text" />
   </v-container>
 </template>
 
