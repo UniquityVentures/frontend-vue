@@ -72,14 +72,13 @@ const hasMore = ref(true);
 
 // Search handling with debounce
 let debounceTimeout = null;
-const onSearchUpdate = (t) => {
-	query.value = t;
+const onSearchUpdate = (searchValue) => {
 	if (debounceTimeout) clearTimeout(debounceTimeout);
 	hasMore.value = true;
 	filters.value.page = 1;
+	filters.value[props.searchField] = searchValue;
 	debounceTimeout = setTimeout(() => {
-		results.value = []; // Clear results only after debounce
-		fetchResults();
+		fetchResults(searchValue);
 	}, 300);
 };
 
@@ -118,10 +117,6 @@ watch(model, fetchSelected);
 // Fetch results
 const fetchResults = async () => {
 	if (loading.value || !hasMore.value) return;
-	filters.value[props.searchField] = query.value;
-	console.log(filters.value)
-	console.log(query.value)
-	console.log(query)
 	loading.value = true;
 
 	try {
@@ -149,10 +144,21 @@ const fetchResults = async () => {
 };
 
 // Fetch more results when scrolling
-const fetchMoreResults = () => {
-	if (!loading.value && hasMore.value) {
+
+const isAtBottom = ref(false)
+
+const delay = (delayInms) => {
+  return new Promise(resolve => setTimeout(resolve, delayInms));
+};
+
+setInterval(() => {
+	if (isAtBottom.value && !loading.value && hasMore.value) {
 		fetchResults();
 	}
+}, 1000);
+
+const fetchMoreResults = (isIntersecting) => {
+	isAtBottom.value = isIntersecting;
 };
 
 onMounted(fetchResults);
