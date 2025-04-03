@@ -30,12 +30,7 @@
 
       <v-row>
         <v-col cols="12" md="6">
-          <v-date-input 
-            label="Date" 
-            v-model="formData.date" 
-            :rules="[v => !!v || 'Date is required']"
-            required
-          ></v-date-input>
+          <DateSelect v-model="formData.date" label="Date" required />
         </v-col>
       </v-row>
 
@@ -57,7 +52,7 @@
 
 <script setup>
 import StudentSelect from "@/apps/students/components/StudentSelect.vue";
-import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
+import DateSelect from "@/components/DateSelect.vue";
 import SubmitButton from "@/components/SubmitButton.vue";
 import { onMounted, ref } from "vue";
 
