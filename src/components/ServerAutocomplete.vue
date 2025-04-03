@@ -87,23 +87,25 @@ const selected = ref(null);
 
 const fetchSelected = async () => {
 	if (props.multiple) {
-		if (model.value?.length) {
+		if (model.value?.length && !model.value.every((e, i) => e === selected.value?.[i]?.id)) {
 			selected.value = await Promise.all(
-				model.value.map(
-					async (v) => (await props.fetch({ id: v })).results[0],
-				),
+				model.value.map(async (v) => (await props.fetch({ id: v })).results[0]),
 			);
-			if (typeof model.value[0] !== typeof selected.value[0].id) {
+			if (selected.value?.[0]?.id && typeof model.value[0] !== typeof selected.value[0]?.id) {
 				const converter = selected.value[0].id.constructor;
 				model.value = model.value.map(converter);
+			} else {
+				model.value = selected.value?.filter((e) => e).map(((e) => e.id));
 			}
 		}
 	} else {
-		if (model.value) {
+		if (model.value && model.value !== selected.value.id) {
 			selected.value = (await props.fetch({ id: model.value })).results[0];
 			if (typeof model.value !== typeof selected.value.id) {
 				const converter = selected.value.id.constructor;
 				model.value = converter(model.value);
+			} else {
+				model.value = selected.value.id;
 			}
 		}
 	}
