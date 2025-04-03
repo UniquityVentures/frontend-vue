@@ -3,7 +3,9 @@
 		<v-app>
 			<v-navigation-drawer app location="end" v-model="rightDrawer" color="accent" :temporary="mobile">
 				<v-btn :to="{ name: 'All Apps' }" class="ma-4 d-flex justify-center" color="white" variant="outlined">
-					Go to All Apps
+					<template v-slot:default>
+						Go to All Apps
+					</template>
 				</v-btn>
 
 				<template v-for="(route, index) in reversedRoutes" :key="index">

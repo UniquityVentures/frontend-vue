@@ -18,7 +18,9 @@
         <template #cards-slot="{ items }">
             <v-row>
                 <v-col cols="12" sm="6" md="3" lg="2" v-for="item in items" :key="item.id">
-                    <v-card variant="flat" class="border" height="100%">
+                    <v-card variant="flat" class="border" height="100%"
+                    :to="{ name: 'AttendanceRecord', params: { recordId: item.id } }"
+                    >
                         <v-card-title class="text-subtitle-1">
                             {{ item.student_details?.user_details?.full_name || 'Unknown Student' }}
                         </v-card-title>
@@ -28,6 +30,9 @@
                         <v-card-text>
                             <BatchChip :batch="item.student_details?.batch_details" />
                             <v-chip>Roll No: {{ item.student_details?.roll_no }}</v-chip>
+                        </v-card-text>
+                        <v-card-text>
+                            <v-chip>Date: {{ item.date }}</v-chip>
                             <v-chip :color="getStatusColor(item.status)" class="ml-auto">
                                 {{ item.status }}
                             </v-chip>
@@ -38,7 +43,9 @@
         </template>
         <template #list-slot="{ items }">
             <v-list>
-                <v-list-item v-for="item in items" :key="item.id" class="border">
+                <v-list-item v-for="item in items" :key="item.id" class="border"
+                :to="{ name: 'AttendanceRecord', params: { recordId: item.id } }"
+                >
                     <v-list-item-title>
                         {{ item.student_details?.user_details?.full_name || 'Unknown Student' }}
                     </v-list-item-title>
