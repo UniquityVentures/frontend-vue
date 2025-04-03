@@ -4,8 +4,8 @@
       <v-col>
         <v-row class="ma-2 flex justify-center">
           <v-col lg="8">
-            <v-card variant="flat">
-              <v-card-title>Date: {{ record.date }}</v-card-title>
+            <v-card>
+              <v-card-title>Attendance Record</v-card-title>
 
               <v-card-text>
                 <h4 class="text-subtitle-1">Student:</h4>
@@ -20,6 +20,12 @@
                   />
                 </v-list>
               </v-card-text>
+
+              <v-card-text>
+                <h4 class="text-subtitle-1">Date:</h4>
+                {{ record.date }}
+              </v-card-text>
+
               <v-card-text>
                 <h4 class="text-subtitle-1">Status:</h4>
                 <v-chip :color="getStatusColor(record.status)" class="mb-4">
