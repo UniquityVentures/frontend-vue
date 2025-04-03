@@ -9,6 +9,7 @@
 		:item-props="getInfo"
 		:multiple="multiple"
 		@update:search="onSearchUpdate"
+		@update:menu="menuOpen = $event"
 		:clearable="true"
 		:density="density"
 	>
@@ -147,17 +148,19 @@ const fetchResults = async () => {
 
 const isAtBottom = ref(false)
 
+const menuOpen = ref(false)
+
 const delay = (delayInms) => {
   return new Promise(resolve => setTimeout(resolve, delayInms));
 };
 
 setInterval(() => {
-	if (isAtBottom.value === true && !loading.value && hasMore.value) {
+	if (menuOpen.value && isAtBottom.value && !loading.value && hasMore.value) {
 		fetchResults();
 	}
 }, 1000);
 
-const fetchMoreResults = (isIntersecting) => {
+const fetchMoreResults = (isIntersecting, entries, observer) => {
 	isAtBottom.value = isIntersecting;
 };
 
