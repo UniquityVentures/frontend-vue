@@ -132,6 +132,8 @@ const fetchResults = async () => {
 				listing.results.unshift(selected.value);
 			}
 		}
+		console.log("Results.Value", results.value)
+		console.log("Listing.Value", listing.results)
 		results.value = dedup([...results.value, ...listing.results], (e) => e.id);
 		// Update pagination state
 		hasMore.value = filters.value.page < listing.total_pages;
