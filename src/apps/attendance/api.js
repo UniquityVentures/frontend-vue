@@ -20,14 +20,9 @@ const importAttendanceRecords = {
 // Add bulk update attendance function
 const bulkUpdateAttendance = async (payload) => {
 	try {
+
 		const response = await api.post("/api/attendance/bulk-update/", payload);
-
-		if (!response.ok) {
-			const errorData = await response.json().catch(() => ({}));
-			throw new Error(errorData.error || "Failed to update attendance");
-		}
-
-		return await response.json();
+		return response.data;
 	} catch (error) {
 		console.error("Error submitting attendance:", error);
 		throw error;

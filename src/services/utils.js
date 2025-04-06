@@ -71,6 +71,9 @@ export const toHeaderCase = (str) => {
 };
 
 export const formatErrorMessage = (error) => {
+	if (typeof error === 'string') {
+		return error
+	}
 	if (error.response) {
 		const { status, data } = error.response;
 		// Handle 400 Bad Request
@@ -127,13 +130,13 @@ export const dedup = (arr, keyFn) => {
 // Convert YYYY-MM-DD string to Date object
 export const stringToDate = (dateString) => {
 	if (!dateString) return null;
-	
+
 	// Make sure dateString is actually a string
 	if (typeof dateString !== 'string') {
 		console.warn('Expected string date format YYYY-MM-DD but got:', dateString);
 		return null;
 	}
-	
+
 	try {
 		// Parse YYYY-MM-DD string to Date object
 		const [year, month, day] = dateString.split('-').map(Number);
@@ -147,7 +150,7 @@ export const stringToDate = (dateString) => {
 // Convert Date to YYYY-MM-DD string
 export const dateToString = (date) => {
 	if (!date) return '';
-	
+
 	try {
 		const year = date.getFullYear();
 		const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
