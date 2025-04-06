@@ -78,6 +78,8 @@ const onSearchUpdate = (searchValue) => {
 	hasMore.value = true;
 	filters.value.page = 1;
 	filters.value[props.searchField] = searchValue;
+	// Clear existing results when search query changes
+	results.value = [];
 	debounceTimeout = setTimeout(() => {
 		fetchResults(searchValue);
 	}, 300);
@@ -145,7 +147,6 @@ const fetchResults = async () => {
 };
 
 // Fetch more results when scrolling
-
 const isAtBottom = ref(false)
 
 const menuOpen = ref(false)

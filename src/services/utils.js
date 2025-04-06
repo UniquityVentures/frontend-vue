@@ -121,7 +121,7 @@ export const dedup = (arr, keyFn) => {
 	for (const e of arr) {
 		m.set(keyFn(e), e)
 	}
-	return m.values();
+	return [...m.values()];
 };
 
 // Convert YYYY-MM-DD string to Date object
