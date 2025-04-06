@@ -20,7 +20,7 @@ const props = defineProps({
 	},
 	searchField: {
 		type: String,
-		default: "name",
+		default: "code",
 	},
 	rules: {
 		type: Array,

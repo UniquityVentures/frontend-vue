@@ -88,11 +88,11 @@ const onSearchUpdate = (searchValue) => {
 const fetchSelected = async () => {
 	if (props.multiple) {
 		// Prevent Unnecessary network requests
-		if (!model.value.length) {
+		if (!model.value?.length) {
 			return
 		}
 		// Don't request the data which is already present
-		const missingEntries = model.value.filter((e) => results.value.includes(e));
+		const missingEntries = model.value.filter((e) => !results.value.map((v) => v.id).includes(e));
 		if (!missingEntries.length) {
 			return
 		}
@@ -113,7 +113,7 @@ const fetchSelected = async () => {
 		}
 
 		// Same thing as above, just for single element
-		if (results.value.includes(model.value)) {
+		if (results.value.map(e => e.id).includes(model.value)) {
 			return
 		}
 		const newResults = (await props.fetch({ id: model.value })).results[0];
@@ -139,7 +139,7 @@ const fetchResults = async () => {
 		const listing = await props.fetch(filters.value);
 		results.value = dedup([...results.value, ...listing.results], (e) => e.id);
 		// Update pagination state
-		hasMore.value = filters.value.page < listing.total_pages;
+		hasMore.value = filters.value.page <= listing.total_pages;
 		if (hasMore.value) {
 			filters.value.page++;
 		}
