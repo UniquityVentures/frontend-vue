@@ -35,6 +35,16 @@
 				</v-list-item>
 			</v-list>
 		</template>
+		<template #card-slot="{ item }">
+			<v-card link :to="{ name: 'Event', params: { eventId: item.id }}" variant="flat" class="border">
+				<v-card-title class="text-subtitle-1">{{ item.title }}</v-card-title>
+				<v-card-subtitle>{{ item.description }}</v-card-subtitle>
+				<v-card-text>
+					<v-chip color="blue">{{ `Start: ${formatDateTime(item.start)}` }}</v-chip>
+					<v-chip color="red">{{ `End: ${formatDateTime(item.end)}` }}</v-chip>
+				</v-card-text>
+			</v-card>
+		</template>
 	</ResponsiveDataTable>
 </template>
 

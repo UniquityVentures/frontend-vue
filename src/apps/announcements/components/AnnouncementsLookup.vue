@@ -48,7 +48,7 @@
         </template>
         <template #list-slot="{ items }">
             <v-list lines="three">
-                <v-list-item v-for="item in items" :key="item.id" class="border">
+                <v-list-item link :to="{ name: 'Announcement', params: { announcementId: item.id }}" v-for="item in items" :key="item.id" class="border">
                     <v-list-item-title>{{ item.title }}</v-list-item-title>
                     <v-list-item-subtitle class="text-wrap">{{ item.description }}</v-list-item-subtitle>
 					<TeacherChip label="Signed by" :teacher="item.signed_by_details" v-if="item.signed_by_details" />
