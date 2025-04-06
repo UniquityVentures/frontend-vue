@@ -14,8 +14,8 @@ const getCourse = courseViewset.retrieve;
 const createCourse = courseViewset.create;
 
 const getCourseInfoFromObj = (item) => ({
-	title: item.name,
-	subtitle: item.code,
+	title: item.code,
+	subtitle: item.name,
 	value: item.id,
 });
 

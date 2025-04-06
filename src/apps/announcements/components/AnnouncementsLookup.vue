@@ -68,11 +68,25 @@ import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
 import ExportButton from "@/components/ExportButton.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
-import { ref } from "vue";
+import { ref, computed, onMounted } from "vue";
 import DateRangeSelect from "../../../components/DateRangeSelect.vue";
 import { exportAnnouncements, getAnnouncements } from "../api";
+
+const props = defineProps({
+	defaultFilters: {
+		type: Object,
+		required: false,
+	},
+});
 
 const filters = ref({
 	sort_by: "release_at",
 });
+
+onMounted(() => {
+	if (props.defaultFilters) {
+		filters.value = { ...filters.value, ...props.defaultFilters };
+		console.log(filters.value);
+	}
+})
 </script>

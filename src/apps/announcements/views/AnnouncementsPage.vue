@@ -1,7 +1,9 @@
 <template>
   <v-container>
-    <AnnouncementsLookup />
-  </v-container>
+		<AnnouncementsLookup
+			:defaultFilters = "$route.query"
+		/>
+	</v-container>
 </template>
 
 <script setup>

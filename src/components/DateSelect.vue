@@ -7,6 +7,8 @@
 		:disabled="disabled"
 		display-format="fullDate"
 		prepend-icon="mdi-calendar"
+		:rules="rules"
+		:required="required"
 	/>
 </template>
 
@@ -27,6 +29,13 @@ const props = defineProps({
 		type: Boolean,
 		default: false,
 	},
+	rules: {
+		required: false,
+	},
+	required: {
+		type: Boolean,
+		default: false
+	}
 });
 
 const dateModel = ref();

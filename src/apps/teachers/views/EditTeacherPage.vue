@@ -33,6 +33,7 @@ const handleUpdate = async (formData) => {
 		// Extract user-specific fields
 		const userData = {
 			id: user.value.id,
+			username: user.value.username,
 			first_name: formData.first_name,
 			last_name: formData.last_name,
 			email: formData.email,

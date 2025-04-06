@@ -9,8 +9,12 @@
 
         <!-- Date Selection -->
         <v-card-text>
-            <v-date-input v-model="attendanceDate" label="Attendance Date" 
-                :rules="[v => !!v || 'Date is required']" required></v-date-input>
+			<DateSelect
+				v-model="attendanceDate"
+				label="Attendance Date" 
+				:rules="[v => !!v || 'Date is required']"
+				required
+			/>
         </v-card-text>
 
         <!-- Selected Students Section -->
@@ -63,6 +67,7 @@
 </template>
 
 <script setup>
+import DateSelect from "@/components/DateSelect.vue";
 import { getStudents } from "@/apps/students/api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import SubmitButton from "@/components/SubmitButton.vue";
@@ -145,7 +150,6 @@ const submitAttendance = async () => {
 
 		await bulkUpdateAttendance(payload);
 		clearSelection();
-
 		return { success: true, message: "Attendance marked successfully" };
 	} catch (error) {
 		console.error("Error submitting attendance:", error);

@@ -54,6 +54,8 @@ const handleSubmit = async () => {
 				isSuccess.value = false;
 				error.value = formatErrorMessage(response.error);
 				console.error(error.value);
+				isSubmitting.value = false;
+				return
 			}
 			isSubmitting.value = false;
 			isSuccess.value = true;
@@ -62,6 +64,7 @@ const handleSubmit = async () => {
 			console.error(err);
 			error.value = formatErrorMessage(err);
 			isSubmitting.value = false;
+			isSuccess.value = false;
 		});
 };
 </script>
