@@ -45,6 +45,9 @@
 							<v-chip color="blue">{{ `Start: ${formatDateTime(item.start)}` }}</v-chip>
 							<v-chip color="red">{{ `End: ${formatDateTime(item.end)}` }}</v-chip>
 						</v-card-text>
+						<v-card-text>
+							<TeacherChip label="Created by" :teacher="item.created_by_details" v-if="item.created_by_details" />
+						</v-card-text>
 					</v-card>
 				</v-col>
 			</v-row>
@@ -60,7 +63,7 @@ import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { formatDateTime } from "@/services/utils";
 import { ref } from "vue";
 import { getEvents } from "../api";
-
+import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 const props = defineProps({
 	title: {
 		type: String,
