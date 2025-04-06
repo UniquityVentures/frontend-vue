@@ -23,7 +23,10 @@
               Roll No: {{ item.student_details?.roll_no }}
             </v-card-subtitle>
             <v-card-text>
-              <v-chip :color="getStatusColor(item.status)" class="ml-auto">
+              <v-chip v-if="item.date" color="grey-darken-2">
+                {{ item.date }}
+              </v-chip>
+              <v-chip :color="getStatusColor(item.status)">
                 {{ item.status }}
               </v-chip>
             </v-card-text>
