@@ -85,33 +85,46 @@ const onSearchUpdate = (searchValue) => {
 	}, 300);
 };
 
-const selected = ref(null);
-
 const fetchSelected = async () => {
 	if (props.multiple) {
-		if (model.value?.length && !model.value.every((e, i) => e === selected.value?.[i]?.id)) {
-			selected.value = await Promise.all(
-				model.value.map(async (v) => (await props.fetch({ id: v })).results[0]),
-			);
-			if (selected.value?.[0]?.id && typeof model.value[0] !== typeof selected.value[0]?.id) {
-				const converter = selected.value[0].id.constructor;
-				model.value = model.value.map(converter);
-			} else {
-				const temp = model.value;
-				model.value = temp; 
-			}
+		// Prevent Unnecessary network requests
+		if (!model.value.length) {
+			return
 		}
+		// Don't request the data which is already present
+		const missingEntries = model.value.filter((e) => results.value.includes(e));
+		if (!missingEntries.length) {
+			return
+		}
+		const newResults = await Promise.all(
+			missingEntries.map(async (v) => (await props.fetch({ id: v })).results[0]),
+		);
+		if (newResults?.[0]?.id && typeof model.value[0] !== typeof newResults[0]?.id) {
+			const converter = newResults[0].id.constructor;
+			model.value = model.value.map(converter);
+		} else {
+			const temp = model.value;
+			model.value = temp; 
+		}
+		results.value = newResults.concat(results.value);
 	} else {
-		if (model.value && model.value !== selected.value?.id) {
-			selected.value = (await props.fetch({ id: model.value })).results[0];
-			if (typeof model.value !== typeof selected.value.id) {
-				const converter = selected.value.id.constructor;
-				model.value = converter(model.value);
-			} else {
-				const temp = model.value;
-				model.value = temp; 
-			}
+		if (!model.value) {
+			return
 		}
+
+		// Same thing as above, just for single element
+		if (results.value.includes(model.value)) {
+			return
+		}
+		const newResults = (await props.fetch({ id: model.value })).results[0];
+		if (typeof model.value !== typeof newResults.id) {
+			const converter = newResults.id.constructor;
+			model.value = converter(model.value);
+		} else {
+			const temp = model.value;
+			model.value = temp; 
+		}
+		results.value.unshift(newResults);
 	}
 };
 
@@ -123,17 +136,7 @@ const fetchResults = async () => {
 	loading.value = true;
 
 	try {
-		await fetchSelected();
 		const listing = await props.fetch(filters.value);
-		if (selected.value) {
-			if (props.multiple) {
-				listing.results = selected.value.concat(listing.results);
-			} else {
-				listing.results.unshift(selected.value);
-			}
-		}
-		console.log("Results.Value", results.value)
-		console.log("Listing.Value", listing.results)
 		results.value = dedup([...results.value, ...listing.results], (e) => e.id);
 		// Update pagination state
 		hasMore.value = filters.value.page < listing.total_pages;
@@ -167,5 +170,8 @@ const fetchMoreResults = (isIntersecting, entries, observer) => {
 	isAtBottom.value = isIntersecting;
 };
 
-onMounted(fetchResults);
+onMounted(async () => {
+	await fetchSelected();
+	await fetchResults();
+});
 </script>
