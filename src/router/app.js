@@ -1,4 +1,4 @@
-import announcementsRoutes from "@/apps/announcements/routes";
+import announcementsAdminRoutes from "@/apps/announcements/routes/adminRoutes";
 import assignmentsRoutes from "@/apps/assignments/routes";
 import attachmentRoutes from "@/apps/attachments/routes";
 import attendanceRoutes from "@/apps/attendance/routes";
@@ -14,7 +14,7 @@ export default [
 	...coursesRoutes,
 	...studentsRoutes,
 	...teachersRoutes,
-	...announcementsRoutes,
+	...announcementsAdminRoutes,
 	...assignmentsRoutes,
 	...attachmentRoutes,
 	...calendarRoutes,

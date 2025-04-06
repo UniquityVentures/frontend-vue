@@ -1,10 +1,10 @@
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 
-import AnnouncementPage from "./views/AnnouncementPage.vue";
-import AnnouncementsPage from "./views/AnnouncementsPage.vue";
-import CreateAnnouncementPage from "./views/CreateAnnouncementPage.vue";
-import EditAnnouncementPage from "./views/EditAnnouncementPage.vue";
+import AnnouncementPage from "@/apps/announcements/views/AnnouncementPage.vue";
+import AnnouncementsPage from "@/apps/announcements/views/AnnouncementsPage.vue";
+import CreateAnnouncementPage from "@/apps/announcements/views/CreateAnnouncementPage.vue";
+import EditAnnouncementPage from "@/apps/announcements/views/EditAnnouncementPage.vue";
 
 export default [
 	{
