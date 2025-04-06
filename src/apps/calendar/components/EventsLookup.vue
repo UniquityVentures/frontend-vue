@@ -22,7 +22,7 @@
 				</v-col>
 				<v-col cols="12" sm="6" md="3" lg="2">
 					<TeacherSelect v-model="filters.created_by" label="Created By" />
-				</v-col>
+				</v-col> 
 			</v-row>
 		</template>
 		<template #list-slot="{ items }">
@@ -35,15 +35,19 @@
 				</v-list-item>
 			</v-list>
 		</template>
-		<template #card-slot="{ item }">
-			<v-card link :to="{ name: 'Event', params: { eventId: item.id }}" variant="flat" class="border">
-				<v-card-title class="text-subtitle-1">{{ item.title }}</v-card-title>
-				<v-card-subtitle>{{ item.description }}</v-card-subtitle>
-				<v-card-text>
-					<v-chip color="blue">{{ `Start: ${formatDateTime(item.start)}` }}</v-chip>
-					<v-chip color="red">{{ `End: ${formatDateTime(item.end)}` }}</v-chip>
-				</v-card-text>
-			</v-card>
+		<template #cards-slot="{ items }">
+			<v-row>
+				<v-col cols="12" md="4" lg="3" v-for="item in items" :key="item.id">
+					<v-card link :to="{ name: 'Event', params: { eventId: item.id }}" variant="flat" class="border">
+						<v-card-title class="text-subtitle-1">{{ item.title }}</v-card-title>
+						<v-card-subtitle>{{ item.description.slice(0, 100) }}...</v-card-subtitle>
+						<v-card-text>
+							<v-chip color="blue">{{ `Start: ${formatDateTime(item.start)}` }}</v-chip>
+							<v-chip color="red">{{ `End: ${formatDateTime(item.end)}` }}</v-chip>
+						</v-card-text>
+					</v-card>
+				</v-col>
+			</v-row>
 		</template>
 	</ResponsiveDataTable>
 </template>
