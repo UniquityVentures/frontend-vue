@@ -13,10 +13,10 @@
             <TeacherChip v-for="teacher in otherTeachers" :key="teacher.id" :teacher="teacher"/>
         </v-card-text>
         <v-card-text>
-            <v-chip color="primary" size="small" label>Grade: {{ batch.standard }}</v-chip>
-            <v-chip color="primary" size="small" variant="outlined" label>Number of Students: {{ batch.students.length }}</v-chip>
-            <v-chip :color="batch.is_active ? 'success' : 'error'" size="small" label>Status: {{ batch.is_active ? 'Active' : 'Inactive' }}</v-chip>
-            <v-chip color="success" label variant="outlined">Join Code: {{ batch.join_code }}</v-chip>
+            <v-chip color="primary" >Grade: {{ batch.standard }}</v-chip>
+            <v-chip color="primary" >Number of Students: {{ batch.students.length }}</v-chip>
+            <v-chip color="primary" >Number of Courses: {{ batch.courses.length }}</v-chip>
+            <v-chip :color="batch.is_active ? 'success' : 'error'" >Status: {{ batch.is_active ? 'Active' : 'Inactive' }}</v-chip>
         </v-card-text>
     </v-card>
 </template>

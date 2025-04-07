@@ -8,7 +8,7 @@ import CoursesImportPage from "./views/CoursesImportPage.vue";
 import CoursesPage from "./views/CoursesPage.vue";
 import CreateCoursePage from "./views/CreateCoursePage.vue";
 import EditCoursePage from "./views/EditCoursePage.vue";
-
+import CourseAnnouncementsPage from "./views/CourseAnnouncementsPage.vue";
 export default [
 	{
 		path: "courses/",
@@ -64,8 +64,10 @@ export default [
 				props: true,
 				meta: {
 					defaultRoute: "Course",
-					getDisplayName: async (props) =>
-						(await getCourse(props.courseId)).name,
+					getDisplayName: async (props) => {
+						const course = await getCourse(props.courseId);
+						return `${course.name} (${course.code})`;
+					},
 					getMenu: (params) => [
 						{
 							title: "View Course",
@@ -75,12 +77,16 @@ export default [
 							title: "Edit Course",
 							to: { name: "EditCourse", params },
 						},
+						{
+							title: "Announcements",
+							to: { name: "CourseAnnouncements", params },
+						},
 					],
 					icon: "mdi-book-open-variant",
 				},
 				children: [
 					{
-						path: "",
+						path: "view/",
 						component: CoursePage,
 						name: "Course",
 						props: true,
@@ -89,6 +95,12 @@ export default [
 						path: "edit/",
 						component: EditCoursePage,
 						name: "EditCourse",
+						props: true,
+					},
+					{
+						path: "announcements/",
+						component: CourseAnnouncementsPage,
+						name: "CourseAnnouncements",
 						props: true,
 					},
 				],
