@@ -27,7 +27,8 @@
   const record = ref(null);
   
   const handleUpdate = async (data) => {
-    return await updateAttendanceRecord(props.recordId, data);
+	  data.id = props.recordId;
+    return await updateAttendanceRecord(data);
   };
   
   onMounted(async () => {
