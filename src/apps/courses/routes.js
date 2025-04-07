@@ -9,6 +9,8 @@ import CoursesPage from "./views/CoursesPage.vue";
 import CreateCoursePage from "./views/CreateCoursePage.vue";
 import EditCoursePage from "./views/EditCoursePage.vue";
 import CourseAnnouncementsPage from "./views/CourseAnnouncementsPage.vue";
+import CourseAssignmentsPage from "./views/CourseAssignmentsPage.vue";
+
 export default [
 	{
 		path: "courses/",
@@ -81,6 +83,10 @@ export default [
 							title: "Announcements",
 							to: { name: "CourseAnnouncements", params },
 						},
+						{
+							title: "Assignments",
+							to: { name: "CourseAssignments", params },
+						},
 					],
 					icon: "mdi-book-open-variant",
 				},
@@ -101,6 +107,12 @@ export default [
 						path: "announcements/",
 						component: CourseAnnouncementsPage,
 						name: "CourseAnnouncements",
+						props: true,
+					},
+					{
+						path: "assignments/",
+						component: CourseAssignmentsPage,
+						name: "CourseAssignments",
 						props: true,
 					},
 				],
