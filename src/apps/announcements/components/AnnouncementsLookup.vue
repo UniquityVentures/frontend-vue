@@ -15,6 +15,9 @@
                 <v-col cols="12" sm="6" md="3" lg="2">
                     <BatchSelect v-model="filters.batch" label="Batch" />
                 </v-col>
+                <v-col cols="12" sm="6" md="3" lg="2">
+                    <CourseSelect v-model="filters.course" label="Course" />
+                </v-col>
                 <v-col cols="12" sm="6" md="4" lg="3">
                     <DateRangeSelect 
                         :filters="filters"
@@ -71,7 +74,7 @@ import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { ref, computed, onMounted } from "vue";
 import DateRangeSelect from "../../../components/DateRangeSelect.vue";
 import { exportAnnouncements, getAnnouncements } from "../api";
-
+import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
 const props = defineProps({
 	defaultFilters: {
 		type: Object,

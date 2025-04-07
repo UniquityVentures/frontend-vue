@@ -28,7 +28,7 @@ export default [
 		},
 		children: [
 			{
-				path: "",
+				path: "all/",
 				component: AnnouncementsPage,
 				name: "Announcements",
 			},
@@ -58,7 +58,7 @@ export default [
 				},
 				children: [
 					{
-						path: "",
+						path: "view/",
 						component: AnnouncementPage,
 						name: "Announcement",
 						props: true,
