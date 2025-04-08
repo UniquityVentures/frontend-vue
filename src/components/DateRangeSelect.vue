@@ -1,5 +1,5 @@
 <template>
-    <v-date-input 
+	<v-date-input 
 		v-model="dateModel"
 		:label="label"
 		:hint="hint"
@@ -11,7 +11,7 @@
 		clearable
 		color="primary"
 		:rules="rules"
-        />
+	/>
 </template>
 
 <script setup>
@@ -70,7 +70,7 @@ watch(dateModel, (dates) => {
 	if (dates.length && dates.length >= 2) {
 		const sortedDates = [...dates].sort((a, b) => a - b);
 		// Update both date filters directly on the parent's filters object
-		start.value = toApiDate(sorted[0]);
+		start.value = toApiDate(sortedDates[0]);
 		end.value = toApiDate(sortedDates[sortedDates.length - 1]);
 	}
 });
