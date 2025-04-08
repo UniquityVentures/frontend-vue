@@ -39,21 +39,21 @@
 
       <v-row>
         <v-col cols="12" md="6">
-          <v-date-input 
-            label="Release Date" 
-            v-model="formData.release_at" 
+          <DateSelect 
+            v-model="filters.release_at"
+            label="Release Date"
             :rules="[v => !!v || 'Release Date is required']"
             required
-          ></v-date-input>
+          />
         </v-col>
         
         <v-col cols="12" md="6">
-          <v-date-input 
-            label="Expiry Date" 
-            v-model="formData.expiry_at" 
+          <DateSelect 
+            v-model="filters.expiry_at"
+            label="Expiry Date"
             :rules="[v => !!v || 'Expiry Date is required']"
             required
-          ></v-date-input>
+          />
         </v-col>
       </v-row>
 
@@ -116,8 +116,8 @@ import TeacherSelect from "@/apps/teachers/components/TeacherSelect"
 import CourseSelect from "@/apps/courses/components/CourseSelect"
 import BatchSelect from "@/apps/batches/components/BatchSelect"
 import SubmitButton from "@/components/SubmitButton.vue";
+import DateSelect from "@/components/DateSelect.vue";
 import AttachmentsInput from "@/apps/attachments/components/AttachmentsInput.vue";
-import { formToApiDateTime } from "@/services/utils";
 import { onMounted, ref } from "vue";
 
 const props = defineProps({

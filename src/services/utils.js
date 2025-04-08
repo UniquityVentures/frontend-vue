@@ -16,17 +16,15 @@ export const formatDateTime = (dateString) => {
 	});
 };
 
-// Convert API datetime string to HTML datetime-local input format
-export const apiToFormDateTime = (dateString) => {
-	if (!dateString) return "";
-	return new Date(dateString).toISOString().slice(0, 16);
-};
+export const toApiDate = (unparsedDate) => {
+	const date = new Date(unparsedDate);
+	return date.toISOString().slice(0, 10)
+}
 
-// Convert HTML datetime-local input value to API format
-export const formToApiDateTime = (dateString) => {
-	if (!dateString) return null;
-	return new Date(dateString).toISOString();
-};
+export const toApiDateTime = (unparsedDate) => {
+	const date = new Date(unparsedDate);
+	return date.toISOString()
+}
 
 export const keyHandler = (item, fieldConfig) => {
 	if (!fieldConfig || !fieldConfig.key) return "";
@@ -127,37 +125,3 @@ export const dedup = (arr, keyFn) => {
 	return [...m.values()];
 };
 
-// Convert YYYY-MM-DD string to Date object
-export const stringToDate = (dateString) => {
-	if (!dateString) return null;
-
-	// Make sure dateString is actually a string
-	if (typeof dateString !== 'string') {
-		console.warn('Expected string date format YYYY-MM-DD but got:', dateString);
-		return null;
-	}
-
-	try {
-		// Parse YYYY-MM-DD string to Date object
-		const [year, month, day] = dateString.split('-').map(Number);
-		return new Date(year, month - 1, day); // Month is 0-indexed in JS Date
-	} catch (error) {
-		console.error('Error parsing date string:', error);
-		return null;
-	}
-};
-
-// Convert Date to YYYY-MM-DD string
-export const dateToString = (date) => {
-	if (!date) return '';
-
-	try {
-		const year = date.getFullYear();
-		const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
-		const day = String(date.getDate()).padStart(2, '0');
-		return `${year}-${month}-${day}`;
-	} catch (error) {
-		console.error('Error formatting date:', error);
-		return '';
-	}
-};

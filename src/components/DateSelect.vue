@@ -13,8 +13,8 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
-import { dateToString } from "@/services/utils";
+import { ref, watch, onMounted } from "vue";
+import { toApiDate } from "@/services/utils";
 
 const props = defineProps({
 	label: {
@@ -43,6 +43,12 @@ const dateModel = ref();
 const model = defineModel();
 
 watch(dateModel, (date) => {
-	model.value = dateToString(date);
+	model.value = toApiDate(date);
 });
+
+onMounted(() => {
+	if (model.value) {
+		dateModel.value = new Date(model.value);
+	}
+})
 </script>

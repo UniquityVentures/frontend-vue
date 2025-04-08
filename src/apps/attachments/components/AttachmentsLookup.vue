@@ -37,7 +37,7 @@
 						<v-card-title class="text-subtitle-1">{{ item.name }}</v-card-title>
 						<v-card-subtitle>{{ item.file_type }}</v-card-subtitle>
 						<v-card-text>
-							<v-chip color="primary">{{ formatDateTime(item.created_at) }}</v-chip>
+							<DateChip color="primary" :date="item.created_at" />
 						</v-card-text>
 					</v-card>
 				</v-col>
@@ -49,7 +49,7 @@
 <script setup>
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
-import { formatDateTime } from "@/services/utils";
+import DateChip from "@/components/DateChip.vue";
 import { ref } from "vue";
 import { getAttachments } from "../api";
 import { attachmentDefaultHeaders } from "../config";

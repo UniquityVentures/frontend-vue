@@ -32,7 +32,9 @@
                             <v-chip>Roll No: {{ item.student_details?.roll_no }}</v-chip>
                         </v-card-text>
                         <v-card-text>
-                            <v-chip>Date: {{ item.date }}</v-chip>
+							{{console.log(item.date)}}
+							<DateChip v-if="item.date" label="Date" color="info" :date="item.date" />
+
                             <v-chip :color="getStatusColor(item.status)" class="ml-auto">
                                 {{ item.status }}
                             </v-chip>
@@ -68,6 +70,7 @@ import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { ref } from "vue";
 import { getAttendanceRecords } from "../api";
 import DateSelect from "@/components/DateSelect.vue";
+import DateChip from "@/components/DateChip.vue";
 import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
 import BatchChip from "@/apps/batches/components/BatchChip.vue";
 

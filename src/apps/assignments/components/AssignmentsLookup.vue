@@ -38,8 +38,8 @@
 						<v-card-subtitle class="text-wrap">{{ item.description.slice(0, 100) }}...</v-card-subtitle>
 						<v-card-text>
 							<v-chip color="primary">Course: {{ item.course_details.name }} - {{ item.course_details.code }}</v-chip>
-							<v-chip color="green">Release: {{ formatDateTime(item.release_at) }}</v-chip>
-							<v-chip color="red">Due: {{ formatDateTime(item.due_at) }}</v-chip>
+							<DateChip label="Release" color="green" :date="item.release_at" />
+							<DateChip label="Due" color="red" :date="item.due_at" />
 						</v-card-text>
 					</v-card>
 				</v-col>
@@ -52,7 +52,7 @@
 import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
-import { formatDateTime } from "@/services/utils";
+import DateChip from "@/components/DateChip.vue";
 import { ref } from "vue";
 import { getAssignments } from "../api";
 

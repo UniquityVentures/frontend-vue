@@ -30,8 +30,8 @@
 				<v-list-item v-for="item in items" :key="item.id" link :to="{ name: 'Event', params: { eventId: item.id } }" class="border">
 					<v-list-item-title>{{ item.title }}</v-list-item-title>
 					<v-list-item-subtitle>{{ item.description }}</v-list-item-subtitle>
-					<v-chip color="blue">{{ `Start: ${formatDateTime(item.start)}` }}</v-chip>
-					<v-chip color="red">{{ `End: ${formatDateTime(item.end)}` }}</v-chip>
+					<DateChip color="blue" label="Start" :date="item.start" />
+					<DateChip color="red" label="End" :date="item.end" />
 				</v-list-item>
 			</v-list>
 		</template>
@@ -42,8 +42,8 @@
 						<v-card-title class="text-subtitle-1">{{ item.title }}</v-card-title>
 						<v-card-subtitle>{{ item.description.slice(0, 100) }}...</v-card-subtitle>
 						<v-card-text>
-							<v-chip color="blue">{{ `Start: ${formatDateTime(item.start)}` }}</v-chip>
-							<v-chip color="red">{{ `End: ${formatDateTime(item.end)}` }}</v-chip>
+							<DateChip color="blue" label="Start" :date="item.start" />
+							<DateChip color="red" label="End" :date="item.end" />
 						</v-card-text>
 						<v-card-text>
 							<TeacherChip label="Created by" :teacher="item.created_by_details" v-if="item.created_by_details" />
@@ -59,8 +59,8 @@
 import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
 import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
+import DateChip from "@/components/DateChip.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
-import { formatDateTime } from "@/services/utils";
 import { ref } from "vue";
 import { getEvents } from "../api";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";

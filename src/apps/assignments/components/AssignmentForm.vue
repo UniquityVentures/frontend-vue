@@ -41,7 +41,7 @@
         </v-col>
 
         <v-col cols="12" md="6">
-          <v-date-input 
+          <DateSelect
             label="Release Date" 
             v-model="formData.release_at"
             :rules="[v => !!v || 'Release date is required']" 
@@ -49,9 +49,9 @@
             color="primary"
           />
         </v-col>
-        
+
         <v-col cols="12" md="6">
-          <v-date-input 
+          <DateSelect
             label="Due Date" 
             v-model="formData.due_at"
             :rules="[v => !!v || 'Due date is required']" 
@@ -94,7 +94,7 @@
 import AttachmentsInput from "@/apps/attachments/components/AttachmentsInput.vue";
 import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
 import SubmitButton from "@/components/SubmitButton.vue";
-import { apiToFormDateTime, formToApiDateTime } from "@/services/utils";
+import DateSelect from "@/components/DateSelect.vue";
 import { onMounted, ref } from "vue";
 
 const props = defineProps({
@@ -136,11 +136,6 @@ const submitForm = async () => {
 		// Create a copy of the form data
 		const data = { ...formData.value };
 
-		// Handle datetime formatting
-		if (data.due_date) {
-			data.due_date = formToApiDateTime(data.due_date);
-		}
-
 		// Call the action passed from parent
 		return await props.action(data);
 	} catch (error) {
@@ -154,11 +149,6 @@ onMounted(() => {
 		// Copy assignment data to form data
 		formData.value = { ...props.assignment };
 		console.log(formData.value);
-
-		// Convert API datetime format to form datetime format
-		if (formData.value.due_date) {
-			formData.value.due_date = apiToFormDateTime(formData.value.due_date);
-		}
 	}
 });
 </script>

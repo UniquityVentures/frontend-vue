@@ -15,8 +15,8 @@
 							
 							<v-card-text>
 								<h4 class="text-subtitle-1">Dates:</h4>
-								<v-chip color="primary">Release: {{ formatDateTime(attachment.created_at) }}</v-chip>
-								<v-chip color="red">Expiry: {{ formatDateTime(attachment.updated_at) }}</v-chip>
+								<DateChip color="primary" label="Release" :date="attachment.created_at" />
+								<DateChip color="red" label="Expiry" :date="attachment.updated_at" />
 							</v-card-text>
 							
 							<v-card-actions>
@@ -37,7 +37,7 @@
 <script setup>
 import { deleteAttachment } from "@/apps/attachments/api";
 import DeleteButton from "@/components/DeleteButton.vue";
-import { formatDateTime } from "@/services/utils";
+import DateChip from "@/components/DateChip.vue";
 import { onMounted, ref } from "vue";
 import { getAttachment } from "../api";
 const attachment = ref({});

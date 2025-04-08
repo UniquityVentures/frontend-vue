@@ -10,8 +10,6 @@
 					</slot>
 				</v-card-text>
 			</v-card>
-		</v-card-text>
-		<v-card-text>
 			<!-- List template -->
 			<v-data-table-server v-if="template === 'list'" :items-length="itemsLen" :items="items"
 				v-model:items-per-page="pageSize"

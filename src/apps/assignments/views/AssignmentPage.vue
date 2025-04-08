@@ -44,8 +44,8 @@
 
 							<v-card-text>
 								<h4 class="text-subtitle-1">Dates:</h4>
-								<v-chip color="primary">Release: {{ formatDateTime(assignment?.release_at) }}</v-chip>
-								<v-chip color="red">Due: {{ formatDateTime(assignment?.due_at) }}</v-chip>
+								<DateChip color="primary" label="Release" :date="assignment?.release_at" />
+								<DateChip color="red" label="Due" :date="assignment?.due_at" />
 							</v-card-text>
 
 							<v-card-text>
@@ -86,8 +86,9 @@
 </template>
 
 <script setup>
-import { formatDateTime } from "@/services/utils";
+import DateChip from "@/components/DateChip.vue";
 import { useAuthStore } from "@/stores/auth";
+import { formatDateTime } from "@/services/utils";
 import { onMounted, ref } from "vue";
 import { getAssignment } from "../api";
 

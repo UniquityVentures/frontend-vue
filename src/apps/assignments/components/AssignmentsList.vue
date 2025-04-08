@@ -8,12 +8,12 @@
                     :to="{ name: 'Assignment', params: { assignmentId: item.id } }" link class="border">
                     <v-list-item-title>{{ item.title || 'Title loading...' }}</v-list-item-title>
                     <v-list-item-subtitle>{{ item.description || 'Description loading...' }}</v-list-item-subtitle>
-                    <v-chip v-if="item.due_date" color="primary" size="small">
-                        Due: {{ formatDate(item.due_date) }}
-                    </v-chip>
+					<DateChip v-if="item.due_date" label="Due" color="primary" :date="item.due_date" />
                 </v-list-item>
             </v-list>
-            <v-skeleton-loader v-if="loading" type="list-item-three-line" v-for="i in limit" :key="i" />
+			<span v-if="loading">
+				<v-skeleton-loader type="list-item-three-line" v-for="i in limit" :key="i" />
+			</span>
             <div v-if="!loading && limitedItems.length === 0" class="text-center py-4">
                 No assignments found
             </div>

@@ -59,7 +59,7 @@ import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { ref } from "vue";
 import { getAttendanceRecords } from "../../attendance/api";
 import DateSelect from "@/components/DateSelect.vue";
-import { dateToString } from "@/services/utils";
+import { toApiDate } from "@/services/utils";
 
 const props = defineProps({
   batch: {
@@ -77,7 +77,7 @@ const getStatusColor = (status) => {
 const batch = ref(props.batch);
 const filters = ref({
   batch: props.batch.id,
-  date: dateToString(new Date()),
+  date: toApiDate(new Date()),
 });
 
 </script>

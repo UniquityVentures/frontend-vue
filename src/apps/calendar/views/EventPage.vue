@@ -24,8 +24,8 @@
 
               <v-card-text>
                 <h4 class="text-subtitle-1">Event Time:</h4>
-                <v-chip color="primary">Start: {{ formatDate(event?.start) }}</v-chip>
-                <v-chip color="red">End: {{ formatDate(event?.end) }}</v-chip>
+                <DateChip label="Start" color="primary" date="event?.start" />
+                <DateChip label="End" color="red" date="event?.end" />
               </v-card-text>
 
               <v-card-text>

@@ -18,8 +18,8 @@
               
               <v-card-text>
                 <h4 class="text-subtitle-1">Dates:</h4>
-                <v-chip color="primary">Release: {{ formatDateTime(announcement.release_at) }}</v-chip>
-                <v-chip color="red">Expiry: {{ formatDateTime(announcement.expiry_at) }}</v-chip>
+				<DateChip color="primary" label="Release" :date="announcement.release_at" />
+				<DateChip color="red" label="Expiry" :date="announcement.expriy_at" />
               </v-card-text>
 
               <v-card-text>
@@ -86,7 +86,7 @@
 import { getBatch } from "@/apps/batches/api";
 import { getCourse } from "@/apps/courses/api";
 import TeacherListItem from "@/apps/teachers/components/TeacherListItem.vue";
-import { formatDateTime } from "@/services/utils";
+import DateChip from "@/components/DateChip.vue";
 import { onMounted, ref } from "vue";
 import { getAnnouncement } from "../api";
 

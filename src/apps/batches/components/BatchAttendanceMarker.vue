@@ -73,7 +73,6 @@ import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import SubmitButton from "@/components/SubmitButton.vue";
 import { ref } from "vue";
 import { bulkUpdateAttendance } from "../../attendance/api";
-import { apiToFormDateTime } from "@/services/utils";
 
 const props = defineProps({
 	title: {

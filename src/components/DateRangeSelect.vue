@@ -1,22 +1,26 @@
 <template>
-    <v-date-input :label="label" v-model="internalValue" multiple="range" clearable :disabled="disabled" color="primary"
-        @update:model-value="handleDateUpdate" />
+    <v-date-input 
+		v-model="dateModel"
+		:label="label"
+		:hint="hint"
+		persistent-hint
+		:disabled="disabled"
+		display-format="fullDate"
+		multiple="range"
+		prepend-icon="mdi-calendar"
+		clearable
+		color="primary"
+		:rules="rules"
+        />
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
+import { toApiDate } from "@/services/utils";
 
 const props = defineProps({
 	filters: {
 		type: Object,
-		required: true,
-	},
-	startKey: {
-		type: String,
-		required: true,
-	},
-	endKey: {
-		type: String,
 		required: true,
 	},
 	label: {
@@ -31,39 +35,43 @@ const props = defineProps({
 		type: Boolean,
 		default: true,
 	},
+	hint: {
+		type: String,
+		default: "",
+	},
+	rules: {
+		required: false,
+	},
 });
 
-// Internal value to track the v-date-input state
-const internalValue = ref(null);
+const start = defineModel("start");
+const end = defineModel("end");
+
+const dateModel = ref([]);
 
 // Initialize from existing filters if they exist
 onMounted(() => {
-	if (props.filters[props.startKey] && props.filters[props.endKey]) {
-		internalValue.value = [
-			props.filters[props.startKey],
-			props.filters[props.endKey],
-		];
+	if (start.value) {
+		dateModel.value.push(new Date(start.value));
+	}
+	if (end.value) {
+		const endDate = new Date(end.value);
+		const startDate = new Date(start.value);
+
+		while (endDate >= startDate) {
+			startDate.setDate(start.getDate() + 1);
+			dateModel.value.push(new Date(startDate));
+		}
 	}
 });
 
-// Handle date range change
-const handleDateUpdate = (value) => {
-	internalValue.value = value;
-
-	if (!value) {
-		// Clear both start and end date filters
-		props.filters[props.startKey] = null;
-		props.filters[props.endKey] = null;
-		return;
-	}
-
+watch(dateModel, (dates) => {
 	// If it's a date range (array of dates)
-	if (Array.isArray(value) && value.length >= 2) {
-		const dates = [...value].sort((a, b) => new Date(a) - new Date(b));
-
+	if (dates.length && dates.length >= 2) {
+		const sortedDates = [...dates].sort((a, b) => a - b);
 		// Update both date filters directly on the parent's filters object
-		props.filters[props.startKey] = dates[0];
-		props.filters[props.endKey] = dates[dates.length - 1];
+		start.value = toApiDate(sorted[0]);
+		end.value = toApiDate(sortedDates[sortedDates.length - 1]);
 	}
-};
+});
 </script>

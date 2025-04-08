@@ -20,9 +20,7 @@
 							</v-chip>
 						</v-row>
 						<v-row>
-							<v-chip color="info">
-								Transaction Date: {{ transaction?.datetime ? formatDate(transaction?.datetime) : "Loading" }}
-							</v-chip>
+							<DateTimeChip label="Transaction Date" color="info" :date="transaction?.datetime" />
 						</v-row>
 
 					</v-card-text>
@@ -42,6 +40,7 @@
 
 <script setup>
 import StudentCard from "@/apps/students/components/StudentCard.vue";
+import DateTimeChip from "@/components/DateTimeChip.vue"
 import { formatDate } from "@/services/utils";
 import { onMounted, ref } from "vue";
 import { getTransaction } from "../api";
