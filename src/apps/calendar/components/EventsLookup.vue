@@ -14,9 +14,8 @@
 				</v-col>
 				<v-col cols="12" sm="6" md="4" lg="3">
 					<DateRangeSelect
-						:filters="filters"
-						start-key="start_date"
-						end-key="end_date"
+						v-model:start="filters.start_date"
+						v-model:end="filters.end_date"
 						label="Date Range"
 					/>
 				</v-col>

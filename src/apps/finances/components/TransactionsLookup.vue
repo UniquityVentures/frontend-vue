@@ -14,9 +14,8 @@
                 </v-col>
                 <v-col cols="12" sm="6" md="4" lg="3">
                     <DateRangeSelect
-                        :filters="filters"
-                        start-key="datetime_start"
-                        end-key="datetime_end"
+                        v-model:start="filters.datetime_start"
+                        v-model:end="filters.datetime_end"
                         label="Transaction Date Range"
                     />
                 </v-col>

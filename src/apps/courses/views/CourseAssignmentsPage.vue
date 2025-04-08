@@ -14,9 +14,8 @@
                     </v-col>
                     <v-col cols="12" sm="6" md="4" lg="3">
                         <DateRangeSelect
-                            :filters="filters"
-                            start-key="due_start"
-                            end-key="due_end"
+                            v-model:start="filters.due_start"
+                            v-model:end="filters.due_end"
                             label="Due Date Range"
                         />
                     </v-col>

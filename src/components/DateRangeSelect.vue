@@ -67,7 +67,7 @@ onMounted(() => {
 
 watch(dateModel, (dates) => {
 	// If it's a date range (array of dates)
-	if (dates.length && dates.length >= 2) {
+	if (dates?.length && dates.length >= 2) {
 		const sortedDates = [...dates].sort((a, b) => a - b);
 		// Update both date filters directly on the parent's filters object
 		start.value = toApiDate(sortedDates[0]);
