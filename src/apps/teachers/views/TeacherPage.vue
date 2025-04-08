@@ -48,7 +48,7 @@ import { onMounted, ref } from "vue";
 const teacher = ref({});
 
 const props = defineProps({
-	teacherId: Number,
+	teacherId: [Number, String],
 });
 
 const fetchDetails = async () => {

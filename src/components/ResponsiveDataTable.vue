@@ -2,8 +2,8 @@
 	<v-card>
 		<v-card-title v-if="title">{{ title }}</v-card-title>
 		<v-card-subtitle v-if="subtitle">{{ subtitle }}</v-card-subtitle>
-		<v-card-text v-if="!hideFilters">
-			<v-card variant="flat">
+		<v-card-text>
+			<v-card variant="flat" v-if="!hideFilters">
 				<v-card-text class="mt-2">
 					<slot name="filters-slot" :filters="filters">
 						<!-- filters slot -->
