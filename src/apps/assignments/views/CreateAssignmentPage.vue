@@ -4,6 +4,7 @@
 			:action="createAssignment"
 			actionName="Create"
 			title="Assignment"
+			subtitle="Create a new assignment"
 		/>
 	</v-container>
 </template>

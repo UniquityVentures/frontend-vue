@@ -1,92 +1,117 @@
 <template>
-  <v-card>
+  <v-card variant="flat">
     <v-card-title>
       {{ title }}
     </v-card-title>
     <v-card-subtitle v-if="subtitle">
       {{ subtitle }}
     </v-card-subtitle>
-    <v-card-text>
-      <v-row>
-        <v-col cols="12">
-          <v-text-field 
-            label="Title" 
-            v-model="formData.title"
-            :rules="[v => !!v || 'Title is required']" 
-            required
-          ></v-text-field>
-        </v-col>
-      </v-row>
+    
+    <v-card class="ma-2" variant="outlined">
+      <v-card-title class="text-subtitle-1">Basic Information:</v-card-title>
+      <v-card-text>
+        <v-row>
+          <v-col cols="12">
+            <v-text-field 
+              label="Title" 
+              v-model="formData.title"
+              :rules="[v => !!v || 'Title is required']" 
+              required
+            ></v-text-field>
+          </v-col>
+        </v-row>
 
-      <v-row>
-        <v-col cols="12">
-          <v-textarea 
-            label="Description" 
-            v-model="formData.description"
-            :rules="[v => !!v || 'Description is required']" 
-            required
-            rows="10"
-          ></v-textarea>
-        </v-col>
-      </v-row>
+        <v-row>
+          <v-col cols="12">
+            <v-textarea 
+              label="Description" 
+              v-model="formData.description"
+              :rules="[v => !!v || 'Description is required']" 
+              required
+              rows="10"
+            ></v-textarea>
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+    
+    <v-card class="ma-2" variant="outlined">
+      <v-card-title class="text-subtitle-1">Assign to:</v-card-title>
+      <v-card-text>
+        <v-row>
+          <v-col cols="12" md="6">
+            <CourseSelect 
+              v-model="formData.course" 
+              label="Course"
+              :rules="[v => !!v || 'Course is required']" 
+              required
+            />
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+    
+    <v-card class="ma-2" variant="outlined">
+      <v-card-title class="text-subtitle-1">Dates:</v-card-title>
+      <v-card-text>
+        <v-row>
+          <v-col cols="12" md="6">
+            <DateSelect
+              label="Release Date" 
+              v-model="formData.release_at"
+              :rules="[v => !!v || 'Release date is required']" 
+              required
+              color="primary"
+            />
+          </v-col>
 
-      <v-row>
-        <v-col cols="12" md="6">
-          <CourseSelect 
-            v-model="formData.course" 
-            label="Course"
-            :rules="[v => !!v || 'Course is required']" 
-            required
-          />
-        </v-col>
-
-        <v-col cols="12" md="6">
-          <DateSelect
-            label="Release Date" 
-            v-model="formData.release_at"
-            :rules="[v => !!v || 'Release date is required']" 
-            required
-            color="primary"
-          />
-        </v-col>
-
-        <v-col cols="12" md="6">
-          <DateSelect
-            label="Due Date" 
-            v-model="formData.due_at"
-            :rules="[v => !!v || 'Due date is required']" 
-            required
-            color="primary"
-          />
-        </v-col>
-      </v-row>
-
-      <v-row>
-        <v-col cols="12">
-          <AttachmentsInput v-model="formData.attachments" title="Attachments" />
-        </v-col>
-      </v-row>
-
-      <v-row>
-        <v-col cols="12" md="6">
-          <v-text-field 
-            label="Maximum Score" 
-            v-model="formData.max_score"
-            type="number"
-          ></v-text-field>
-        </v-col>
-        
-        <v-col cols="12" md="6">
-          <v-text-field 
-            label="Passing Score" 
-            v-model="formData.passing_score"
-            type="number"
-          ></v-text-field>
-        </v-col>
-      </v-row>
-      
-      <SubmitButton :onSubmit="submitForm" :submitText="actionName" />
-    </v-card-text>
+          <v-col cols="12" md="6">
+            <DateSelect
+              label="Due Date" 
+              v-model="formData.due_at"
+              :rules="[v => !!v || 'Due date is required']" 
+              required
+              color="primary"
+            />
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+    
+    <v-card class="ma-2" variant="outlined">
+      <v-card-title class="text-subtitle-1">Attachments</v-card-title>
+      <v-card-text>
+        <v-row>
+          <v-col cols="12">
+            <AttachmentsInput v-model="formData.attachments" title="Attachments" />
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+    
+    <v-card class="ma-2" variant="outlined">
+      <v-card-title class="text-subtitle-1">Grading:</v-card-title>
+      <v-card-text>
+        <v-row>
+          <v-col cols="12" md="6">
+            <v-text-field 
+              label="Maximum Score" 
+              v-model="formData.max_score"
+              type="number"
+            ></v-text-field>
+          </v-col>
+          
+          <v-col cols="12" md="6">
+            <v-text-field 
+              label="Passing Score" 
+              v-model="formData.passing_score"
+              type="number"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+    <SubmitButton :onSubmit="submitForm" :submitText="actionName" />
   </v-card>
 </template>
 
