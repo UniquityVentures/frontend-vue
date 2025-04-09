@@ -17,40 +17,39 @@
                     :teacherId="syllabus.course_details.main_teacher" 
                 />
         </v-card-text>
-        
         <v-card-text>
-            <div class="mt-4">
+            <div>
                 <div class="text-subtitle-1 mb-2">
                     Chapters ({{ syllabus.chapter_count }})
                 </div>
-                
-                <v-expansion-panels>
+                <v-expansion-panels variant="accordion" elevation="0" class="border">
                     <v-expansion-panel v-for="chapter in syllabus.chapters" :key="chapter.id">
-                        <v-expansion-panel-title>
-                            <div class="d-flex align-center">
-                                <span class="me-auto">{{ chapter.order }}. {{ chapter.name }}</span>
-                                <v-chip size="small" color="info" class="ms-2">{{ chapter.topics.length }} topics</v-chip>
-                            </div>
+                        <v-expansion-panel-title style="background-color: #f8f8f8;">
+                            Chapter {{ chapter.order }}: {{ chapter.name }}
                         </v-expansion-panel-title>
                         <v-expansion-panel-text>
-                            <div class="text-subtitle-2 mb-2">
-                                <strong>Book:</strong> {{ chapter.book }}
-                                <span class="ms-4"><strong>Pages:</strong> {{ chapter.page_range }}</span>
-                            </div>
-                            
-                            <v-list lines="two" class="bg-grey-lighten-4 rounded">
-                                <v-list-item v-for="topic in chapter.topics" :key="topic.id" class="mb-1 rounded">
-                                    <v-list-item-title>
-                                        {{ topic.order }}. {{ topic.name }}
-                                    </v-list-item-title>
-                                    <v-list-item-subtitle>
-                                        {{ topic.description }}
-                                    </v-list-item-subtitle>
-                                    <template v-slot:append>
-                                        <v-chip size="small" color="secondary">Pages: {{ topic.page_range }}</v-chip>
-                                    </template>
-                                </v-list-item>
-                            </v-list>
+                            <v-card variant="flat">
+                                <v-card-text>
+                                    <strong>Book:</strong> {{ chapter.book }}
+                                    <span class="ms-4"><strong>Pages:</strong> {{ chapter.page_range }}</span>
+                                </v-card-text>
+                                
+                                <v-card-text>
+                                    <v-list lines="two">
+                                        <v-list-item v-for="topic in chapter.topics" :key="topic.id" class="border rounded">
+                                            <v-list-item-title>
+                                                {{ topic.name }}
+                                            </v-list-item-title>
+                                            <v-list-item-subtitle>
+                                                {{ topic.description }}
+                                            </v-list-item-subtitle>
+                                            <template v-slot:append>
+                                                <v-chip size="small" color="secondary">Pages: {{ topic.page_range }}</v-chip>
+                                            </template>
+                                        </v-list-item>
+                                    </v-list>
+                                </v-card-text>
+                            </v-card>
                         </v-expansion-panel-text>
                     </v-expansion-panel>
                 </v-expansion-panels>
