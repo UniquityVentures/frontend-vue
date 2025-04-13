@@ -7,6 +7,7 @@ const getStudents = studentViewset.list;
 const getStudent = studentViewset.retrieve;
 const updateStudent = studentViewset.update;
 const createStudent = studentViewset.create;
+const deleteStudent = studentViewset.delete;
 const exportStudents = studentViewset.export;
 const getStudentStats = studentViewset.stats;
 const importStudents = {
@@ -25,6 +26,7 @@ export {
 	getStudent,
 	updateStudent,
 	createStudent,
+	deleteStudent,
 	exportStudents,
 	importStudents,
 	getStudentStats,

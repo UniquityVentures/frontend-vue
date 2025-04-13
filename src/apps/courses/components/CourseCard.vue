@@ -25,15 +25,21 @@
 				Status: {{ course.is_active ? 'Active' : 'Inactive' }}
 			</v-chip>
 		</v-card-text>
+
+		<v-card-actions>
+			<DeleteButton :action="() => deleteCourse(course?.id)" :name="'course ' + course?.name" />
+		</v-card-actions>
 	</v-card>
 </template>
 
 
 <script setup>
-import { getCourseImage } from "@/apps/courses/api";
+import { getCourseImage, deleteCourse } from "@/apps/courses/api";
 import { getTeacher } from "@/apps/teachers/api";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 import { ref, watch } from "vue";
+
+import DeleteButton from "@/components/DeleteButton.vue";
 
 const props = defineProps({
 	course: {

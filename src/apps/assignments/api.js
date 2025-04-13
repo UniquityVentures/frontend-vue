@@ -7,6 +7,7 @@ const getAssignments = assignmentsViewset.list;
 const getAssignment = assignmentsViewset.retrieve;
 const updateAssignment = assignmentsViewset.update;
 const createAssignment = assignmentsViewset.create;
+const deleteAssignment = assignmentsViewset.delete;
 const exportAssignments = assignmentsViewset.export;
 const importAssignments = {
 	dryRun: assignmentsViewset.import.dryRun,
@@ -18,6 +19,7 @@ export {
 	getAssignment,
 	updateAssignment,
 	createAssignment,
+	deleteAssignment,
 	exportAssignments,
 	importAssignments,
 };

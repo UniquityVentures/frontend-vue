@@ -1,11 +1,13 @@
 <template>
 	<v-container>
+		{{currentCalendarView}}
+
 		<vue-cal
 			:events="formattedEvents"
 			style="min-height: 500px;"
-			:disable-views="['years', 'week']"
-			default-view="month"
-			:selected-date="$query.date"
+			v-model:view="currentCalendarView.value"
+			:view-date="$route?.query?.date ? new Date($route?.query?.date) : undefined"
+			click-to-navigate
 			@view-change="updateCurrentDate"
 		>
 			<template #event="{ event }">
@@ -30,9 +32,15 @@ import "vue-cal/dist/vuecal.css";
 import { getCalendar } from "@/apps/calendar/api";
 import EventDialogCard from "@/apps/calendar/components/EventDialogCard.vue";
 
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
 // Calendar state
 const currentDate = ref(new Date());
 const events = ref([]);
+
+const currentCalendarView = ref("week");
 
 // Fetch events for the current month/year
 const fetchEvents = async () => {
@@ -51,6 +59,10 @@ const fetchEvents = async () => {
 
 onMounted(() => {
 	fetchEvents();
+	if (router.currentRoute.value.query.date) {
+		currentCalendarView.value = "day";
+		console.log(currentCalendarView.value);
+	}
 });
 
 // Update current date based on vue-cal's view change and refetch events

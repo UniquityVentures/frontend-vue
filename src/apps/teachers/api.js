@@ -14,6 +14,7 @@ const getTeachers = teacherViewset.list;
 const getTeacher = teacherViewset.retrieve;
 const updateTeacher = teacherViewset.update;
 const createTeacher = teacherViewset.create;
+const deleteTeacher = teacherViewset.delete;
 const exportTeachers = teacherViewset.export;
 const getTeacherStats = teacherViewset.stats;
 const importTeachers = {
@@ -32,6 +33,7 @@ export {
 	getTeacher,
 	updateTeacher,
 	createTeacher,
+	deleteTeacher,
 	exportTeachers,
 	importTeachers,
 	getTeacherStats,
