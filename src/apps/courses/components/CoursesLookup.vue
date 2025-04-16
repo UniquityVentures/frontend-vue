@@ -26,7 +26,10 @@
                             <BatchChip v-for="batchId in item.batches" v-bind:key="batchId" :batchId="batchId" />
                             <TeacherChip :teacherId="item.main_teacher" />
                         </v-card-text>
-                    </v-card>
+						<v-card-actions>
+							<DeleteButton :action="() => deleteCourse(item?.id)" :name="'course ' + item?.name" />
+						</v-card-actions>
+					</v-card>
                 </v-col>
             </v-row>
         </template>
@@ -39,8 +42,9 @@ import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
+import DeleteButton from "@/components/DeleteButton.vue";
 import { ref } from "vue";
-import { getCourses } from "../api";
+import { getCourses, deleteCourse  } from "../api";
 
 const filters = ref({});
 </script>

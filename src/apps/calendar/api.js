@@ -8,6 +8,7 @@ const getEvents = eventViewset.list;
 const getEvent = eventViewset.retrieve;
 const updateEvent = eventViewset.update;
 const createEvent = eventViewset.create;
+const deleteEvent = eventViewset.delete;
 const exportEvents = eventViewset.export;
 const importEvents = {
 	dryRun: eventViewset.import.dryRun,
@@ -23,6 +24,7 @@ export {
 	getEvent,
 	updateEvent,
 	createEvent,
+	deleteEvent,
 	exportEvents,
 	importEvents,
 	getCalendar,

@@ -1,18 +1,18 @@
 <template>
 	<v-btn
-		@click="dialogOpen = true"
+		@click.prevent="dialogOpen = true"
 		variant="outlined"
 		prepend-icon="mdi-delete"
 		:loading="isSubmitting"
 		:disabled="isSubmitting"
 		:append-icon="isSuccess ? 'mdi-check' : (error ? 'mdi-alert' : '')"
-		:color="error ? 'error' : 'primary'"
+		:color="error ? 'error' : 'red'"
 		>
 		{{ isSuccess ? 'Deleted!' : (error ? 'Failed!' : label) }}
 	</v-btn>
 
 	<v-dialog max-width="500" v-model='dialogOpen'>
-		<v-card title="Dialog">
+		<v-card :title="'Deleting ' + name">
 			<v-card-text>
 				<p>Are you sure you want to delete {{name ? name : "this item"}}?</p>	
 				<p>This action is irreversible</p>	
@@ -28,9 +28,15 @@
 
 			<v-card-actions>
 				<v-btn
-					text="Confirm Delete"
 					@click="deleteItem"
-				></v-btn>
+					prepend-icon="mdi-delete"
+					:loading="isSubmitting"
+					:disabled="isSubmitting"
+					:append-icon="isSuccess ? 'mdi-check' : (error ? 'mdi-alert' : '')"
+					:color="error ? 'error' : 'red'"
+				>
+					{{ isSuccess ? 'Deleted!' : (error ? 'Failed!' : 'Confirm Delete') }}
+				</v-btn>
 				<v-btn
 					text="Cancel"
 					@click="dialogOpen = false"
@@ -73,7 +79,6 @@ const deleteItem = async () => {
 			isSuccess.value = true;
 			dialogOpen.value = false;
 			emit("deleted");
-			router.back();
 		} else {
 			error.value = formatErrorMessage(result.error);
 		}

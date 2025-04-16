@@ -1,6 +1,8 @@
 <template>
     <ResponsiveDataTable :fetch="getTransactions" v-model:filters="filters"
-        title="Transactions" subtitle="Financial Transactions List">
+        title="Transactions" subtitle="Financial Transactions List"
+		:templates="{ desktop: 'list', mobile: 'list' }"
+	>
         <template #filters-slot>
             <v-row>
                 <v-col cols="12" sm="6" md="3" lg="2">
@@ -29,31 +31,35 @@
                 </v-col>
             </v-row>
         </template>
-        <template #list-item-slot="{ item }">
-            <v-list-item-title>
-                <v-icon :color="getStatusColor(item.transaction_status)">
-                    {{ getStatusIcon(item.transaction_status) }}
-                </v-icon>
-                {{ item.student_details?.user_details?.full_name || "Unknown Student" }}
-            </v-list-item-title>
-            <v-list-item-subtitle>
-                Amount: ₹{{ item.amount / 100 }} - {{ formatDate(item.datetime) }}
-            </v-list-item-subtitle>
-            <div class="d-flex flex-wrap mt-1">
-                <v-chip color="success">
-                    {{ item.transaction_type }}
-                </v-chip>
-                <v-chip color="primary">
-                    {{ item.payee_details?.email || "Unknown Payee" }}
-                </v-chip>
-                <v-chip :color="getStatusColor(item.transaction_status)">
-                    {{ getStatusText(item.transaction_status) }}
-                </v-chip>
-                <v-chip v-if="item.order_id" color="grey">
-                    ID: {{ item.order_id }}
-                </v-chip>
-            </div>
-        </template>
+        <template #list-slot="{ items }">
+			<v-list>
+				<v-list-item v-for="item in items" :key="item.id" link :to="{ name: 'Transaction', params: { transactionId: item.id } }" class="border">
+					<v-list-item-title>
+						<v-icon :color="getStatusColor(item.transaction_status)">
+							{{ getStatusIcon(item.transaction_status) }}
+						</v-icon>
+						{{ item.student_details?.user_details?.full_name || "Unknown Student" }}
+					</v-list-item-title>
+					<v-list-item-subtitle>
+						Amount: ₹{{ item.amount / 100 }} - {{ formatDate(item.datetime) }}
+					</v-list-item-subtitle>
+					<div class="d-flex flex-wrap mt-1">
+						<v-chip color="success">
+							{{ item.transaction_type }}
+						</v-chip>
+						<v-chip color="primary">
+							{{ item.payee_details?.email || "Unknown Payee" }}
+						</v-chip>
+						<v-chip :color="getStatusColor(item.transaction_status)">
+							{{ getStatusText(item.transaction_status) }}
+						</v-chip>
+						<v-chip v-if="item.order_id" color="grey">
+							ID: {{ item.order_id }}
+						</v-chip>
+					</div>
+				</v-list-item>
+			</v-list>
+		</template>
     </ResponsiveDataTable>
 </template>
 

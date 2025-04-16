@@ -2,6 +2,8 @@
 @use 'vuetify/styles' as vuetify;
 @use './typography.scss';
 
+
+
 // v-card styles
 .v-card-title {
     padding: 10px 10px 0px 10px !important;
@@ -52,8 +54,8 @@
 
 // other component styles
 .v-divider {
-    margin: 5px 0px 0px !important;
-    border-color: rgba(0, 0, 0, 1) !important;
+    margin: 10px 0px !important;
+    color: rgba(0, 0, 0, 1) !important;
 }
 
 .v-chip, .v-skeleton-loader__chip {
@@ -138,4 +140,26 @@
   .v-selection-control__input {
     margin-right: 8px;
   }
+}
+
+// Lighten borders for outlined variants
+.v-card.v-card--variant-outlined,
+.v-btn.v-btn--variant-outlined,
+.v-text-field.v-field--variant-outlined .v-field__outline,
+.v-select.v-field--variant-outlined .v-field__outline,
+.v-autocomplete.v-field--variant-outlined .v-field__outline,
+.v-combobox.v-field--variant-outlined .v-field__outline,
+.v-textarea.v-field--variant-outlined .v-field__outline {
+  border-color: rgba(0, 0, 0, 0.40) !important;
+}
+
+// When hovering over outlined elements, slightly darken the border
+.v-card.v-card--variant-outlined:hover,
+.v-btn.v-btn--variant-outlined:hover {
+  border-color: rgba(0, 0, 0, 0.69) !important;
+}
+
+// Outlined component focus state - use primary color but with reduced opacity
+.v-field--variant-outlined.v-field--focused .v-field__outline {
+  border-color: rgb(var(--v-theme-primary), 0.5) !important;
 }

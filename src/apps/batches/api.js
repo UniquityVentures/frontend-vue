@@ -18,6 +18,7 @@ const getBatches = (filter = {}) =>
 	});
 const getBatch = batchViewset.retrieve;
 const updateBatch = batchViewset.update;
+const deleteBatch = batchViewset.delete;
 const createBatch = batchViewset.create;
 const exportBatches = batchViewset.export;
 const importBatches = {
@@ -37,6 +38,7 @@ const getBatchInfoFromObj = (item) => ({
 export {
 	getBatches,
 	getBatch,
+	deleteBatch,
 	updateBatch,
 	getBatchImage,
 	getBatchInfoFromObj,

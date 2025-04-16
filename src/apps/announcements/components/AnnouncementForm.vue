@@ -1,112 +1,136 @@
 <template>
-  <v-card>
+  <v-card variant="flat">
     <v-card-title>
       {{ title }}
     </v-card-title>
     <v-card-subtitle v-if="subtitle">
       {{ subtitle }}
     </v-card-subtitle>
-    <v-card-text>
-      <v-row>
-        <v-col cols="12" md="6">
-          <v-text-field 
-            label="Title" 
-            v-model="formData.title"
-            :rules="[v => !!v || 'Title is required']" 
-            required
-          ></v-text-field>
-        </v-col>
-        
-        <v-col cols="12" md="6">
-          <TeacherSelect
-            label="Signed By"
-            v-model="formData.signed_by"
-          />
-        </v-col>
-      </v-row>
+    
+    <v-card class="ma-2" variant="outlined">
+      <v-card-title class="text-subtitle-1">Basic Information:</v-card-title>
+      <v-card-text>
+        <v-row>
+          <v-col cols="12" md="6">
+            <v-text-field 
+              label="Title" 
+              v-model="formData.title"
+              :rules="[v => !!v || 'Title is required']" 
+              required
+            ></v-text-field>
+          </v-col>
+          
+          <v-col cols="12" md="6">
+            <TeacherSelect
+              label="Signed By"
+              v-model="formData.signed_by"
+            />
+          </v-col>
+        </v-row>
 
-      <v-row>
-        <v-col cols="12">
-          <v-textarea 
-            label="Description" 
-            v-model="formData.description"
-            :rules="[v => !!v || 'Description is required']" 
-            required
-            rows="10"
-          ></v-textarea>
-        </v-col>
-      </v-row>
-
-      <v-row>
-        <v-col cols="12" md="6">
-          <DateSelect 
-            v-model="filters.release_at"
-            label="Release Date"
-            :rules="[v => !!v || 'Release Date is required']"
-            required
-          />
-        </v-col>
-        
-        <v-col cols="12" md="6">
-          <DateSelect 
-            v-model="filters.expiry_at"
-            label="Expiry Date"
-            :rules="[v => !!v || 'Expiry Date is required']"
-            required
-          />
-        </v-col>
-      </v-row>
-
-      <v-row>
-        <v-col cols="12" md="4">
-          <v-text-field 
-            label="Priority" 
-            v-model="formData.priority"
-          ></v-text-field>
-        </v-col>
-        
-        <v-col cols="6" md="4">
-          <v-checkbox 
-            label="Is Active" 
-            v-model="formData.is_active"
-          ></v-checkbox>
-        </v-col>
-        
-        <v-col cols="6" md="4">
-          <v-checkbox 
-            label="Is School Wide" 
-            v-model="formData.is_school_wide"
-          ></v-checkbox>
-        </v-col>
-      </v-row>
-
-      <v-row>
-        <v-col cols="12">
-          <v-radio-group v-model="batchesOrCourses" label="Announce to Batches or Courses?" inline class="border rounded-lg pt-2">
-            <v-radio label="Batches" value="batches"></v-radio>
-            <v-radio label="Courses" value="courses"></v-radio>
-          </v-radio-group>
-          <BatchSelect
-            v-if="batchesOrCourses === 'batches'" 
-            multiple
-            v-model="formData.batches"
-          />
-          <CourseSelect
-            v-if="batchesOrCourses === 'courses'"
-            multiple
-            v-model="formData.courses"
-          />
-        </v-col>
-      </v-row>
-
-      <v-row>
-        <v-col cols="12">
-          <AttachmentsInput v-model="formData.attachments" required />
-        </v-col>
-      </v-row>
-      
-      <SubmitButton :onSubmit="() => props.action(formData)" :submitText="actionName" />
-    </v-card-text>
+        <v-row>
+          <v-col cols="12">
+            <v-textarea 
+              label="Description" 
+              v-model="formData.description"
+              :rules="[v => !!v || 'Description is required']" 
+              required
+              rows="10"
+            ></v-textarea>
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+    
+    <v-card class="ma-2" variant="outlined">
+      <v-card-title class="text-subtitle-1">Dates:</v-card-title>
+      <v-card-text>
+        <v-row>
+          <v-col cols="12" md="6">
+            <DateSelect 
+              v-model="formData.release_at"
+              label="Release Date"
+              :rules="[v => !!v || 'Release Date is required']"
+              required
+            />
+          </v-col>
+          
+          <v-col cols="12" md="6">
+            <DateSelect 
+              v-model="formData.expiry_at"
+              label="Expiry Date"
+              :rules="[v => !!v || 'Expiry Date is required']"
+              required
+            />
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+    
+    <v-card class="ma-2" variant="outlined">
+      <v-card-title class="text-subtitle-1">Settings:</v-card-title>
+      <v-card-text>
+        <v-row>
+          <v-col cols="12" md="4">
+            <v-text-field 
+              label="Priority" 
+              v-model="formData.priority"
+            ></v-text-field>
+          </v-col>
+          
+          <v-col cols="6" md="4">
+            <v-checkbox 
+              label="Is Active" 
+              v-model="formData.is_active"
+            ></v-checkbox>
+          </v-col>
+          
+          <v-col cols="6" md="4">
+            <v-checkbox 
+              label="Is School Wide" 
+              v-model="formData.is_school_wide"
+            ></v-checkbox>
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+    
+    <v-card class="ma-2" variant="outlined">
+      <v-card-title class="text-subtitle-1">Recipients:</v-card-title>
+      <v-card-text>
+        <v-row>
+          <v-col cols="12">
+            <v-radio-group v-model="batchesOrCourses" label="Announce to Batches or Courses?" inline class="border rounded-lg pt-2">
+              <v-radio label="Batches" value="batches"></v-radio>
+              <v-radio label="Courses" value="courses"></v-radio>
+            </v-radio-group>
+            <BatchSelect
+              v-if="batchesOrCourses === 'batches'" 
+              multiple
+              v-model="formData.batches"
+            />
+            <CourseSelect
+              v-if="batchesOrCourses === 'courses'"
+              multiple
+              v-model="formData.courses"
+            />
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+    
+    <v-card class="ma-2" variant="outlined">
+      <v-card-title class="text-subtitle-1">Attachments:</v-card-title>
+      <v-card-text>
+        <v-row>
+          <v-col cols="12">
+            <AttachmentsInput v-model="formData.attachments" required />
+          </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+    
+    <SubmitButton :onSubmit="() => props.action(formData)" :submitText="actionName" />
   </v-card>
 </template>
 

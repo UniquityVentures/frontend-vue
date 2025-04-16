@@ -54,7 +54,7 @@
                         :to="{ name: 'Course', params: { courseId: course.id }}"
                         link
                       >
-                        {{ course.name }} ({{ course.batch_details?.name }})
+                        {{ course.name }} ({{ course.code }})
                       </v-chip>
                     </v-chip-group>
                   </div>
