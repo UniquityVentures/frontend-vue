@@ -1,6 +1,5 @@
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
-
 import { getCourse } from "./api";
 import CoursePage from "./views/CoursePage.vue";
 import CoursesExportPage from "./views/CoursesExportPage.vue";
@@ -41,7 +40,7 @@ export default [
 		},
 		children: [
 			{
-				path: "",
+				path: "all/",
 				component: CoursesPage,
 				name: "Courses",
 			},
