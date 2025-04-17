@@ -11,11 +11,6 @@
 							<template v-slot:append>
 								<v-btn icon="mdi-logout" @click="logoutHandler" size="small" variant="text"/>
 							</template>
-							<!-- <v-card-text>
-								<v-chip label>
-									{{ account?.group_details?.name || 'No access level' }}
-								</v-chip>
-							</v-card-text> -->
 						</v-card>
 					</v-list-item>
 

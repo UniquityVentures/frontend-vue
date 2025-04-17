@@ -32,6 +32,12 @@ const routes = [
 		],
 	},
 	{
+		path: "/accounts",
+		name: "Accounts",
+		component: AccountsPage,
+		meta: { requiresAuth: true },
+	},
+	{
 		path: "/access_denied",
 		name: "Access Denied",
 		component: AccessDeniedPage,
@@ -46,7 +52,7 @@ const routes = [
 		component: DashboardLayout,
 		children: [
 			{
-				path: "",
+				path: "all/",
 				name: "All Apps",
 				component: AllAppsPage,
 				meta: { requiresAuth: true },
@@ -59,12 +65,6 @@ const routes = [
 			},
 			...appRoutes,
 		],
-	},
-	{
-		path: "/accounts",
-		name: "Accounts",
-		component: AccountsPage,
-		meta: { requiresAuth: true },
 	},
 ];
 

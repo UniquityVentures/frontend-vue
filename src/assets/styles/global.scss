@@ -25,12 +25,6 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    
-    // Style buttons to look like tonal variant instead of trying to set the variant property
-    .v-btn {
-        opacity: 0.8;
-        border: 1px solid rgba(0, 0, 0, 0.25) !important;
-    }
 }
 
 // v-list styles

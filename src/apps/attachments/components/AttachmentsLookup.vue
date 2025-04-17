@@ -1,7 +1,5 @@
 <template>
 	<ResponsiveDataTable 
-		:getToFunction="(item) => ({ name: 'Attachment', params: { attachmentId: item.id } })"
-		:headers="attachmentDefaultHeaders" 
 		:fetch="getAttachments" 
 		v-model:filters="filters" 
 		:templates="{ desktop: 'card', mobile: 'card' }"
@@ -49,11 +47,9 @@
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import DateChip from "@/components/DateChip.vue";
-import DeleteButton from "@/components/DeleteButton.vue";
 
 import { ref } from "vue";
-import { getAttachments, deleteAttachment } from "../api";
-import { attachmentDefaultHeaders } from "../config";
+import { getAttachments } from "../api";
 
 const props = defineProps({
 	title: {
