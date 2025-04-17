@@ -1,5 +1,5 @@
 <template>
-    <v-card link v-if="student" variant="flat" class="border position-relative">
+    <v-card link v-if="student" variant="flat" class="border position-relative" :to="{ name: 'Student', params: { studentId: student.id }}">
         <div class="menu-container">
             <slot name="menu"></slot>
         </div>
@@ -9,18 +9,13 @@
             <BatchChip :batchId="student.batch" /><br>
             <v-chip>Roll No: {{ student.roll_no }}</v-chip>
         </v-card-text>
-        <v-card-actions class="justify-center flex-wrap" >
-            <v-btn :to="{ name: 'Student', params: { studentId: student.id }}" size="small">View / Edit</v-btn>
-			<DeleteButton :action="() => deleteStudent(student?.id)" :name="'Student ' + student?.user_details?.full_name" />
-        </v-card-actions>
     </v-card>
 </template>
 
 <script setup>
 import BatchChip from "@/apps/batches/components/BatchChip.vue";
-import DeleteButton from "@/components/DeleteButton.vue";
 import { onMounted, ref } from "vue";
-import { getStudent, deleteStudent } from "../api";
+import { getStudent } from "../api";
 
 const props = defineProps({
 	student: Object,

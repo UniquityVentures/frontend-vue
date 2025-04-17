@@ -26,9 +26,6 @@
                             <BatchChip v-for="batchId in item.batches" v-bind:key="batchId" :batchId="batchId" />
                             <TeacherChip :teacherId="item.main_teacher" />
                         </v-card-text>
-						<v-card-actions>
-							<DeleteButton :action="() => deleteCourse(item?.id)" :name="'course ' + item?.name" />
-						</v-card-actions>
 					</v-card>
                 </v-col>
             </v-row>

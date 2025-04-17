@@ -1,7 +1,6 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import { getTeacher, deleteTeacher } from "../api";
-import DeleteButton from "@/components/DeleteButton.vue";
+import { getTeacher} from "../api";
 
 const props = defineProps({
 	teacher: {
@@ -36,8 +35,5 @@ onMounted(async () => {
                 {{ teacher.whatsapp }}
             </v-chip>
         </v-card-text>
-		<v-card-actions>
-			<DeleteButton :action="() => deleteTeacher(teacher?.id)" :name="'Teacher ' + teacher?.user_details?.full_name" />
-		</v-card-actions>
 	</v-card>
 </template>

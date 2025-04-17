@@ -27,7 +27,6 @@
 <script setup>
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { getCourses } from "../api";
-import { courseDefaultHeaders } from "../config";
 
 const props = defineProps({
 	filters: {

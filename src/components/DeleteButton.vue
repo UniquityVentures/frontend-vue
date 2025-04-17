@@ -1,7 +1,6 @@
 <template>
 	<v-btn
 		@click.prevent="dialogOpen = true"
-		variant="outlined"
 		prepend-icon="mdi-delete"
 		:loading="isSubmitting"
 		:disabled="isSubmitting"
@@ -14,7 +13,7 @@
 	<v-dialog max-width="500" v-model='dialogOpen'>
 		<v-card :title="'Deleting ' + name">
 			<v-card-text>
-				<p>Are you sure you want to delete {{name ? name : "this item"}}?</p>	
+				<p>Are you sure you want to delete "{{name ? name : "this item"}}"?</p>	
 				<p>This action is irreversible</p>	
 				<v-alert
 					v-if="error"

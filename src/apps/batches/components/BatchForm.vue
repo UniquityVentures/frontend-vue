@@ -38,7 +38,7 @@
         
         <v-col cols="12" md="6">
           <TeacherSelect
-			:multiple="true"
+			      :multiple="true"
             label="Other Teacher"
             v-model="formData.other_teachers"
           />
@@ -62,8 +62,10 @@
           ></v-checkbox>
         </v-col>
       </v-row>
-      
+    </v-card-text>
+    <v-card-text>
       <SubmitButton :onSubmit="submitForm" :submitText="actionName" />
+      <DeleteButton :action="() => deleteBatch(batch?.id)" :name="'batch ' + batch?.name" />
     </v-card-text>
   </v-card>
 </template>
@@ -73,6 +75,8 @@ import CourseSelect from "@/apps/courses/components/CourseSelect"
 import TeacherSelect from "@/apps/teachers/components/TeacherSelect"
 import SubmitButton from "@/components/SubmitButton.vue";
 import { onMounted, ref } from "vue";
+import DeleteButton from "@/components/DeleteButton.vue";
+import { deleteBatch } from "../api";
 
 const props = defineProps({
 	batch: {

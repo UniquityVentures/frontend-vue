@@ -36,11 +36,8 @@
 						<v-card-title class="text-subtitle-1">{{ item.name }}</v-card-title>
 						<v-card-subtitle>{{ item.file_type }}</v-card-subtitle>
 						<v-card-text>
-							<DateChip color="primary" :date="item.created_at" />
+							<DateChip color="primary" label="Created" :date="item.created_at" />
 						</v-card-text>
-						<v-card-actions>
-							<DeleteButton :action="() => deleteAttachment(item?.id)" :name="'Attachment ' + item?.name" />
-						</v-card-actions>
 					</v-card>
 				</v-col>
 			</v-row>

@@ -6,9 +6,9 @@
     <v-card-subtitle v-if="subtitle">
       {{ subtitle }}
     </v-card-subtitle>
-    
-    <v-card class="ma-2" variant="outlined">
-      <v-card-title class="text-subtitle-1">Basic Information:</v-card-title>
+    <v-card-text>
+    <v-card class="ma-2" variant="flat">
+      <v-card-title>Basic Information:</v-card-title>
       <v-card-text>
         <v-row>
           <v-col cols="12" md="6">
@@ -42,8 +42,8 @@
       </v-card-text>
     </v-card>
     
-    <v-card class="ma-2" variant="outlined">
-      <v-card-title class="text-subtitle-1">Dates:</v-card-title>
+    <v-card class="ma-2" variant="flat">
+      <v-card-title>Dates:</v-card-title>
       <v-card-text>
         <v-row>
           <v-col cols="12" md="6">
@@ -67,8 +67,8 @@
       </v-card-text>
     </v-card>
     
-    <v-card class="ma-2" variant="outlined">
-      <v-card-title class="text-subtitle-1">Settings:</v-card-title>
+    <v-card class="ma-2" variant="flat">
+      <v-card-title>Settings:</v-card-title>
       <v-card-text>
         <v-row>
           <v-col cols="12" md="4">
@@ -95,8 +95,8 @@
       </v-card-text>
     </v-card>
     
-    <v-card class="ma-2" variant="outlined">
-      <v-card-title class="text-subtitle-1">Recipients:</v-card-title>
+    <v-card class="ma-2" variant="flat">
+      <v-card-title>Recipients:</v-card-title>
       <v-card-text>
         <v-row>
           <v-col cols="12">
@@ -119,8 +119,8 @@
       </v-card-text>
     </v-card>
     
-    <v-card class="ma-2" variant="outlined">
-      <v-card-title class="text-subtitle-1">Attachments:</v-card-title>
+    <v-card class="ma-2" variant="flat">
+      <v-card-title>Attachments:</v-card-title>
       <v-card-text>
         <v-row>
           <v-col cols="12">
@@ -129,8 +129,11 @@
         </v-row>
       </v-card-text>
     </v-card>
-    
+    </v-card-text>
+    <v-card-text>
     <SubmitButton :onSubmit="() => props.action(formData)" :submitText="actionName" />
+    <DeleteButton :action="() => deleteAnnouncement(announcement?.id)" :name="'Announcement ' + announcement?.title" />
+    </v-card-text>
   </v-card>
 </template>
 
@@ -143,6 +146,8 @@ import SubmitButton from "@/components/SubmitButton.vue";
 import DateSelect from "@/components/DateSelect.vue";
 import AttachmentsInput from "@/apps/attachments/components/AttachmentsInput.vue";
 import { onMounted, ref } from "vue";
+import DeleteButton from "@/components/DeleteButton.vue";
+import { deleteAnnouncement } from "../api";
 
 const props = defineProps({
 	announcement: {

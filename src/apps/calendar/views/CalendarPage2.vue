@@ -1,7 +1,5 @@
 <template>
 	<v-container>
-		{{currentCalendarView}}
-
 		<vue-cal
 			:events="formattedEvents"
 			style="min-height: 500px;"
@@ -61,7 +59,6 @@ onMounted(() => {
 	fetchEvents();
 	if (router.currentRoute.value.query.date) {
 		currentCalendarView.value = "day";
-		console.log(currentCalendarView.value);
 	}
 });
 
