@@ -38,6 +38,9 @@
 						<v-card-text>
 							<DateChip color="primary" :date="item.created_at" />
 						</v-card-text>
+						<v-card-actions>
+							<DeleteButton :action="() => deleteAttachment(item?.id)" :name="'Attachment ' + item?.name" />
+						</v-card-actions>
 					</v-card>
 				</v-col>
 			</v-row>
@@ -49,8 +52,10 @@
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import DateChip from "@/components/DateChip.vue";
+import DeleteButton from "@/components/DeleteButton.vue";
+
 import { ref } from "vue";
-import { getAttachments } from "../api";
+import { getAttachments, deleteAttachment } from "../api";
 import { attachmentDefaultHeaders } from "../config";
 
 const props = defineProps({

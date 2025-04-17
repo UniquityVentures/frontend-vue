@@ -43,6 +43,9 @@
                         <v-card-text>
                             <TeacherChip label="Signed by" :teacher="item.signed_by_details" v-if="item.signed_by_details" />
                         </v-card-text>
+						<v-card-actions>
+							<DeleteButton :action="() => deleteAnnouncement(item?.id)" :name="'Announcement ' + item?.title" />
+						</v-card-actions>
                     </v-card>
                 </v-col>
             </v-row>
@@ -53,6 +56,9 @@
                     <v-list-item-title>{{ item.title }}</v-list-item-title>
                     <v-list-item-subtitle class="text-wrap">{{ item.description }}</v-list-item-subtitle>
 					<TeacherChip label="Signed by" :teacher="item.signed_by_details" v-if="item.signed_by_details" />
+						<v-list-item-action>
+							<DeleteButton :action="() => deleteAnnouncement(item?.id)" :name="'Announcement ' + item?.title" />
+						</v-list-item-action>
                 </v-list-item>
             </v-list>
         </template>
@@ -69,9 +75,10 @@ import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
 import ExportButton from "@/components/ExportButton.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
+import DeleteButton from "@/components/DeleteButton.vue";
 import { ref, computed, onMounted } from "vue";
 import DateRangeSelect from "../../../components/DateRangeSelect.vue";
-import { exportAnnouncements, getAnnouncements } from "../api";
+import { exportAnnouncements, getAnnouncements, deleteAnnouncement } from "../api";
 import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
 const props = defineProps({
 	defaultFilters: {

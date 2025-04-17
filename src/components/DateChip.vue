@@ -1,5 +1,5 @@
 <template> 
-	<v-chip :color="color" v-if="date">
+	<v-chip :to=" {name: 'Calendar', query: {'date': date}}" :color="color" v-if="date">
 		{{label ? `${label}: ` : ''}}{{displayDate(date)}}
 	</v-chip>
 </template>

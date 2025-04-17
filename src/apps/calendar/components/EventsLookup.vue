@@ -31,6 +31,9 @@
 					<v-list-item-subtitle>{{ item.description }}</v-list-item-subtitle>
 					<DateChip color="blue" label="Start" :date="item.start" />
 					<DateChip color="red" label="End" :date="item.end" />
+					<v-list-item-action>
+						<DeleteButton :action="() => deleteEvent(item?.id)" :name="'Event ' + item?.title" />
+					</v-list-item-action>
 				</v-list-item>
 			</v-list>
 		</template>
@@ -47,6 +50,9 @@
 						<v-card-text>
 							<TeacherChip label="Created by" :teacher="item.created_by_details" v-if="item.created_by_details" />
 						</v-card-text>
+						<v-card-actions>
+							<DeleteButton :action="() => deleteEvent(item?.id)" :name="'Event ' + item?.title" />
+						</v-card-actions>
 					</v-card>
 				</v-col>
 			</v-row>
@@ -59,9 +65,10 @@ import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
 import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
 import DateChip from "@/components/DateChip.vue";
+import DeleteButton from "@/components/DeleteButton.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { ref } from "vue";
-import { getEvents } from "../api";
+import { getEvents, deleteEvent } from "../api";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 const props = defineProps({
 	title: {

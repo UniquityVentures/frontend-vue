@@ -20,7 +20,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <v-list-item class="border" v-if="announcement">
+    <v-list-item link :to="{ name: 'Announcement', params: { announcementId: announcement.id }}" class="border" v-if="announcement">
         <v-list-item-title>{{ announcement.title }}</v-list-item-title>
         <v-list-item-subtitle class="text-wrap">{{ announcement.description }}</v-list-item-subtitle>
 		<TeacherChip label="Signed by" :teacher="announcement.signed_by_details" v-if="announcement.signed_by_details" />

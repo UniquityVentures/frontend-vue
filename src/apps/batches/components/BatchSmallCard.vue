@@ -1,6 +1,8 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import { getBatch } from "../api";
+import { getBatch, deleteBatch } from "../api";
+
+import DeleteButton from "@/components/DeleteButton.vue";
 
 const props = defineProps({
 	batch: {
@@ -35,5 +37,8 @@ onMounted(async () => {
                 No. of Courses: {{ batch.courses.length }}
             </v-chip>
         </v-card-text>
+		<v-card-actions>
+				<DeleteButton :action="() => deleteBatch(batch?.id)" :name="'batch ' + batch?.name" />
+		</v-card-actions>
     </v-card>
 </template>

@@ -12,6 +12,7 @@ const courseViewset = createViewset("api/allocation/courses", "courses");
 const getCourses = courseViewset.list;
 const getCourse = courseViewset.retrieve;
 const createCourse = courseViewset.create;
+const deleteCourse = courseViewset.delete;
 
 const getCourseInfoFromObj = (item) => ({
 	title: item.code,
@@ -32,6 +33,7 @@ export {
 	getCourseImage,
 	getCourseInfoFromObj,
 	updateCourse,
+	deleteCourse,
 	createCourse,
 	exportCourses,
 	importCourses,

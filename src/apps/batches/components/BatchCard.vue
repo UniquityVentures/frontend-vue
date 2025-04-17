@@ -17,15 +17,20 @@
             <v-chip color="primary" >Number of Students: {{ batch.students.length }}</v-chip>
             <v-chip color="primary" >Number of Courses: {{ batch.courses.length }}</v-chip>
             <v-chip :color="batch.is_active ? 'success' : 'error'" >Status: {{ batch.is_active ? 'Active' : 'Inactive' }}</v-chip>
+			<v-row>
+				<DeleteButton :action="() => deleteBatch(batch?.id)" :name="'batch ' + batch?.name" />
+			</v-row>
         </v-card-text>
     </v-card>
 </template>
 
 <script setup>
-import { getBatch, getBatchImage } from "@/apps/batches/api";
+import { getBatch, getBatchImage, deleteBatch } from "@/apps/batches/api";
 import { getTeacher } from "@/apps/teachers/api";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 import { onMounted, ref } from "vue";
+
+import DeleteButton from "@/components/DeleteButton.vue";
 
 const props = defineProps({ batchId: [Number, String], batch: Object });
 const otherTeachers = ref([]);
