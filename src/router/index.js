@@ -2,7 +2,8 @@
 import DashboardLayout from "@/layouts/DashboardLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 // Routes in Apps
-import appRoutes from "@/router/app";
+import adminRoutes from "@/router/adminApps";
+import studentRoutes from "@/router/studentApps";
 import { useAuthStore } from "@/stores/auth";
 import AccessDeniedPage from "@/views/AccessDeniedPage.vue";
 import AccountsPage from "@/views/AccountsPage.vue";
@@ -63,7 +64,8 @@ const routes = [
 				component: DashboardPage,
 				meta: { requiresAuth: true },
 			},
-			...appRoutes,
+			...adminRoutes,
+			...studentRoutes,
 		],
 	},
 ];

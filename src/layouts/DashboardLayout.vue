@@ -1,15 +1,13 @@
 <template>
 	<Suspense>
 		<v-app>
-			<v-navigation-drawer app v-model="leftDrawer"
-				color="secondary">
+			<v-navigation-drawer app v-model="leftDrawer" color="secondary">
 				<v-list dense>
 					<v-list-item>
-						<v-card class="mb-4" 
-							:title="user.first_name + ' ' + user.last_name"
+						<v-card class="mb-4" :title="user.first_name + ' ' + user.last_name"
 							:subtitle="account?.group_details?.name || 'No linked account'">
 							<template v-slot:append>
-								<v-btn icon="mdi-logout" @click="logoutHandler" size="small" variant="text"/>
+								<v-btn icon="mdi-logout" @click="logoutHandler" size="small" variant="text" />
 							</template>
 						</v-card>
 					</v-list-item>
@@ -38,45 +36,39 @@
 	</Suspense>
 </template>
 
-<style>
-</style>
 <script setup>
-import { useAuthStore } from "@/stores/auth"; // Pinia store
+import { useAuthStore } from "@/stores/auth";
 import { computed, ref } from "vue";
 import { useDisplay } from "vuetify/lib/framework.mjs";
-
 import { useRouter } from "vue-router";
-
 import RecursiveList from "@/components/RecursiveList.vue";
-
-import appRoutes from "@/router/app";
+import adminRoutes from "@/router/adminApps";
+import studentRoutes from "@/router/studentApps";
 import { getAppsMeta } from "@/router/menu";
 
 const { mdAndUp } = useDisplay();
 const leftDrawer = ref(mdAndUp.value);
 const router = useRouter();
 const authStore = useAuthStore();
-
 const appsMenu = ref();
-
 const user = computed(() => authStore.user);
 const account = computed(() => authStore.account);
 
 function logoutHandler() {
 	router
-		.push({ name: "Login" })
-		.then(() => {
-			authStore.logout();
-		})
-		.catch((error) => {
-			console.error("Navigation failed:", error);
-			authStore.logout(); // Still logout even if navigation fails
-		});
+	.push({ name: "Login" })
+	.then(() => {
+		authStore.logout();
+	})
+	.catch((error) => {
+		console.error("Navigation failed:", error);
+		authStore.logout(); 
+	});
 }
 
 // Equivalent to awaiting the funciton and then assigning to appsMenu.value
 // Couldn't await because there was no gaurantee there would be a Suspense component at the root
-getAppsMeta(appRoutes).then((menu) => {
+getAppsMeta(adminRoutes).then((menu) => {
 	appsMenu.value = menu;
 });
 </script>

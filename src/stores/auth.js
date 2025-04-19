@@ -25,7 +25,7 @@ export const useAuthStore = defineStore("auth", {
 	},
 
 	actions: {
-		async login(credentials) {
+		async login(credentials) { 
 			// First get tokens
 			const response = await api.post("api/token/", credentials);
 			this.setTokens({

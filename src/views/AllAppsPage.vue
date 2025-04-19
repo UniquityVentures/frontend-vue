@@ -31,10 +31,10 @@
 
 <script setup>
 import { ref, watch } from "vue";
+import adminRoutes from "@/router/adminApps";
+import studentRoutes from "@/router/studentApps";
 
-import appRoutes from "@/router/app";
-
-const apps = ref(appRoutes.map((route) => route.meta));
+const apps = ref(adminRoutes.map((route) => route.meta));
 
 const filteredApps = ref([...apps.value]);
 
