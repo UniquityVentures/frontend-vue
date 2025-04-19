@@ -66,9 +66,15 @@ function logoutHandler() {
 	});
 }
 
-// Equivalent to awaiting the funciton and then assigning to appsMenu.value
-// Couldn't await because there was no gaurantee there would be a Suspense component at the root
-getAppsMeta(adminRoutes).then((menu) => {
+// Choose routes based on account type
+let routesToUse = studentRoutes; // Default to student routes
+
+// Check account type and select appropriate routes
+if (account.value?.group_details?.name === "Admin") {
+	routesToUse = adminRoutes;
+}
+
+getAppsMeta(routesToUse).then((menu) => {
 	appsMenu.value = menu;
 });
 </script>

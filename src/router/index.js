@@ -64,8 +64,20 @@ const routes = [
 				component: DashboardPage,
 				meta: { requiresAuth: true },
 			},
-			...adminRoutes,
-			...studentRoutes,
+			...adminRoutes.map(route => ({
+				...route,
+				meta: { 
+					...route.meta,
+					accountType: 'Admin'
+				}
+			})),
+			...studentRoutes.map(route => ({
+				...route,
+				meta: { 
+					...route.meta,
+					accountType: 'Student'
+				}
+			})),
 		],
 	},
 ];
@@ -84,6 +96,16 @@ router.beforeEach((to, from, next) => {
 			return next({ name: "Login" });
 		}
 	}
+	
+	// Check account type restrictions
+	if (to.matched.some((record) => record.meta.accountType)) {
+		const accountType = authStore.account?.group_details?.name;
+		if (to.matched.some((record) => 
+			record.meta.accountType && record.meta.accountType !== accountType)) {
+			return next({ name: "Access Denied" });
+		}
+	}
+	
 	if (
 		!to.matched.every((route) =>
 			route.meta?.permission
