@@ -8,8 +8,14 @@ import coursesRoutes from "@/apps/courses/routes";
 import financesRoutes from "@/apps/finances/routes";
 import studentsRoutes from "@/apps/students/routes";
 import teachersRoutes from "@/apps/teachers/routes";
+import AdminDashboardPage from "@/views/Dashboards/AdminDashboardPage.vue";
 
 export default [
+	{
+		path: "dashboard/",
+		name: "Dashboard",
+		component: AdminDashboardPage,
+	},
 	...batchesRoutes,
 	...coursesRoutes,
 	...studentsRoutes,

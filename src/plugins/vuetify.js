@@ -71,6 +71,9 @@ const vuetify = createVuetify({
 		VRow: { dense: true },
 		VCol: { dense: true },
 		VBtn: { variant: "tonal" },
+		VNavigationDrawer: {
+			touchless: true  // Disables swipe gestures
+		},
 	},
 });
 
