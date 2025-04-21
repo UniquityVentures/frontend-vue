@@ -7,7 +7,7 @@ import calendarRoutes from "@/apps/calendar/routes";
 import coursesRoutes from "@/apps/courses/routes";
 import financesRoutes from "@/apps/finances/routes";
 import studentsRoutes from "@/apps/students/routes";
-import teachersRoutes from "@/apps/teachers/routes";
+import teachersAdminRoutes from "@/apps/teachers/routes/adminRoutes";
 import AdminDashboardPage from "@/views/Dashboards/AdminDashboardPage.vue";
 
 export default [
@@ -19,7 +19,7 @@ export default [
 	...batchesRoutes,
 	...coursesRoutes,
 	...studentsRoutes,
-	...teachersRoutes,
+	...teachersAdminRoutes,
 	...announcementsAdminRoutes,
 	...assignmentsRoutes,
 	...attachmentRoutes,

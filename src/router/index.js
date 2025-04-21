@@ -102,10 +102,11 @@ router.beforeEach((to, from, next) => {
 	const authStore = useAuthStore();
 	
 	// If user is authenticated but routes haven't been added yet
-	if (authStore.isAuthenticated && authStore.account) {
+	if (authStore.account) {
 		const accountType = authStore.account?.group_details?.name;
 		// Check if we need to add routes
 		if (router.getRoutes().filter(r => r.meta?.dynamic).length === 0) {
+			console.log("adding routes");
 			addAccountRoutes(accountType);
 			// Return to same route after adding routes to refresh the navigation
 			return next(to.fullPath);
