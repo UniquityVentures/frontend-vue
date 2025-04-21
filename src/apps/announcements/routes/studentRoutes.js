@@ -1,8 +1,7 @@
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import StudentAnnouncementsPage from "@/apps/announcements/views/StudentAnnouncementsPage.vue";
-import AnnouncementPage from "@/apps/announcements/views/AnnouncementPage.vue";
-
+import StudentAnnouncementPage from "@/apps/announcements/views/StudentAnnouncementPage.vue";
 export default [
     {
         path: "announcements/",
@@ -42,7 +41,7 @@ export default [
                 children: [
                     {
                         path: "view/",
-                        component: AnnouncementPage,
+                        component: StudentAnnouncementPage,
                         name: "Announcement",
                         props: true,
                     },

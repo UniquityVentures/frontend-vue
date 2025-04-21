@@ -13,16 +13,13 @@
 
               <v-card-text>
                 <h4 class="text-subtitle-1">Created by:</h4>
-                <v-list lines="2">
-                  <v-list-item :title="event?.created_by_details?.user_details?.full_name"
-                    :subtitle="event?.created_by_details?.user_details?.email" :to="'#'" />
-                </v-list>
+                <TeacherListItem :teacher="event?.created_by_details" />
               </v-card-text>
 
               <v-card-text>
                 <h4 class="text-subtitle-1">Event Time:</h4>
-                <DateChip label="Start" color="primary" date="event?.start" />
-                <DateChip label="End" color="red" date="event?.end" />
+                <DateChip label="Start" color="primary" :date="event?.start" />
+                <DateChip label="End" color="red" :date="event?.end" />
               </v-card-text>
 
               <v-card-text>
@@ -72,6 +69,7 @@ import { onMounted, ref } from "vue";
 import { getEvent } from "../api";
 import DateChip from "@/components/DateChip.vue";
 import DeleteButton from "@/components/DeleteButton.vue";
+import TeacherListItem from "@/apps/teachers/components/TeacherListItem.vue";
 import { deleteEvent } from "../api";
 
 const event = ref({});
@@ -81,16 +79,6 @@ const courseDetails = ref([]);
 const props = defineProps({
   eventId: [Number, String],
 });
-
-const formatDate = (dateString) => {
-  return new Date(dateString).toLocaleString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-};
 
 const fetchDetails = async () => {
   event.value = await getEvent(props.eventId);

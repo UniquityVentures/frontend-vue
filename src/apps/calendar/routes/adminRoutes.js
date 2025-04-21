@@ -1,0 +1,84 @@
+import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
+import EmptyLayout from "@/layouts/EmptyLayout.vue";
+import CalendarPage from "../views/CalendarPage.vue";
+import EventPage from "../views/EventPage.vue";
+import EventsPage from "../views/EventsPage.vue";
+import CalendarPage2 from "../views/CalendarPage2.vue";
+
+export default [
+	{
+		path: "calendar/",
+		component: AppSideBarBreadcrumbsLayout,
+		meta: {
+			getDisplayName: () => "Calendar",
+			defaultRoute: "Calendar",
+			description: "View and manage calendar",
+			getMenu: () => [
+				{
+					title: "Calendar",
+					to: { name: "Calendar" },
+				},
+				{
+					title: "Events",
+					to: { name: "Events" },
+				},
+			],
+			icon: "mdi-calendar",
+		},
+		children: [
+			{
+				path: "calendar/",
+				component: CalendarPage2,
+				name: "Calendar",
+			},
+			{
+				path: "events/",
+				component: EmptyLayout,
+				meta: {
+					defaultRoute: "Events",
+					getDisplayName: () => "Events",
+				},
+				children: [
+					{
+						path: "",
+						component: EventsPage,
+						name: "Events",
+					},
+					{
+						path: ":eventId/",
+						component: EmptyLayout,
+						props: true,
+						meta: {
+							defaultRoute: "Event",
+							getDisplayName: () => "Event",
+							getMenu: (params) => [
+								{
+									title: "View Event",
+									to: { name: "Event", params },
+								},
+								{
+									title: "Edit Event",
+									to: { name: "EditEvent", params },
+								},
+							],
+						},
+						children: [
+							{
+								path: "all/",
+								component: EventPage,
+								name: "Event",
+								props: true,
+							},
+							{
+								path: "edit/",
+								component: EventPage, // Replace with EditEventPage when available
+								name: "EditEvent",
+								props: true,
+							},
+						],
+					},
+				],
+			},
+		],
+	},
+];

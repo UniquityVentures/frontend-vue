@@ -14,6 +14,7 @@ export const useAuthStore = defineStore("auth", {
 	getters: {
 		isAuth: (state) => !!state.access,
 		getUser: (state) => state.user,
+		getAccount: (state) => state.account,
 		getAccess: (state) => state.access,
 		getRefresh: (state) => state.refresh,
 		hasPermission: (state) => (permission) => {

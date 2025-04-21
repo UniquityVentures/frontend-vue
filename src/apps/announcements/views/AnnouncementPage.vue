@@ -31,19 +31,13 @@
                   <div v-if="announcement?.batches?.length > 0">
                     <h5 class="text-subtitle-2 mt-2">Batches:</h5>
                     <v-chip-group column>
-                      <v-chip v-for="batch in batchDetails" :key="batch.id" color="primary" variant="outlined"
-                        :to="{ name: 'Batch', params: { batchId: batch.id } }" link>
-                        {{ batch.name }}
-                      </v-chip>
+                      <BatchChip v-for="batch in batchDetails" :key="batch.id" :batch="batch" />
                     </v-chip-group>
                   </div>
                   <div v-if="announcement?.courses?.length > 0">
                     <h5 class="text-subtitle-2 mt-2">Courses:</h5>
                     <v-chip-group column>
-                      <v-chip v-for="course in courseDetails" :key="course.id" color="secondary" variant="outlined"
-                        :to="{ name: 'Course', params: { courseId: course.id } }" link>
-                        {{ course.name }} ({{ course.code }})
-                      </v-chip>
+                      <CourseChip v-for="course in courseDetails" :key="course.id" :course="course" />
                     </v-chip-group>
                   </div>
                 </div>
@@ -69,6 +63,8 @@ import { getBatch } from "@/apps/batches/api";
 import { getCourse } from "@/apps/courses/api";
 import TeacherListItem from "@/apps/teachers/components/TeacherListItem.vue";
 import DateChip from "@/components/DateChip.vue";
+import BatchChip from "@/apps/batches/components/BatchChip.vue";
+import CourseChip from "@/apps/courses/components/CourseChip.vue";
 import { onMounted, ref } from "vue";
 import { getAnnouncement } from "../api";
 

@@ -18,9 +18,6 @@
             <v-chip color="primary" >Number of Courses: {{ batch.courses.length }}</v-chip>
             <v-chip :color="batch.is_active ? 'success' : 'error'" >Status: {{ batch.is_active ? 'Active' : 'Inactive' }}</v-chip>
         </v-card-text>
-        <v-card-text>
-            <v-btn color="primary" :to="{ name: 'EditBatch', params: { id: batch.id } }">Edit</v-btn>
-        </v-card-text>
     </v-card>
 </template>
 
