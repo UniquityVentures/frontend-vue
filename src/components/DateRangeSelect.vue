@@ -9,7 +9,7 @@
 		multiple="range"
 		prepend-icon="mdi-calendar"
 		clearable
-		color="primary"
+		color="accent"
 		:rules="rules"
 	/>
 </template>

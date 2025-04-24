@@ -2,7 +2,7 @@
   <v-card v-if="student">
     <!-- Student Avatar/Image -->
     <v-img class="student-avatar-container" height="180" cover>
-      <v-avatar size="120" color="primary" class="ma-4">
+      <v-avatar size="120" color="accent" class="ma-4">
         <v-icon size="64">mdi-account-circle</v-icon>
       </v-avatar>
     </v-img>

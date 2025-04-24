@@ -61,7 +61,7 @@
               v-model="formData.release_at"
               :rules="[v => !!v || 'Release date is required']" 
               required
-              color="primary"
+              color="accent"
             />
           </v-col>
 
@@ -71,7 +71,7 @@
               v-model="formData.due_at"
               :rules="[v => !!v || 'Due date is required']" 
               required
-              color="primary"
+              color="accent"
             />
           </v-col>
         </v-row>

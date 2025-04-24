@@ -28,7 +28,7 @@ onMounted(async () => {
         <v-card-title class="text-subtitle-1">{{ batch.name }}</v-card-title>
         <v-card-subtitle>{{ batch.main_teacher_details?.user_details?.full_name || "Loading..." }}</v-card-subtitle>
         <v-card-text>
-            <v-chip prepend-icon="mdi-account-group" color="primary">
+            <v-chip prepend-icon="mdi-account-group" color="accent">
                 No of Students: {{ batch.students.length }}
             </v-chip>
             <v-chip prepend-icon="mdi-book-open-variant" color="blue">

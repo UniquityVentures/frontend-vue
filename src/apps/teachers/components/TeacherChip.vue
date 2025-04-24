@@ -3,7 +3,7 @@
     <v-chip
       v-for="teacher in teachers"
       :key="teacher.id"
-      color="primary"
+      color="accent"
       link
       :to="{ name: 'Teacher', params: { teacherId: teacher.id } }"
     >
@@ -14,7 +14,7 @@
   
   <v-chip
     v-else-if="teachers?.id"
-    color="primary"
+    color="accent"
     link
     :to="{ name: 'Teacher', params: { teacherId: teachers.id } }"
   >

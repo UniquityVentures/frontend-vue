@@ -44,7 +44,7 @@
 
 							<v-card-text>
 								<h4 class="text-subtitle-1">Dates:</h4>
-								<DateChip color="primary" label="Release" :date="assignment?.release_at" />
+								<DateChip color="accent" label="Release" :date="assignment?.release_at" />
 								<DateChip color="red" label="Due" :date="assignment?.due_at" />
 							</v-card-text>
 

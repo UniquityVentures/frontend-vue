@@ -4,7 +4,7 @@
       v-for="(item, index) in course"
       :key="item.id"
       v-bind="chipProps"
-      color="primary"
+      color="accent"
       link
       :to="{ name: 'Course', params: { courseId: item.id } }"
     >
@@ -17,7 +17,7 @@
     v-else-if="course?.id"
     v-bind="chipProps"
     class="course-chip"
-    color="primary"
+    color="accent"
     link
     :to="{ name: 'Course', params: { courseId: course.id } }"
   >

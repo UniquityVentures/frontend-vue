@@ -34,7 +34,7 @@
 						<v-card-title class="text-subtitle-1">{{ item.name }}</v-card-title>
 						<v-card-subtitle>{{ item.file_type }}</v-card-subtitle>
 						<v-card-text>
-							<DateChip color="primary" label="Created" :date="item.created_at" />
+							<DateChip color="accent" label="Created" :date="item.created_at" />
 						</v-card-text>
 					</v-card>
 				</v-col>

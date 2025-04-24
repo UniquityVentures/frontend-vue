@@ -5,7 +5,7 @@
     <v-card-text>
       <v-list-item v-if="student.guardian1_name" class="border mb-2">
         <template v-slot:prepend>
-          <v-avatar color="primary" variant="tonal">
+          <v-avatar color="accent" variant="tonal">
             <v-icon>mdi-account-child</v-icon>
           </v-avatar>
         </template>
@@ -15,7 +15,7 @@
           {{ student.guardian1_email }}
         </v-list-item-subtitle>
 
-				<v-chip color="primary" size="small" :href="`tel:${student.guardian1_phone}`">
+				<v-chip color="accent" size="small" :href="`tel:${student.guardian1_phone}`">
 					<v-icon start size="small">mdi-phone</v-icon>
 					{{ student.guardian1_phone }}
 				</v-chip>
@@ -28,7 +28,7 @@
 
       <v-list-item v-if="student.guardian2_name" class="border">
         <template v-slot:prepend>
-          <v-avatar color="primary" variant="tonal">
+          <v-avatar color="accent" variant="tonal">
             <v-icon>mdi-account-child</v-icon>
           </v-avatar>
         </template>
@@ -38,7 +38,7 @@
           {{ student.guardian2_email }}
         </v-list-item-subtitle>
 
-				<v-chip color="primary" size="small" :href="`tel:${student.guardian2_phone}`">
+				<v-chip color="accent" size="small" :href="`tel:${student.guardian2_phone}`">
 					<v-icon start size="small">mdi-phone</v-icon>
 					{{ student.guardian2_phone }}
 				</v-chip>

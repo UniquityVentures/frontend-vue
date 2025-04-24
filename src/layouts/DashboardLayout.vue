@@ -22,7 +22,7 @@
 
 				</v-list>
 			</v-navigation-drawer>
-			<v-app-bar app color="primary" dark>
+			<v-app-bar app color="secondary" dense elevation="1">
 				<v-app-bar-nav-icon @click.stop="leftDrawer = !leftDrawer"></v-app-bar-nav-icon>
 				<v-toolbar-title>School ERP Dashboard</v-toolbar-title>
 			</v-app-bar>

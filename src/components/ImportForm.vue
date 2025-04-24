@@ -8,12 +8,12 @@
                         accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                         outlined :error-messages="fileError" @update:model-value="fileError = ''"></v-file-input>
 
-                    <v-btn color="primary" @click="downloadTemplate" class="mt-4">
+                    <v-btn color="accent" @click="downloadTemplate" class="mt-4">
                         <v-icon left>mdi-download</v-icon>
                         Download Template
                     </v-btn>
 
-                    <v-btn type="submit" color="primary" class="mt-4 ml-4" :loading="loading" :disabled="!file">
+                    <v-btn type="submit" color="accent" class="mt-4 ml-4" :loading="loading" :disabled="!file">
                         Validate File
                     </v-btn>
                 </div>
@@ -80,7 +80,7 @@
                         </ul>
                     </v-alert>
 
-                    <v-btn @click="resetForm" color="primary" class="mt-4">
+                    <v-btn @click="resetForm" color="accent" class="mt-4">
                         Start New Import
                     </v-btn>
                 </div>

@@ -9,7 +9,7 @@
                     <v-list-item-title>{{ student.user_details?.full_name || 'Unnamed Student' }}</v-list-item-title>
                     <v-list-item-subtitle>{{ student.student_no || 'No student number' }}</v-list-item-subtitle>
                     <div class="d-flex gap-2 mt-2">
-                        <v-chip v-if="student.status" color="primary" size="small">
+                        <v-chip v-if="student.status" color="accent" size="small">
                             {{ student.status }}
                         </v-chip>
                         <v-chip v-if="student.grade_level" color="secondary" size="small">

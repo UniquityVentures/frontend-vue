@@ -8,7 +8,7 @@
             rounded="lg"
         >
             <template v-slot:prepend>
-                <v-avatar color="primary">
+                <v-avatar color="accent">
                     <v-icon icon="mdi-account" color="white"></v-icon>
                 </v-avatar>
             </template>
@@ -21,7 +21,7 @@
         </v-list-item>
 
         <div class="d-flex align-center mb-2">
-            <v-icon icon="mdi-clock-start" class="mr-2" color="primary"></v-icon>
+            <v-icon icon="mdi-clock-start" class="mr-2" color="accent"></v-icon>
             <span>{{ new Date(event.start).toLocaleString() }}</span>
         </div>
 
@@ -42,7 +42,7 @@
                 <v-chip color="success" size="small">School Wide</v-chip>
             </div>
             <div v-else class="d-flex flex-wrap gap-2">
-                <v-chip color="primary" size="small">
+                <v-chip color="accent" size="small">
                     {{ event.batches?.length }} Batch(s)
                 </v-chip>
                 <v-chip color="secondary" size="small">

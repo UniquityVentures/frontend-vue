@@ -18,7 +18,7 @@
 
               <v-card-text>
                 <h4 class="text-subtitle-1">Dates:</h4>
-                <DateChip color="primary" label="Release" :date="announcement.release_at" />
+                <DateChip color="accent" label="Release" :date="announcement.release_at" />
                 <DateChip color="red" label="Expiry" :date="announcement.expriy_at" />
               </v-card-text>
 
@@ -31,7 +31,7 @@
                   <div v-if="announcement?.batches?.length > 0">
                     <h5 class="text-subtitle-2 mt-2">Batches:</h5>
                     <v-chip-group column>
-                      <v-chip v-for="batch in batchDetails" :key="batch.id" color="primary" variant="outlined"
+                      <v-chip v-for="batch in batchDetails" :key="batch.id" color="accent" variant="outlined"
                         :to="{ name: 'Batch', params: { batchId: batch.id } }" link>
                         {{ batch.name }}
                       </v-chip>

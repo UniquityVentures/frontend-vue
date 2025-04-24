@@ -58,7 +58,7 @@
         </template>
         <template #actions-slot>
             <ExportButton :exportFunction="exportAnnouncements" title="Export Data in this Table" v-model:filters="filters" />
-            <v-btn variant="text" color="primary" :to="{ name: 'CreateAnnouncement' }">Create New Announcement</v-btn>
+            <v-btn variant="text" color="accent" :to="{ name: 'CreateAnnouncement' }">Create New Announcement</v-btn>
         </template>
     </ResponsiveDataTable>
 </template>

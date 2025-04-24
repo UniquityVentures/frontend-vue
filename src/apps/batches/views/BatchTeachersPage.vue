@@ -39,7 +39,7 @@
 				/>
             </v-card-text>
             <v-card-actions>
-                <SubmitButton submitText="Add Selected Teachers to Batch" :onSubmit="addTeachers" color="primary" />
+                <SubmitButton submitText="Add Selected Teachers to Batch" :onSubmit="addTeachers" color="accent" />
             </v-card-actions>
         </v-card>
         <v-card class="column-item">

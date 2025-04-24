@@ -2,7 +2,7 @@
 	<v-card>
 		<v-card-item>
 			<template v-slot:prepend>
-				<v-icon icon="mdi-account-school" size="large" color="primary"></v-icon>
+				<v-icon icon="mdi-account-school" size="large" color="accent"></v-icon>
 			</template>
 			<v-card-title>{{title}} Overview</v-card-title>
 		</v-card-item>
@@ -10,7 +10,7 @@
 		<v-card-text>
 			<v-row v-if="loading">
 				<v-col cols="12" class="text-center">
-					<v-progress-circular indeterminate color="primary"></v-progress-circular>
+					<v-progress-circular indeterminate color="accent"></v-progress-circular>
 				</v-col>
 			</v-row>
 			<v-row v-else-if="error">
@@ -22,7 +22,7 @@
 				<v-col cols="6" v-for="key in Object.keys(stats)">
 					<v-card variant="outlined">
 						<v-card-item>
-							<div class="text-h4 text-primary text-center">{{stats[key]}}</div>
+							<div class="text-h5 text-accent text-center">{{stats[key]}}</div>
 							<div class="text-subtitle-2 text-center">{{toHeaderCase(key)}}</div>
 						</v-card-item>
 					</v-card>

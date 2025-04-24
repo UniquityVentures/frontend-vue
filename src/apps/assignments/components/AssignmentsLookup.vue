@@ -35,7 +35,7 @@
 						<v-card-title class="text-subtitle-1">{{ item.title }}</v-card-title>
 						<v-card-subtitle class="text-wrap">{{ item.description.slice(0, 100) }}...</v-card-subtitle>
 						<v-card-text>
-							<v-chip color="primary">Course: {{ item.course_details.name }} - {{ item.course_details.code }}</v-chip>
+							<v-chip color="accent">Course: {{ item.course_details.name }} - {{ item.course_details.code }}</v-chip>
 							<DateChip label="Release" color="green" :date="item.release_at" />
 							<DateChip label="Due" color="red" :date="item.due_at" />
 						</v-card-text>

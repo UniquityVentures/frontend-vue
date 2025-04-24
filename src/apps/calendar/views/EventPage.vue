@@ -21,7 +21,7 @@
 
               <v-card-text>
                 <h4 class="text-subtitle-1">Event Time:</h4>
-                <DateChip label="Start" color="primary" date="event?.start" />
+                <DateChip label="Start" color="accent" date="event?.start" />
                 <DateChip label="End" color="red" date="event?.end" />
               </v-card-text>
 
@@ -34,7 +34,7 @@
                   <div v-if="event?.batches?.length > 0">
                     <h5 class="text-subtitle-2 mt-2">Batches:</h5>
                     <v-chip-group column>
-                      <v-chip v-for="batch in batchDetails" :key="batch.id" color="primary" variant="outlined"
+                      <v-chip v-for="batch in batchDetails" :key="batch.id" color="accent" variant="outlined"
                         :to="{ name: 'Batch', params: { batchId: batch.id } }" link>
                         {{ batch.name }}
                       </v-chip>

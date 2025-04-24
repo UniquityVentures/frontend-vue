@@ -5,21 +5,21 @@
             {{ batch.name }}
         </v-card-title>
         <v-card-text>
-            <span class="text-primary">Head Teacher:</span><br>
+            <span class="text-accent">Head Teacher:</span><br>
             <TeacherChip :teacher="batch.main_teacher_details" />
         </v-card-text>
         <v-card-text v-if="otherTeachers.length">
-            <span class="text-primary">Other Teachers:</span><br>
+            <span class="text-accent">Other Teachers:</span><br>
             <TeacherChip v-for="teacher in otherTeachers" :key="teacher.id" :teacher="teacher"/>
         </v-card-text>
         <v-card-text>
-            <v-chip color="primary" >Grade: {{ batch.standard }}</v-chip>
-            <v-chip color="primary" >Number of Students: {{ batch.students.length }}</v-chip>
-            <v-chip color="primary" >Number of Courses: {{ batch.courses.length }}</v-chip>
+            <v-chip color="accent" >Grade: {{ batch.standard }}</v-chip>
+            <v-chip color="accent" >Number of Students: {{ batch.students.length }}</v-chip>
+            <v-chip color="accent" >Number of Courses: {{ batch.courses.length }}</v-chip>
             <v-chip :color="batch.is_active ? 'success' : 'error'" >Status: {{ batch.is_active ? 'Active' : 'Inactive' }}</v-chip>
         </v-card-text>
         <v-card-text>
-            <v-btn color="primary" :to="{ name: 'EditBatch', params: { id: batch.id } }">Edit</v-btn>
+            <v-btn color="accent" :to="{ name: 'EditBatch', params: { id: batch.id } }">Edit</v-btn>
         </v-card-text>
     </v-card>
 </template>
