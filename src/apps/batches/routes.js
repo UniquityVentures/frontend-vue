@@ -158,19 +158,19 @@ export default [
 						props: true,
 						component: EmptyLayout,
 						meta: {
-							getDisplayName: () => "Attendance",
+							getDisplayName: () => "Batch Attendance",
 							defaultRoute: "BatchAttendance",
+							getMenu: (props) => [
+								{
+									title: "All Attendance Records",
+									to: { name: "BatchAttendance", props },
+								},
+								{
+									title: "Mark Attendance",
+									to: { name: "BatchMarkAttendance", props },
+								},
+							],
 						},
-						getMenu: (props) => [
-							{
-								title: "All Attendance Records",
-								to: { name: "BatchAttendance", props },
-							},
-							{
-								title: "Mark Attendance",
-								to: { name: "BatchMarkAttendance", props },
-							},
-						],
 						children: [
 							{
 								path: "all/",
