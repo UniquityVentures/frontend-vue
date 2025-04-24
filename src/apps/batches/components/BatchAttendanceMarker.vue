@@ -43,7 +43,7 @@
     </v-card>
     <ResponsiveDataTable :fetch="getStudents" class="column-item"
         v-model:filters="filters" title="Select Absentees" subtitle="Select students who are absent"
-        :templates="{ desktop: 'card', mobile: 'card' }">
+        :templates="{ desktop: 'card', mobile: 'card' }" page_size="50">
         <template #filters-slot>
             <v-text-field label="Search" v-model="filters.name" />
         </template>

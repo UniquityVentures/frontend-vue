@@ -1,7 +1,7 @@
 <template>
   <ResponsiveDataTable :fetch="getAttendanceRecords" v-model:filters="filters"
     :title="`Attendance Records for ${batch.name}`" :subtitle="`Select a date to view attendance records`"
-    :templates="{ desktop: 'card', mobile: 'list' }">
+    :templates="{ desktop: 'card', mobile: 'list' }" page_size="50">
     <template #filters-slot>
       <v-row>
         <v-col cols="12" sm="6" md="3" lg="2">

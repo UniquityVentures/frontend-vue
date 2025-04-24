@@ -107,12 +107,8 @@ export default [
 							to: { name: "BatchStudents", props },
 						},
 						{
-							title: "Attendance Records",
-							to: { name: "BatchAttendancePage", props },	
-						},
-						{
-							title: "Mark Attendance",
-							to: { name: "BatchMarkAttendance", props },
+							title: "Attendance",
+							to: { name: "BatchAttendance", props },
 						},
 					],
 				},
@@ -158,16 +154,37 @@ export default [
 						component: BatchStudentsPage,
 					},
 					{
-						path: "mark-attendance/",
-						props: true,
-						name: "BatchMarkAttendance",
-						component: BatchMarkAttendancePage,
-					},
-					{
 						path: "attendance/",
 						props: true,
-						name: "BatchAttendancePage",
-						component: BatchAttendancePage,
+						component: EmptyLayout,
+						meta: {
+							getDisplayName: () => "Attendance",
+							defaultRoute: "BatchAttendance",
+						},
+						getMenu: (props) => [
+							{
+								title: "All Attendance Records",
+								to: { name: "BatchAttendance", props },
+							},
+							{
+								title: "Mark Attendance",
+								to: { name: "BatchMarkAttendance", props },
+							},
+						],
+						children: [
+							{
+								path: "all/",
+								props: true,
+								name: "BatchAttendance",
+								component: BatchAttendancePage,
+							},
+							{
+								path: "mark/",
+								props: true,
+								name: "BatchMarkAttendance",
+								component: BatchMarkAttendancePage,
+							},
+						]	
 					},
 				],
 			},

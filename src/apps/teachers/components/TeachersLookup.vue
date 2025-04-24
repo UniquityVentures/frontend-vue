@@ -1,6 +1,8 @@
 <template>
 	<ResponsiveDataTable :fetch="getTeachers" v-model:filters="filters"
-		title="Teachers" subtitle="Teachers Master List" :templates="{ desktop: 'card', mobile: 'card' }">
+		title="Teachers" subtitle="Teachers Master List" 
+		:templates="{ desktop: 'card', mobile: 'card' }"
+		page_size="50">
 		<template #filters-slot>
 			<v-row>
 				<v-col cols="12" sm="6" md="3" lg="2">
@@ -16,7 +18,7 @@
 		</template>
 		<template #cards-slot="{ items }">
 			<v-row>
-				<v-col cols="12" md="4" lg="3" v-for="item in items" :key="item.id">
+				<v-col cols="6" md="3" lg="2" v-for="item in items" :key="item.id">
 					<TeacherSmallCard :teacher="item" />
 				</v-col>
 			</v-row>
