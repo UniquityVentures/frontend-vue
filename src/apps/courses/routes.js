@@ -10,6 +10,7 @@ import EditCoursePage from "./views/EditCoursePage.vue";
 import CourseAnnouncementsPage from "./views/CourseAnnouncementsPage.vue";
 import CourseAssignmentsPage from "./views/CourseAssignmentsPage.vue";
 import CourseSyllabusPage from "./views/CourseSyllabusPage.vue";
+
 export default [
 	{
 		path: "courses/",
@@ -120,9 +121,37 @@ export default [
 					},
 					{
 						path: "syllabus/",
-						component: CourseSyllabusPage,
-						name: "CourseSyllabus",
+						component: EmptyLayout,
+						defaultRoute: "CourseSyllabus",
 						props: true,
+						meta: {
+							getDisplayName: () => "Course Syllabus",
+							defaultRoute: "CourseSyllabus",
+							getMenu: (props) => [
+								{
+									title: "View Syllabus",
+									to: { name: "CourseSyllabus", params: props },
+								},
+								{
+									title: "Edit Syllabus",
+									to: { name: "CourseEditSyllabus", params: props },
+								},
+							],
+						},
+						children: [
+							{
+								path: "view/",
+								component: CourseSyllabusPage,
+								name: "CourseSyllabus",
+								props: true,
+							},
+							{
+								path: "edit/",
+								component: EmptyLayout,
+								name: "CourseEditSyllabus",
+								props: true,
+							},
+						],
 					},
 				],
 			},

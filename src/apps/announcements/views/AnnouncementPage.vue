@@ -51,7 +51,7 @@
 
               <v-card-actions>
                 <v-btn :to="{ name: 'EditAnnouncement', params: { announcementId: announcement.id } }"
-                  variant="outlined" prepend-icon="mdi-pencil">
+                  prepend-icon="mdi-pencil">
                   Edit
                 </v-btn>
               </v-card-actions>

@@ -24,30 +24,45 @@
                 </div>
                 <v-expansion-panels variant="accordion" elevation="0" class="border">
                     <v-expansion-panel v-for="chapter in syllabus.chapters" :key="chapter.id">
-                        <v-expansion-panel-title style="background-color: #f8f8f8;">
+                        <v-expansion-panel-title>
                             Chapter {{ chapter.order }}: {{ chapter.name }}
                         </v-expansion-panel-title>
                         <v-expansion-panel-text>
                             <v-card variant="flat">
+                                <v-card-title>
+                                    Chapter {{ chapter.order }}: {{ chapter.name }}
+                                </v-card-title>
                                 <v-card-text>
                                     <strong>Book:</strong> {{ chapter.book }}
                                     <span class="ms-4"><strong>Pages:</strong> {{ chapter.page_range }}</span>
                                 </v-card-text>
                                 
                                 <v-card-text>
-                                    <v-list lines="two">
-                                        <v-list-item v-for="topic in chapter.topics" :key="topic.id" class="border rounded">
-                                            <v-list-item-title>
+                                    <v-expansion-panels variant="accordion" elevation="0" class="mt-2">
+                                        <v-expansion-panel v-for="topic in chapter.topics" :key="topic.id">
+                                            <v-expansion-panel-title>
                                                 {{ topic.name }}
-                                            </v-list-item-title>
-                                            <v-list-item-subtitle>
-                                                {{ topic.description }}
-                                            </v-list-item-subtitle>
-                                            <template v-slot:append>
-                                                <v-chip size="small" color="secondary">Pages: {{ topic.page_range }}</v-chip>
-                                            </template>
-                                        </v-list-item>
-                                    </v-list>
+                                            </v-expansion-panel-title>
+                                            <v-expansion-panel-text>
+                                                <v-card variant="flat">
+                                                    <v-card-title>
+                                                        {{ topic.name }}
+                                                    </v-card-title>
+                                                    
+                                                    <v-card-subtitle>
+                                                        Pages: {{ topic.page_range }}
+                                                    </v-card-subtitle>
+                                                    
+                                                    <v-divider class="mx-4"></v-divider>
+                                                    
+                                                    <v-card-text>
+                                                        <p class="text-subtitle-1">Description:</p>
+                                                        <p>{{ topic.description }}</p>
+                                                    </v-card-text>
+                                                </v-card>
+                                            </v-expansion-panel-text>
+                                        </v-expansion-panel>
+                                    </v-expansion-panels>
                                 </v-card-text>
                             </v-card>
                         </v-expansion-panel-text>

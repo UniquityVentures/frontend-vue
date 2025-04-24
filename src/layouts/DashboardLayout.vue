@@ -17,6 +17,7 @@
 					<v-list-item :to="{ name: 'Dashboard' }">
 						<v-list-item-title>Dashboard</v-list-item-title>
 					</v-list-item>
+					
 					<v-divider class="mb-4"></v-divider>
 					<RecursiveList v-for="item in appsMenu" :item="item" />
 
@@ -25,6 +26,12 @@
 			<v-app-bar app color="secondary" dense elevation="1">
 				<v-app-bar-nav-icon @click.stop="leftDrawer = !leftDrawer"></v-app-bar-nav-icon>
 				<v-toolbar-title>School ERP Dashboard</v-toolbar-title>
+				
+				<!-- Theme toggle icon in app bar -->
+				<v-spacer></v-spacer>
+				<v-btn icon @click="toggleTheme" class="mr-4">
+					<v-icon>{{ isDarkMode ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
+				</v-btn>
 			</v-app-bar>
 			<v-main>
 				<slot>
@@ -42,8 +49,8 @@
 </style>
 <script setup>
 import { useAuthStore } from "@/stores/auth"; // Pinia store
-import { computed, ref } from "vue";
-import { useDisplay } from "vuetify/lib/framework.mjs";
+import { computed, ref, onMounted } from "vue";
+import { useDisplay, useTheme } from "vuetify/lib/framework.mjs";
 
 import { useRouter } from "vue-router";
 
@@ -56,11 +63,29 @@ const { mdAndUp } = useDisplay();
 const leftDrawer = ref(mdAndUp.value);
 const router = useRouter();
 const authStore = useAuthStore();
+const theme = useTheme();
 
+const isDarkMode = ref(false);
 const appsMenu = ref();
 
 const user = computed(() => authStore.user);
 const account = computed(() => authStore.account);
+
+// Initialize theme from localStorage if available
+onMounted(() => {
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme) {
+    theme.global.name.value = savedTheme;
+    isDarkMode.value = savedTheme === 'dark';
+  }
+});
+
+function toggleTheme() {
+  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark';
+  isDarkMode.value = theme.global.current.value.dark;
+  // Save preference to localStorage
+  localStorage.setItem('theme', theme.global.name.value);
+}
 
 function logoutHandler() {
 	router
