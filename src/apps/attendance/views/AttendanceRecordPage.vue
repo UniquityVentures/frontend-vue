@@ -38,12 +38,11 @@
               <v-card-actions>
                 <v-btn 
                   :to="{ name: 'EditAttendanceRecord', params: { recordId: record.id } }"
-                  variant="outlined" 
                   prepend-icon="mdi-pencil"
                 >
                   Edit
                 </v-btn>
-                <v-btn variant="outlined" prepend-icon="mdi-delete" color="error">
+                <v-btn prepend-icon="mdi-delete" color="error">
                   Delete
                 </v-btn>
               </v-card-actions>

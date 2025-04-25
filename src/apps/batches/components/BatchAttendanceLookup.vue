@@ -15,7 +15,7 @@
     <template #cards-slot="{ items }">
       <v-row>
         <v-col cols="12" sm="6" md="3" lg="2" v-for="item in items" :key="item.id">
-          <v-card variant="flat" class="border" height="100%">
+          <v-card variant="flat" class="border" height="100%" :to="{ name: 'AttendanceRecord', params: { recordId: item.id } }">
             <v-card-title class="text-subtitle-1">
               {{ item.student_details?.user_details?.full_name || 'Unknown Student' }}
             </v-card-title>

@@ -137,7 +137,7 @@ const submitAttendance = async () => {
 		// Build attendance data payload
 		const attendanceData = selectedStudentIds.map((id) => ({
 			student: id,
-			status: "absent",
+			status: "Absent",
 			reason: "",
 		}));
 
