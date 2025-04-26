@@ -1,15 +1,15 @@
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
-import { getCourse } from "./api";
-import CoursePage from "./views/CoursePage.vue";
-import CoursesExportPage from "./views/CoursesExportPage.vue";
-import CoursesImportPage from "./views/CoursesImportPage.vue";
-import CoursesPage from "./views/CoursesPage.vue";
-import CreateCoursePage from "./views/CreateCoursePage.vue";
-import EditCoursePage from "./views/EditCoursePage.vue";
-import CourseAnnouncementsPage from "./views/CourseAnnouncementsPage.vue";
-import CourseAssignmentsPage from "./views/CourseAssignmentsPage.vue";
-import CourseSyllabusPage from "./views/CourseSyllabusPage.vue";
+import { getCourse } from "../api";
+import CoursePage from "../views/CoursePage.vue";
+import CoursesExportPage from "../views/CoursesExportPage.vue";
+import CoursesImportPage from "../views/CoursesImportPage.vue";
+import CoursesPage from "../views/CoursesPage.vue";
+import CreateCoursePage from "../views/CreateCoursePage.vue";
+import EditCoursePage from "../views/EditCoursePage.vue";
+import CourseAnnouncementsPage from "../views/CourseAnnouncementsPage.vue";
+import CourseAssignmentsPage from "../views/CourseAssignmentsPage.vue";
+import CourseSyllabusPage from "../views/CourseSyllabusPage.vue";
 
 export default [
 	{
@@ -121,37 +121,9 @@ export default [
 					},
 					{
 						path: "syllabus/",
-						component: EmptyLayout,
-						defaultRoute: "CourseSyllabus",
+						component: CourseSyllabusPage,
+						name: "CourseSyllabus",
 						props: true,
-						meta: {
-							getDisplayName: () => "Course Syllabus",
-							defaultRoute: "CourseSyllabus",
-							getMenu: (props) => [
-								{
-									title: "View Syllabus",
-									to: { name: "CourseSyllabus", params: props },
-								},
-								{
-									title: "Edit Syllabus",
-									to: { name: "CourseEditSyllabus", params: props },
-								},
-							],
-						},
-						children: [
-							{
-								path: "view/",
-								component: CourseSyllabusPage,
-								name: "CourseSyllabus",
-								props: true,
-							},
-							{
-								path: "edit/",
-								component: EmptyLayout,
-								name: "CourseEditSyllabus",
-								props: true,
-							},
-						],
 					},
 				],
 			},

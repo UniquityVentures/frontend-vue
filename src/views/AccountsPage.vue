@@ -40,6 +40,11 @@ const accounts = ref([]);
 
 onMounted(async () => {
 	accounts.value = authStore.user.accounts || [];
+  
+	// If there's only one account, select it automatically and redirect
+	if (accounts.value.length === 1) {
+		await selectAccount(accounts.value[0]);
+	}
 });
 
 async function selectAccount(account) {

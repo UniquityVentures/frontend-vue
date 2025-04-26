@@ -30,14 +30,23 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
+import adminRoutes from "@/router/adminApps";
+import studentRoutes from "@/router/studentApps";
+import { useAuthStore } from "@/stores/auth";
 
-import appRoutes from "@/router/app";
+const authStore = useAuthStore();
 
-const apps = ref(appRoutes.map((route) => route.meta));
+// Choose routes based on account type
+let routesToUse = studentRoutes; // Default to student routes
 
+// Check account type and select appropriate routes
+if (authStore.account?.group_details?.name === "Admin") {
+	routesToUse = adminRoutes;
+}
+
+const apps = ref(routesToUse.map((route) => route.meta));
 const filteredApps = ref([...apps.value]);
-
 const search = ref("");
 
 watch(search, () => {
