@@ -27,13 +27,14 @@
 		</v-card-text>
 
 		<v-card-text>
-			<v-btn color="primary" :to="{ name: 'EditCourse', params: { id: course.id } }">Edit</v-btn>
+			<v-btn color="primary" :to="accountRoute( 'EditCourse', { params: { id: course.id } })">Edit</v-btn>
 		</v-card-text>
 	</v-card>
 </template>
 
 
 <script setup>
+import {accountRoute} from "@/services/api";
 import { getCourseImage } from "@/apps/courses/api";
 import { getTeacher } from "@/apps/teachers/api";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";

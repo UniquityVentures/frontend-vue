@@ -1,6 +1,6 @@
 <template>
   <v-chip v-if="batch" color="info"
-    :to="{ name: 'Batch', params: { batchId: batch.id } }">
+    :to="accountRoute( 'Batch', { params: { batchId: batch.id } })">
     <strong v-if="label">{{ label }}: </strong>
     <v-avatar size="24" icon="mdi-school" />
     {{ batch.name }}
@@ -9,6 +9,7 @@
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 import { onMounted, ref } from "vue";
 import { getBatch } from "../api";
 

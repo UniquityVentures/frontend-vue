@@ -1,10 +1,11 @@
 <template> 
-	<v-chip :to=" {name: 'Calendar', query: {'date': date}}" :color="color" v-if="isValidDate(date)">
+	<v-chip :to="accountRoute('Calendar',{ query: {'date': date}})" :color="color" v-if="isValidDate(date)">
 		{{label ? `${label}: ` : ''}}{{displayDate(date)}}
 	</v-chip>
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 const props = defineProps({
 	label: {
 		type: String,

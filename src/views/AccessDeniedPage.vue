@@ -16,7 +16,7 @@
         <v-btn
           color="primary"
           size="large"
-          @click="$router.push({ name: 'Dashboard' })"
+          @click="$router.push(accountRoute('Dashboard'))"
         >
           Back to Dashboard
         </v-btn>
@@ -28,4 +28,5 @@
 <script setup>
 import accessDeniedAnimation from "@/assets/access-denied.json";
 import { LottieAnimation } from "lottie-web-vue";
+import {accountRoute} from "@/services/api";
 </script>

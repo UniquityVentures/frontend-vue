@@ -5,7 +5,7 @@
       :key="teacher.id"
       color="primary"
       link
-      :to="{ name: 'Teacher', params: { teacherId: teacher.id } }"
+      :to="accountRoute('Teacher', {  params: { teacherId: teacher.id } })"
     >
       <v-avatar size="24" icon="mdi-account-tie" />
       {{ teacher?.user_details?.full_name || 'Unknown' }}
@@ -16,7 +16,7 @@
     v-else-if="teachers?.id"
     color="primary"
     link
-    :to="{ name: 'Teacher', params: { teacherId: teachers.id } }"
+    :to="accountRoute('Teacher', {  params: { teacherId: teacher.id } })"
   >
     <strong v-if="label">{{ label }}: </strong>
     <v-avatar size="24" icon="mdi-account-tie" />
@@ -27,6 +27,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { getTeacher } from "../api";
+import { accountRoute } from "@/services/api";
 
 const props = defineProps({
 	teacher: {

@@ -14,7 +14,7 @@
                     v-if="record.student_details?.id"
                     :title="record.student_details?.user_details?.full_name || 'Unknown Student'"
                     :subtitle="`Student No: ${record.student_details?.student_no || 'N/A'}`"
-                    :to="{ name: 'Student', params: { studentId: record.student_details.id } }"
+                    :to="accountRoute( 'Student', { params: { studentId: record.student_details.id } })"
                     class="border"
                     link
                   />
@@ -37,7 +37,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-btn 
-                  :to="{ name: 'EditAttendanceRecord', params: { recordId: record.id } }"
+                  :to="accountRoute( 'EditAttendanceRecord', { params: { recordId: record.id } })"
                   variant="outlined" 
                   prepend-icon="mdi-pencil"
                 >
@@ -59,6 +59,7 @@
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 import { onMounted, ref } from "vue";
 import { getAttendanceRecord } from "../api";
 import { getCourse } from "@/apps/courses/api";

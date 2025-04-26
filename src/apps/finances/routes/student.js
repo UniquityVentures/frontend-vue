@@ -1,9 +1,9 @@
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import { api } from "@/services/api";
-import TransactionPage from "./views/TransactionPage.vue";
-import TransactionRequestFormPage from "./views/TransactionRequestFormPage.vue";
-import TransactionsPage from "./views/TransactionsPage.vue";
+import TransactionPage from "../views/TransactionPage.vue";
+import TransactionRequestFormPage from "../views/TransactionRequestFormPage.vue";
+import TransactionsPage from "../views/TransactionsPage.vue";
 
 export default [
 	{
@@ -12,16 +12,16 @@ export default [
 		meta: {
 			requiresAuth: true,
 			getDisplayName: () => "Finances",
-			defaultRoute: "Transactions",
+			defaultRoute: "StudentTransactions",
 			description: "View and manage finances",
 			getMenu: (props) => [
 				{
 					title: "All Transactions",
-					to: { name: "Transactions", params: props },
+					to: { name: "StudentTransactions", params: props },
 				},
 				{
 					title: "Request Transactions",
-					to: { name: "TransactionRequest", params: props },
+					to: { name: "StudentTransactionRequest", params: props },
 				},
 			],
 			icon: "mdi-credit-card-outline",
@@ -30,26 +30,26 @@ export default [
 			{
 				path: "all/",
 				component: TransactionsPage,
-				name: "Transactions",
+				name: "StudentTransactions",
 			},
 			{
 				path: "request/",
 				component: TransactionRequestFormPage,
-				name: "TransactionRequest",
+				name: "StudentTransactionRequest",
 			},
 			{
 				path: ":transactionId",
 				props: true,
 				component: EmptyLayout,
 				meta: {
-					defaultRoute: "Transaction",
+					defaultRoute: "StudentTransaction",
 					getDisplayName: async (params) =>
 						(await api.get(`api/finances/transaction/${params.transactionId}/`))
 							.data.order_id,
 					getMenu: (props) => [
 						{
 							title: "View Transaction",
-							to: { name: "Transaction", params: props },
+							to: { name: "StudentTransaction", params: props },
 						},
 					],
 					icon: "mdi-account-card-outline",
@@ -58,7 +58,7 @@ export default [
 					{
 						path: "",
 						component: TransactionPage,
-						name: "Transaction",
+						name: "StudentTransaction",
 						props: true,
 					},
 					/*

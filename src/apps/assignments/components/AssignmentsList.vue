@@ -5,7 +5,7 @@
         <v-card-text>
             <v-list v-if="!loading && limitedItems.length" lines="two" density="compact">
                 <v-list-item v-for="item in limitedItems" :key="item.id"
-                    :to="{ name: 'Assignment', params: { assignmentId: item.id } }" link class="border">
+                    :to="accountRoute( 'Assignment', { params: { assignmentId: item.id } })" link class="border">
                     <v-list-item-title>{{ item.title || 'Title loading...' }}</v-list-item-title>
                     <v-list-item-subtitle>{{ item.description || 'Description loading...' }}</v-list-item-subtitle>
 					<DateChip v-if="item.due_date" label="Due" color="primary" :date="item.due_date" />
@@ -25,6 +25,7 @@
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 import { formatDate } from "@/services/utils";
 import { computed, onMounted, ref } from "vue";
 import { getAssignments } from "../api";

@@ -21,12 +21,15 @@ import { useAuthStore } from "@/stores/auth";
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 
+import {accountRoute} from "@/services/api";
+
 const authStore = useAuthStore();
 const router = useRouter();
+router.abc = 123;
 
 onMounted(() => {
 	if (authStore.isAuth) {
-		router.push({ name: "Dashboard" });
+		router.push(accountRoute("Dashboard"));
 	}
 });
 </script>

@@ -19,7 +19,7 @@
             <v-row>
                 <v-col cols="12" sm="6" md="3" lg="2" v-for="item in items" :key="item.id">
                     <v-card variant="flat" class="border" height="100%"
-                    :to="{ name: 'AttendanceRecord', params: { recordId: item.id } }"
+                    :to="accountRoute( 'AttendanceRecord', { params: { recordId: item.id } })"
                     >
                         <v-card-title class="text-subtitle-1">
                             {{ item.student_details?.user_details?.full_name || 'Unknown Student' }}
@@ -46,7 +46,7 @@
         <template #list-slot="{ items }">
             <v-list>
                 <v-list-item v-for="item in items" :key="item.id" class="border"
-                :to="{ name: 'AttendanceRecord', params: { recordId: item.id } }"
+                :to="accountRoute( 'AttendanceRecord', { params: { recordId: item.id } })"
                 >
                     <v-list-item-title>
                         {{ item.student_details?.user_details?.full_name || 'Unknown Student' }}
@@ -66,6 +66,7 @@
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { ref } from "vue";
 import { getAttendanceRecords } from "../api";

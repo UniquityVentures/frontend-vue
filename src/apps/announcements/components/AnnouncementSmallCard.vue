@@ -1,4 +1,5 @@
 <script setup>
+import {accountRoute} from "@/services/api";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 import { onMounted, ref } from "vue";
 import { getAnnouncement } from "../api";
@@ -20,7 +21,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <v-card v-if="announcement" link :to="{ name: 'Announcement', params: { announcementId: announcement.id }}" variant="flat" class="border">
+    <v-card v-if="announcement" link :to="accountRoute( 'Announcement', { params: { announcementId: announcement.id }})" variant="flat" class="border">
         <v-card-title class="text-subtitle-1">{{ announcement.title }}</v-card-title>
         <v-card-subtitle class="text-wrap">{{ announcement.description.slice(0, 100) }}...</v-card-subtitle>
         <v-card-text>

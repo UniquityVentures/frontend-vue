@@ -16,7 +16,7 @@
                     variant="text" 
                     size="small" 
                     color="primary"
-                    :to="{ name: 'Syllabus', params: { syllabusId: chapter.syllabus }}"
+                    :to="accountRoute( 'Syllabus', { params: { syllabusId: chapter.syllabus }})"
                 >
                     View Syllabus
                 </v-btn>
@@ -37,6 +37,7 @@
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 const props = defineProps({
     chapter: {
         type: Object,

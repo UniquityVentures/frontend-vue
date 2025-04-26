@@ -1,10 +1,10 @@
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import { api } from "@/services/api";
-import CreateStudentPage from "./views/CreateStudentPage.vue";
-import EditStudentsPage from "./views/EditStudentsPage.vue";
-import StudentPage from "./views/StudentPage.vue";
-import StudentsPage from "./views/StudentsPage.vue";
+import CreateStudentPage from "../views/CreateStudentPage.vue";
+import EditStudentsPage from "../views/EditStudentsPage.vue";
+import StudentPage from "../views/StudentPage.vue";
+import StudentsPage from "../views/StudentsPage.vue";
 
 export default [
 	{
@@ -13,17 +13,17 @@ export default [
 		meta: {
 			requiresAuth: true,
 			getDisplayName: () => "Students",
-			defaultRoute: "Students",
+			defaultRoute: "StudentStudents",
 			description: "View and manage students",
 			icon: "mdi-account-school",
 			getMenu: (props) => [
 				{
 					title: "View Students",
-					to: { name: "Students", params: props },
+					to: { name: "StudentStudents", params: props },
 				},
 				{
 					title: "Create Student",
-					to: { name: "CreateStudent", params: props },
+					to: { name: "StudentCreateStudent", params: props },
 				},
 			],
 		},
@@ -36,25 +36,25 @@ export default [
 			{
 				path: "create/",
 				component: CreateStudentPage,
-				name: "CreateStudent",
+				name: "StudentCreateStudent",
 			},
 			{
 				path: ":studentId",
 				props: true,
 				component: EmptyLayout,
 				meta: {
-					defaultRoute: "Student",
+					defaultRoute: "StudentStudent",
 					getDisplayName: async (params) =>
 						(await api.get(`api/accounts/students/${params.studentId}/`)).data
 							.user_details.full_name,
 					getMenu: (props) => [
 						{
 							title: "View Student",
-							to: { name: "Student", params: props },
+							to: { name: "StudentStudent", params: props },
 						},
 						{
 							title: "Edit Student",
-							to: { name: "EditStudent", params: props },
+							to: { name: "StudentEditStudent", params: props },
 						},
 					],
 				},
@@ -62,13 +62,13 @@ export default [
 					{
 						path: "view/",
 						component: StudentPage,
-						name: "Student",
+						name: "StudentStudent",
 						props: true,
 					},
 					{
 						path: "edit/",
 						component: EditStudentsPage,
-						name: "EditStudent",
+						name: "StudentEditStudent",
 						props: true,
 					},
 				],

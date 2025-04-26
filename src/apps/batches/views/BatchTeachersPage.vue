@@ -19,7 +19,7 @@
                     v-for="(teacher, index) in course_teachers" :key="index"
                     :title="teacher.teacher?.user_details?.full_name"
                     :subtitle="`Leading Course: ${teacher.course.name} (${teacher.course.code})`"
-                    :to="{ name: 'Teacher', params: { teacherId: teacher?.teacher.user_details?.id } }">
+                    :to="accountRoute( 'Teacher', { params: { teacherId: teacher?.teacher.user_details?.id } })">
                     </v-list-item>
                 </v-list>
             </v-card-text>
@@ -80,6 +80,7 @@
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 import { getBatch, updateBatch } from "@/apps/batches/api";
 import { getCourse } from "@/apps/courses/api";
 import {

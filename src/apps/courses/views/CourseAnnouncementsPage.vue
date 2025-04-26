@@ -1,8 +1,8 @@
 <template>
     <v-container v-if="course">
-        <v-btn prepend-icon="mdi-plus" color="primary" :to="{ name: 'CreateAnnouncement', query: {course: [course.id]} }">
+        <v-btn prepend-icon="mdi-plus" color="primary" :to="accountRoute( 'CreateAnnouncement', { query: {course: [course.id]} })">
             Create New Announcement</v-btn>
-        <v-btn prepend-icon="mdi-view-list" color="grey-darken-2" :to="{ name: 'Announcements', query: {course: course.id} }">
+        <v-btn prepend-icon="mdi-view-list" color="grey-darken-2" :to="accountRoute( 'Announcements', { query: {course: course.id} })">
             View All Announcements</v-btn>
         <v-divider/>
         <ResponsiveDataTable :fetch="getAnnouncements" v-model:filters="filters" title="Announcements"
@@ -34,6 +34,7 @@
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 import { getAnnouncements } from "@/apps/announcements/api";
 import AnnouncementListItem from "@/apps/announcements/components/AnnouncementListItem.vue";
 import AnnouncementSmallCard from "@/apps/announcements/components/AnnouncementSmallCard.vue";

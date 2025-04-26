@@ -14,6 +14,7 @@ const api = axios.create({
 	withCredentials: true,
 });
 
+
 api.interceptors.request.use(
 	(config) => {
 		const authStore = useAuthStore();
@@ -71,4 +72,11 @@ const itemsPerPage = 10;
 const getRandomImage = (images) =>
 	images[Math.floor(Math.random() * images.length)].default;
 
-export { api, itemsPerPage, getRandomImage };
+const accountRoute = (name, { params, query } = {}) => {
+	const authStore = useAuthStore();
+	return {
+		name: `${authStore.account?.group_details?.name}${name}`, params, query
+	}
+}
+
+export { api, itemsPerPage, getRandomImage, accountRoute };

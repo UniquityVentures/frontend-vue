@@ -1,9 +1,11 @@
 // Layouts
+//
 import DashboardLayout from "@/layouts/DashboardLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 // Routes in Apps
-import adminRoutes from "@/router/adminApps";
-import studentRoutes from "@/router/studentApps";
+import adminRoutes from "@/router/adminRoutes";
+import teacherRoutes from "@/router/teacherRoutes";
+import studentRoutes from "@/router/studentRoutes";
 import { useAuthStore } from "@/stores/auth";
 import AccessDeniedPage from "@/views/AccessDeniedPage.vue";
 import AccountsPage from "@/views/AccountsPage.vue";
@@ -58,6 +60,24 @@ const routes = [
 				component: AllAppsPage,
 				meta: { requiresAuth: true },
 			},
+			{
+				path: "student/",
+				component: EmptyLayout,
+				meta: { requiresAuth: true },
+				children: studentRoutes,
+			},
+			{
+				path: "teacher/",
+				component: EmptyLayout,
+				meta: { requiresAuth: true },
+				children: teacherRoutes,
+			},
+			{
+				path: "admin/",
+				component: EmptyLayout,
+				meta: { requiresAuth: true },
+				children: adminRoutes,
+			},
 		],
 	},
 ];
@@ -67,59 +87,17 @@ const router = createRouter({
 	routes,
 });
 
-// Add a function to dynamically add routes based on account type
-export function addAccountRoutes(accountType) {
-	// First remove any existing dynamic routes
-	router.getRoutes().forEach(route => {
-		if (route.meta.dynamic) {
-			router.removeRoute(route.name);
-		}
-	});
-
-	// Add routes based on account type
-	let routesToAdd = [];
-	if (accountType === 'Admin') {
-		routesToAdd = adminRoutes;
-	} else if (accountType === 'Student') {
-		routesToAdd = studentRoutes;
-	}
-	// You can add more account types here as needed
-
-	// Add the routes with a dynamic meta flag
-	routesToAdd.forEach(route => {
-		router.addRoute('app', {
-			...route, 
-			meta: {
-				...route.meta,
-				dynamic: true // Mark as dynamic for removal later
-			}
-		});
-	});
-}
-
 // Navigation guard
 router.beforeEach((to, from, next) => {
 	const authStore = useAuthStore();
-	
-	// If user is authenticated but routes haven't been added yet
-	if (authStore.account) {
-		const accountType = authStore.account?.group_details?.name;
-		// Check if we need to add routes
-		if (router.getRoutes().filter(r => r.meta?.dynamic).length === 0) {
-			console.log("adding routes");
-			addAccountRoutes(accountType);
-			// Return to same route after adding routes to refresh the navigation
-			return next(to.fullPath);
-		}
-	}
-	
+
 	if (to.matched.some((record) => record.meta.requiresAuth)) {
 		const token = authStore.getAccess;
 		if (!token) {
 			return next({ name: "Login" });
 		}
 	}
-	
+
 	// Only check permissions now
 	if (
 		!to.matched.every((route) =>
@@ -130,7 +108,7 @@ router.beforeEach((to, from, next) => {
 	) {
 		return next({ name: "Access Denied" });
 	}
-	
+
 	next();
 });
 

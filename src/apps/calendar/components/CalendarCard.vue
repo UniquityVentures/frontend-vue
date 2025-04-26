@@ -28,7 +28,7 @@
                     <v-btn 
                         color="primary" 
                         variant="tonal"
-                        :to="{ name: 'Event', params: { eventId: selectedEvent.id } }"
+                        :to="accountRoute( 'Event', { params: { eventId: selectedEvent.id } })"
                     >
                         View Details
                     </v-btn>
@@ -39,6 +39,7 @@
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 import { getCalendar } from "@/apps/calendar/api";
 import EventDialogCard from "@/apps/calendar/components/EventDialogCard.vue";
 import { computed, onMounted, ref, watch } from "vue";

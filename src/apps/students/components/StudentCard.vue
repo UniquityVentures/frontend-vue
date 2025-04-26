@@ -39,7 +39,7 @@
 
     <v-card-text v-if="student?.batch">
       <div class="text-subtitle-2">Batch: </div>
-      <v-list-item link class="border" :to="{ name: 'Batch', params: { batchId: student.batch}}" variant="tonal">
+      <v-list-item link class="border" :to="accountRoute( 'Batch', { params: { batchId: student.batch}})" variant="tonal">
           <v-list-item-title>{{ student.batch_details?.name }}</v-list-item-title>
           <v-list-item-subtitle>Roll Number: {{ student.roll_no }}</v-list-item-subtitle>
 
@@ -52,7 +52,7 @@
       <v-btn
         v-if="!student.user_details.is_approved"
         color="warning"
-        :to="{ name: 'EditStudent', params: { studentId: student.id }}"
+        :to="accountRoute( 'EditStudent', { params: { studentId: student.id }})"
         prepend-icon="mdi-check-circle"
         variant="outlined"
       >
@@ -63,6 +63,7 @@
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 
 const props = defineProps({

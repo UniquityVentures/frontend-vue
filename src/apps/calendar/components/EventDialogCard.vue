@@ -3,7 +3,7 @@
         <div class="text-h5 mb-4">{{ event.title }}</div>
 
         <v-list-item
-            :to="{ name: 'Teacher', params: { teacherId: event.created_by_details?.id } }"
+            :to="accountRoute( 'Teacher', { params: { teacherId: event.created_by_details?.id } })"
             class="pa-2 mb-4"
             rounded="lg"
         >
@@ -54,6 +54,7 @@
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 defineProps({
 	event: {
 		type: Object,

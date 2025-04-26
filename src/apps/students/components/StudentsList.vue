@@ -5,7 +5,7 @@
         <v-card-text>
             <v-list v-if="!loading && limitedItems.length" lines="two" density="compact">
                 <v-list-item v-for="student in limitedItems" :key="student.id"
-                    :to="{ name: 'Student', params: { studentId: student.id } }" link class="border">
+                    :to="accountRoute( 'Student', { params: { studentId: student.id } })" link class="border">
                     <v-list-item-title>{{ student.user_details?.full_name || 'Unnamed Student' }}</v-list-item-title>
                     <v-list-item-subtitle>{{ student.student_no || 'No student number' }}</v-list-item-subtitle>
                     <div class="d-flex gap-2 mt-2">
@@ -28,6 +28,7 @@
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 import BatchChip from "@/apps/batches/components/BatchChip.vue";
 import { getStudents } from "@/apps/students/api";
 import { computed, onMounted, ref } from "vue";

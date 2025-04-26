@@ -31,7 +31,7 @@
 		<template #cards-slot="{ items }">
 			<v-row>
 				<v-col cols="12" md="4" lg="3" v-for="item in items" :key="item.id">
-					<v-card height="100%" link :to="{ name: 'Assignment', params: { assignmentId: item.id }}" variant="flat" class="border">
+					<v-card height="100%" link :to="accountRoute( 'Assignment', { params: { assignmentId: item.id }})" variant="flat" class="border">
 						<v-card-title class="text-subtitle-1">{{ item.title }}</v-card-title>
 						<v-card-subtitle class="text-wrap">{{ item.description.slice(0, 100) }}...</v-card-subtitle>
 						<v-card-text>
@@ -51,6 +51,7 @@ import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import DateChip from "@/components/DateChip.vue";
+import {accountRoute} from "@/services/api";
 
 import { ref } from "vue";
 import { getAssignments } from "../api";

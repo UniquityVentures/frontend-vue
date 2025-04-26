@@ -5,7 +5,7 @@
         v-if="teacher?.user_details"
         :title="teacher?.user_details?.full_name"
         :subtitle="`ID: ${teacher?.identifier}`"
-        :to="{ name: 'Teacher', params: { teacherId: teacher?.user_details?.id } }">
+        :to="accountRoute( 'Teacher', { params: { teacherId: teacher?.user_details?.id } })">
         <v-chip v-for="(chip, index) in chips" :key="index" :label="chip.label" :color="chip.color || 'primary'">
             {{ chip.value }}
         </v-chip>
@@ -13,6 +13,7 @@
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 const props = defineProps({
 	teacher: Object,
 	chips: Array,

@@ -1,36 +1,36 @@
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
-import AssignmentPage from "./views/AssignmentPage.vue";
-import AssignmentsExportPage from "./views/AssignmentsExportPage.vue";
-import AssignmentsImportPage from "./views/AssignmentsImportPage.vue";
-import AssignmentsPage from "./views/AssignmentsPage.vue";
-import CreateAssignmentPage from "./views/CreateAssignmentPage.vue";
-import EditAssignmentPage from "./views/EditAssignmentPage.vue";
+import AssignmentPage from "../views/AssignmentPage.vue";
+import AssignmentsExportPage from "../views/AssignmentsExportPage.vue";
+import AssignmentsImportPage from "../views/AssignmentsImportPage.vue";
+import AssignmentsPage from "../views/AssignmentsPage.vue";
+import CreateAssignmentPage from "../views/CreateAssignmentPage.vue";
+import EditAssignmentPage from "../views/EditAssignmentPage.vue";
 
 export default [
 	{
 		path: "assignments/",
 		component: AppSideBarBreadcrumbsLayout,
 		meta: {
-			getDisplayName: () => "Assignments",
-			defaultRoute: "Assignments",
+			getDisplayName: () => "StudentAssignments",
+			defaultRoute: "StudentAssignments",
 			description: "View and manage assignments",
 			getMenu: () => [
 				{
 					title: "All Assignments",
-					to: { name: "Assignments" },
+					to: { name: "StudentAssignments" },
 				},
 				{
 					title: "Create Assignment",
-					to: { name: "CreateAssignment" },
+					to: { name: "StudentCreateAssignment" },
 				},
 				{
 					title: "Import Assignments",
-					to: { name: "ImportAssignments" },
+					to: { name: "StudentImportAssignments" },
 				},
 				{
 					title: "Export Assignments",
-					to: { name: "ExportAssignments" },
+					to: { name: "StudentExportAssignments" },
 				},
 			],
 			icon: "mdi-clipboard-text",
@@ -44,33 +44,33 @@ export default [
 			{
 				path: "create/",
 				component: CreateAssignmentPage,
-				name: "CreateAssignment",
+				name: "StudentCreateAssignment",
 			},
 			{
 				path: "import/",
 				component: AssignmentsImportPage,
-				name: "ImportAssignments",
+				name: "StudentImportAssignments",
 			},
 			{
 				path: "export/",
 				component: AssignmentsExportPage,
-				name: "ExportAssignments",
+				name: "StudentExportAssignments",
 			},
 			{
 				path: ":assignmentId/",
 				component: EmptyLayout,
 				props: true,
 				meta: {
-					defaultRoute: "Assignment",
+					defaultRoute: "StudentAssignment",
 					getDisplayName: () => "View",
 					getMenu: (params) => [
 						{
 							title: "View Assignment",
-							to: { name: "Assignment", params },
+							to: { name: "StudentAssignment", params },
 						},
 						{
 							title: "Edit Assignment",
-							to: { name: "EditAssignment", params },
+							to: { name: "StudentEditAssignment", params },
 						},
 					],
 					icon: "mdi-clipboard-text",
@@ -79,13 +79,13 @@ export default [
 					{
 						path: "",
 						component: AssignmentPage,
-						name: "Assignment",
+						name: "StudentAssignment",
 						props: true,
 					},
 					{
 						path: "edit/",
 						component: EditAssignmentPage,
-						name: "EditAssignment",
+						name: "StudentEditAssignment",
 						props: true,
 					},
 				],

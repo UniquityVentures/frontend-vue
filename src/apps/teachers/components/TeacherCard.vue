@@ -48,7 +48,7 @@
       <v-btn
         v-if="!teacher.user_details.is_approved"
         color="warning"
-        :to="{ name: 'EditTeacher', params: { teacherId: teacher.id }}"
+        :to="accountRoute( 'EditTeacher', { params: { teacherId: teacher.id }})"
         prepend-icon="mdi-check-circle"
         variant="outlined"
       >
@@ -59,6 +59,7 @@
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 import { getPortraitImage } from "@/apps/teachers/api";
 
 const props = defineProps({

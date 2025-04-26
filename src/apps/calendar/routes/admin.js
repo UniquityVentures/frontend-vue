@@ -1,9 +1,9 @@
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
-import CalendarPage from "./views/CalendarPage.vue";
-import EventPage from "./views/EventPage.vue";
-import EventsPage from "./views/EventsPage.vue";
-import CalendarPage2 from "./views/CalendarPage2.vue";
+import CalendarPage from "../views/CalendarPage.vue";
+import EventPage from "../views/EventPage.vue";
+import EventsPage from "../views/EventsPage.vue";
+import CalendarPage2 from "../views/CalendarPage2.vue";
 
 export default [
 	{
@@ -11,16 +11,16 @@ export default [
 		component: AppSideBarBreadcrumbsLayout,
 		meta: {
 			getDisplayName: () => "Calendar",
-			defaultRoute: "Calendar",
+			defaultRoute: "AdminCalendar",
 			description: "View and manage calendar",
 			getMenu: () => [
 				{
 					title: "Calendar",
-					to: { name: "Calendar" },
+					to: { name: "AdminCalendar" },
 				},
 				{
 					title: "Events",
-					to: { name: "Events" },
+					to: { name: "AdminEvents" },
 				},
 			],
 			icon: "mdi-calendar",
@@ -29,34 +29,34 @@ export default [
 			{
 				path: "calendar/",
 				component: CalendarPage2,
-				name: "Calendar",
+				name: "AdminCalendar",
 			},
 			{
 				path: "events/",
 				component: EmptyLayout,
 				meta: {
-					defaultRoute: "Events",
+					defaultRoute: "AdminEvents",
 					getDisplayName: () => "Events",
 				},
 				children: [
 					{
 						path: "",
 						component: EventsPage,
-						name: "Events",
+						name: "AdminEvents",
 					},
 					{
 						path: ":eventId/",
 						component: EmptyLayout,
 						props: true,
 						meta: {
-							defaultRoute: "Event",
+							defaultRoute: "AdminEvent",
 							getDisplayName: () => "Event",
 						},
 						children: [
 							{
 								path: "all/",
 								component: EventPage,
-								name: "Event",
+								name: "AdminEvent",
 								props: true,
 							},
 						],

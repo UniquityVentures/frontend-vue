@@ -26,7 +26,7 @@
 		</template>
 		<template #list-slot="{ items }">
 			<v-list>
-				<v-list-item v-for="item in items" :key="item.id" link :to="{ name: 'Event', params: { eventId: item.id } }" class="border">
+				<v-list-item v-for="item in items" :key="item.id" link :to="accountRoute( 'Event', { params: { eventId: item.id } })" class="border">
 					<v-list-item-title>{{ item.title }}</v-list-item-title>
 					<v-list-item-subtitle>{{ item.description }}</v-list-item-subtitle>
 					<DateChip color="blue" label="Start" :date="item.start" />
@@ -37,7 +37,7 @@
 		<template #cards-slot="{ items }">
 			<v-row>
 				<v-col cols="12" md="4" lg="3" v-for="item in items" :key="item.id">
-					<v-card link :to="{ name: 'Event', params: { eventId: item.id }}" variant="flat" class="border">
+					<v-card link :to="accountRoute( 'Event', { params: { eventId: item.id }})" variant="flat" class="border">
 						<v-card-title class="text-subtitle-1">{{ item.title }}</v-card-title>
 						<v-card-subtitle>{{ item.description.slice(0, 100) }}...</v-card-subtitle>
 						<v-card-text>
@@ -55,6 +55,7 @@
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
 import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
 import DateRangeSelect from "@/components/DateRangeSelect.vue";

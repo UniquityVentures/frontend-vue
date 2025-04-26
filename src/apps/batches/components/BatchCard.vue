@@ -19,12 +19,13 @@
             <v-chip :color="batch.is_active ? 'success' : 'error'" >Status: {{ batch.is_active ? 'Active' : 'Inactive' }}</v-chip>
         </v-card-text>
         <v-card-text>
-            <v-btn color="primary" :to="{ name: 'EditBatch', params: { id: batch.id } }">Edit</v-btn>
+            <v-btn color="primary" :to="accountRoute( 'EditBatch', { params: { id: batch.id } })">Edit</v-btn>
         </v-card-text>
     </v-card>
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 import { getBatch, getBatchImage } from "@/apps/batches/api";
 import { getTeacher } from "@/apps/teachers/api";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";

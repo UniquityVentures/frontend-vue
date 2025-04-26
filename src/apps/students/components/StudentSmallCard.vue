@@ -1,5 +1,5 @@
 <template>
-    <v-card link v-if="student" variant="flat" class="border position-relative" :to="{ name: 'Student', params: { studentId: student.id }}">
+    <v-card link v-if="student" variant="flat" class="border position-relative" :to="accountRoute( 'Student', { params: { studentId: student.id }})">
         <div class="menu-container">
             <slot name="menu"></slot>
         </div>
@@ -13,6 +13,7 @@
 </template>
 
 <script setup>
+import { accountRoute } from "@/services/api";
 import BatchChip from "@/apps/batches/components/BatchChip.vue";
 import { onMounted, ref } from "vue";
 import { getStudent } from "../api";

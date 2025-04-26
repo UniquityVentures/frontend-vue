@@ -6,10 +6,12 @@
             <v-list v-if="!loading && limitedItems.length" lines="two" density="compact">
                 <AnnouncementListItem v-for="item in limitedItems" :key="item.id" :announcement="item" />
             </v-list>
-            <v-skeleton-loader v-if="loading" type="list-item-three-line" v-for="i in limit" :key="i" />
-        </v-card-text>
-        <v-card-actions v-if="viewAll" class="justify-center">
-            <v-btn :to="viewAll.route">{{ viewAll.label }}</v-btn>
+			<v-skeleton-loader v-if="loading" type="list-item-three-line" v-for="i in limit" :key="i" />
+		</v-card-text>
+		<v-card-actions v-if="viewAll" class="justify-center">
+			<v-btn :to="accountRoute('Announcements')">
+				{{ viewAll.label }}
+			</v-btn>
         </v-card-actions>
     </v-card>
 </template>
@@ -19,13 +21,18 @@ import { getAnnouncements } from "@/apps/announcements/api";
 import { computed, onMounted, ref } from "vue";
 import AnnouncementListItem from "./AnnouncementListItem.vue";
 
+import {accountRoute} from "@/services/api";
+
+
 const props = defineProps({
 	title: String,
 	subtitle: String,
 	filter: { type: Object, default: () => ({}) },
 	viewAll: {
 		type: Object,
-		default: () => ({ route: { name: "Announcements" }, label: "View All" }),
+		default: () => ({
+			label: "View All",
+		}),
 	},
 	limit: { type: Number, default: 5 },
 });

@@ -40,6 +40,7 @@
 import { useAuthStore } from "@/stores/auth";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { accountRoute } from "@/services/api";
 
 // State
 const error = ref("");
@@ -57,6 +58,7 @@ async function handleSubmit() {
 		});
 		router.push({ name: "Accounts" });
 	} catch (err) {
+		console.error(err);
 		error.value = "Login failed. Please check your credentials.";
 	}
 }

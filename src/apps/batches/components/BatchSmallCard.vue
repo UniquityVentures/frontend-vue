@@ -1,4 +1,5 @@
 <script setup>
+import {accountRoute} from "@/services/api";
 import { onMounted, ref } from "vue";
 import { getBatch, deleteBatch } from "../api";
 
@@ -24,7 +25,7 @@ onMounted(async () => {
 </script>
 
 <template>
-    <v-card v-if="batch" link :to="{ name: 'Batch', params: { batchId: batch.id }}" variant="flat" class="border">
+    <v-card v-if="batch" link :to="accountRoute( 'Batch', { params: { batchId: batch.id }})" variant="flat" class="border">
         <v-card-title class="text-subtitle-1">{{ batch.name }}</v-card-title>
         <v-card-subtitle>{{ batch.main_teacher_details?.user_details?.full_name || "Loading..." }}</v-card-subtitle>
         <v-card-text>

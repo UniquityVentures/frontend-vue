@@ -17,7 +17,7 @@
         <template #cards-slot="{ items }">
             <v-row>
                 <v-col cols="6" md="3" lg="2" v-for="item in items" :key="item.id">
-                    <v-card link :to="{ name: 'Course', params: { courseId: item.id }}" variant="flat" class="border">
+                    <v-card link :to="accountRoute( 'Course', { params: { courseId: item.id }})" variant="flat" class="border">
                         <v-card-title class="text-subtitle-1">{{ item.name }}</v-card-title>
                         <v-card-subtitle>{{ item.code }}</v-card-subtitle>
                         <v-card-text>
@@ -34,6 +34,7 @@
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 import BatchChip from "@/apps/batches/components/BatchChip.vue";
 import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";

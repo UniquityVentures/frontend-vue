@@ -12,16 +12,16 @@ export default [
 		component: AppSideBarBreadcrumbsLayout,
 		meta: {
 			getDisplayName: () => "Announcements",
-			defaultRoute: "Announcements",
+			defaultRoute: "AdminAnnouncements",
 			description: "View and manage announcements",
 			getMenu: () => [
 				{
 					title: "All Announcements",
-					to: { name: "Announcements" },
+					to: { name: "AdminAnnouncements" },
 				},
 				{
 					title: "Create Announcement",
-					to: { name: "CreateAnnouncement" },
+					to: { name: "AdminCreateAnnouncement" },
 				},
 			],
 			icon: "mdi-bullhorn",
@@ -30,28 +30,28 @@ export default [
 			{
 				path: "all/",
 				component: AnnouncementsPage,
-				name: "Announcements",
+				name: "AdminAnnouncements",
 			},
 			{
 				path: "create/",
 				component: CreateAnnouncementPage,
-				name: "CreateAnnouncement",
+				name: "AdminCreateAnnouncement",
 			},
 			{
 				path: ":announcementId/",
 				component: EmptyLayout,
 				props: true,
 				meta: {
-					defaultRoute: "Announcement",
+					defaultRoute: "AdminAnnouncement",
 					getDisplayName: () => "View",
 					getMenu: (params) => [
 						{
 							title: "View Announcement",
-							to: { name: "Announcement", params },
+							to: { name: "AdminAnnouncement", params },
 						},
 						{
 							title: "Edit Announcement",
-							to: { name: "EditAnnouncement", params },
+							to: { name: "AdminEditAnnouncement", params },
 						},
 					],
 					icon: "mdi-bullhorn",
@@ -60,13 +60,13 @@ export default [
 					{
 						path: "view/",
 						component: AnnouncementPage,
-						name: "Announcement",
+						name: "AdminAnnouncement",
 						props: true,
 					},
 					{
 						path: "edit/",
 						component: EditAnnouncementPage,
-						name: "EditAnnouncement",
+						name: "AdminEditAnnouncement",
 						props: true,
 					},
 				],

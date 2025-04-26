@@ -26,6 +26,7 @@ import { createUser } from "@/apps/users/api";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { createTeacher } from "../api";
+import {accountRoute} from "@/services/api";
 import TeacherForm from "../components/TeacherForm.vue";
 
 const router = useRouter();
@@ -49,7 +50,7 @@ const handleCreateTeacher = async (teacherData) => {
 			...teacherData,
 			user: user.value.id,
 		});
-		router.push({ name: "Teacher", params: { teacherId: teacher.id } });
+		router.push(accountRoute("Teacher", { params: { teacherId: teacher.id } }));
 		return { success: true };
 	} catch (error) {
 		console.error("Failed to create teacher:", error);

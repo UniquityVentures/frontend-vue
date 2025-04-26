@@ -31,8 +31,8 @@
 
 <script setup>
 import { ref, watch, computed } from "vue";
-import adminRoutes from "@/router/adminApps";
-import studentRoutes from "@/router/studentApps";
+import adminRoutes from "@/router/adminRoutes";
+import studentRoutes from "@/router/studentRoutes";
 import { useAuthStore } from "@/stores/auth";
 
 const authStore = useAuthStore();

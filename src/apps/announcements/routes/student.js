@@ -9,12 +9,12 @@ export default [
         component: AppSideBarBreadcrumbsLayout,
         meta: {
             getDisplayName: () => "Announcements",
-            defaultRoute: "Announcements",
+            defaultRoute: "StudentAnnouncements",
             description: "View and manage announcements",
             getMenu: () => [
                 {
                     title: "All Announcements",
-                    to: { name: "Announcements" },
+                    to: { name: "StudentAnnouncements" },
                 },
             ],
             icon: "mdi-bullhorn",
@@ -23,19 +23,19 @@ export default [
             {
                 path: "all/",
                 component: StudentAnnouncementsPage,
-                name: "Announcements",
+                name: "StudentAnnouncements",
             },
             {
                 path: ":announcementId/",
                 component: EmptyLayout,
                 props: true,
                 meta: {
-                    defaultRoute: "Announcement",
+                    defaultRoute: "StudentAnnouncement",
                     getDisplayName: () => "View",
                     getMenu: (params) => [
                         {
                             title: "View Announcement",
-                            to: { name: "Announcement", params },
+                            to: { name: "StudentAnnouncement", params },
                         },
                     ],
                 },
@@ -43,7 +43,7 @@ export default [
                     {
                         path: "view/",
                         component: AnnouncementPage,
-                        name: "Announcement",
+                        name: "StudentAnnouncement",
                         props: true,
                     },
                 ],

@@ -1,39 +1,39 @@
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
-import { getCourse } from "./api";
-import CoursePage from "./views/CoursePage.vue";
-import CoursesExportPage from "./views/CoursesExportPage.vue";
-import CoursesImportPage from "./views/CoursesImportPage.vue";
-import CoursesPage from "./views/CoursesPage.vue";
-import CreateCoursePage from "./views/CreateCoursePage.vue";
-import EditCoursePage from "./views/EditCoursePage.vue";
-import CourseAnnouncementsPage from "./views/CourseAnnouncementsPage.vue";
-import CourseAssignmentsPage from "./views/CourseAssignmentsPage.vue";
-import CourseSyllabusPage from "./views/CourseSyllabusPage.vue";
+import { getCourse } from "../api";
+import CoursePage from "../views/CoursePage.vue";
+import CoursesExportPage from "../views/CoursesExportPage.vue";
+import CoursesImportPage from "../views/CoursesImportPage.vue";
+import CoursesPage from "../views/CoursesPage.vue";
+import CreateCoursePage from "../views/CreateCoursePage.vue";
+import EditCoursePage from "../views/EditCoursePage.vue";
+import CourseAnnouncementsPage from "../views/CourseAnnouncementsPage.vue";
+import CourseAssignmentsPage from "../views/CourseAssignmentsPage.vue";
+import CourseSyllabusPage from "../views/CourseSyllabusPage.vue";
 export default [
 	{
 		path: "courses/",
 		component: AppSideBarBreadcrumbsLayout,
 		meta: {
 			getDisplayName: () => "Courses",
-			defaultRoute: "Courses",
+			defaultRoute: "TeacherCourses",
 			description: "View and manage courses",
 			getMenu: () => [
 				{
 					title: "All Courses",
-					to: { name: "Courses" },
+					to: { name: "TeacherCourses" },
 				},
 				{
 					title: "Create Course",
-					to: { name: "CreateCourse" },
+					to: { name: "TeacherCreateCourse" },
 				},
 				{
 					title: "Import Courses",
-					to: { name: "ImportCourses" },
+					to: { name: "TeacherImportCourses" },
 				},
 				{
 					title: "Export Courses",
-					to: { name: "ExportCourses" },
+					to: { name: "TeacherExportCourses" },
 				},
 			],
 			icon: "mdi-book-open-variant",
@@ -42,29 +42,29 @@ export default [
 			{
 				path: "all/",
 				component: CoursesPage,
-				name: "Courses",
+				name: "TeacherCourses",
 			},
 			{
 				path: "create/",
 				component: CreateCoursePage,
-				name: "CreateCourse",
+				name: "TeacherCreateCourse",
 			},
 			{
 				path: "import/",
 				component: CoursesImportPage,
-				name: "ImportCourses",
+				name: "TeacherImportCourses",
 			},
 			{
 				path: "export/",
 				component: CoursesExportPage,
-				name: "ExportCourses",
+				name: "TeacherExportCourses",
 			},
 			{
 				path: ":courseId/",
 				component: EmptyLayout,
 				props: true,
 				meta: {
-					defaultRoute: "Course",
+					defaultRoute: "TeacherCourse",
 					getDisplayName: async (props) => {
 						const course = await getCourse(props.courseId);
 						return `${course.name} (${course.code})`;
@@ -72,23 +72,23 @@ export default [
 					getMenu: (params) => [
 						{
 							title: "View Course",
-							to: { name: "Course", params },
+							to: { name: "TeacherCourse", params },
 						},
 						{
 							title: "Edit Course",
-							to: { name: "EditCourse", params },
+							to: { name: "TeacherEditCourse", params },
 						},
 						{
 							title: "Announcements",
-							to: { name: "CourseAnnouncements", params },
+							to: { name: "TeacherCourseAnnouncements", params },
 						},
 						{
 							title: "Assignments",
-							to: { name: "CourseAssignments", params },
+							to: { name: "TeacherCourseAssignments", params },
 						},
 						{
 							title: "Syllabus",
-							to: { name: "CourseSyllabus", params },
+							to: { name: "TeacherCourseSyllabus", params },
 						},
 					],
 					icon: "mdi-book-open-variant",
@@ -97,31 +97,31 @@ export default [
 					{
 						path: "view/",
 						component: CoursePage,
-						name: "Course",
+						name: "TeacherCourse",
 						props: true,
 					},
 					{
 						path: "edit/",
 						component: EditCoursePage,
-						name: "EditCourse",
+						name: "TeacherEditCourse",
 						props: true,
 					},
 					{
 						path: "announcements/",
 						component: CourseAnnouncementsPage,
-						name: "CourseAnnouncements",
+						name: "TeacherCourseAnnouncements",
 						props: true,
 					},
 					{
 						path: "assignments/",
 						component: CourseAssignmentsPage,
-						name: "CourseAssignments",
+						name: "TeacherCourseAssignments",
 						props: true,
 					},
 					{
 						path: "syllabus/",
 						component: CourseSyllabusPage,
-						name: "CourseSyllabus",
+						name: "TeacherCourseSyllabus",
 						props: true,
 					},
 				],

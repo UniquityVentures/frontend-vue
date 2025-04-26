@@ -9,7 +9,7 @@
 			@view-change="updateCurrentDate"
 		>
 			<template #event="{ event }">
-				<v-card :to="{ name: 'Event', params: { eventId: event.id } }" class="event-container">
+				<v-card :to="accountRoute( 'Event', { params: { eventId: event.id } })" class="event-container">
 					<v-card-title class="text-subtitle-2">
 						{{ event.title }}
 					</v-card-title>
@@ -24,6 +24,7 @@
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 import { ref, computed, onMounted } from "vue";
 import VueCal from "vue-cal";
 import "vue-cal/dist/vuecal.css";

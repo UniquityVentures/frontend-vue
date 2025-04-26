@@ -28,7 +28,7 @@
 			<v-row>
 				<v-col cols="12" md="4" lg="3" v-for="item in items" :key="item.id">
 					<v-card height="100%" link 
-						:to="{ name: 'Attachment', params: { attachmentId: item.id } }" 
+						:to="accountRoute( 'Attachment', { params: { attachmentId: item.id } })" 
 						variant="flat" class="border">
 						<v-img :src="item.file" max-height="200" contain></v-img>
 						<v-card-title class="text-subtitle-1">{{ item.name }}</v-card-title>
@@ -44,6 +44,7 @@
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import DateChip from "@/components/DateChip.vue";

@@ -1,8 +1,8 @@
 <template>
     <v-container v-if="course">
-        <v-btn prepend-icon="mdi-plus" color="primary" :to="{ name: 'CreateAssignment', query: {course: course.id} }">
+        <v-btn prepend-icon="mdi-plus" color="primary" :to="accountRoute( 'CreateAssignment', { query: {course: course.id} })">
             Create New Assignment</v-btn>
-        <v-btn prepend-icon="mdi-view-list" color="grey-darken-2" :to="{ name: 'Assignments', query: {course: course.id} }">
+        <v-btn prepend-icon="mdi-view-list" color="grey-darken-2" :to="accountRoute( 'Assignments', { query: {course: course.id} })">
             View All Assignments</v-btn>
         <v-divider/>
         <ResponsiveDataTable :fetch="getAssignments" v-model:filters="filters" title="Assignments"
@@ -24,7 +24,7 @@
             <template #cards-slot="{ items }">
                 <v-row>
                     <v-col cols="12" md="4" lg="3" v-for="item in items" :key="item.id">
-                        <v-card height="100%" link :to="{ name: 'Assignment', params: { assignmentId: item.id }}" variant="flat" class="border">
+                        <v-card height="100%" link :to="accountRoute( 'Assignment', { params: { assignmentId: item.id }})" variant="flat" class="border">
                             <v-card-title class="text-subtitle-1">{{ item.title }}</v-card-title>
                             <v-card-subtitle class="text-wrap">{{ item.description?.slice(0, 100) }}...</v-card-subtitle>
                             <v-card-text>
@@ -37,7 +37,7 @@
             </template>
             <template #list-slot="{ items }">
                 <v-list lines="three">
-                    <v-list-item link :to="{ name: 'Assignment', params: { assignmentId: item.id }}" v-for="item in items" :key="item.id" class="border">
+                    <v-list-item link :to="accountRoute( 'Assignment', { params: { assignmentId: item.id }})" v-for="item in items" :key="item.id" class="border">
                         <v-list-item-title>{{ item.title }}</v-list-item-title>
                         <v-list-item-subtitle class="text-wrap">{{ item.description }}</v-list-item-subtitle>
                         <v-list-item-subtitle>
@@ -52,6 +52,7 @@
 </template>
 
 <script setup>
+							import {accountRoute} from "@/services/api";
 import { getAssignments } from "@/apps/assignments/api";
 import { getCourse } from "@/apps/courses/api";
 import DateRangeSelect from "@/components/DateRangeSelect.vue";

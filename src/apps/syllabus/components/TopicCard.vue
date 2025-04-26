@@ -16,7 +16,7 @@
                         variant="text" 
                         size="small" 
                         color="primary"
-                        :to="{ name: 'Chapter', params: { chapterId: topic.chapter }}"
+                        :to="accountRoute( 'Chapter', { params: { chapterId: topic.chapter }})"
                         class="me-2"
                     >
                         View Chapter
@@ -36,20 +36,21 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { getChapter } from '@/apps/syllabus/api';
+import { accountRoute } from "@/services/api";
+import { ref, onMounted } from "vue";
+import { getChapter } from "@/apps/syllabus/api";
 
 const props = defineProps({
-    topic: {
-        type: Object,
-        required: true
-    },
+	topic: {
+		type: Object,
+		required: true,
+	},
 });
 
 const chapterDetails = ref(null);
 
 onMounted(async () => {
-    chapterDetails.value = await getChapter(props.topic.chapter);
+	chapterDetails.value = await getChapter(props.topic.chapter);
 });
 </script>
 

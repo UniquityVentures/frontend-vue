@@ -6,7 +6,7 @@
       v-bind="chipProps"
       color="primary"
       link
-      :to="{ name: 'Course', params: { courseId: item.id } }"
+      :to="accountRoute( 'Course', { params: { courseId: item.id } })"
     >
       <v-avatar size="24" icon="mdi-book-open-variant" />
       {{ item?.name || item?.id || 'Unknown Course' }}
@@ -19,7 +19,7 @@
     class="course-chip"
     color="primary"
     link
-    :to="{ name: 'Course', params: { courseId: course.id } }"
+    :to="accountRoute( 'Course', { params: { courseId: course.id } })"
   >
     <strong v-if="label">{{ label }}: </strong>
     <v-avatar size="24" icon="mdi-book-open-variant" />
@@ -28,6 +28,7 @@
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 const props = defineProps({
 	course: {
 		type: [Object, Array],

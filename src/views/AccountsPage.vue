@@ -32,7 +32,9 @@
 <script setup>
 import { useAuthStore } from "@/stores/auth";
 import { onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter } from "vue-router"
+
+import {accountRoute} from "@/services/api";
 
 const router = useRouter();
 const authStore = useAuthStore();
@@ -40,7 +42,8 @@ const accounts = ref([]);
 
 onMounted(async () => {
 	accounts.value = authStore.user.accounts || [];
-  
+	console.log(router.abc);
+
 	// If there's only one account, select it automatically and redirect
 	if (accounts.value.length === 1) {
 		await selectAccount(accounts.value[0]);
@@ -49,6 +52,7 @@ onMounted(async () => {
 
 async function selectAccount(account) {
 	await authStore.setActiveAccount(account);
-	router.push({ name: "Dashboard" });
+	console.log(account);
+	router.push(accountRoute("Dashboard"))
 }
 </script>

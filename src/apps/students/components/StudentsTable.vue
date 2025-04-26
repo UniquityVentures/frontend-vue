@@ -22,7 +22,7 @@
 						icon="mdi-arrow-right"
 						size="x-small"
 						variant="outlined"
-						:to="{ name: 'Dashboard', params: { id: item} }"
+						:to="accountRoute( 'Dashboard', { params: { id: item} })"
 					></v-btn>
 				</template>
 			</v-data-table>
@@ -32,6 +32,7 @@
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 import { getStudents } from "@/apps/students/api";
 import { onMounted, ref } from "vue";
 

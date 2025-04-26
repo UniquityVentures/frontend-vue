@@ -37,7 +37,7 @@
         <template #cards-slot="{ items }">
             <v-row>
                 <v-col cols="12" md="4" lg="3" v-for="item in items" :key="item.id">
-                    <v-card height="100%" link :to="{ name: 'Announcement', params: { announcementId: item.id }}" variant="flat" class="border">
+                    <v-card height="100%" link :to="accountRoute( 'Announcement', { params: { announcementId: item.id }})" variant="flat" class="border">
                         <v-card-title class="text-subtitle-1">{{ item.title }}</v-card-title>
                         <v-card-subtitle class="text-wrap">{{ item.description.slice(0, 100) }}...</v-card-subtitle>
                         <v-card-text>
@@ -49,7 +49,7 @@
         </template>
         <template #list-slot="{ items }">
             <v-list lines="three">
-                <v-list-item link :to="{ name: 'Announcement', params: { announcementId: item.id }}" v-for="item in items" :key="item.id" class="border">
+                <v-list-item link :to="accountRoute( 'Announcement', { params: { announcementId: item.id }})" v-for="item in items" :key="item.id" class="border">
                     <v-list-item-title>{{ item.title }}</v-list-item-title>
                     <v-list-item-subtitle class="text-wrap">{{ item.description }}</v-list-item-subtitle>
 					<TeacherChip label="Signed by" :teacher="item.signed_by_details" v-if="item.signed_by_details" />
@@ -58,12 +58,13 @@
         </template>
         <template #actions-slot>
             <ExportButton :exportFunction="exportAnnouncements" title="Export Data in this Table" v-model:filters="filters" />
-            <v-btn variant="text" color="primary" :to="{ name: 'CreateAnnouncement' }">Create New Announcement</v-btn>
+            <v-btn variant="text" color="primary" :to="accountRoute({ name: 'CreateAnnouncement' })">Create New Announcement</v-btn>
         </template>
     </ResponsiveDataTable>
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";

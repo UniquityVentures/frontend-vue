@@ -11,12 +11,12 @@ export default [
 		meta: {
 			requiresAuth: true,
 			getDisplayName: () => "Teachers",
-			defaultRoute: "Teachers",
+			defaultRoute: "StudentTeachers",
 			description: "View your teachers",
 			getMenu: () => [
 				{
 					title: "All Teachers",
-					to: { name: "Teachers" },
+					to: { name: "StudentTeachers" },
 				},
 			],
 			icon: "mdi-account-tie",
@@ -25,21 +25,21 @@ export default [
 			{
 				path: "all/",
 				component: TeachersPage,
-				name: "Teachers",
+				name: "StudentTeachers",
 			},
 			{
 				path: ":teacherId",
 				props: true,
 				component: EmptyLayout,
 				meta: {
-					defaultRoute: "Teacher",
+					defaultRoute: "StudentTeacher",
 					getDisplayName: async (params) =>
 						(await api.get(`api/accounts/teachers/${params.teacherId}/`)).data
 							.user_details.full_name,
 					getMenu: (props) => [
 						{
 							title: "View Teacher",
-							to: { name: "Teacher", params: props },
+							to: { name: "StudentTeacher", params: props },
 						},
 					],
 					icon: "mdi-account-tie",
@@ -48,7 +48,7 @@ export default [
 					{
 						path: "view/",
 						component: TeacherPage,
-						name: "Teacher",
+						name: "StudentTeacher",
 						props: true,
 					},
 				],

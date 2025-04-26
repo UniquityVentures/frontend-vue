@@ -1,4 +1,5 @@
 <script setup>
+import {accountRoute} from "@/services/api";
 import { onMounted, ref } from "vue";
 import { getTeacher} from "../api";
 
@@ -24,7 +25,7 @@ onMounted(async () => {
 
 <template>
     <v-card v-if="teacher"
-    height="100%" link :to="{ name: 'Teacher', params: { teacherId: teacher.id }}" variant="flat" class="border">
+    height="100%" link :to="accountRoute( 'Teacher', { params: { teacherId: teacher.id }})" variant="flat" class="border">
         <v-card-title class="text-subtitle-1">{{ teacher.user_details.full_name }}</v-card-title>
         <v-card-subtitle>{{ teacher.identifier }}</v-card-subtitle>
         <v-card-text>

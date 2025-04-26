@@ -13,16 +13,16 @@ export default [
 		meta: {
 			requiresAuth: true,
 			getDisplayName: () => "Teachers",
-			defaultRoute: "Teachers",
+			defaultRoute: "TeacherTeachers",
 			description: "View and manage teachers",
 			getMenu: (props) => [
 				{
 					title: "View Teachers",
-					to: { name: "Teachers", params: props },
+					to: { name: "TeacherTeachers", params: props },
 				},
 				{
 					title: "Create Teacher",
-					to: { name: "CreateTeacher", params: props },
+					to: { name: "TeacherCreateTeacher", params: props },
 				},
 			],
 			icon: "mdi-account-tie",
@@ -31,30 +31,30 @@ export default [
 			{
 				path: "all/",
 				component: TeachersPage,
-				name: "Teachers",
+				name: "TeacherTeachers",
 			},
 			{
 				path: "create/",
 				component: CreateTeacherPage,
-				name: "CreateTeacher",
+				name: "TeacherCreateTeacher",
 			},
 			{
 				path: ":teacherId",
 				props: true,
 				component: EmptyLayout,
 				meta: {
-					defaultRoute: "Teacher",
+					defaultRoute: "TeacherTeacher",
 					getDisplayName: async (params) =>
 						(await api.get(`api/accounts/teachers/${params.teacherId}/`)).data
 							.user_details.full_name,
 					getMenu: (props) => [
 						{
 							title: "View Teacher",
-							to: { name: "Teacher", params: props },
+							to: { name: "TeacherTeacher", params: props },
 						},
 						{
 							title: "Edit Teacher",
-							to: { name: "EditTeacher", params: props },
+							to: { name: "TeacherEditTeacher", params: props },
 						},
 					],
 					icon: "mdi-account-tie",
@@ -64,13 +64,13 @@ export default [
 						path: "view/",
 						component: TeacherPage,
 						//component: StudentPage,
-						name: "Teacher",
+						name: "TeacherTeacher",
 						props: true,
 					},
 					{
 						path: "edit/",
 						component: EditTeacherPage,
-						name: "EditTeacher",
+						name: "TeacherEditTeacher",
 						props: true,
 					},
 				],

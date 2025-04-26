@@ -33,7 +33,7 @@
         </template>
         <template #list-slot="{ items }">
 			<v-list>
-				<v-list-item v-for="item in items" :key="item.id" link :to="{ name: 'Transaction', params: { transactionId: item.id } }" class="border">
+				<v-list-item v-for="item in items" :key="item.id" link :to="accountRoute( 'Transaction', { params: { transactionId: item.id } })" class="border">
 					<v-list-item-title>
 						<v-icon :color="getStatusColor(item.transaction_status)">
 							{{ getStatusIcon(item.transaction_status) }}
@@ -64,6 +64,7 @@
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 import StudentSelect from "@/apps/students/components/StudentSelect.vue";
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";

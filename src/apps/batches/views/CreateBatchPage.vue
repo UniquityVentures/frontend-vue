@@ -13,6 +13,7 @@
 import { useRouter } from "vue-router";
 import { createBatch } from "../api";
 import BatchForm from "../components/BatchForm.vue";
+import {accountRoute} from "@/services/api";
 
 const router = useRouter();
 
@@ -21,7 +22,7 @@ const handleCreateBatch = async (batchData) => {
 		const response = await createBatch(batchData);
 		// Navigate to the newly created batch
 		if (response?.id) {
-			router.push({ name: "Batch", params: { batchId: response.id } });
+			router.push(accountRoute("Batch", { params: { batchId: response.id } }));
 		}
 		return { success: true };
 	} catch (error) {

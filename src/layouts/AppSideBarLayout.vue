@@ -2,7 +2,7 @@
 	<Suspense>
 		<v-app>
 			<v-navigation-drawer app location="end" v-model="rightDrawer" color="accent" :temporary="mobile">
-				<v-btn :to="{ name: 'All Apps' }" class="ma-4 d-flex justify-center" color="white" variant="outlined">
+				<v-btn :to="{name: 'All Apps'}" class="ma-4 d-flex justify-center" color="white" variant="outlined">
 					<template v-slot:default>
 						Go to All Apps
 					</template>
@@ -33,6 +33,7 @@
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 import RecursiveList from "@/components/RecursiveList.vue";
 import { currentRouteMeta } from "@/router/menu";
 import { computed, ref, watch } from "vue";

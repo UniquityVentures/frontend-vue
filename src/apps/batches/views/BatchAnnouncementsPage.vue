@@ -1,8 +1,8 @@
 <template>
     <v-container v-if="batch">
-		<v-btn prepend-icon="mdi-plus" color="primary" :to="{ name: 'CreateAnnouncement', query: {batches: [batch.id]} }">
+		<v-btn prepend-icon="mdi-plus" color="primary" :to="accountRoute( 'CreateAnnouncement', { query: {batches: [batch.id]} })">
             Create New Announcement</v-btn>
-        <v-btn prepend-icon="mdi-view-list" color="grey-darken-2" :to="{ name: 'Announcements', query: {batch: batch.id} }">
+        <v-btn prepend-icon="mdi-view-list" color="grey-darken-2" :to="accountRoute( 'Announcements', { query: {batch: batch.id} })">
             View All Announcements</v-btn>
         <v-divider/>
         <ResponsiveDataTable :fetch="getAnnouncements" v-model:filters="filters" title="Announcements"
@@ -35,6 +35,7 @@
 
 <script setup>
 import { getAnnouncements } from "@/apps/announcements/api";
+import {accountRoute} from "@/services/api";
 import AnnouncementListItem from "@/apps/announcements/components/AnnouncementListItem.vue";
 import AnnouncementSmallCard from "@/apps/announcements/components/AnnouncementSmallCard.vue";
 import { getBatch } from "@/apps/batches/api";

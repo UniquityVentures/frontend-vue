@@ -33,12 +33,7 @@
 										v-if="assignment?.course_details?.batch_details?.main_teacher_details"
 										:title="assignment?.course_details?.batch_details?.main_teacher_details?.user_details?.full_name"
 										:subtitle="assignment?.course_details?.batch_details?.main_teacher_details?.user_details?.email"
-										:to="{
-											name: 'Teacher',
-											params: {
-												teacherId: assignment?.course_details?.batch_details?.main_teacher_details?.id
-											}
-										}" />
+										:to="accountRoute( 'Teacher', { params: { teacherId: assignment?.course_details?.batch_details?.main_teacher_details?.id } })" />
 								</v-list>
 							</v-card-text>
 
@@ -56,7 +51,7 @@
 											:title="submission.student_details?.user_details?.full_name"
 											:subtitle="`Submitted: ${formatDateTime(submission.submitted_at)}`"
 											prepend-icon="mdi-file-check-outline"
-											:to="{ name: 'SubmissionDetails', params: { submissionId: submission.id } }"
+											:to="accountRoute( 'SubmissionDetails', { params: { submissionId: submission.id } })"
 											link />
 									</v-list>
 								</div>
@@ -66,7 +61,7 @@
 							</v-card-text>
 
 							<v-card-actions>
-								<v-btn :to="{ name: 'EditAssignment', params: { assignmentId: assignment.id } }"
+								<v-btn :to="accountRoute( 'EditAssignment', { params: { assignmentId: assignment.id } })"
 									variant="outlined" prepend-icon="mdi-pencil"
 									v-if="authStore.hasPermission('change_assignment')">
 									Edit
@@ -86,6 +81,7 @@
 </template>
 
 <script setup>
+import {accountRoute} from "@/services/api";
 import DateChip from "@/components/DateChip.vue";
 import { useAuthStore } from "@/stores/auth";
 import { formatDateTime } from "@/services/utils";

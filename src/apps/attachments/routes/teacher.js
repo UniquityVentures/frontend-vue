@@ -1,8 +1,8 @@
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import { api } from "@/services/api";
-import AttachmentPage from "./views/AttachmentPage.vue";
-import AttachmentsPage from "./views/AttachmentsPage.vue";
+import AttachmentPage from "../views/AttachmentPage.vue";
+import AttachmentsPage from "../views/AttachmentsPage.vue";
 
 export default [
 	{
@@ -10,13 +10,13 @@ export default [
 		component: AppSideBarBreadcrumbsLayout,
 		meta: {
 			requiresAuth: true,
-			getDisplayName: () => "Attachments",
-			defaultRoute: "Attachments",
+			getDisplayName: () => "TeacherAttachments",
+			defaultRoute: "TeacherAttachments",
 			description: "View and manage attachments",
 			getMenu: (props) => [
 				{
 					title: "View Attachments",
-					to: { name: "Attachments", params: props },
+					to: { name: "TeacherAttachments", params: props },
 				},
 			],
 			icon: "mdi-paperclip",
@@ -25,21 +25,21 @@ export default [
 			{
 				path: "all/",
 				component: AttachmentsPage,
-				name: "Attachments",
+				name: "TeacherAttachments",
 			},
 			{
 				path: ":attachmentId",
 				props: true,
 				component: AttachmentPage,
 				meta: {
-					defaultRoute: "Attachment",
+					defaultRoute: "TeacherAttachment",
 					getDisplayName: async (params) =>
 						(await api.get(`api/attachments/${params.attachmentId}/`)).data
 							.name,
 					getMenu: (props) => [
 						{
 							title: "View Attachment",
-							to: { name: "Attachment", params: props },
+							to: { name: "TeacherAttachment", params: props },
 						},
 					],
 				},
@@ -47,13 +47,13 @@ export default [
 					{
 						path: "view/",
 						component: EmptyLayout,
-						name: "Attachment",
+						name: "TeacherAttachment",
 						props: true,
 					},
 					{
 						path: "edit/",
 						component: EmptyLayout,
-						name: "EditAttachment",
+						name: "TeacherEditAttachment",
 						props: true,
 					},
 				],

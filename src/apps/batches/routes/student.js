@@ -21,24 +21,24 @@ export default [
 		meta: {
 			requiresAuth: true,
 			getDisplayName: () => "Batches",
-			defaultRoute: "Batches",
+			defaultRoute: "StudentBatches",
 			description: "View and manage batches",
 			getMenu: () => [
 				{
 					title: "All Batches",
-					to: { name: "Batches" },
+					to: { name: "StudentBatches" },
 				},
 				{
 					title: "Create Batches",
-					to: { name: "CreateBatch" },
+					to: { name: "StudentCreateBatch" },
 				},
 				{
 					title: "Export Batches",
-					to: { name: "BatchesExport" },
+					to: { name: "StudentBatchesExport" },
 				},
 				{
 					title: "Import Batches",
-					to: { name: "BatchesImport" },
+					to: { name: "StudentBatchesImport" },
 				},
 			],
 			icon: "mdi-google-batch",
@@ -46,26 +46,26 @@ export default [
 		children: [
 			{
 				path: "create/",
-				name: "CreateBatch",
+				name: "StudentCreateBatch",
 				component: CreateBatchPage,
 				meta: {
 					getDisplayName: () => "Create Batches",
-					defaultRoute: "CreateBatch",
+					defaultRoute: "StudentCreateBatch",
 				},
 			},
 			{
 				path: "all/",
-				name: "Batches",
+				name: "StudentBatches",
 				component: BatchesPage,
 			},
 			{
 				path: "export/",
-				name: "BatchesExport",
+				name: "StudentBatchesExport",
 				component: BatchesExportPage,
 			},
 			{
 				path: "import/",
-				name: "BatchesImport",
+				name: "StudentBatchesImport",
 				component: BatchesImportPage,
 			},
 			{
@@ -80,39 +80,39 @@ export default [
 						}
 						return "Batches";
 					},
-					defaultRoute: "Batches",
+					defaultRoute: "StudentBatches",
 					getMenu: (props) => [
 						{
 							title: "View Batch",
-							to: { name: "Batch", props },
+							to: { name: "StudentBatch", props },
 						},
 						{
 							title: "Edit Batch",
-							to: { name: "EditBatch", props },
+							to: { name: "StudentEditBatch", props },
 						},
 						{
 							title: "Announcements",
-							to: { name: "BatchAnnouncements", props },
+							to: { name: "StudentBatchAnnouncements", props },
 						},
 						{
 							title: "Courses",
-							to: { name: "BatchCourses", props },
+							to: { name: "StudentBatchCourses", props },
 						},
 						{
 							title: "Teachers",
-							to: { name: "BatchTeachers", props },
+							to: { name: "StudentBatchTeachers", props },
 						},
 						{
 							title: "Students",
-							to: { name: "BatchStudents", props },
+							to: { name: "StudentBatchStudents", props },
 						},
 						{
 							title: "Attendance Records",
-							to: { name: "BatchAttendancePage", props },	
+							to: { name: "StudentBatchAttendancePage", props },	
 						},
 						{
 							title: "Mark Attendance",
-							to: { name: "BatchMarkAttendance", props },
+							to: { name: "StudentBatchMarkAttendance", props },
 						},
 					],
 				},
@@ -120,19 +120,19 @@ export default [
 					{
 						path: "view/",
 						props: true,
-						name: "Batch",
+						name: "StudentBatch",
 						component: BatchPage,
 					},
 					{
 						path: "edit/",
 						props: true,
-						name: "EditBatch",
+						name: "StudentEditBatch",
 						component: EditBatchPage,
 					},
 					{
 						path: "announcements/",
 						props: true,
-						name: "BatchAnnouncements",
+						name: "StudentBatchAnnouncements",
 						component: BatchAnnouncementsPage,
 						meta: {
 							getDisplayName: () => "Announcements",
@@ -142,31 +142,31 @@ export default [
 					{
 						path: "teachers/",
 						props: true,
-						name: "BatchTeachers",
+						name: "StudentBatchTeachers",
 						component: BatchTeachersPage,
 					},
 					{
 						path: "courses/",
 						props: true,
-						name: "BatchCourses",
+						name: "StudentBatchCourses",
 						component: BatchCoursesPage,
 					},
 					{
 						path: "students/",
 						props: true,
-						name: "BatchStudents",
+						name: "StudentBatchStudents",
 						component: BatchStudentsPage,
 					},
 					{
 						path: "mark-attendance/",
 						props: true,
-						name: "BatchMarkAttendance",
+						name: "StudentBatchMarkAttendance",
 						component: BatchMarkAttendancePage,
 					},
 					{
 						path: "attendance/",
 						props: true,
-						name: "BatchAttendancePage",
+						name: "StudentBatchAttendancePage",
 						component: BatchAttendancePage,
 					},
 				],
