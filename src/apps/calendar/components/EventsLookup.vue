@@ -63,20 +63,6 @@ import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { ref } from "vue";
 import { getEvents } from "../api";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
-const props = defineProps({
-	title: {
-		type: String,
-		default: null,
-	},
-	subtitle: {
-		type: String,
-		default: null,
-	},
-	overrideFields: {
-		type: Array,
-		default: null,
-	},
-});
 
 const filters = ref({});
 </script>

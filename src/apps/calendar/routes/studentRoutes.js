@@ -1,8 +1,10 @@
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
-import EventsPage from "../views/EventsPage.vue";
+import StudentEventsPage from "../views/StudentEventsPage.vue";
 import CalendarPage2 from "../views/CalendarPage2.vue";
 import StudentEventPage from "../views/StudentEventPage.vue";
+import StudentCalendarPage2 from "../views/StudentCalendarPage2.vue";
+
 export default [
 	{
 		path: "calendar/",
@@ -26,7 +28,7 @@ export default [
 		children: [
 			{
 				path: "calendar/",
-				component: CalendarPage2,
+				component: StudentCalendarPage2,
 				name: "Calendar",
 			},
 			{
@@ -39,7 +41,7 @@ export default [
 				children: [
 					{
 						path: "",
-						component: EventsPage,
+						component: StudentEventsPage,
 						name: "Events",
 					},
 					{

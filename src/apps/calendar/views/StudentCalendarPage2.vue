@@ -29,6 +29,10 @@ import VueCal from "vue-cal";
 import "vue-cal/dist/vuecal.css";
 import { getCalendar } from "@/apps/calendar/api";
 import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
+
+const authStore = useAuthStore();
+const account = authStore.getAccount;
 
 const router = useRouter();
 
@@ -45,6 +49,7 @@ const fetchEvents = async () => {
 		const filter = {
 			month: date.getMonth() + 1, // JS months are 0-indexed
 			year: date.getFullYear(),
+			batches: account.batch,
 		};
 		const response = await getCalendar(filter);
 		events.value = response;
