@@ -16,7 +16,14 @@
             <template #cards-slot="{ items }">
                 <v-row>
                     <v-col cols="6" md="3" lg="2" v-for="item in items" :key="item.id">
-                        <StudentSmallCard :student="item" />
+                        <v-card height="100%" variant="flat" class="border" :to="{ name: 'Student', params: { studentId: item.id } }">
+                            <v-card-title class="text-subtitle-1">
+                                {{ item.name || item.user_details?.full_name }}
+                            </v-card-title>
+                            <v-card-subtitle>
+                                Roll No: {{ item.roll_no }}
+                            </v-card-subtitle>
+                        </v-card>
                     </v-col>
                 </v-row>
             </template>

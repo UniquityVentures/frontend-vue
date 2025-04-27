@@ -21,15 +21,32 @@ const vuetify = createVuetify({
 		themes: {
 			light: {
 				colors: {
-					primary: "#6A1B9A", // Deep Purple
-					secondary: "#7B1FA2", // Purple
-					accent: "#D500F9", // Neon Purple
-					background: "#FAFAFA", // Very Light Gray
+					primary: "#9C27B0", // Purple currently
+					secondary: "#E1E1E1", // Medium-dark white
+					tertiary: "#F6F6F6", // Light-medium white
+					quaternary: "#F9F9F9", // Lightest white (almost pure white)
+					accent: "#9C27B0", // Purple currently
+					background: "#F3F3F3", // Very Light Gray
 					surface: "#FFFFFF", // Pure White
 					error: "#E53935", // Red
 					info: "#1E88E5", // Blue
 					success: "#43A047", // Green
 					warning: "#FB8C00", // Orange
+				},
+			},
+			dark: {
+				colors: {
+					primary: "#8E24AA", 
+					secondary: "#1A1A1A", 
+					tertiary: "#212121", 
+					quaternary: "#2D2D2D", 
+					accent: "#CE93D8", 
+					background: "#222222", 
+					surface: "#313131", 
+					error: "#FF5252", // Brighter red for dark theme
+					info: "#64B5F6", // Brighter blue for dark theme
+					success: "#81C784", // Brighter green for dark theme
+					warning: "#FFB74D", 
 				},
 			},
 		},
@@ -71,6 +88,9 @@ const vuetify = createVuetify({
 		VRow: { dense: true },
 		VCol: { dense: true },
 		VBtn: { variant: "tonal" },
+		VNavigationDrawer: {
+			touchless: true  // Disables swipe gestures
+		},
 	},
 });
 

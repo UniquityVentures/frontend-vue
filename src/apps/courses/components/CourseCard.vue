@@ -10,36 +10,30 @@
 		</v-card-subtitle>
 
 		<v-card-text>
-			<span class="text-primary">Teacher:</span><br>
+			<span class="text-accent">Teacher:</span><br>
 			<TeacherChip v-if="course.main_teacher_details" :teacher="course.main_teacher_details" />
 		</v-card-text>
 
 		<v-card-text v-if="course?.other_teachers?.length">
-			<span class="text-primary">Other Teachers:</span><br>
+			<span class="text-accent">Other Teachers:</span><br>
 			<TeacherChip v-for="teacher in teachers" :key="teacher.id" :teacher="teacher"/>
 		</v-card-text>
 
 		<v-card-text>
-			<v-chip color="primary" size="small" label v-if="course.standard">Grade: {{ course.standard }}</v-chip>
+			<v-chip color="accent" size="small" label v-if="course.standard">Grade: {{ course.standard }}</v-chip>
 			<v-chip :color="course.is_active ? 'success' : 'error'" size="small" label v-if="course.is_active !== undefined">
 				Status: {{ course.is_active ? 'Active' : 'Inactive' }}
 			</v-chip>
 		</v-card-text>
-
-		<v-card-actions>
-			<DeleteButton :action="() => deleteCourse(course?.id)" :name="'course ' + course?.name" />
-		</v-card-actions>
 	</v-card>
 </template>
 
 
 <script setup>
-import { getCourseImage, deleteCourse } from "@/apps/courses/api";
+import { getCourseImage } from "@/apps/courses/api";
 import { getTeacher } from "@/apps/teachers/api";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 import { ref, watch } from "vue";
-
-import DeleteButton from "@/components/DeleteButton.vue";
 
 const props = defineProps({
 	course: {

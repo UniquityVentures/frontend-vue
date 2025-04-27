@@ -39,7 +39,7 @@
 				/>
             </v-card-text>
             <v-card-actions>
-                <SubmitButton submitText="Add Selected Teachers to Batch" :onSubmit="addTeachers" color="primary" />
+                <SubmitButton submitText="Add Selected Teachers to Batch" :onSubmit="addTeachers" color="accent" />
             </v-card-actions>
         </v-card>
         <v-card class="column-item">
@@ -60,7 +60,7 @@
                 <SubmitButton submitText="Remove Selected Teachers from Batch" :onSubmit="removeTeachers" color="error" />
             </v-card-actions>
         </v-card>
-        <v-card class="column-item">
+        <!-- <v-card class="column-item">
             <v-card-title>Teacher Join Requests</v-card-title>
             <v-card-subtitle>Teachers who have requested to join this batch</v-card-subtitle>
             <v-card-text>
@@ -75,7 +75,7 @@
                     </v-list-item>
                 </v-list>
             </v-card-text>
-        </v-card>
+        </v-card> -->
     </v-container>
 </template>
 

@@ -15,7 +15,7 @@
                         v-if="topic.chapter" 
                         variant="text" 
                         size="small" 
-                        color="primary"
+                        color="accent"
                         :to="{ name: 'Chapter', params: { chapterId: topic.chapter }}"
                         class="me-2"
                     >
@@ -27,7 +27,7 @@
             <div v-if="chapterDetails" class="mt-3 pt-3 border-t">
                 <span class="text-subtitle-2">From Chapter:</span>
                 <div class="d-flex align-center mt-1">
-                    <v-chip color="primary">{{ chapterDetails.name }}</v-chip>
+                    <v-chip color="accent">{{ chapterDetails.name }}</v-chip>
                     <v-chip color="info" class="ms-2" size="small">{{ chapterDetails.book }}</v-chip>
                 </div>
             </div>

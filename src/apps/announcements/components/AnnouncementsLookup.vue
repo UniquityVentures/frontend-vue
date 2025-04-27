@@ -43,9 +43,6 @@
                         <v-card-text>
                             <TeacherChip label="Signed by" :teacher="item.signed_by_details" v-if="item.signed_by_details" />
                         </v-card-text>
-						<v-card-actions>
-							<DeleteButton :action="() => deleteAnnouncement(item?.id)" :name="'Announcement ' + item?.title" />
-						</v-card-actions>
                     </v-card>
                 </v-col>
             </v-row>
@@ -56,15 +53,12 @@
                     <v-list-item-title>{{ item.title }}</v-list-item-title>
                     <v-list-item-subtitle class="text-wrap">{{ item.description }}</v-list-item-subtitle>
 					<TeacherChip label="Signed by" :teacher="item.signed_by_details" v-if="item.signed_by_details" />
-						<v-list-item-action>
-							<DeleteButton :action="() => deleteAnnouncement(item?.id)" :name="'Announcement ' + item?.title" />
-						</v-list-item-action>
                 </v-list-item>
             </v-list>
         </template>
         <template #actions-slot>
             <ExportButton :exportFunction="exportAnnouncements" title="Export Data in this Table" v-model:filters="filters" />
-            <v-btn variant="text" color="primary" :to="{ name: 'CreateAnnouncement' }">Create New Announcement</v-btn>
+            <v-btn variant="text" color="accent" :to="{ name: 'CreateAnnouncement' }">Create New Announcement</v-btn>
         </template>
     </ResponsiveDataTable>
 </template>

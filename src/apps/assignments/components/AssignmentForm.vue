@@ -1,14 +1,14 @@
 <template>
   <v-card variant="flat">
-    <v-card-title>
+    <v-card-title class="text-h5">
       {{ title }}
     </v-card-title>
     <v-card-subtitle v-if="subtitle">
       {{ subtitle }}
     </v-card-subtitle>
     
-    <v-card class="ma-2" variant="outlined">
-      <v-card-title class="text-subtitle-1">Basic Information:</v-card-title>
+    <v-card class="ma-2" variant="flat">
+      <v-card-title>Basic Information:</v-card-title>
       <v-card-text>
         <v-row>
           <v-col cols="12">
@@ -35,8 +35,8 @@
       </v-card-text>
     </v-card>
     
-    <v-card class="ma-2" variant="outlined">
-      <v-card-title class="text-subtitle-1">Assign to:</v-card-title>
+    <v-card class="ma-2" variant="flat">
+      <v-card-title>Assign to:</v-card-title>
       <v-card-text>
         <v-row>
           <v-col cols="12" md="6">
@@ -51,8 +51,8 @@
       </v-card-text>
     </v-card>
     
-    <v-card class="ma-2" variant="outlined">
-      <v-card-title class="text-subtitle-1">Dates:</v-card-title>
+    <v-card class="ma-2" variant="flat">
+      <v-card-title>Dates:</v-card-title>
       <v-card-text>
         <v-row>
           <v-col cols="12" md="6">
@@ -61,7 +61,7 @@
               v-model="formData.release_at"
               :rules="[v => !!v || 'Release date is required']" 
               required
-              color="primary"
+              color="accent"
             />
           </v-col>
 
@@ -71,15 +71,15 @@
               v-model="formData.due_at"
               :rules="[v => !!v || 'Due date is required']" 
               required
-              color="primary"
+              color="accent"
             />
           </v-col>
         </v-row>
       </v-card-text>
     </v-card>
     
-    <v-card class="ma-2" variant="outlined">
-      <v-card-title class="text-subtitle-1">Attachments</v-card-title>
+    <v-card class="ma-2" variant="flat">
+      <v-card-title>Attachments</v-card-title>
       <v-card-text>
         <v-row>
           <v-col cols="12">
@@ -89,8 +89,8 @@
       </v-card-text>
     </v-card>
     
-    <v-card class="ma-2" variant="outlined">
-      <v-card-title class="text-subtitle-1">Grading:</v-card-title>
+    <v-card class="ma-2" variant="flat">
+      <v-card-title>Grading:</v-card-title>
       <v-card-text>
         <v-row>
           <v-col cols="12" md="6">
@@ -111,7 +111,10 @@
         </v-row>
       </v-card-text>
     </v-card>
-    <SubmitButton :onSubmit="submitForm" :submitText="actionName" />
+    <v-card-text>
+      <SubmitButton :onSubmit="submitForm" :submitText="actionName" />
+      <DeleteButton :action="() => deleteAssignment(assignment?.id)" :name="'Assignment ' + assignment?.title" />
+    </v-card-text>
   </v-card>
 </template>
 
@@ -121,6 +124,8 @@ import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
 import SubmitButton from "@/components/SubmitButton.vue";
 import DateSelect from "@/components/DateSelect.vue";
 import { onMounted, ref } from "vue";
+import DeleteButton from "@/components/DeleteButton.vue";
+import { deleteAssignment } from "../api";
 
 const props = defineProps({
 	assignment: {

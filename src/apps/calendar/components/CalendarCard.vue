@@ -2,7 +2,7 @@
     <v-container>
         <v-sheet>
             <v-calendar ref="calendar" v-model="currentDate" :events="formattedEvents" view-mode="month"
-                color="primary">
+                color="accent">
                 <template v-slot:event="{ event }">
                     <v-chip :color="event.color" @click.stop="showEvent(event)">
                         {{ event.title }}
@@ -26,7 +26,7 @@
                         Close
                     </v-btn>
                     <v-btn 
-                        color="primary" 
+                        color="accent" 
                         variant="tonal"
                         :to="{ name: 'Event', params: { eventId: selectedEvent.id } }"
                     >

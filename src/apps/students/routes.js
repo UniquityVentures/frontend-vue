@@ -29,7 +29,7 @@ export default [
 		},
 		children: [
 			{
-				path: "",
+				path: "all/",
 				component: StudentsPage,
 				name: "Students",
 			},
@@ -60,7 +60,7 @@ export default [
 				},
 				children: [
 					{
-						path: "",
+						path: "view/",
 						component: StudentPage,
 						name: "Student",
 						props: true,

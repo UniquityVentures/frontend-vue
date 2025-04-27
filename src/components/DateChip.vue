@@ -1,5 +1,5 @@
 <template> 
-	<v-chip :to=" {name: 'Calendar', query: {'date': date}}" :color="color" v-if="date">
+	<v-chip :to=" {name: 'Calendar', query: {'date': date}}" :color="color" v-if="isValidDate(date)">
 		{{label ? `${label}: ` : ''}}{{displayDate(date)}}
 	</v-chip>
 </template>
@@ -23,5 +23,13 @@ const formatter = Intl.DateTimeFormat("en-US", {
 	day: "numeric",
 });
 
-const displayDate = (date) => formatter.format(new Date(date));
+const isValidDate = (date) => {
+	const d = new Date(date);
+	return d instanceof Date && !isNaN(d);
+};
+
+const displayDate = (date) => {
+	if (!isValidDate(date)) return "Invalid date";
+	return formatter.format(new Date(date));
+};
 </script>

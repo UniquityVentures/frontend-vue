@@ -4,7 +4,7 @@
             {{ chapter.order }}. {{ chapter.name }}
         </v-card-title>
         <v-card-subtitle>
-            <v-chip color="primary" size="small">Book: {{ chapter.book }}</v-chip>
+            <v-chip color="accent" size="small">Book: {{ chapter.book }}</v-chip>
             <v-chip color="secondary" size="small" class="ms-2">Pages: {{ chapter.page_range }}</v-chip>
         </v-card-subtitle>
         
@@ -15,7 +15,7 @@
                     v-if="chapter.syllabus" 
                     variant="text" 
                     size="small" 
-                    color="primary"
+                    color="accent"
                     :to="{ name: 'Syllabus', params: { syllabusId: chapter.syllabus }}"
                 >
                     View Syllabus

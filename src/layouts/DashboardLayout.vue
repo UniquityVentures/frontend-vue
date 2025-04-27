@@ -1,35 +1,35 @@
 <template>
 	<Suspense>
 		<v-app>
-			<v-navigation-drawer app v-model="leftDrawer"
-				color="secondary">
+			<v-navigation-drawer app v-model="leftDrawer" color="secondary">
 				<v-list dense>
 					<v-list-item>
-						<v-card class="mb-4" 
-							:title="user.first_name + ' ' + user.last_name"
+						<v-card class="mb-4" :title="user.first_name + ' ' + user.last_name"
 							:subtitle="account?.group_details?.name || 'No linked account'">
 							<template v-slot:append>
-								<v-btn icon="mdi-logout" @click="logoutHandler" size="small" variant="text"/>
+								<v-btn icon="mdi-logout" @click="logoutHandler" size="small" variant="text" />
 							</template>
-							<!-- <v-card-text>
-								<v-chip label>
-									{{ account?.group_details?.name || 'No access level' }}
-								</v-chip>
-							</v-card-text> -->
 						</v-card>
 					</v-list-item>
 
 					<v-list-item :to="{ name: 'Dashboard' }">
 						<v-list-item-title>Dashboard</v-list-item-title>
 					</v-list-item>
+					
 					<v-divider class="mb-4"></v-divider>
 					<RecursiveList v-for="item in appsMenu" :item="item" />
 
 				</v-list>
 			</v-navigation-drawer>
-			<v-app-bar app color="primary" dark>
+			<v-app-bar app color="secondary" dense elevation="1">
 				<v-app-bar-nav-icon @click.stop="leftDrawer = !leftDrawer"></v-app-bar-nav-icon>
 				<v-toolbar-title>School ERP Dashboard</v-toolbar-title>
+				
+				<!-- Theme toggle icon in app bar -->
+				<v-spacer></v-spacer>
+				<v-btn icon @click="toggleTheme" class="mr-4">
+					<v-icon>{{ isDarkMode ? 'mdi-weather-sunny' : 'mdi-weather-night' }}</v-icon>
+				</v-btn>
 			</v-app-bar>
 			<v-main>
 				<slot>
@@ -43,45 +43,63 @@
 	</Suspense>
 </template>
 
-<style>
-</style>
 <script setup>
-import { useAuthStore } from "@/stores/auth"; // Pinia store
-import { computed, ref } from "vue";
-import { useDisplay } from "vuetify/lib/framework.mjs";
-
+import { useAuthStore } from "@/stores/auth";
+import { computed, ref, onMounted } from "vue";
+import { useDisplay, useTheme } from "vuetify/lib/framework.mjs";
 import { useRouter } from "vue-router";
-
 import RecursiveList from "@/components/RecursiveList.vue";
-
-import appRoutes from "@/router/app";
+import adminRoutes from "@/router/adminApps";
+import studentRoutes from "@/router/studentApps";
 import { getAppsMeta } from "@/router/menu";
 
 const { mdAndUp } = useDisplay();
 const leftDrawer = ref(mdAndUp.value);
 const router = useRouter();
 const authStore = useAuthStore();
-
+const theme = useTheme();
+const isDarkMode = ref(false);
 const appsMenu = ref();
-
 const user = computed(() => authStore.user);
 const account = computed(() => authStore.account);
 
-function logoutHandler() {
-	router
-		.push({ name: "Login" })
-		.then(() => {
-			authStore.logout();
-		})
-		.catch((error) => {
-			console.error("Navigation failed:", error);
-			authStore.logout(); // Still logout even if navigation fails
-		});
+// Initialize theme from localStorage if available
+onMounted(() => {
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme) {
+    theme.global.name.value = savedTheme;
+    isDarkMode.value = savedTheme === 'dark';
+  }
+});
+
+function toggleTheme() {
+  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark';
+  isDarkMode.value = theme.global.current.value.dark;
+  // Save preference to localStorage
+  localStorage.setItem('theme', theme.global.name.value);
 }
 
-// Equivalent to awaiting the funciton and then assigning to appsMenu.value
-// Couldn't await because there was no gaurantee there would be a Suspense component at the root
-getAppsMeta(appRoutes).then((menu) => {
+function logoutHandler() {
+	router
+	.push({ name: "Login" })
+	.then(() => {
+		authStore.logout();
+	})
+	.catch((error) => {
+		console.error("Navigation failed:", error);
+		authStore.logout(); 
+	});
+}
+
+// Choose routes based on account type
+let routesToUse = studentRoutes; // Default to student routes
+
+// Check account type and select appropriate routes
+if (account.value?.group_details?.name === "Admin") {
+	routesToUse = adminRoutes;
+}
+
+getAppsMeta(routesToUse).then((menu) => {
 	appsMenu.value = menu;
 });
 </script>

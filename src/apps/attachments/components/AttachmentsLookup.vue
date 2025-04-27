@@ -1,7 +1,5 @@
 <template>
 	<ResponsiveDataTable 
-		:getToFunction="(item) => ({ name: 'Attachment', params: { attachmentId: item.id } })"
-		:headers="attachmentDefaultHeaders" 
 		:fetch="getAttachments" 
 		v-model:filters="filters" 
 		:templates="{ desktop: 'card', mobile: 'card' }"
@@ -36,11 +34,8 @@
 						<v-card-title class="text-subtitle-1">{{ item.name }}</v-card-title>
 						<v-card-subtitle>{{ item.file_type }}</v-card-subtitle>
 						<v-card-text>
-							<DateChip color="primary" :date="item.created_at" />
+							<DateChip color="accent" label="Created" :date="item.created_at" />
 						</v-card-text>
-						<v-card-actions>
-							<DeleteButton :action="() => deleteAttachment(item?.id)" :name="'Attachment ' + item?.name" />
-						</v-card-actions>
 					</v-card>
 				</v-col>
 			</v-row>
@@ -52,11 +47,9 @@
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import DateChip from "@/components/DateChip.vue";
-import DeleteButton from "@/components/DeleteButton.vue";
 
 import { ref } from "vue";
-import { getAttachments, deleteAttachment } from "../api";
-import { attachmentDefaultHeaders } from "../config";
+import { getAttachments } from "../api";
 
 const props = defineProps({
 	title: {

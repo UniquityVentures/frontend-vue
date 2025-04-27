@@ -1,7 +1,5 @@
 <template>
 	<v-container>
-		{{currentCalendarView}}
-
 		<vue-cal
 			:events="formattedEvents"
 			style="min-height: 500px;"
@@ -30,8 +28,6 @@ import { ref, computed, onMounted } from "vue";
 import VueCal from "vue-cal";
 import "vue-cal/dist/vuecal.css";
 import { getCalendar } from "@/apps/calendar/api";
-import EventDialogCard from "@/apps/calendar/components/EventDialogCard.vue";
-
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -61,7 +57,6 @@ onMounted(() => {
 	fetchEvents();
 	if (router.currentRoute.value.query.date) {
 		currentCalendarView.value = "day";
-		console.log(currentCalendarView.value);
 	}
 });
 
@@ -81,7 +76,7 @@ const formattedEvents = computed(() =>
 	})),
 );
 
-// Format date for display
+// Format date (this function just shows the time) for display
 const formatDate = (date) => {
 	if (!date) return "";
 	return new Intl.DateTimeFormat("default", {

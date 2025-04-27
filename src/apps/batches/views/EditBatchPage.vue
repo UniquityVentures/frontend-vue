@@ -5,6 +5,7 @@
 			:action="handleUpdateBatch"
 			actionName="Update"
 			title="Batch"
+			subtitle="Edit Form"
 		/>
 	</v-container>
 	<v-skeleton-loader v-else type="card"></v-skeleton-loader>

@@ -14,7 +14,7 @@
           Sorry, you don't have permission to access this page.
         </p>
         <v-btn
-          color="primary"
+          color="accent"
           size="large"
           @click="$router.push({ name: 'Dashboard' })"
         >

@@ -4,6 +4,7 @@
 			:action="handleCreateBatch"
 			actionName="Create"
 			title="Batch"
+			subtitle="Create Form"
 		/>
 	</v-container>
 </template>

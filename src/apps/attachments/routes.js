@@ -23,7 +23,7 @@ export default [
 		},
 		children: [
 			{
-				path: "",
+				path: "all/",
 				component: AttachmentsPage,
 				name: "Attachments",
 			},
@@ -45,7 +45,7 @@ export default [
 				},
 				children: [
 					{
-						path: "",
+						path: "view/",
 						component: EmptyLayout,
 						name: "Attachment",
 						props: true,

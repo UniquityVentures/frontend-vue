@@ -1,6 +1,7 @@
 import { api } from "@/services/api";
 import Cookies from "js-cookie";
 import { defineStore } from "pinia";
+import { addAccountRoutes } from '@/router';
 
 export const useAuthStore = defineStore("auth", {
 	state: () => ({
@@ -13,6 +14,7 @@ export const useAuthStore = defineStore("auth", {
 	getters: {
 		isAuth: (state) => !!state.access,
 		getUser: (state) => state.user,
+		getAccount: (state) => state.account,
 		getAccess: (state) => state.access,
 		getRefresh: (state) => state.refresh,
 		hasPermission: (state) => (permission) => {
@@ -25,7 +27,7 @@ export const useAuthStore = defineStore("auth", {
 	},
 
 	actions: {
-		async login(credentials) {
+		async login(credentials) { 
 			// First get tokens
 			const response = await api.post("api/token/", credentials);
 			this.setTokens({
@@ -36,11 +38,6 @@ export const useAuthStore = defineStore("auth", {
 			// Then get user data
 			const userResponse = await api.get("/api/users/self/");
 			this.setUser(userResponse.data);
-
-			// If user has an account, fetch its details including permissions
-			if (userResponse.data.account) {
-				await this.setActiveAccount(userResponse.data.account);
-			}
 		},
 
 		async setActiveAccount(accountInfo) {
@@ -50,6 +47,10 @@ export const useAuthStore = defineStore("auth", {
 				`/api/accounts/${type.toLowerCase()}s/${id}/`,
 			);
 			this.account = accountResponse.data;
+
+			// After successful login and getting account info
+			const accountType = this.account?.group_details?.name;
+			addAccountRoutes(accountType);
 		},
 
 		refreshTokens(tokens) {

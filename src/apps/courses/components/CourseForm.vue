@@ -71,8 +71,10 @@
           ></v-checkbox>
         </v-col>
       </v-row>
-      
+    </v-card-text>
+    <v-card-text>
       <SubmitButton :onSubmit="() => props.action(formData)" :submitText="actionName" />
+      <DeleteButton :action="() => deleteCourse(course?.id)" :name="'Course ' + course?.name" />
     </v-card-text>
   </v-card>
 </template>
@@ -82,6 +84,8 @@ import TeacherSelect from "@/apps/teachers/components/TeacherSelect"
 import BatchSelect from "@/apps/batches/components/BatchSelect"
 import SubmitButton from "@/components/SubmitButton.vue";
 import { onMounted, ref } from "vue";
+import DeleteButton from "@/components/DeleteButton.vue";
+import { deleteCourse } from "../api";
 
 const props = defineProps({
 	course: {

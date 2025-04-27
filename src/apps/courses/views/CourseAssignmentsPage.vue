@@ -1,6 +1,6 @@
 <template>
     <v-container v-if="course">
-        <v-btn prepend-icon="mdi-plus" color="primary" :to="{ name: 'CreateAssignment', query: {course: course.id} }">
+        <v-btn prepend-icon="mdi-plus" color="accent" :to="{ name: 'CreateAssignment', query: {course: course.id} }">
             Create New Assignment</v-btn>
         <v-btn prepend-icon="mdi-view-list" color="grey-darken-2" :to="{ name: 'Assignments', query: {course: course.id} }">
             View All Assignments</v-btn>

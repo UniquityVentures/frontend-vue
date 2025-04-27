@@ -8,7 +8,7 @@
         An ERP system designed for schools.
       </v-card-text>
       <v-card-actions class="justify-center">
-        <v-btn color="primary" dark to="/login">
+        <v-btn color="accent" dark to="/login">
           Login
         </v-btn>
       </v-card-actions>

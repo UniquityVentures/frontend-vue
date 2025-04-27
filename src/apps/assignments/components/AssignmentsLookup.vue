@@ -35,13 +35,10 @@
 						<v-card-title class="text-subtitle-1">{{ item.title }}</v-card-title>
 						<v-card-subtitle class="text-wrap">{{ item.description.slice(0, 100) }}...</v-card-subtitle>
 						<v-card-text>
-							<v-chip color="primary">Course: {{ item.course_details.name }} - {{ item.course_details.code }}</v-chip>
+							<v-chip color="accent">Course: {{ item.course_details.name }} - {{ item.course_details.code }}</v-chip>
 							<DateChip label="Release" color="green" :date="item.release_at" />
 							<DateChip label="Due" color="red" :date="item.due_at" />
 						</v-card-text>
-						<v-card-actions>
-							<DeleteButton :action="() => deleteAssignment(item?.id)" :name="'Assignment ' + item?.title" />
-						</v-card-actions>
 					</v-card>
 				</v-col>
 			</v-row>
@@ -54,10 +51,9 @@ import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import DateChip from "@/components/DateChip.vue";
-import DeleteButton from "@/components/DeleteButton.vue";
 
 import { ref } from "vue";
-import { getAssignments, deleteAssignment } from "../api";
+import { getAssignments } from "../api";
 
 const filters = ref({});
 </script>

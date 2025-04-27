@@ -47,7 +47,7 @@
 						<v-chip color="success">
 							{{ item.transaction_type }}
 						</v-chip>
-						<v-chip color="primary">
+						<v-chip color="accent">
 							{{ item.payee_details?.email || "Unknown Payee" }}
 						</v-chip>
 						<v-chip :color="getStatusColor(item.transaction_status)">

@@ -8,7 +8,7 @@
                     :to="{ name: 'Assignment', params: { assignmentId: item.id } }" link class="border">
                     <v-list-item-title>{{ item.title || 'Title loading...' }}</v-list-item-title>
                     <v-list-item-subtitle>{{ item.description || 'Description loading...' }}</v-list-item-subtitle>
-					<DateChip v-if="item.due_date" label="Due" color="primary" :date="item.due_date" />
+					<DateChip v-if="item.due_date" label="Due" color="accent" :date="item.due_date" />
                 </v-list-item>
             </v-list>
 			<span v-if="loading">

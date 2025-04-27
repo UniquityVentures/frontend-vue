@@ -15,7 +15,7 @@
 							</v-col>
 						</v-row>
 						<v-row>
-							<v-chip color="primary">
+							<v-chip color="accent">
 								Amount: ₹{{ transaction?.amount / 100 }} 
 							</v-chip>
 						</v-row>

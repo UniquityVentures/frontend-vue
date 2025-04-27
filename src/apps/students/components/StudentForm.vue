@@ -42,6 +42,7 @@
 
       
       <SubmitButton :onSubmit="submitForm" :submitText="actionName" />
+      <DeleteButton :action="() => deleteStudent(student?.id)" :name="'Student ' + student?.user_details?.full_name" />
     </v-card-text>
   </v-card>
 </template>
@@ -49,7 +50,9 @@
 <script setup>
 import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
 import SubmitButton from "@/components/SubmitButton.vue";
+import DeleteButton from "@/components/DeleteButton.vue";
 import { computed, onMounted, ref } from "vue";
+import { deleteStudent } from "../api";
 
 const props = defineProps({
 	student: {

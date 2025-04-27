@@ -15,7 +15,7 @@
 							
 							<v-card-text>
 								<h4 class="text-subtitle-1">Dates:</h4>
-								<DateChip color="primary" label="Release" :date="attachment.created_at" />
+								<DateChip color="accent" label="Release" :date="attachment.created_at" />
 								<DateChip color="red" label="Expiry" :date="attachment.updated_at" />
 							</v-card-text>
 							

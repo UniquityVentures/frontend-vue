@@ -89,15 +89,19 @@
           ></v-checkbox>
         </v-col>
       </v-row>
-      
+    </v-card-text>
+    <v-card-text>
       <SubmitButton :onSubmit="submitForm" :submitText="actionName" />
+      <DeleteButton :action="() => deleteTeacher(teacher?.id)" :name="'Teacher ' + teacher?.user_details?.full_name" />
     </v-card-text>
   </v-card>
 </template>
 
 <script setup>
 import SubmitButton from "@/components/SubmitButton.vue";
+import DeleteButton from "@/components/DeleteButton.vue";
 import { onMounted, ref } from "vue";
+import { deleteTeacher } from "../api";
 
 const props = defineProps({
 	teacher: {
