@@ -31,6 +31,9 @@ const props = defineProps({ batchId: [Number, String], batch: Object });
 const otherTeachers = ref([]);
 
 const fetchOtherTeachers = async () => {
+	if (!batch.value) {
+		return
+	}
 	for (const teacherId of batch.value.other_teachers) {
 		const teacher = await getTeacher(teacherId);
 		otherTeachers.value.push(teacher);
@@ -45,7 +48,6 @@ onMounted(async () => {
 	} else {
 		batch.value = props.batch;
 	}
-	await fetchOtherTeachers();
 });
 </script>
 

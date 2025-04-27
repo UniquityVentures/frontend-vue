@@ -1,6 +1,6 @@
 <template> 
 	<v-container class="columns-container" v-if="batch">
-		<BatchCard class="column-item" :batchId="batchId" />
+		<BatchCard class="column-item" :batchId="batch.id" />
 		
 		<CoursesList 
 			v-if="batch.id"
