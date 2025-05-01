@@ -54,7 +54,7 @@ const handleCreateUser = async (formData) => {
 const handleCreateStudent = async (formData) => {
 	try {
 		const student = await createStudent({
-			...formData.student,
+			...formData,
 			user: user.value.id,
 		});
 		router.push({ name: "Student", params: { studentId: student.id } });

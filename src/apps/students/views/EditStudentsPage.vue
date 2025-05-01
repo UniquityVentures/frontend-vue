@@ -44,6 +44,7 @@ import { getUser, updateUser } from "@/apps/users/api";
 import { onMounted, ref } from "vue";
 import { getStudent, updateStudent } from "../api";
 import StudentForm from "../components/StudentForm.vue";
+import UserForm from "@/apps/users/components/UserForm.vue";
 
 const props = defineProps({
 	studentId: {

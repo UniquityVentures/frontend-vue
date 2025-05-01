@@ -128,7 +128,6 @@ const formData = ref({
 const submitForm = async () => {
 	try {
 		// Call the action passed from parent
-		console.log(formData.value);
 		return await props.action(formData.value);
 	} catch (error) {
 		console.error("Error submitting form:", error);
