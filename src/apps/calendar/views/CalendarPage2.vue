@@ -92,6 +92,5 @@ border: 1px solid;
 height: 100%;
 width: 100%;
 text-align: left;
-padding: 4px;
 }
 </style>
