@@ -32,9 +32,9 @@ const router = useRouter();
 const stage = ref(1);
 const user = ref({});
 
-const handleCreateUser = async (userData) => {
+const handleCreateUser = async (formData) => {
 	try {
-		user.value = await createUser(userData);
+		user.value = await createUser(formData);
 		stage.value = 2;
 		return { success: true };
 	} catch (error) {
@@ -43,10 +43,10 @@ const handleCreateUser = async (userData) => {
 	}
 };
 
-const handleCreateStudent = async (studentData) => {
+const handleCreateStudent = async (formData) => {
 	try {
 		const student = await createStudent({
-			...studentData,
+			...formData.student,
 			user: user.value.id,
 		});
 		router.push({ name: "Student", params: { studentId: student.id } });
