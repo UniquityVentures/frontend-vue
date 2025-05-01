@@ -47,7 +47,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, watch } from "vue";
 import SubmitButton from "@/components/SubmitButton.vue";
 const props = defineProps({
 	action: {
@@ -68,22 +68,22 @@ const props = defineProps({
 	},
 });
 
-const formData = ref({})
+const formData = ref({
+	is_active: true,
+	is_approved: false,
+});
 
-const model = defineModel()
+const model = defineModel();
 
-onMounted(() => {
-	if (model.value) {
-		// Copy user data to form data
-		formData.value = {
-			...model.value,
-		};
-	} else {
-		formData.value = {
-			is_active: true,
-			is_approved: false,
-		};
-	}
-})
-
+watch(
+	model,
+	(v) => {
+		if (v) {
+			formData.value = {
+				...v,
+			};
+		}
+	},
+	{ deep: true, immediate: true },
+);
 </script>

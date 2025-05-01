@@ -51,6 +51,7 @@ const handleStudentUpdate = async (formData) => {
 onMounted(async () => {
 	student.value = await getStudent(props.studentId);
 	user.value = await getUser(student.value.user);
+	console.log(user.value);
 });
 
 const handleUpdateUser = async (userData) => {
