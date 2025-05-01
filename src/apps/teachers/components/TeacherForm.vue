@@ -1,34 +1,27 @@
 <template>
-			<v-row>
-				<v-col cols="12" md="6">
-					<v-text-field 
-						label="Identifier Number" 
-						v-model="formData.identifier"
-						type="number"
-					></v-text-field>
-				</v-col>
-			</v-row>
+	<v-container>
+		<v-row>
+			<v-col cols="12" md="6">
+				<v-text-field label="Identifier Number" v-model="formData.identifier" type="number"></v-text-field>
+			</v-col>
+		</v-row>
 
-			<v-row>
-				<v-col cols="12" md="6">
-					<v-text-field 
-						label="Phone" 
-						v-model="formData.phone"
-					></v-text-field>
-				</v-col>
+		<v-row>
+			<v-col cols="12" md="6">
+				<v-text-field label="Phone" v-model="formData.phone"></v-text-field>
+			</v-col>
 
-				<v-col cols="12" md="6">
-					<v-text-field 
-						label="Whatsapp" 
-						v-model="formData.whatsapp"
-					></v-text-field>
-				</v-col>
-			</v-row>
+			<v-col cols="12" md="6">
+				<v-text-field label="Whatsapp" v-model="formData.whatsapp"></v-text-field>
+			</v-col>
+		</v-row>
 
 		<v-card-text>
 			<SubmitButton :onSubmit="submitForm" :submitText="actionName" />
-			<DeleteButton :action="() => deleteTeacher(teacher?.id)" :name="'Teacher ' + teacher?.user_details?.full_name" />
+			<DeleteButton :action="() => deleteTeacher(teacher?.id)"
+				:name="'Teacher ' + teacher?.user_details?.full_name" />
 		</v-card-text>
+	</v-container>
 </template>
 
 <script setup>
@@ -89,4 +82,4 @@ onMounted(() => {
 		};
 	}
 });
-</script> 
+</script>
