@@ -1,6 +1,5 @@
 <template>
-    <v-container>
-		<v-row>
+		<v-row justify="center" align-content="center">
 			<v-col lg="3">
 				<v-date-picker
 					v-model="date"
@@ -20,16 +19,14 @@
 								{{ event.title }}
 							</v-card-title>
 							<v-card-text>
-								<v-chip color="green">Start: {{ formatDate(event.start) }}</v-chip>
-								<v-chip color="red">End: {{ formatDate(event.end) }}</v-chip>
+								<v-chip color="green">Start: {{ getTime(event.start) }}</v-chip>
+								<v-chip color="red">End: {{ getTime(event.end) }}</v-chip>
 							</v-card-text>
 						</v-card>
 					</template>
 				</vue-cal>
 			</v-col>
 		</v-row>
-	</v-container>
-
 </template>
 
 <script setup>
@@ -46,8 +43,15 @@ const date = ref(new Date());
 // Replace onMounted and add fetchEvents function
 const fetchEvents = async () => {
 	try {
+		const selectedDate = new Date(date.value);
+		// Fix timezone issue by using a method that preserves the local date
+		const year = selectedDate.getFullYear();
+		const month = String(selectedDate.getMonth() + 1).padStart(2, '0'); 
+		const day = String(selectedDate.getDate()).padStart(2, '0');
+		const localDate = `${year}-${month}-${day}`;
+		
 		const filter = {
-			date: toApiDate(date.value),
+			date: localDate,
 		};
 		const response = await getEvents(filter);
 		events.value = response.results;
@@ -71,4 +75,21 @@ const formattedEvents = computed(() =>
 		end: new Date(event.end),
 	})),
 );
+// Format date (this function just shows the time) for display
+const getTime = (date) => {
+	if (!date) return "";
+	return new Intl.DateTimeFormat("default", {
+		hour: "numeric",
+		minute: "numeric",
+	}).format(date);
+};
 </script>
+
+<style scoped>
+.event-container {
+border: 1px solid;
+height: 100%;
+width: 100%;
+text-align: left;
+}
+</style>
