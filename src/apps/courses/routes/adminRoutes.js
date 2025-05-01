@@ -91,6 +91,10 @@ export default [
 							title: "Syllabus",
 							to: { name: "CourseSyllabus", params },
 						},
+						{
+							title: "Time Table",
+							to: { name: "ViewTimeTable", params },
+						},
 					],
 					icon: "mdi-book-open-variant",
 				},
@@ -121,9 +125,61 @@ export default [
 					},
 					{
 						path: "syllabus/",
-						component: CourseSyllabusPage,
-						name: "CourseSyllabus",
 						props: true,
+						component: EmptyLayout,
+						meta: {
+							getDisplayName: () => "Syllabus",
+							defaultRoute: "CourseSyllabus",
+							getMenu: (props) => [
+								{
+									title: "All Syllabus Page",
+									to: { name: "CourseSyllabus", props },
+								},
+							],
+						},
+						children: [
+							{
+								path: "",
+								name: "CourseSyllabus",
+								props: true,
+								component: CourseSyllabusPage,
+							},
+
+						]
+					},
+					{
+						path: "timetable/",
+						props: true,
+						component: EmptyLayout,
+						meta: {
+							getDisplayName: () => "Time Table",
+							defaultRoute: "ViewTimeTable",
+							getMenu: (props) => [
+								{
+									title: "View Time Table",
+									to: { name: "ViewTimeTable", props },
+								},
+								{
+									title: "Edit Time Table",
+									to: { name: "EditTimeTable", props },
+								},
+							],
+						},
+						children: [
+							{
+								path: "",
+								name: "ViewTimeTable",
+								props: true,
+								component: EmptyLayout,
+							},
+							{
+								path: "edit/",
+								name: "EditTimeTable",
+								props: true,
+								component: EmptyLayout,
+							},
+
+						]
 					},
 				],
 			},

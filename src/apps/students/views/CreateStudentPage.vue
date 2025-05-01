@@ -1,5 +1,12 @@
 <template>
 	<v-container>
+		<v-card class="mb-2">
+			<v-card-title>
+				Teacher
+			</v-card-title>
+			<v-card-subtitle>
+				Create Teacher
+			</v-card-subtitle>
 		<UserForm
 			v-if="stage===1"
 			:action="handleCreateUser"
@@ -17,6 +24,7 @@
 			title="Student Details"
 			subtitle="Add student-specific information"
 		/>
+		</v-card>
 	</v-container>
 </template>
 
