@@ -156,3 +156,27 @@
 .v-field--variant-outlined.v-field--focused .v-field__outline {
   border-color: rgb(var(--v-theme-primary), 0.5) !important;
 }
+
+// vue-cal styles
+.vuecal__bg {
+  background-color: rgba(var(--v-theme-quaternary), 1);
+}
+.vuecal__cell .vuecal__event {
+  background-color: rgba(var(--v-theme-surface), 1);
+}
+.vuecal__header {
+  background-color: rgba(var(--v-theme-quaternary), 1);
+}
+
+// Custom styling for calendar events
+.event-container {
+  cursor: pointer;
+  
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .v-card-title {
+    font-size: 0.95rem !important;
+  }
+}
