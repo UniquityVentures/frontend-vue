@@ -66,7 +66,6 @@ onMounted(() => {
 	if (model.value) {
 		// Copy user data to form data
 		formData.value = {
-			...formData.value,
 			...model.value,
 		};
 	} else {

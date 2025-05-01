@@ -1,93 +1,71 @@
 <template>
     <v-container>
-        <v-sheet>
-            <v-calendar ref="calendar" v-model="currentDate" :events="formattedEvents" view-mode="month"
-                color="accent">
-                <template v-slot:event="{ event }">
-                    <v-chip :color="event.color" @click.stop="showEvent(event)">
-                        {{ event.title }}
-                    </v-chip>
-                </template>
-            </v-calendar>
-        </v-sheet>
+		<v-row>
+			<v-col lg="3">
+				<v-date-picker
+					v-model="date"
+				></v-date-picker>
+			</v-col>
+			<v-col lg="5">
+				<vue-cal
+					:events="formattedEvents"
+					style="min-height: 500px;"
+					:view-date="date"
+                    :disable-views="['years', 'week', 'month', 'year']"
+				>
+					<template #event="{ event }">
+						<v-card :to="{ name: 'Event', params: { eventId: event.id } }" class="event-container">
+							<v-card-title class="text-subtitle-2">
+								{{ event.title }}
+							</v-card-title>
+							<v-card-text>
+								<v-chip color="green">Start: {{ formatDate(event.start) }}</v-chip>
+								<v-chip color="red">End: {{ formatDate(event.end) }}</v-chip>
+							</v-card-text>
+						</v-card>
+					</template>
+				</vue-cal>
+			</v-col>
+		</v-row>
+	</v-container>
 
-        <v-dialog v-model="selectedOpen" max-width="600">
-            <v-card v-if="selectedEvent">
-                <v-card-text>
-                    <EventDialogCard :event="selectedEvent" />
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn 
-                        color="grey-darken-1" 
-                        variant="text" 
-                        @click="selectedOpen = false"
-                    >
-                        Close
-                    </v-btn>
-                    <v-btn 
-                        color="accent" 
-                        variant="tonal"
-                        :to="{ name: 'Event', params: { eventId: selectedEvent.id } }"
-                    >
-                        View Details
-                    </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-    </v-container>
 </template>
 
 <script setup>
-import { getCalendar } from "@/apps/calendar/api";
-import EventDialogCard from "@/apps/calendar/components/EventDialogCard.vue";
 import { computed, onMounted, ref, watch } from "vue";
+import { getEvents } from "../api";
+import "vue-cal/dist/vuecal.css";
+import VueCal from "vue-cal";
 
 // Calendar state
 const currentDate = ref(new Date());
 const events = ref([]);
-const selectedEvent = ref(null);
-const selectedOpen = ref(false);
-
+const date = ref(new Date());
 // Replace onMounted and add fetchEvents function
 const fetchEvents = async () => {
 	try {
-		const date = new Date(currentDate.value);
 		const filter = {
-			month: date.getMonth() + 1, // Months are 0-based in JS
-			year: date.getFullYear(),
+			date: date.value,
 		};
-		const response = await getCalendar(filter);
+		const response = await getEvents(filter);
 		events.value = response;
 	} catch (error) {
 		console.error("Error fetching events:", error);
 	}
 };
 
-// Watch for changes in view mode and current date
-watch([currentDate], () => {
-	fetchEvents();
-});
-
 onMounted(() => {
 	fetchEvents();
 });
 
-// Format events for the calendar
-const formattedEvents = computed(() => {
-	return events.value.map((event) => ({
+// Format events for vue-cal
+const formattedEvents = computed(() =>
+	events.value.map((event) => ({
+		id: event.id,
 		title: event.title,
 		start: new Date(event.start),
 		end: new Date(event.end),
-		color: event.is_school_wide ? "red" : "primary",
-		allDay: false,
-		originalEvent: event,
-	}));
-});
+	})),
+);
 
-// Open the event dialog when a chip is clicked
-const showEvent = (event) => {
-	selectedEvent.value = event.originalEvent;
-	selectedOpen.value = true;
-};
 </script>
