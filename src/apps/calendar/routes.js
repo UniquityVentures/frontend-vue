@@ -28,7 +28,7 @@ export default [
 		children: [
 			{
 				path: "calendar/",
-				component: CalendarPage2,
+				component: CalendarPage,
 				name: "Calendar",
 			},
 			{

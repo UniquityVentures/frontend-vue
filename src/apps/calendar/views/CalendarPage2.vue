@@ -26,7 +26,6 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import VueCal from "vue-cal";
-import "vue-cal/dist/vuecal.css";
 import { getCalendar } from "@/apps/calendar/api";
 import { useRouter } from "vue-router";
 
