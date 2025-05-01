@@ -16,7 +16,6 @@
 
 <script setup>
 import { onMounted, ref, watch } from "vue";
-import { toApiDate } from "@/services/utils";
 
 const props = defineProps({
 	filters: {
@@ -70,8 +69,8 @@ watch(dateModel, (dates) => {
 	if (dates?.length && dates.length >= 2) {
 		const sortedDates = [...dates].sort((a, b) => a - b);
 		// Update both date filters directly on the parent's filters object
-		start.value = toApiDate(sortedDates[0]);
-		end.value = toApiDate(sortedDates[sortedDates.length - 1]);
+		start.value = sortedDates[0];
+		end.value = sortedDates[sortedDates.length - 1];
 	}
 });
 </script>

@@ -34,7 +34,6 @@ import { computed, onMounted, ref, watch } from "vue";
 import { getEvents } from "../api";
 import VueCal from "vue-cal";
 import { formatDate } from "@/services/utils";
-import { toApiDate } from "@/services/utils";
 
 // Calendar state
 const currentDate = ref(new Date());
@@ -44,14 +43,9 @@ const date = ref(new Date());
 const fetchEvents = async () => {
 	try {
 		const selectedDate = new Date(date.value);
-		// Fix timezone issue by using a method that preserves the local date
-		const year = selectedDate.getFullYear();
-		const month = String(selectedDate.getMonth() + 1).padStart(2, '0'); 
-		const day = String(selectedDate.getDate()).padStart(2, '0');
-		const localDate = `${year}-${month}-${day}`;
 		
 		const filter = {
-			date: localDate,
+			date: selectedDate,
 		};
 		const response = await getEvents(filter);
 		events.value = response.results;
