@@ -10,7 +10,7 @@
 				<vue-cal
 					:events="formattedEvents"
 					style="min-height: 500px;"
-					:view-date="date"
+					:selected-date="date"
                     :disable-views="['years', 'week', 'month', 'year']"
 				>
 					<template #event="{ event }">
@@ -34,7 +34,6 @@
 <script setup>
 import { computed, onMounted, ref, watch } from "vue";
 import { getEvents } from "../api";
-import "vue-cal/dist/vuecal.css";
 import VueCal from "vue-cal";
 
 // Calendar state
