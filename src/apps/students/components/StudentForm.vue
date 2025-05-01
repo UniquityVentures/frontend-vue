@@ -1,50 +1,124 @@
 <template>
-  <v-card>
-    <v-card-title>
-      {{ title }}
-    </v-card-title>
-    <v-card-subtitle v-if="subtitle">
-      {{ subtitle }}
-    </v-card-subtitle>
-    <v-card-text>
-      <v-row>
-        <v-col cols="12" md="6">
-          <v-text-field 
-            label="Identifier" 
-            v-model="formData.student_no"
-            hint="Student ID or registration number"
-          ></v-text-field>
-        </v-col>
-        
-        <v-col cols="12" md="6">
-          <BatchSelect 
-            v-model="formData.batch" 
-            label="Batch"
-          />
-        </v-col>
-      </v-row>
+	<v-card>
+		<v-card-title>
+			{{ title }}
+		</v-card-title>
+		<v-card-subtitle v-if="subtitle">
+			{{ subtitle }}
+		</v-card-subtitle>
+		<v-card-text>
+			<v-row>
+				<v-col cols="12" md="6">
+					<v-text-field 
+						label="Identifier" 
+						v-model="formData.student.student_no"
+						hint="Student ID or registration number"
+					></v-text-field>
+				</v-col>
 
-      <v-row>
-        <v-col cols="12" md="6">
-          <v-text-field 
-            label="Phone" 
-            v-model="formData.phone"
-          ></v-text-field>
-        </v-col>
-        
-        <v-col cols="12" md="6">
-          <v-text-field 
-            label="Whatsapp" 
-            v-model="formData.whatsapp"
-          ></v-text-field>
-        </v-col>
-      </v-row>
+				<v-col cols="12" md="6">
+					<BatchSelect 
+						v-model="formData.student.batch" 
+						label="Batch"
+					/>
+				</v-col>
+			</v-row>
 
-      
-      <SubmitButton :onSubmit="submitForm" :submitText="actionName" />
-      <DeleteButton :action="() => deleteStudent(student?.id)" :name="'Student ' + student?.user_details?.full_name" />
-    </v-card-text>
-  </v-card>
+			<v-row>
+				<v-col cols="12" md="6">
+					<v-text-field 
+						label="Username" 
+						v-model="formData.user.username"
+						hint="Student's username"
+					></v-text-field>
+				</v-col>
+
+				<v-col cols="12" md="6">
+					<v-text-field 
+						label="E-Mail" 
+						v-model="formData.user.email"
+						hint="Student's email"
+					></v-text-field>
+				</v-col>
+			</v-row>
+
+			<v-row>
+				<v-col cols="12" md="6">
+					<v-text-field 
+						label="First Name" 
+						v-model="formData.user.first_name"
+						hint="Student's First Name"
+					></v-text-field>
+				</v-col>
+
+				<v-col cols="12" md="6">
+					<v-text-field 
+						label="E-Mail" 
+						v-model="formData.user.last_name"
+						hint="Student's last name"
+					></v-text-field>
+				</v-col>
+			</v-row>
+
+
+			<v-row>
+
+				<v-col>
+					<v-card class="ma-2" variant="flat">
+						<v-card-title>
+							Guardian 1 Details
+						</v-card-title>
+						<v-card-text>
+							<v-text-field 
+								label="Name" 
+								v-model="formData.student.guardian1_name "
+							></v-text-field>
+							<v-text-field 
+								label="E-Mail" 
+								v-model="formData.student.guardian1_email"
+							></v-text-field>
+							<v-text-field 
+								label="Phone" 
+								v-model="formData.student.guardian1_phone"
+							></v-text-field>
+							<v-text-field 
+								label="Whatsapp" 
+								v-model="formData.student.guardian1_whatsapp"
+							></v-text-field>
+						</v-card-text>
+					</v-card>
+
+				</v-col>
+				<v-col>
+					<v-card class="ma-2" variant="flat">
+						<v-card-title>
+							Guardian 2 Details
+						</v-card-title>
+						<v-card-text>
+							<v-text-field 
+								label="Name" 
+								v-model="formData.student.guardian2_name "
+							></v-text-field>
+							<v-text-field 
+								label="E-Mail" 
+								v-model="formData.student.guardian2_email"
+							></v-text-field>
+							<v-text-field 
+								label="Phone" 
+								v-model="formData.student.guardian2_phone"
+							></v-text-field>
+							<v-text-field 
+								label="Whatsapp" 
+								v-model="formData.student.guardian2_whatsapp"
+							></v-text-field>
+						</v-card-text>
+					</v-card>
+				</v-col>
+			</v-row>
+			<SubmitButton :onSubmit="submitForm" :submitText="actionName" />
+			<DeleteButton :action="() => deleteStudent(student?.id)" :name="'Student ' + student?.user_details?.full_name" />
+		</v-card-text>
+	</v-card>
 </template>
 
 <script setup>
@@ -84,15 +158,14 @@ const props = defineProps({
 // Initialize form data with default values
 const formData = ref({
 	// Student-specific fields
-	student_no: "",
-	batch: null,
-	phone: "",
-	whatsapp: "",
+	user: {},
+	student: {},
 });
 
 const submitForm = async () => {
 	try {
 		// Call the action passed from parent
+		console.log(formData.value);
 		return await props.action(formData.value);
 	} catch (error) {
 		console.error("Error submitting form:", error);
@@ -105,10 +178,14 @@ onMounted(() => {
 		// Copy student data to form data
 		formData.value = {
 			...formData.value,
-			student_no: props.student.student_no || "",
-			batch: props.student.batch || null,
-			phone: props.student.phone || "",
-			whatsapp: props.student.whatsapp || "",
+			student: props.student,
+		};
+	}
+	if (props.user) {
+		// Copy user data to form data
+		formData.value = {
+			...formData.value,
+			user: props.user,
 		};
 	}
 });

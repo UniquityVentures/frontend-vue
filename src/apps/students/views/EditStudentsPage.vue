@@ -30,29 +30,9 @@ const user = ref(null);
 
 const handleUpdate = async (formData) => {
 	try {
-		// Extract user-specific fields
-		const userData = {
-			id: user.value.id,
-			first_name: formData.first_name,
-			last_name: formData.last_name,
-			email: formData.email,
-			is_active: formData.is_active,
-			is_approved: formData.is_approved,
-		};
-
-		// Extract student-specific fields
-		const studentData = {
-			id: student.value.id,
-			identifier: formData.identifier,
-			batch: formData.batch,
-			phone: formData.phone,
-			whatsapp: formData.whatsapp,
-			user: user.value.id,
-		};
-
 		// Update both user and student data
-		await updateUser(userData);
-		await updateStudent(studentData);
+		await updateUser(formData.user);
+		await updateStudent(formData.student);
 		return { success: true };
 	} catch (error) {
 		console.error("Failed to update student:", error);
