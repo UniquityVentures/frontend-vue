@@ -5,6 +5,7 @@
 			actionName="Create"
 			title="Batch"
 			subtitle="Create Form"
+			:hideDelete="true"
 		/>
 	</v-container>
 </template>

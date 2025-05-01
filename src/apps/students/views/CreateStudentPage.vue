@@ -23,6 +23,7 @@
 			actionName="Create Student"
 			title="Student Details"
 			subtitle="Add student-specific information"
+			:hideDelete="true"
 		/>
 		</v-card>
 	</v-container>

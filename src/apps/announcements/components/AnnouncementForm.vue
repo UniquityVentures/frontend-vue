@@ -71,24 +71,17 @@
       <v-card-title>Settings:</v-card-title>
       <v-card-text>
         <v-row>
-          <v-col cols="12" md="4">
+          <v-col cols="12" md="6">
             <v-text-field 
               label="Priority" 
               v-model="formData.priority"
             ></v-text-field>
           </v-col>
           
-          <v-col cols="6" md="4">
+          <v-col cols="6" md="6">
             <v-checkbox 
               label="Is Active" 
               v-model="formData.is_active"
-            ></v-checkbox>
-          </v-col>
-          
-          <v-col cols="6" md="4">
-            <v-checkbox 
-              label="Is School Wide" 
-              v-model="formData.is_school_wide"
             ></v-checkbox>
           </v-col>
         </v-row>
@@ -96,28 +89,37 @@
     </v-card>
     
     <v-card class="ma-2" variant="flat">
-      <v-card-title>Recipients:</v-card-title>
-      <v-card-text>
-        <v-row>
-          <v-col cols="12">
-            <v-radio-group v-model="batchesOrCourses" label="Announce to Batches or Courses?" inline class="border rounded-lg pt-2">
-              <v-radio label="Batches" value="batches"></v-radio>
-              <v-radio label="Courses" value="courses"></v-radio>
-            </v-radio-group>
-            <BatchSelect
-              v-if="batchesOrCourses === 'batches'" 
-              multiple
-              v-model="formData.batches"
-            />
-            <CourseSelect
-              v-if="batchesOrCourses === 'courses'"
-              multiple
-              v-model="formData.courses"
-            />
-          </v-col>
-        </v-row>
-      </v-card-text>
-    </v-card>
+        <v-card-title>Recipients:</v-card-title>
+        <v-card-text>
+          <v-row>
+            <v-col cols="12">
+              <v-checkbox 
+                label="Is School Wide" 
+                v-model="formData.is_school_wide"
+              ></v-checkbox>
+            </v-col>
+          </v-row>
+          
+          <v-row v-if="!formData.is_school_wide">
+            <v-col cols="12">
+              <v-radio-group v-model="batchesOrCourses" label="Event for Batches or Courses?" inline class="border rounded-lg pt-2">
+                <v-radio label="Batches" value="batches"></v-radio>
+                <v-radio label="Courses" value="courses"></v-radio>
+              </v-radio-group>
+              <BatchSelect
+                v-if="batchesOrCourses === 'batches'" 
+                multiple
+                v-model="formData.batches"
+              />
+              <CourseSelect
+                v-if="batchesOrCourses === 'courses'"
+                multiple
+                v-model="formData.courses"
+              />
+            </v-col>
+          </v-row>
+        </v-card-text>
+      </v-card>
     
     <v-card class="ma-2" variant="flat">
       <v-card-title>Attachments:</v-card-title>
@@ -131,8 +133,9 @@
     </v-card>
     </v-card-text>
     <v-card-text>
-    <SubmitButton :onSubmit="() => props.action(formData)" :submitText="actionName" />
-    <DeleteButton :action="() => deleteAnnouncement(announcement?.id)" :name="'Announcement ' + announcement?.title" />
+      <SubmitButton :onSubmit="() => props.action(formData)" :submitText="actionName" />
+      <DeleteButton :action="() => deleteAnnouncement(announcement?.id)" 
+        :name="'Announcement ' + announcement?.title" v-if="!hideDelete" />
     </v-card-text>
   </v-card>
 </template>
@@ -169,6 +172,10 @@ const props = defineProps({
 	subtitle: {
 		type: String,
 		default: "",
+	},
+	hideDelete: {
+		type: Boolean,
+		default: false,
 	},
 });
 

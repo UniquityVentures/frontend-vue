@@ -118,7 +118,8 @@
     </v-card-text>
     <v-card-text>
       <SubmitButton :onSubmit="() => props.action(formData)" :submitText="actionName" />
-      <DeleteButton :action="() => deleteEvent(event?.id)" :name="'Event ' + event?.title" />
+      <DeleteButton :action="() => deleteEvent(event?.id)" 
+        :name="'Event ' + event?.title" v-if="!hideDelete" />
     </v-card-text>
   </v-card>
 </template>
@@ -153,6 +154,10 @@ const props = defineProps({
   subtitle: {
     type: String,
     default: "",
+  },
+  hideDelete: {
+    type: Boolean,
+    default: false,
   },
 });
 

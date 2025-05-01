@@ -1,12 +1,21 @@
 <template>
 	<v-container>
+		<!-- Add stepper for progress tracking -->
+		<v-stepper :value="stage" class="mb-4">
+			<v-stepper-header>
+				<v-divider></v-divider>
+				<v-stepper-item step="1" :complete="stage > 1">
+					Create Teacher User
+				</v-stepper-item>
+				<v-divider></v-divider>
+				<v-stepper-item step="2" :complete="stage > 2">
+					Add Teacher Details
+				</v-stepper-item>
+				<v-divider></v-divider>
+			</v-stepper-header>
+		</v-stepper>
+		
 		<v-card class="mb-2">
-			<v-card-title>
-				Teacher
-			</v-card-title>
-			<v-card-subtitle>
-				Create Teacher
-			</v-card-subtitle>
 			<UserForm
 				v-if="stage===1"
 				:action="handleCreateUser"
@@ -23,6 +32,7 @@
 				actionName="Create Teacher"
 				title="Teacher Details"
 				subtitle="Add teacher-specific information"
+				:hideDelete="true"
 			/>
 		</v-card>
 	</v-container>

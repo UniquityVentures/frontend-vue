@@ -5,6 +5,7 @@
       actionName="Create"
       :action="handleCreate"
       title="Create New Event"
+      :hideDelete="true"
     />
   </v-container>
 </template>

@@ -1,27 +1,34 @@
 <template>
-	<v-container>
-		<v-row>
-			<v-col cols="12" md="6">
-				<v-text-field label="Identifier Number" v-model="formData.identifier" type="number"></v-text-field>
-			</v-col>
-		</v-row>
+	<v-card>
+		<v-card-title>
+			{{ title }}
+		</v-card-title>
+		<v-card-subtitle v-if="subtitle">
+			{{ subtitle }}
+		</v-card-subtitle>
+		<v-card-text>
+			<v-row>
+				<v-col cols="12" md="6">
+					<v-text-field label="Identifier Number" v-model="formData.identifier" type="number"></v-text-field>
+				</v-col>
+			</v-row>
 
-		<v-row>
-			<v-col cols="12" md="6">
-				<v-text-field label="Phone" v-model="formData.phone"></v-text-field>
-			</v-col>
+			<v-row>
+				<v-col cols="12" md="6">
+					<v-text-field label="Phone" v-model="formData.phone"></v-text-field>
+				</v-col>
 
-			<v-col cols="12" md="6">
-				<v-text-field label="Whatsapp" v-model="formData.whatsapp"></v-text-field>
-			</v-col>
-		</v-row>
-
+				<v-col cols="12" md="6">
+					<v-text-field label="Whatsapp" v-model="formData.whatsapp"></v-text-field>
+				</v-col>
+			</v-row>
+		</v-card-text>
 		<v-card-text>
 			<SubmitButton :onSubmit="submitForm" :submitText="actionName" />
-			<DeleteButton :action="() => deleteTeacher(teacher?.id)"
+			<DeleteButton :action="() => deleteTeacher(teacher?.id)" v-if="!hideDelete"
 				:name="'Teacher ' + teacher?.user_details?.full_name" />
 		</v-card-text>
-	</v-container>
+	</v-card>
 </template>
 
 <script setup>
@@ -54,6 +61,10 @@ const props = defineProps({
 	subtitle: {
 		type: String,
 		default: "",
+	},
+	hideDelete: {
+		type: Boolean,
+		default: false,
 	},
 });
 
