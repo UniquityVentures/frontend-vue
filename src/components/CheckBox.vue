@@ -1,5 +1,5 @@
 <template>
-    <v-checkbox :model-value="modelValue" @update:model-value="updateValue" v-bind="$attrs"></v-checkbox>
+    <v-checkbox :model-value="displayValue" @update:model-value="updateValue" v-bind="$attrs"></v-checkbox>
 </template>
 
 <script setup>
@@ -26,4 +26,8 @@ const displayValue = computed(() => {
 const updateValue = (value) => {
     emit('update:modelValue', value ? 'True' : 'False');
 };
+
+defineOptions({
+    inheritAttrs: false
+});
 </script>
