@@ -1,5 +1,12 @@
 <template>
 	<v-container>
+		<v-card class="mb-2">
+			<v-card-title>
+				Teacher
+			</v-card-title>
+			<v-card-subtitle>
+				Create Teacher
+			</v-card-subtitle>
 		<UserForm
 			v-if="stage===1"
 			:action="handleCreateUser"
@@ -17,6 +24,7 @@
 			title="Student Details"
 			subtitle="Add student-specific information"
 		/>
+		</v-card>
 	</v-container>
 </template>
 
@@ -46,7 +54,7 @@ const handleCreateUser = async (formData) => {
 const handleCreateStudent = async (formData) => {
 	try {
 		const student = await createStudent({
-			...formData.student,
+			...formData,
 			user: user.value.id,
 		});
 		router.push({ name: "Student", params: { studentId: student.id } });

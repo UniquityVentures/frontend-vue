@@ -11,55 +11,18 @@
 				<v-col cols="12" md="6">
 					<v-text-field 
 						label="Identifier" 
-						v-model="formData.student.student_no"
+						v-model="formData.student_no"
 						hint="Student ID or registration number"
 					></v-text-field>
 				</v-col>
 
 				<v-col cols="12" md="6">
 					<BatchSelect 
-						v-model="formData.student.batch" 
+						v-model="formData.batch" 
 						label="Batch"
 					/>
 				</v-col>
 			</v-row>
-
-			<v-row>
-				<v-col cols="12" md="6">
-					<v-text-field 
-						label="Username" 
-						v-model="formData.user.username"
-						hint="Student's username"
-					></v-text-field>
-				</v-col>
-
-				<v-col cols="12" md="6">
-					<v-text-field 
-						label="E-Mail" 
-						v-model="formData.user.email"
-						hint="Student's email"
-					></v-text-field>
-				</v-col>
-			</v-row>
-
-			<v-row>
-				<v-col cols="12" md="6">
-					<v-text-field 
-						label="First Name" 
-						v-model="formData.user.first_name"
-						hint="Student's First Name"
-					></v-text-field>
-				</v-col>
-
-				<v-col cols="12" md="6">
-					<v-text-field 
-						label="E-Mail" 
-						v-model="formData.user.last_name"
-						hint="Student's last name"
-					></v-text-field>
-				</v-col>
-			</v-row>
-
 
 			<v-row>
 
@@ -71,19 +34,19 @@
 						<v-card-text>
 							<v-text-field 
 								label="Name" 
-								v-model="formData.student.guardian1_name "
+								v-model="formData.guardian1_name "
 							></v-text-field>
 							<v-text-field 
 								label="E-Mail" 
-								v-model="formData.student.guardian1_email"
+								v-model="formData.guardian1_email"
 							></v-text-field>
 							<v-text-field 
 								label="Phone" 
-								v-model="formData.student.guardian1_phone"
+								v-model="formData.guardian1_phone"
 							></v-text-field>
 							<v-text-field 
 								label="Whatsapp" 
-								v-model="formData.student.guardian1_whatsapp"
+								v-model="formData.guardian1_whatsapp"
 							></v-text-field>
 						</v-card-text>
 					</v-card>
@@ -97,19 +60,19 @@
 						<v-card-text>
 							<v-text-field 
 								label="Name" 
-								v-model="formData.student.guardian2_name "
+								v-model="formData.guardian2_name "
 							></v-text-field>
 							<v-text-field 
 								label="E-Mail" 
-								v-model="formData.student.guardian2_email"
+								v-model="formData.guardian2_email"
 							></v-text-field>
 							<v-text-field 
 								label="Phone" 
-								v-model="formData.student.guardian2_phone"
+								v-model="formData.guardian2_phone"
 							></v-text-field>
 							<v-text-field 
 								label="Whatsapp" 
-								v-model="formData.student.guardian2_whatsapp"
+								v-model="formData.guardian2_whatsapp"
 							></v-text-field>
 						</v-card-text>
 					</v-card>
@@ -165,7 +128,6 @@ const formData = ref({
 const submitForm = async () => {
 	try {
 		// Call the action passed from parent
-		console.log(formData.value);
 		return await props.action(formData.value);
 	} catch (error) {
 		console.error("Error submitting form:", error);
@@ -177,15 +139,7 @@ onMounted(() => {
 	if (props.student) {
 		// Copy student data to form data
 		formData.value = {
-			...formData.value,
-			student: props.student,
-		};
-	}
-	if (props.user) {
-		// Copy user data to form data
-		formData.value = {
-			...formData.value,
-			user: props.user,
+			...props.student,
 		};
 	}
 });

@@ -56,10 +56,6 @@ const props = defineProps({
 		type: String,
 		default: "",
 	},
-	user: {
-		type: Object,
-		default: null,
-	},
 });
 
 const formData = ref({})
@@ -67,22 +63,11 @@ const formData = ref({})
 const model = defineModel()
 
 onMounted(() => {
-	if (props.user) {
+	if (model.value) {
 		// Copy user data to form data
 		formData.value = {
-			first_name: props.user.first_name,
-			last_name: props.user.last_name,
-			email: props.user.email,
-			username: props.user.username,
-			is_active:
-				props.user.is_active !== undefined
-					? props.user.is_active
-					: true,
-			is_approved:
-				props.user.is_approved !== undefined
-					? props.user.is_approved
-					: false,
 			...formData.value,
+			...model.value,
 		};
 	} else {
 		formData.value = {
