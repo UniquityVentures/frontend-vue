@@ -11,7 +11,8 @@
 					:events="formattedEvents"
 					style="min-height: 500px;"
 					:selected-date="date"
-                    :disable-views="['years', 'week', 'month', 'year']"
+					hide-view-selector
+					active-view="day"
 				>
 					<template #event="{ event }">
 						<v-card :to="{ name: 'Event', params: { eventId: event.id } }" class="event-container">
@@ -35,6 +36,8 @@
 import { computed, onMounted, ref, watch } from "vue";
 import { getEvents } from "../api";
 import VueCal from "vue-cal";
+import { formatDate } from "@/services/utils";
+import { toApiDate } from "@/services/utils";
 
 // Calendar state
 const currentDate = ref(new Date());
@@ -44,10 +47,10 @@ const date = ref(new Date());
 const fetchEvents = async () => {
 	try {
 		const filter = {
-			date: date.value,
+			date: toApiDate(date.value),
 		};
 		const response = await getEvents(filter);
-		events.value = response;
+		events.value = response.results;
 	} catch (error) {
 		console.error("Error fetching events:", error);
 	}
@@ -56,6 +59,8 @@ const fetchEvents = async () => {
 onMounted(() => {
 	fetchEvents();
 });
+
+watch(date, fetchEvents);
 
 // Format events for vue-cal
 const formattedEvents = computed(() =>
@@ -66,5 +71,4 @@ const formattedEvents = computed(() =>
 		end: new Date(event.end),
 	})),
 );
-
 </script>
