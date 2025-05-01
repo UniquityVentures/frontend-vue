@@ -78,7 +78,7 @@ onMounted(() => {
 		// Copy teacher data to form data
 		formData.value = {
 			...formData.value,
-			teacher: props.teacher,
+			...props.teacher,
 		};
 	}
 });

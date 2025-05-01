@@ -25,7 +25,6 @@
 				Update Other Details
 			</v-card-subtitle>
 			<v-card-text>
-
 				<TeacherForm
 					v-if="teacher && user"
 					:teacher="teacher"
@@ -70,6 +69,8 @@ const handleUpdateTeacher = async (formData) => {
 onMounted(async () => {
 	teacher.value = await getTeacher(props.teacherId);
 	user.value = await getUser(teacher.value.user);
+	console.log(teacher.value);
+	console.log(user.value);
 });
 
 const handleUpdateUser = async (userData) => {
