@@ -25,7 +25,6 @@
 </template>
 
 <script setup>
-import { formatDate } from "@/services/utils";
 import { computed, onMounted, ref } from "vue";
 import { getAssignments } from "../api";
 

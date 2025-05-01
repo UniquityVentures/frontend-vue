@@ -62,5 +62,10 @@ export const createViewset = (baseUrl, filename = "export") => ({
 	},
 
 	// Get stats (if supported)
-	stats: async () => (await api.get(`${baseUrl}/stats/`)).data,
+	stats: async (filter = {}) =>
+		(
+			await api.get(`${baseUrl}/stats/`, {
+				params: { ...filter },
+			})
+		).data,
 });

@@ -1,10 +1,7 @@
 import { createViewset } from "@/services/viewset";
 import { api } from "@/services/api.js";
 
-const attendanceRecordViewset = createViewset(
-	"api/attendance",
-	"attendance",
-);
+const attendanceRecordViewset = createViewset("api/attendance", "attendance");
 
 // Get base methods
 const getAttendanceRecords = attendanceRecordViewset.list;
@@ -12,6 +9,7 @@ const getAttendanceRecord = attendanceRecordViewset.retrieve;
 const updateAttendanceRecord = attendanceRecordViewset.update;
 const createAttendanceRecord = attendanceRecordViewset.create;
 const exportAttendanceRecords = attendanceRecordViewset.export;
+const getAttendanceStats = attendanceRecordViewset.stats;
 const importAttendanceRecords = {
 	dryRun: attendanceRecordViewset.import.dryRun,
 	finalize: attendanceRecordViewset.import.finalize,
@@ -20,7 +18,6 @@ const importAttendanceRecords = {
 // Add bulk update attendance function
 const bulkUpdateAttendance = async (payload) => {
 	try {
-
 		const response = await api.post("/api/attendance/bulk-update/", payload);
 		return response.data;
 	} catch (error) {
@@ -43,5 +40,6 @@ export {
 	createAttendanceRecord,
 	exportAttendanceRecords,
 	importAttendanceRecords,
+	getAttendanceStats,
 	bulkUpdateAttendance,
 };

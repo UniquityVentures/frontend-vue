@@ -1,23 +1,23 @@
 <template>
     <ResponsiveDataTable :fetch="getAttendanceRecords" v-model:filters="filters"
         :title="`Attendance Records Master`" :subtitle="`View attendance records for all students`"
-        :templates="{ desktop: 'card', mobile: 'list' }">
+		:templates="{ desktop: 'card', mobile: 'list' }">
         <template #filters-slot>
             <v-row>
-                <v-col cols="12" sm="6" md="3" lg="2">
+                <v-col cols="12" sm="6">
                     <DateSelect v-model="filters.date" label="Select Date" required />
                 </v-col>
-                <v-col cols="12" sm="6" md="3" lg="2">
+                <v-col cols="12" sm="6">
                     <v-text-field v-model="filters.name" label="Student Name" />
                 </v-col>
-                <v-col cols="12" sm="6" md="3" lg="2">
+                <v-col cols="12" sm="6">
                     <BatchSelect v-model="filters.batch" label="Select Batch" required />
                 </v-col>
             </v-row>
         </template>
         <template #cards-slot="{ items }">
             <v-row>
-                <v-col cols="12" sm="6" md="3" lg="2" v-for="item in items" :key="item.id">
+                <v-col cols="12" sm="6" v-for="item in items" :key="item.id">
                     <v-card variant="flat" class="border" height="100%"
                     :to="{ name: 'AttendanceRecord', params: { recordId: item.id } }"
                     >
@@ -32,7 +32,6 @@
                             <v-chip>Roll No: {{ item.student_details?.roll_no }}</v-chip>
                         </v-card-text>
                         <v-card-text>
-							{{console.log(item.date)}}
 							<DateChip v-if="item.date" label="Date" color="info" :date="item.date" />
 
                             <v-chip :color="getStatusColor(item.status)" class="ml-auto">
@@ -67,7 +66,6 @@
 
 <script setup>
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
-import { ref } from "vue";
 import { getAttendanceRecords } from "../api";
 import DateSelect from "@/components/DateSelect.vue";
 import DateChip from "@/components/DateChip.vue";
@@ -75,11 +73,11 @@ import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
 import BatchChip from "@/apps/batches/components/BatchChip.vue";
 
 const getStatusColor = (status) => {
-    if (status === "Present") return "green";
-    if (status === "Absent") return "red";
-    return "gray";
+	if (status === "Present") return "green";
+	if (status === "Absent") return "red";
+	return "gray";
 };
 
-const filters = ref({});
+const filters = defineModel("filters");
 
 </script>
