@@ -4,6 +4,7 @@ import BatchAttendancePage from "@/apps/batches/views/BatchAttendancePage.vue";
 import BatchMarkAttendancePage from "@/apps/batches/views/BatchMarkAttendancePage.vue";
 import BatchCoursesPage from "@/apps/batches/views/BatchCoursesPage.vue";
 import BatchPage from "@/apps/batches/views/BatchPage.vue";
+import PromotePage from "@/apps/batches/views/PromotePage.vue";
 import BatchStudentsPage from "@/apps/batches/views/BatchStudentsPage.vue";
 import BatchTeachersPage from "@/apps/batches/views/BatchTeachersPage.vue";
 import BatchesExportPage from "@/apps/batches/views/BatchesExportPage.vue";
@@ -110,6 +111,10 @@ export default [
 							title: "Attendance",
 							to: { name: "BatchAttendance", props },
 						},
+						{
+							title: "Promote Students",
+							to: { name: "PromotePage", props },
+						},
 					],
 				},
 				children: [
@@ -152,6 +157,12 @@ export default [
 						props: true,
 						name: "BatchStudents",
 						component: BatchStudentsPage,
+					},
+					{
+						path: "promote/",
+						props: true,
+						name: "PromotePage",
+						component: PromotePage,
 					},
 					{
 						path: "attendance/",
