@@ -2,7 +2,7 @@ import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.v
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import { api } from "@/services/api";
 import CreateStudentPage from "./views/CreateStudentPage.vue";
-import EditStudentsPage from "./views/EditStudentsPage.vue";
+import EditStudentPage from "./views/EditStudentPage.vue";
 import StudentPage from "./views/StudentPage.vue";
 import StudentsPage from "./views/StudentsPage.vue";
 
@@ -67,7 +67,7 @@ export default [
 					},
 					{
 						path: "edit/",
-						component: EditStudentsPage,
+						component: EditStudentPage,
 						name: "EditStudent",
 						props: true,
 					},

@@ -91,7 +91,6 @@ const props = defineProps({
 	},
 });
 
-//
 const filters = defineModel("filters");
 
 // Template Handling

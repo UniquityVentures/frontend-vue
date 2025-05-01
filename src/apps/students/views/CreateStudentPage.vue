@@ -1,30 +1,39 @@
 <template>
 	<v-container>
+		<!-- Add stepper for progress tracking -->
+		<v-stepper :value="stage" class="mb-4">
+			<v-stepper-header>
+				<v-divider></v-divider>
+				<v-stepper-item step="1" :complete="stage > 1">
+					Create Student User
+				</v-stepper-item>
+				<v-divider></v-divider>
+				<v-stepper-item step="2" :complete="stage > 2">
+					Add Student Details
+				</v-stepper-item>
+				<v-divider></v-divider>
+			</v-stepper-header>
+		</v-stepper>
+		
 		<v-card class="mb-2">
-			<v-card-title>
-				Teacher
-			</v-card-title>
-			<v-card-subtitle>
-				Create Teacher
-			</v-card-subtitle>
-		<UserForm
-			v-if="stage===1"
-			:action="handleCreateUser"
-			v-model="user"
-			actionName="Create User"
-			title="Student User"
-			subtitle="Create a user account for the student"
-		/>
+			<UserForm
+				v-if="stage===1"
+				:action="handleCreateUser"
+				v-model="user"
+				actionName="Create User"
+				title="Student User"
+				subtitle="Create a user account for the student"
+			/>
 
-		<StudentForm
-			v-if="stage===2"
-			:user="user"
-			:action="handleCreateStudent"
-			actionName="Create Student"
-			title="Student Details"
-			subtitle="Add student-specific information"
-			:hideDelete="true"
-		/>
+			<StudentForm
+				v-if="stage===2"
+				:user="user"
+				:action="handleCreateStudent"
+				actionName="Create Student"
+				title="Student Details"
+				subtitle="Add student-specific information"
+				:hideDelete="true"
+			/>
 		</v-card>
 	</v-container>
 </template>

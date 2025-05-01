@@ -25,7 +25,6 @@
 			</v-row>
 
 			<v-row>
-
 				<v-col>
 					<v-card class="ma-2" variant="flat">
 						<v-card-title>

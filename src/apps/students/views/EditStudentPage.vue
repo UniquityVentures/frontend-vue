@@ -1,41 +1,22 @@
 <template>
 	<v-container>
-		<v-card class="mb-2">
-			<v-card-title>
-				Student
-			</v-card-title>
-			<v-card-subtitle>
-				Update User Info
-			</v-card-subtitle>
-			<v-card-text>
-				<UserForm
-					:action="handleUpdateUser"
-					v-model="user"
-					actionName="Update User"
-					title="Student User"
-					subtitle="Update the user account for the student"
-				/>
-			</v-card-text>
-		</v-card>
-		<v-card>
-			<v-card-title>
-				Student
-			</v-card-title>
-			<v-card-subtitle>
-				Update Other Details
-			</v-card-subtitle>
-			<v-card-text>
-				<StudentForm
-					v-if="student && user"
-					:student="student"
-					:user="user"
-					:action="handleStudentUpdate"
-					actionName="Update"
-					title="Student"
-					subtitle="Edit student details"
-				/>
-			</v-card-text>
-		</v-card>
+		<UserForm
+			:action="handleUpdateUser"
+			v-model="user"
+			actionName="Update User"
+			title="Student User"
+			subtitle="Update the user account for the student"
+			class="mb-4"
+		/>
+		<StudentForm
+			v-if="student && user"
+			:student="student"
+			:user="user"
+			:action="handleStudentUpdate"
+			actionName="Update"
+			title="Student"
+			subtitle="Edit student details"
+		/>
 	</v-container>
 </template>
 

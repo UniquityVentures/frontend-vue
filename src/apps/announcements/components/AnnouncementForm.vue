@@ -182,27 +182,11 @@ const props = defineProps({
 const batchesOrCourses = ref("batches");
 
 // Initialize form data with default values
-const formData = ref({
-	title: "",
-	description: "",
-	priority: "low",
-	is_active: true,
-	is_school_wide: false,
-	signed_by: null,
-	release_at: null,
-	expiry_at: null,
-	batches: [],
-	courses: [],
-	attachments: null,
-});
+const formData = ref({});
 
 onMounted(async () => {
 	if (props.announcement) {
-		for (const [key, value] of Object.entries(formData.value)) {
-			if (props.announcement[key] !== undefined) {
-				formData.value[key] = value.constructor(props.announcement[key]);
-			}
-		}
+		formData.value = props.announcement;
 	}
 });
 </script> 
