@@ -16,16 +16,6 @@ export const formatDateTime = (dateString) => {
 	});
 };
 
-export const toApiDate = (unparsedDate) => {
-	const date = new Date(unparsedDate);
-	return date.toISOString().slice(0, 10)
-}
-
-export const toApiDateTime = (unparsedDate) => {
-	const date = new Date(unparsedDate);
-	return date.toISOString()
-}
-
 export const keyHandler = (item, fieldConfig) => {
 	if (!fieldConfig || !fieldConfig.key) return "";
 

@@ -34,7 +34,6 @@ import { computed, onMounted, ref, watch } from "vue";
 import { getEvents } from "../api";
 import VueCal from "vue-cal";
 import { formatDate } from "@/services/utils";
-import { toApiDate } from "@/services/utils";
 
 // Calendar state
 const currentDate = ref(new Date());
