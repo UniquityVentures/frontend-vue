@@ -6,7 +6,7 @@
             View All Assignments</v-btn>
         <v-divider/>
         <ResponsiveDataTable :fetch="getAssignments" v-model:filters="filters" title="Assignments"
-            :subtitle="`Assignments for ${course.name}`">
+        :subtitle="`Assignments for course: ${course.name} (${course.code})`">
             <template #filters-slot>
                 <v-row>
                     <v-col cols="12" sm="6" md="3" lg="2">

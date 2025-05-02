@@ -40,15 +40,15 @@
         <v-col cols="12" md="6">
           <TeacherSelect
             searchField="name"
-            label="Class Teacher"
+            label="Main Teacher"
             v-model="formData.main_teacher"
           />
         </v-col>
         
         <v-col cols="12" md="6">
           <TeacherSelect
-			:multiple="true"
-            label="Other Teacher"
+			      :multiple="true"
+            label="Other Teachers"
             v-model="formData.other_teachers"
           />
         </v-col>
@@ -59,6 +59,7 @@
           <BatchSelect
             multiple
             v-model="formData.batches"
+            label="Batches this course is taught to"
           />
         </v-col>
       </v-row>
