@@ -4,7 +4,7 @@ export const createViewset = (baseUrl, filename = "export") => ({
 	// List all records with optional filtering
 	list: async (filter = {}) =>
 		(
-			await api.get(`${baseUrl}/all`, {
+			await api.get(`${baseUrl}`, {
 				params: { ...filter },
 			})
 		).data,
@@ -13,17 +13,17 @@ export const createViewset = (baseUrl, filename = "export") => ({
 	retrieve: async (id) => (await api.get(`${baseUrl}/${id}`)).data,
 
 	// Get single record by ID
-	delete: async (id) => (await api.delete(`${baseUrl}/${id}/`)).data,
+	delete: async (id) => (await api.delete(`${baseUrl}/${id}`)).data,
 
 	// Create new record
-	create: async (data) => (await api.post(`${baseUrl}/create/`, data)).data,
+	create: async (data) => (await api.post(`${baseUrl}`, data)).data,
 
 	// Update existing record
-	update: async (data) => (await api.put(`${baseUrl}/${data.id}/`, data)).data,
+	update: async (data) => (await api.put(`${baseUrl}/${data.id}`, data)).data,
 
 	// Export records (if supported)
 	export: async (filter = {}) => {
-		const response = await api.get(`${baseUrl}/export/`, {
+		const response = await api.get(`${baseUrl}/export`, {
 			params: filter,
 			responseType: "blob",
 		});
@@ -44,7 +44,7 @@ export const createViewset = (baseUrl, filename = "export") => ({
 			const formData = new FormData();
 			formData.append("file", file);
 			return (
-				await api.post(`${baseUrl}/import/dry_run/`, formData, {
+				await api.post(`${baseUrl}/import_dryrun`, formData, {
 					headers: { "Content-Type": "multipart/form-data" },
 				})
 			).data;
@@ -54,7 +54,7 @@ export const createViewset = (baseUrl, filename = "export") => ({
 			const formData = new FormData();
 			formData.append("file", file);
 			return (
-				await api.post(`${baseUrl}/import/final/`, formData, {
+				await api.post(`${baseUrl}/import_final`, formData, {
 					headers: { "Content-Type": "multipart/form-data" },
 				})
 			).data;
@@ -64,7 +64,7 @@ export const createViewset = (baseUrl, filename = "export") => ({
 	// Get stats (if supported)
 	stats: async (filter = {}) =>
 		(
-			await api.get(`${baseUrl}/stats/`, {
+			await api.get(`${baseUrl}/stats`, {
 				params: { ...filter },
 			})
 		).data,
