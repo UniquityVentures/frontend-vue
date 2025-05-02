@@ -7,6 +7,8 @@
 // v-card styles
 .v-card-title {
     padding: 10px 10px 0px 10px !important;
+    white-space: normal;
+    word-break: break-word;
 }
 
 .v-card-subtitle {

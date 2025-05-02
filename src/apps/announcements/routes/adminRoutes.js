@@ -43,7 +43,7 @@ export default [
 				props: true,
 				meta: {
 					defaultRoute: "Announcement",
-					getDisplayName: () => "View",
+					getDisplayName: () => "This Announcement",
 					getMenu: (params) => [
 						{
 							title: "View Announcement",

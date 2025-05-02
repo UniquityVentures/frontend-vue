@@ -1,15 +1,10 @@
 <template>
-	<v-container>
 		<v-row v-if="announcement">
 			<v-col>
-				<v-row class="ma-2 flex justify-center">
+				<v-row class="flex justify-center ma-4">
 					<v-col lg="8">
 						<v-card>
 							<v-card-title>{{ announcement?.title }}</v-card-title>
-
-							<v-card-text>
-								<p ref="announcement_description"></p>
-							</v-card-text>
 
 							<v-card-text>
 								<h4 class="text-subtitle-1">Signed by:</h4>
@@ -17,9 +12,14 @@
 							</v-card-text>
 
 							<v-card-text>
+								<h4 class="text-subtitle-1">Content:</h4>
+								<p>{{ announcement?.description }}</p>
+							</v-card-text>
+
+							<v-card-text>
 								<h4 class="text-subtitle-1">Dates:</h4>
 								<DateChip color="accent" label="Release" :date="announcement.release_at" />
-								<DateChip color="red" label="Expiry" :date="announcement.expriy_at" />
+								<DateChip color="red" label="Expiry" :date="announcement.expiry_at" />
 							</v-card-text>
 
 							<v-card-text>
@@ -44,10 +44,11 @@
 							</v-card-text>
 
 							<v-card-actions>
-								<v-btn :to="{ name: 'EditAnnouncement', params: { announcementId: announcement.id } }"
-									prepend-icon="mdi-pencil">
-									Edit
-								</v-btn>
+								<ShareButton 
+									:title="'Announcement Object'"
+									:url="currentUrl"
+									:text="`Check out this announcement: ${announcement?.title}`"
+								/>
 							</v-card-actions>
 						</v-card>
 					</v-col>
@@ -55,7 +56,14 @@
 			</v-col>
 		</v-row>
 		<v-skeleton-loader v-else type="card, card-heading, card-text" />
-	</v-container>
+		
+		<!-- Snackbar for share notifications -->
+		<v-snackbar v-model="snackbar.show" :color="snackbar.color">
+			{{ snackbar.text }}
+			<template v-slot:actions>
+				<v-btn variant="text" @click="snackbar.show = false">Close</v-btn>
+			</template>
+		</v-snackbar>
 </template>
 
 <script setup>
@@ -65,6 +73,7 @@ import TeacherListItem from "@/apps/teachers/components/TeacherListItem.vue";
 import DateChip from "@/components/DateChip.vue";
 import BatchChip from "@/apps/batches/components/BatchChip.vue";
 import CourseChip from "@/apps/courses/components/CourseChip.vue";
+import ShareButton from "@/components/ShareButton.vue";
 import { onMounted, ref } from "vue";
 import { getAnnouncement } from "../api";
 
@@ -74,31 +83,22 @@ const courseDetails = ref([]);
 const props = defineProps({
 	announcementId: Number,
 });
+const currentUrl = ref();
 
-const announcement_description = ref();
+const snackbar = ref({
+	show: false,
+	text: '',
+	color: 'success'
+});
 
 const fetchDetails = async () => {
 	announcement.value = await getAnnouncement(props.announcementId);
-	const words = announcement.value.description.split(" ");
-	const linkified = words.map((v) => {
-		try {
-			const url = new URL(v);
-			return `<a href="${ url }" target="_blank">${url}</a>`
-		} catch {
-			return v
-		}
-	});
-
-
-
-	announcement_description.value.innerHTML = linkified.join(" ");
 	// Fetch batch details
 	if (announcement.value.batches?.length > 0) {
 		batchDetails.value = await Promise.all(
 			announcement.value.batches.map((id) => getBatch(id)),
 		);
 	}
-
 	// Fetch course details
 	if (announcement.value.courses?.length > 0) {
 		courseDetails.value = await Promise.all(
@@ -107,5 +107,8 @@ const fetchDetails = async () => {
 	}
 };
 
-onMounted(fetchDetails);
+onMounted(async () => {
+	await fetchDetails();
+	currentUrl.value = window.location.href;
+});
 </script>
