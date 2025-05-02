@@ -13,13 +13,13 @@ export const createViewset = (baseUrl, filename = "export") => ({
 	retrieve: async (id) => (await api.get(`${baseUrl}/${id}`)).data,
 
 	// Get single record by ID
-	delete: async (id) => (await api.delete(`${baseUrl}/${id}`)).data,
+	delete: async (id) => (await api.delete(`${baseUrl}/${id}/`)).data,
 
 	// Create new record
-	create: async (data) => (await api.post(`${baseUrl}`, data)).data,
+	create: async (data) => (await api.post(`${baseUrl}/`, data)).data,
 
 	// Update existing record
-	update: async (data) => (await api.put(`${baseUrl}/${data.id}`, data)).data,
+	update: async (data) => (await api.put(`${baseUrl}/${data.id}/`, data)).data,
 
 	// Export records (if supported)
 	export: async (filter = {}) => {
