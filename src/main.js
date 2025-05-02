@@ -4,10 +4,16 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import vuetify from "./plugins/vuetify";
 import router from "./router";
+import quill from "./plugins/quill";
 // Import global styles
 import "./assets/styles/global.scss";
 
 const pinia = createPinia();
 pinia.use(piniaPersistedState);
 
-createApp(App).use(pinia).use(router).use(vuetify).mount("#app");
+createApp(App)
+  .use(pinia)
+  .use(router)
+  .use(vuetify)
+  .use(quill)
+  .mount("#app");

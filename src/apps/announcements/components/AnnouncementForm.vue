@@ -30,13 +30,14 @@
 
         <v-row>
           <v-col cols="12">
-            <v-textarea 
-              label="Description" 
-              v-model="formData.description"
-              :rules="[v => !!v || 'Description is required']" 
-              required
-              rows="10"
-            ></v-textarea>
+            <label class="text-subtitle-1">Description</label>
+            <div class="ma-4">
+              <QuillEditor
+                v-model:content="formData.description"
+                :options="quillOptions"
+                content-type="html"
+              />
+            </div>
           </v-col>
         </v-row>
       </v-card-text>
@@ -148,7 +149,7 @@ import BatchSelect from "@/apps/batches/components/BatchSelect"
 import SubmitButton from "@/components/SubmitButton.vue";
 import DateSelect from "@/components/DateSelect.vue";
 import AttachmentsInput from "@/apps/attachments/components/AttachmentsInput.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, inject } from "vue";
 import DeleteButton from "@/components/DeleteButton.vue";
 import { deleteAnnouncement } from "../api";
 
