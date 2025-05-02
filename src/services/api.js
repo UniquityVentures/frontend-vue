@@ -18,8 +18,12 @@ api.interceptors.request.use(
 	(config) => {
 		const authStore = useAuthStore();
 		const access = authStore.getAccess;
+		const account = authStore.getAccount;
 		if (access) {
 			config.headers.Authorization = `Bearer ${access}`;
+		}
+		if (account) {
+			config.headers["X-Account-Type"] = account.group_details.name;
 		}
 		return config;
 	},
