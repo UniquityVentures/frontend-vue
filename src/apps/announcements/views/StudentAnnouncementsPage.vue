@@ -38,10 +38,7 @@ import { ref } from "vue";
 
 const authStore = useAuthStore();
 const account = authStore.account;
-const batch = account.batch;
 
-const filters = ref({
-    batch: batch,
-});
+const filters = ref({});
 
 </script>

@@ -20,15 +20,15 @@
                 </v-col>
                 <v-col cols="12" sm="6" md="4" lg="3">
                     <DateRangeSelect 
-                        v-model:start="filters.released_start"
-                        v-model:end="filters.released_end"
+                        v-model:start="filters.release_start"
+                        v-model:end="filters.release_end"
                         label="Release Date Range" 
                     />
                 </v-col>
                 <v-col cols="12" sm="6" md="4" lg="3">
                     <DateRangeSelect 
-                        v-model:start="filters.expired_start"
-                        v-model:end="filters.expired_end"
+                        v-model:start="filters.expiry_start"
+                        v-model:end="filters.expiry_end"
                         label="Expiry Date Range" 
                     />
                 </v-col>

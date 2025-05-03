@@ -9,7 +9,7 @@
 				<v-col cols="12" sm="6" md="3" lg="2">
 					<v-text-field label="Search by description" v-model="filters.description" />
 				</v-col>
-				<v-col cols="12" sm="6" md="3" lg="2">
+				<v-col cols="12" sm="6" md="3" lg="2" v-if="role === 'Admin'">
 					<BatchSelect v-model="filters.batch" label="Filter by batch" />
 				</v-col>
 				<v-col cols="12" sm="6" md="4" lg="3">
@@ -19,7 +19,7 @@
 						label="Date Range"
 					/>
 				</v-col>
-				<v-col cols="12" sm="6" md="3" lg="2">
+				<v-col cols="12" sm="6" md="3" lg="2" v-if="role === 'Admin'">
 					<TeacherSelect v-model="filters.created_by" label="Created By" />
 				</v-col> 
 			</v-row>
@@ -63,6 +63,10 @@ import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { ref } from "vue";
 import { getEvents } from "../api";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
+import { useAuthStore } from "@/stores/auth";
+
+const authStore = useAuthStore();
+const role = authStore.getRole;
 
 const filters = ref({});
 </script>
