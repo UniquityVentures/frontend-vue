@@ -26,7 +26,9 @@
 		<v-card-text>
 			<SubmitButton :onSubmit="submitForm" :submitText="actionName" />
 			<DeleteButton :action="() => deleteTeacher(teacher?.id)" v-if="!hideDelete"
-				:name="'Teacher ' + teacher?.user_details?.full_name" />
+				:name="'Teacher ' + teacher?.user_details?.full_name"  
+				@deleted="$router.go(-2)"
+			/>
 		</v-card-text>
 	</v-card>
 </template>

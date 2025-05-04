@@ -29,7 +29,7 @@
 					v-if="teacher && user"
 					:teacher="teacher"
 					:user="user"
-					:action="handleUpdate"
+					:action="handleUpdateTeacher"
 					actionName="Update"
 					title="Teacher"
 					subtitle="Edit teacher details"
