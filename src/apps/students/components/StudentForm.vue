@@ -79,7 +79,9 @@
 			</v-row>
 			<SubmitButton :onSubmit="submitForm" :submitText="actionName" />
 			<DeleteButton :action="() => deleteStudent(student?.id)" 
-				:name="'Student ' + student?.user_details?.full_name" v-if="!hideDelete" />
+				:name="'Student ' + student?.user_details?.full_name" v-if="!hideDelete" 
+				@deleted="$router.go(-2)"
+			/>
 		</v-card-text>
 	</v-card>
 </template>

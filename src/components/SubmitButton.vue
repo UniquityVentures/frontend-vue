@@ -59,6 +59,10 @@ const handleSubmit = async () => {
 			}
 			isSubmitting.value = false;
 			isSuccess.value = true;
+			setTimeout(() => {
+				isSuccess.value = false;
+				error.value = false;
+			}, 2000);
 		})
 		.catch((err) => {
 			console.error(err);
