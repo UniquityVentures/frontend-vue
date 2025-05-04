@@ -66,7 +66,9 @@
     <v-card-text>
       <SubmitButton :onSubmit="submitForm" :submitText="actionName" />
       <DeleteButton :action="() => deleteBatch(batch?.id)" 
-        :name="'Batch ' + batch?.name" v-if="!hideDelete" />
+        :name="'Batch ' + batch?.name" v-if="!hideDelete" 
+        @deleted="$router.go(-2)"
+			/>
     </v-card-text>
   </v-card>
 </template>
