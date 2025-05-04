@@ -85,7 +85,7 @@ const fetchEvents = async () => {
 		selectedDate.setHours(0, 0, 0, 0);
 
 		const filter = {
-			date: selectedDate.toISOString().split('T')[0], // Send date as YYYY-MM-DD
+			date: selectedDate, // Send date as YYYY-MM-DD
 		};
 		const response = await getEvents(filter);
 		// Format events for vue-cal immediately after fetching
