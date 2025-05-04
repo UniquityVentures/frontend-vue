@@ -3,7 +3,7 @@ export const formatDate = (dateString) =>
 		year: "numeric",
 		month: "short",
 		day: "numeric",
-	}).format(Date.parse(dateString));
+	}).format(new Date(dateString));
 
 export const formatDateTime = (dateString) => {
 	return new Date(dateString).toLocaleString("en-US", {

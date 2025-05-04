@@ -32,7 +32,7 @@
                             <v-chip>Roll No: {{ item.student_details?.roll_no }}</v-chip>
                         </v-card-text>
                         <v-card-text>
-							<DateChip v-if="item.date" label="Date" color="info" :date="item.date" />
+							<DateChip v-if="item.datetime" label="Date" color="info" :date="item.datetime" />
 
                             <v-chip :color="getStatusColor(item.status)" class="ml-auto">
                                 {{ item.status }}

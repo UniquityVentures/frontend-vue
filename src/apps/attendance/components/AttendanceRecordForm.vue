@@ -30,7 +30,7 @@
 
       <v-row>
         <v-col cols="12" md="6">
-          <DateSelect v-model="formData.date" label="Date" required />
+          <DateSelect v-model="formData.datetime" label="Date" required />
         </v-col>
       </v-row>
 
@@ -97,7 +97,7 @@ const formData = ref({
   student: null,
   status: "Present",
   reason: "",
-  date: null,
+  datetime: null,
   course: null,
 });
 
@@ -121,7 +121,7 @@ onMounted(() => {
       student: props.record.student,
       status: props.record.status,
       reason: props.record.reason || "",
-      date: props.record.date,
+      datetime: props.record.datetime,
       course: props.record.course || null,
     };
   }

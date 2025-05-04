@@ -21,9 +21,9 @@
                 </v-list>
               </v-card-text>
 
-              <v-card-text>
+              <v-card-text v-if="record.datetime">
                 <h4 class="text-subtitle-1">Date:</h4>
-                {{ record.date }}
+                {{ formatDate(record.datetime) }}
               </v-card-text>
 
               <v-card-text>
@@ -61,6 +61,7 @@
 import { onMounted, ref } from "vue";
 import { getAttendanceRecord } from "../api";
 import { getCourse } from "@/apps/courses/api";
+import { formatDate} from "@/services/utils";
 
 const record = ref({});
 const courseDetails = ref(null);
