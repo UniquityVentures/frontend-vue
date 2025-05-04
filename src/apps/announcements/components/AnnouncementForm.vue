@@ -60,7 +60,6 @@
               v-model="formData.expiry_at"
               label="Expiry Date"
               :rules="[v => !!v || 'Expiry Date is required']"
-              required
             />
           </v-col>
         </v-row>

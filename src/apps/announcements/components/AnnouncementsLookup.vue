@@ -87,6 +87,8 @@ const props = defineProps({
 
 const filters = ref({
 	sort_by: "release_at",
+	sort_method: "difference",
+	value: new Date(),
 });
 
 onMounted(() => {
