@@ -1,6 +1,6 @@
 <template>
     <v-container class="columns-container" v-if="batch">
-        <v-card class="column-item">
+        <v-card class="column-item card-1">
             <v-card-title>Teachers List</v-card-title>
             <v-card-text>
                 <div class="text-subtitle-1">Head Teacher</div>
@@ -19,12 +19,12 @@
                     v-for="(teacher, index) in course_teachers" :key="index"
                     :title="teacher.teacher?.user_details?.full_name"
                     :subtitle="`Leading Course: ${teacher.course.name} (${teacher.course.code})`"
-                    :to="{ name: 'Teacher', params: { teacherId: teacher?.teacher.user_details?.id } }">
+                    :to="{ name: 'Teacher', params: { teacherId: teacher?.teacher?.user_details?.id } }">
                     </v-list-item>
                 </v-list>
             </v-card-text>
         </v-card>
-        <v-card class="column-item">
+        <v-card class="column-item card-2">
             <v-card-title>Add Teachers to Batch</v-card-title>
             <v-card-subtitle color="error">Select teachers to add to this batch</v-card-subtitle>
             <v-card-text>
@@ -42,12 +42,13 @@
                 <SubmitButton submitText="Add Selected Teachers to Batch" :onSubmit="addTeachers" color="accent" />
             </v-card-actions>
         </v-card>
-        <v-card class="column-item">
+        <v-card class="column-item card-3">
             <v-card-title>Remove Teachers from Batch</v-card-title>
             <v-card-subtitle color="error">Select teachers to remove from this batch</v-card-subtitle>
             <v-card-text>
 				<ServerAutocomplete
 					v-model="victimTeachers"
+					:key="victimTeachers"
 					:fetch="getBatchTeachers"
 					:getInfo="getTeacherInfoFromObj"
 					searchField="name"
@@ -115,7 +116,6 @@ const addTeachers = async () => {
 	newTeachers.value = [];
 	batch.value = response;
 	await fetchOtherTeachers();
-	await fetchCourseTeachers();
 	return response;
 };
 
@@ -128,25 +128,29 @@ const removeTeachers = async () => {
 	victimTeachers.value = [];
 	batch.value = response;
 	await fetchOtherTeachers();
-	await fetchCourseTeachers();
 	return response;
 };
 
 const fetchOtherTeachers = async () => {
+	other_teachers.value = [];
+	console.log(other_teachers);
 	for (const teacherId of batch.value.other_teachers) {
 		const teacher = await getTeacher(teacherId);
-		other_teachers.value.push(teacher);
+		other_teachers.value = [ ...other_teachers.value, teacher ];
 	}
+	other_teachers.value = [...other_teachers.value]
 };
 
 const fetchCourseTeachers = async () => {
 	for (const courseId of batch.value.courses) {
 		const course = await getCourse(courseId);
 		const teachers = await getTeachers({ courses_leading: courseId });
-		course_teachers.value.push({
-			course: course,
-			teacher: teachers.results[0],
-		});
+		if (teachers.results[0]) {
+			course_teachers.value = [...course_teachers.value, {
+				course: course,
+				teacher: teachers.results[0],
+			}];
+		}
 	}
 };
 

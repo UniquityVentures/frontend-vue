@@ -1,6 +1,6 @@
 <template>
     <v-container v-if="batch">
-    <ResponsiveDataTable :fetch="getCourses" v-model:filters="filters"
+    <ResponsiveDataTable :fetch="getBatchCourses" v-model:filters="filters"
     title="Courses" :subtitle="`Courses for ${batch.name}`" v-if="batch" :templates="{ desktop: 'card', mobile: 'card' }"
     hideFilters >
         <template #filters-slot>
@@ -58,6 +58,7 @@
 					:fetch="getBatchCourses"
 					:getInfo="getCourseInfoFromObj"
 					searchField="name"
+					:key="{ courses: victimCourses, batch: batch }"
 					:multiple="true"
 					:rules="[]"
 					label="Select Course"
@@ -94,7 +95,7 @@ const addCourses = async () => {
 	batch.value.courses = [...batch.value.courses, ...newCourses.value];
 	const response = await updateBatch(batch.value);
 	newCourses.value = [];
-	filters.value = props.batchId;
+	filters.value = {batch: props.batchId};
 	return response;
 };
 
@@ -103,6 +104,7 @@ const removeCourses = async () => {
 	batch.value.courses = batch.value.courses.filter(
 		(course) => !victimCourses.value.includes(course),
 	);
+	console.log(batch.value)
 	const response = await updateBatch(batch.value);
 	victimCourses.value = [];
 	filters.value = props.batchId;
