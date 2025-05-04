@@ -44,7 +44,7 @@ export const createViewset = (baseUrl, filename = "export") => ({
 			const formData = new FormData();
 			formData.append("file", file);
 			return (
-				await api.post(`${baseUrl}/import_dryrun`, formData, {
+				await api.post(`${baseUrl}/import_dryrun/`, formData, {
 					headers: { "Content-Type": "multipart/form-data" },
 				})
 			).data;
@@ -54,7 +54,7 @@ export const createViewset = (baseUrl, filename = "export") => ({
 			const formData = new FormData();
 			formData.append("file", file);
 			return (
-				await api.post(`${baseUrl}/import_final`, formData, {
+				await api.post(`${baseUrl}/import_final/`, formData, {
 					headers: { "Content-Type": "multipart/form-data" },
 				})
 			).data;
