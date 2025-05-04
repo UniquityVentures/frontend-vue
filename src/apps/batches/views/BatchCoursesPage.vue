@@ -2,7 +2,7 @@
     <v-container v-if="batch">
     <ResponsiveDataTable :fetch="getCourses" v-model:filters="filters"
     title="Courses" :subtitle="`Courses for ${batch.name}`" v-if="batch" :templates="{ desktop: 'card', mobile: 'card' }"
-    hideFilters >
+    hideFilters>
         <template #filters-slot>
             <v-text-field label="Search" v-model="filters.name" />
         </template>
