@@ -1,22 +1,40 @@
 <template>
 	<v-container>
-		<UserForm
-			v-if="stage===1"
-			:action="handleCreateUser"
-			v-model="user"
-			actionName="Create User"
-			title="Student User"
-			subtitle="Create a user account for the student"
-		/>
+		<!-- Add stepper for progress tracking -->
+		<v-stepper :value="stage" class="mb-4">
+			<v-stepper-header>
+				<v-divider></v-divider>
+				<v-stepper-item step="1" :complete="stage > 1">
+					Create Student User
+				</v-stepper-item>
+				<v-divider></v-divider>
+				<v-stepper-item step="2" :complete="stage > 2">
+					Add Student Details
+				</v-stepper-item>
+				<v-divider></v-divider>
+			</v-stepper-header>
+		</v-stepper>
+		
+		<v-card class="mb-2">
+			<UserForm
+				v-if="stage===1"
+				:action="handleCreateUser"
+				v-model="user"
+				actionName="Create User"
+				title="Student User"
+				subtitle="Create a user account for the student"
+			/>
 
-		<StudentForm
-			v-if="stage===2"
-			:user="user"
-			:action="handleCreateStudent"
-			actionName="Create Student"
-			title="Student Details"
-			subtitle="Add student-specific information"
-		/>
+			<StudentForm
+				v-if="stage===2"
+				:user="user"
+				:action="handleCreateStudent"
+				actionName="Create Student"
+				title="Student Details"
+				subtitle="Add student-specific information"
+				:hideDelete="true"
+			/>
+		</v-card>
 	</v-container>
 </template>
 
@@ -32,9 +50,9 @@ const router = useRouter();
 const stage = ref(1);
 const user = ref({});
 
-const handleCreateUser = async (userData) => {
+const handleCreateUser = async (formData) => {
 	try {
-		user.value = await createUser(userData);
+		user.value = await createUser(formData);
 		stage.value = 2;
 		return { success: true };
 	} catch (error) {
@@ -43,10 +61,10 @@ const handleCreateUser = async (userData) => {
 	}
 };
 
-const handleCreateStudent = async (studentData) => {
+const handleCreateStudent = async (formData) => {
 	try {
 		const student = await createStudent({
-			...studentData,
+			...formData,
 			user: user.value.id,
 		});
 		router.push({ name: "Student", params: { studentId: student.id } });

@@ -3,7 +3,7 @@ export const formatDate = (dateString) =>
 		year: "numeric",
 		month: "short",
 		day: "numeric",
-	}).format(Date.parse(dateString));
+	}).format(new Date(dateString));
 
 export const formatDateTime = (dateString) => {
 	return new Date(dateString).toLocaleString("en-US", {
@@ -15,16 +15,6 @@ export const formatDateTime = (dateString) => {
 		second: "2-digit",
 	});
 };
-
-export const toApiDate = (unparsedDate) => {
-	const date = new Date(unparsedDate);
-	return date.toISOString().slice(0, 10)
-}
-
-export const toApiDateTime = (unparsedDate) => {
-	const date = new Date(unparsedDate);
-	return date.toISOString()
-}
 
 export const keyHandler = (item, fieldConfig) => {
 	if (!fieldConfig || !fieldConfig.key) return "";

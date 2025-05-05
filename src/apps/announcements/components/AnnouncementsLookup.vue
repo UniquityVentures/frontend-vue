@@ -20,17 +20,20 @@
                 </v-col>
                 <v-col cols="12" sm="6" md="4" lg="3">
                     <DateRangeSelect 
-                        v-model:start="filters.released_start"
-                        v-model:end="filters.released_end"
+                        v-model:start="filters.release_start"
+                        v-model:end="filters.release_end"
                         label="Release Date Range" 
                     />
                 </v-col>
                 <v-col cols="12" sm="6" md="4" lg="3">
                     <DateRangeSelect 
-                        v-model:start="filters.expired_start"
-                        v-model:end="filters.expired_end"
+                        v-model:start="filters.expiry_start"
+                        v-model:end="filters.expiry_end"
                         label="Expiry Date Range" 
                     />
+                </v-col>
+                <v-col cols="12" sm="6" md="3" lg="2">
+                    <CheckBox v-model="filters.is_school_wide" label="Is School Wide" />
                 </v-col>
             </v-row>
         </template>
@@ -69,11 +72,12 @@ import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
 import ExportButton from "@/components/ExportButton.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
-import DeleteButton from "@/components/DeleteButton.vue";
 import { ref, computed, onMounted } from "vue";
 import DateRangeSelect from "../../../components/DateRangeSelect.vue";
-import { exportAnnouncements, getAnnouncements, deleteAnnouncement } from "../api";
+import { exportAnnouncements, getAnnouncements } from "../api";
 import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
+import CheckBox from "@/components/CheckBox.vue";
+
 const props = defineProps({
 	defaultFilters: {
 		type: Object,
@@ -83,6 +87,8 @@ const props = defineProps({
 
 const filters = ref({
 	sort_by: "release_at",
+	sort_method: "difference",
+	value: new Date(),
 });
 
 onMounted(() => {

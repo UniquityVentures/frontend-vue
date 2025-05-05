@@ -8,11 +8,11 @@
 				<v-col cols="12" sm="6" md="3" lg="2">
 					<v-text-field label="Search by name" v-model="filters.name" />
 				</v-col>
-				<v-col cols="12" sm="6" md="3" lg="2">
-					<BatchSelect multiple v-model="filters.batches" label="Filter by batch" />
+				<v-col cols="12" sm="6" md="3" lg="2" v-if="role == 'Admin'">
+					<BatchSelect v-model="filters.batches" label="Filter by batch" />
 				</v-col>
-				<v-col cols="12" sm="6" md="3" lg="2">
-					<CourseSelect multiple  v-model="filters.courses" label="Filter by course" />
+				<v-col cols="12" sm="6" md="3" lg="2" v-if="role == 'Admin'">
+					<CourseSelect v-model="filters.courses" label="Filter by course" />
 				</v-col>
 			</v-row>
 		</template>
@@ -33,5 +33,10 @@ import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { ref } from "vue";
 import { getTeachers } from "../api";
 import TeacherSmallCard from "./TeacherSmallCard.vue";
+import { useAuthStore } from "@/stores/auth";
+
+const authStore = useAuthStore();
+const role = authStore.getRole;
+
 const filters = ref({sort_by: "user__first_name"});
 </script>

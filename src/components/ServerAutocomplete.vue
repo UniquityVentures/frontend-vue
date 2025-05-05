@@ -56,6 +56,9 @@ const props = defineProps({
 		type: String,
 		default: "compact",
 	},
+	key: {
+		required: false,
+	},
 	filters: {
 		type: Object,
 		default: () => {},
@@ -89,32 +92,39 @@ const fetchSelected = async () => {
 	if (props.multiple) {
 		// Prevent Unnecessary network requests
 		if (!model.value?.length) {
-			return
+			return;
 		}
 		// Don't request the data which is already present
-		const missingEntries = model.value.filter((e) => !results.value.map((v) => v.id).includes(e));
+		const missingEntries = model.value.filter(
+			(e) => !results.value.map((v) => v.id).includes(e),
+		);
 		if (!missingEntries.length) {
-			return
+			return;
 		}
 		const newResults = await Promise.all(
-			missingEntries.map(async (v) => (await props.fetch({ id: v })).results[0]),
+			missingEntries.map(
+				async (v) => (await props.fetch({ id: v })).results[0],
+			),
 		);
-		if (newResults?.[0]?.id && typeof model.value[0] !== typeof newResults[0]?.id) {
+		if (
+			newResults?.[0]?.id &&
+			typeof model.value[0] !== typeof newResults[0]?.id
+		) {
 			const converter = newResults[0].id.constructor;
 			model.value = model.value.map(converter);
 		} else {
 			const temp = model.value;
-			model.value = temp; 
+			model.value = temp;
 		}
 		results.value = newResults.concat(results.value);
 	} else {
 		if (!model.value) {
-			return
+			return;
 		}
 
 		// Same thing as above, just for single element
-		if (results.value.map(e => e.id).includes(model.value)) {
-			return
+		if (results.value.map((e) => e.id).includes(model.value)) {
+			return;
 		}
 		const newResults = (await props.fetch({ id: model.value })).results[0];
 		if (typeof model.value !== typeof newResults.id) {
@@ -122,13 +132,11 @@ const fetchSelected = async () => {
 			model.value = converter(model.value);
 		} else {
 			const temp = model.value;
-			model.value = temp; 
+			model.value = temp;
 		}
 		results.value.unshift(newResults);
 	}
 };
-
-watch(model, fetchSelected);
 
 // Fetch results
 const fetchResults = async () => {
@@ -151,13 +159,24 @@ const fetchResults = async () => {
 	}
 };
 
-// Fetch more results when scrolling
-const isAtBottom = ref(false)
+watch(model, fetchSelected, { deep: true });
+watch(
+	props.key,
+	() => {
+		filters.page = 1;
+		fetchResults();
 
-const menuOpen = ref(false)
+	},
+	{ deep: true },
+);
+
+// Fetch more results when scrolling
+const isAtBottom = ref(false);
+
+const menuOpen = ref(false);
 
 const delay = (delayInms) => {
-  return new Promise(resolve => setTimeout(resolve, delayInms));
+	return new Promise((resolve) => setTimeout(resolve, delayInms));
 };
 
 setInterval(() => {

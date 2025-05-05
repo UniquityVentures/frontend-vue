@@ -10,7 +10,7 @@
                     <TeacherSelect v-model="filters.main_teacher" label="Main Teacher" />
                 </v-col>
                 <v-col cols="12" sm="6" md="3" lg="2">
-                    <BatchSelect v-model="filters.batch" label="Batch" />
+                    <BatchSelect v-model="filters.batches" label="Batch" />
                 </v-col>
             </v-row>
         </template>
@@ -39,9 +39,8 @@ import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
-import DeleteButton from "@/components/DeleteButton.vue";
 import { ref } from "vue";
-import { getCourses, deleteCourse  } from "../api";
+import { getCourses } from "../api";
 
 const filters = ref({});
 </script>

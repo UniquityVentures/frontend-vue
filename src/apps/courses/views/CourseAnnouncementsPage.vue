@@ -6,7 +6,7 @@
             View All Announcements</v-btn>
         <v-divider/>
         <ResponsiveDataTable :fetch="getAnnouncements" v-model:filters="filters" title="Announcements"
-            :subtitle="`Announcements for ${course.name}`">
+            :subtitle="`Announcements for course: ${course.name} (${course.code})`">
             <template #filters-slot>
                 <v-row>
                     <v-col cols="12" sm="6" md="3" lg="2">

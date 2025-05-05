@@ -1,10 +1,18 @@
 <template>
 	<v-container>
+		<UserForm
+			:action="handleUpdateUser"
+			v-model="user"
+			actionName="Update User"
+			title="Student User"
+			subtitle="Update the user account for the student"
+			class="mb-4"
+		/>
 		<StudentForm
 			v-if="student && user"
 			:student="student"
 			:user="user"
-			:action="handleUpdate"
+			:action="handleStudentUpdate"
 			actionName="Update"
 			title="Student"
 			subtitle="Edit student details"
@@ -17,6 +25,7 @@ import { getUser, updateUser } from "@/apps/users/api";
 import { onMounted, ref } from "vue";
 import { getStudent, updateStudent } from "../api";
 import StudentForm from "../components/StudentForm.vue";
+import UserForm from "@/apps/users/components/UserForm.vue";
 
 const props = defineProps({
 	studentId: {
@@ -28,31 +37,10 @@ const props = defineProps({
 const student = ref(null);
 const user = ref(null);
 
-const handleUpdate = async (formData) => {
+const handleStudentUpdate = async (formData) => {
 	try {
-		// Extract user-specific fields
-		const userData = {
-			id: user.value.id,
-			first_name: formData.first_name,
-			last_name: formData.last_name,
-			email: formData.email,
-			is_active: formData.is_active,
-			is_approved: formData.is_approved,
-		};
-
-		// Extract student-specific fields
-		const studentData = {
-			id: student.value.id,
-			identifier: formData.identifier,
-			batch: formData.batch,
-			phone: formData.phone,
-			whatsapp: formData.whatsapp,
-			user: user.value.id,
-		};
-
 		// Update both user and student data
-		await updateUser(userData);
-		await updateStudent(studentData);
+		await updateStudent(formData);
 		return { success: true };
 	} catch (error) {
 		console.error("Failed to update student:", error);
@@ -63,5 +51,16 @@ const handleUpdate = async (formData) => {
 onMounted(async () => {
 	student.value = await getStudent(props.studentId);
 	user.value = await getUser(student.value.user);
+	console.log(user.value);
 });
+
+const handleUpdateUser = async (userData) => {
+	try {
+		user.value = await updateUser(userData);
+		return { success: true };
+	} catch (error) {
+		console.error("Failed to create user:", error);
+		return { success: false, error };
+	}
+};
 </script>

@@ -2,8 +2,9 @@ import { createViewset } from "@/services/viewset";
 const images = import.meta.glob("@/assets/courses/course*.png");
 
 const getCourseImage = () => {
-	const index = Math.floor(Math.random() * images.length);
-	return images[index];
+	const im = Object.entries(images);
+	const index = Math.floor(Math.random() * im.length);
+	return im[index][0]
 };
 
 const courseViewset = createViewset("api/allocation/courses", "courses");

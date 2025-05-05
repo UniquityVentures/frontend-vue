@@ -30,7 +30,7 @@
 
       <v-row>
         <v-col cols="12" md="6">
-          <DateSelect v-model="formData.date" label="Date" required />
+          <DateSelect v-model="formData.datetime" label="Date" required />
         </v-col>
       </v-row>
 
@@ -46,6 +46,8 @@
       </v-row>
       
       <SubmitButton :onSubmit="submitForm" :submitText="actionName" />
+      <DeleteButton :action="() => deleteRecord(record?.id)" 
+        :name="'Attendance Record for ' + record?.student?.user_details?.full_name" v-if="!hideDelete" />
     </v-card-text>
   </v-card>
 </template>
@@ -77,6 +79,10 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  hideDelete: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const statusOptions = [
@@ -91,7 +97,7 @@ const formData = ref({
   student: null,
   status: "Present",
   reason: "",
-  date: null,
+  datetime: null,
   course: null,
 });
 
@@ -115,7 +121,7 @@ onMounted(() => {
       student: props.record.student,
       status: props.record.status,
       reason: props.record.reason || "",
-      date: props.record.date,
+      datetime: props.record.datetime,
       course: props.record.course || null,
     };
   }

@@ -34,7 +34,7 @@
 
 <script setup>
 import { toHeaderCase } from "@/services/utils";
-import { onMounted, ref } from "vue";
+import { ref, watch } from "vue";
 
 const stats = ref({});
 const loading = ref(true);
@@ -45,13 +45,18 @@ const props = defineProps({
 		type: String,
 		required: true,
 	},
+	key: {
+		type: Object,
+		required: false,
+	},
 	fetchStats: {
 		type: Function,
 		required: true,
 	},
 });
 
-onMounted(async () => {
+
+const fetchStats = async () => {
 	try {
 		loading.value = true;
 		error.value = false;
@@ -62,5 +67,8 @@ onMounted(async () => {
 	} finally {
 		loading.value = false;
 	}
-});
+};
+
+watch(props, fetchStats, {deep: true, immediate: true});
+
 </script>

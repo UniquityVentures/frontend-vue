@@ -4,6 +4,7 @@
 			:announcement = "$route.query"
 			actionName="Create"
 			:action="handleCreate"
+			:hideDelete="true"
 		/>
 	</v-container>
 </template>

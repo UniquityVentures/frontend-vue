@@ -4,7 +4,8 @@ import CalendarPage from "../views/CalendarPage.vue";
 import EventPage from "../views/EventPage.vue";
 import EventsPage from "../views/EventsPage.vue";
 import CalendarPage2 from "../views/CalendarPage2.vue";
-
+import EditEventPage from "../views/EditEventPage.vue";
+import CreateEventPage from "../views/CreateEventPage.vue";
 export default [
 	{
 		path: "calendar/",
@@ -28,7 +29,7 @@ export default [
 		children: [
 			{
 				path: "calendar/",
-				component: CalendarPage2,
+				component: CalendarPage,
 				name: "Calendar",
 			},
 			{
@@ -37,12 +38,27 @@ export default [
 				meta: {
 					defaultRoute: "Events",
 					getDisplayName: () => "Events",
+					getMenu: () => [
+						{
+							title: "Events",
+							to: { name: "Events" },
+						},
+						{
+							title: "Create New Event",
+							to: { name: "CreateEvent" },
+						},
+					],
 				},
 				children: [
 					{
 						path: "",
 						component: EventsPage,
 						name: "Events",
+					},
+					{
+						path: "create/",
+						component: CreateEventPage,
+						name: "CreateEvent",
 					},
 					{
 						path: ":eventId/",
@@ -71,7 +87,7 @@ export default [
 							},
 							{
 								path: "edit/",
-								component: EventPage, // Replace with EditEventPage when available
+								component: EditEventPage,
 								name: "EditEvent",
 								props: true,
 							},

@@ -1,5 +1,6 @@
 import { getRandomImage } from "@/services/api";
 import { createViewset } from "@/services/viewset";
+import { api } from "@/services/api";
 
 // Static imports work better for this use case
 import batch1 from "@/assets/batches/batch1.png";
@@ -8,7 +9,9 @@ import batch3 from "@/assets/batches/batch3.png";
 
 const images = [batch1, batch2, batch3];
 
-const batchViewset = createViewset("api/allocation/batches", "batches");
+const baseUrl = "api/allocation/batches"
+
+const batchViewset = createViewset(baseUrl , "batches");
 
 // Get base methods
 const getBatches = (filter = {}) =>
@@ -35,6 +38,27 @@ const getBatchInfoFromObj = (item) => ({
 	value: item.id,
 });
 
+export const promoteStudents = {
+	dryRun: async (file) => {
+		const formData = new FormData();
+		formData.append("file", file);
+		return (
+			await api.post(`${baseUrl}/promote/dry_run/`, formData, {
+				headers: { "Content-Type": "multipart/form-data" },
+			})
+		).data;
+	},
+
+	finalize: async (file) => {
+		const formData = new FormData();
+		formData.append("file", file);
+		return (
+			await api.post(`${baseUrl}/promote/final/`, formData, {
+				headers: { "Content-Type": "multipart/form-data" },
+			})
+		).data;
+	},
+};
 export {
 	getBatches,
 	getBatch,

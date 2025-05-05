@@ -29,7 +29,6 @@ import { getBatch } from "@/apps/batches/api";
 import BatchCard from "@/apps/batches/components/BatchCard.vue";
 import { getCourses } from "@/apps/courses/api";
 import CoursesList from "@/apps/courses/components/CoursesList.vue";
-import { onMounted, ref } from "vue";
 import { useAuthStore } from "@/stores/auth";
 
 const authStore = useAuthStore();

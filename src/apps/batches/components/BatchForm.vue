@@ -65,7 +65,10 @@
     </v-card-text>
     <v-card-text>
       <SubmitButton :onSubmit="submitForm" :submitText="actionName" />
-      <DeleteButton :action="() => deleteBatch(batch?.id)" :name="'batch ' + batch?.name" />
+      <DeleteButton :action="() => deleteBatch(batch?.id)" 
+        :name="'Batch ' + batch?.name" v-if="!hideDelete" 
+        @deleted="$router.go(-2)"
+			/>
     </v-card-text>
   </v-card>
 </template>
@@ -98,6 +101,10 @@ const props = defineProps({
 	subtitle: {
 		type: String,
 		default: "",
+	},
+	hideDelete: {
+		type: Boolean,
+		default: false,
 	},
 });
 

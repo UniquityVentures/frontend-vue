@@ -40,15 +40,15 @@
         <v-col cols="12" md="6">
           <TeacherSelect
             searchField="name"
-            label="Class Teacher"
+            label="Main Teacher"
             v-model="formData.main_teacher"
           />
         </v-col>
         
         <v-col cols="12" md="6">
           <TeacherSelect
-			:multiple="true"
-            label="Other Teacher"
+			      :multiple="true"
+            label="Other Teachers"
             v-model="formData.other_teachers"
           />
         </v-col>
@@ -59,6 +59,7 @@
           <BatchSelect
             multiple
             v-model="formData.batches"
+            label="Batches this course is taught to"
           />
         </v-col>
       </v-row>
@@ -74,7 +75,8 @@
     </v-card-text>
     <v-card-text>
       <SubmitButton :onSubmit="() => props.action(formData)" :submitText="actionName" />
-      <DeleteButton :action="() => deleteCourse(course?.id)" :name="'Course ' + course?.name" />
+      <DeleteButton :action="() => deleteCourse(course?.id)" 
+        :name="'Course ' + course?.name" v-if="!hideDelete" />
     </v-card-text>
   </v-card>
 </template>
@@ -107,6 +109,10 @@ const props = defineProps({
 	subtitle: {
 		type: String,
 		default: "",
+	},
+	hideDelete: {
+		type: Boolean,
+		default: false,
 	},
 });
 

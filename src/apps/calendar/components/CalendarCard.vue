@@ -1,93 +1,172 @@
 <template>
-    <v-container>
-        <v-sheet>
-            <v-calendar ref="calendar" v-model="currentDate" :events="formattedEvents" view-mode="month"
-                color="accent">
-                <template v-slot:event="{ event }">
-                    <v-chip :color="event.color" @click.stop="showEvent(event)">
-                        {{ event.title }}
-                    </v-chip>
-                </template>
-            </v-calendar>
-        </v-sheet>
-
-        <v-dialog v-model="selectedOpen" max-width="600">
-            <v-card v-if="selectedEvent">
-                <v-card-text>
-                    <EventDialogCard :event="selectedEvent" />
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn 
-                        color="grey-darken-1" 
-                        variant="text" 
-                        @click="selectedOpen = false"
-                    >
-                        Close
-                    </v-btn>
-                    <v-btn 
-                        color="accent" 
-                        variant="tonal"
-                        :to="{ name: 'Event', params: { eventId: selectedEvent.id } }"
-                    >
-                        View Details
-                    </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-    </v-container>
+		<v-row justify="center" align-content="center">
+			<v-col lg="5">
+				<v-card variant="flat">
+					<v-card-title>Daily Schedule:</v-card-title>
+					<v-card-subtitle>Select a date to view the schedule for that day.</v-card-subtitle>
+					<v-card-text>
+				<v-date-input
+					v-model="date"
+				></v-date-input>
+				<vue-cal
+					:events="formattedEvents"
+					style="min-height: 500px;"
+					:selected-date="date"
+					hide-view-selector
+                    hide-title-bar
+					active-view="day"
+				>
+					<template #event="{ event }">
+						<v-card :to="{ name: 'Event', params: { eventId: event.id } }" class="event-container">
+							<v-card-title class="text-subtitle-2">
+								{{ event.title }}
+							</v-card-title>
+							<v-card-text>
+								<v-chip color="green">Start: {{ getTime(event.start) }}</v-chip>
+								<v-chip color="red">End: {{ getTime(event.end) }}</v-chip>
+							</v-card-text>
+						</v-card>
+					</template>
+				</vue-cal>
+				</v-card-text>
+				</v-card>
+			</v-col>
+			<v-col lg="4">
+				<v-card variant="flat">
+					<v-card-title>Upcoming Events</v-card-title>
+					<v-card-text>
+						<v-timeline density="compact" >
+							<v-timeline-item
+								v-for="event in upcomingEvents"
+								:key="event.id"
+								dot-color="primary"
+								size="small"
+								fill-dot
+							>
+								<v-card :to="{ name: 'Event', params: { eventId: event.id } }">
+									<v-card-title class="text-subtitle-1">
+										{{ event.title }}
+									</v-card-title>
+									<v-card-subtitle class="text-caption">
+										{{ getDateTime(event.start) }} - {{ getDateTime(event.end) }}
+									</v-card-subtitle>
+								</v-card>
+							</v-timeline-item>
+							<v-timeline-item v-if="!upcomingEvents.length" dot-color="grey" size="small" fill-dot>
+								<div class="ms-2 text-caption">No upcoming events.</div>
+							</v-timeline-item>
+						</v-timeline>
+					</v-card-text>
+					<v-card-actions>
+						<v-btn :to="{ name: 'Events' }">View All</v-btn>
+					</v-card-actions>
+				</v-card>
+			</v-col>
+		</v-row>
 </template>
 
 <script setup>
-import { getCalendar } from "@/apps/calendar/api";
-import EventDialogCard from "@/apps/calendar/components/EventDialogCard.vue";
 import { computed, onMounted, ref, watch } from "vue";
+import { getEvents } from "../api";
+import VueCal from "vue-cal";
 
-// Calendar state
+// Calendar state for selected date
 const currentDate = ref(new Date());
-const events = ref([]);
-const selectedEvent = ref(null);
-const selectedOpen = ref(false);
+const events = ref([]); // Events for the selected date
+const date = ref(new Date());
 
-// Replace onMounted and add fetchEvents function
+// State for upcoming events
+const upcomingEvents = ref([]);
+
+// Fetch events for the selected date
 const fetchEvents = async () => {
 	try {
-		const date = new Date(currentDate.value);
+		const selectedDate = new Date(date.value);
+		// Clear time part for filtering by day
+		selectedDate.setHours(0, 0, 0, 0);
+
 		const filter = {
-			month: date.getMonth() + 1, // Months are 0-based in JS
-			year: date.getFullYear(),
+			date: selectedDate, // Send date as YYYY-MM-DD
 		};
-		const response = await getCalendar(filter);
-		events.value = response;
+		const response = await getEvents(filter);
+		// Format events for vue-cal immediately after fetching
+		events.value = response.results.map(event => ({
+			...event,
+			start: new Date(event.start),
+			end: new Date(event.end),
+		}));
 	} catch (error) {
-		console.error("Error fetching events:", error);
+		console.error("Error fetching events for selected date:", error);
+		events.value = []; // Clear events on error
 	}
 };
 
-// Watch for changes in view mode and current date
-watch([currentDate], () => {
-	fetchEvents();
-});
+// Fetch the next 5 upcoming events
+const fetchUpcomingEvents = async () => {
+	try {
+		// Assuming getEvents without filters returns all future events
+		// Or modify getEvents API to accept sorting/limiting parameters
+		// e.g., getEvents({ sort: 'start:asc', limit: 5, futureOnly: true })
+		const response = await getEvents(); // Fetch all events for now
+		const now = new Date();
+		// Filter for future events, sort by start date, take top 5
+		upcomingEvents.value = response.results
+			.map(event => ({ // Ensure dates are Date objects
+				...event,
+				start: new Date(event.start),
+				end: new Date(event.end),
+			}))
+			.filter(event => event.start >= now) // Keep only future/ongoing events
+			.sort((a, b) => a.start - b.start) // Sort by start date ascending
+			.slice(0, 5); // Take the first 5
+	} catch (error) {
+		console.error("Error fetching upcoming events:", error);
+		upcomingEvents.value = []; // Clear on error
+	}
+};
 
 onMounted(() => {
-	fetchEvents();
+	fetchEvents(); // Fetch events for the initially selected date
+	fetchUpcomingEvents(); // Fetch upcoming events
 });
 
-// Format events for the calendar
-const formattedEvents = computed(() => {
-	return events.value.map((event) => ({
-		title: event.title,
-		start: new Date(event.start),
-		end: new Date(event.end),
-		color: event.is_school_wide ? "red" : "primary",
-		allDay: false,
-		originalEvent: event,
-	}));
-});
+// Refetch events when the selected date changes
+watch(date, fetchEvents);
 
-// Open the event dialog when a chip is clicked
-const showEvent = (event) => {
-	selectedEvent.value = event.originalEvent;
-	selectedOpen.value = true;
+// Format events for vue-cal (uses 'events' state)
+const formattedEvents = computed(() => events.value); // Already formatted in fetchEvents
+
+// Format date+time for display in the upcoming events timeline
+const getDateTime = (date) => {
+	if (!date) return "";
+	// Check if date is a Date object, if not, try to parse it
+	const dateObj =  new Date(date);
+	if (!dateObj) return "Invalid Date"; // Handle invalid date strings
+
+	return new Intl.DateTimeFormat("default", {
+		year: 'numeric', month: 'short', day: 'numeric',
+		hour: "numeric", minute: "numeric",
+	}).format(dateObj);
+};
+
+// Format time only (used in vue-cal)
+const getTime = (date) => {
+	if (!date) return "";
+	const dateObj =  new Date(date);
+	if (!dateObj) return "Invalid Date";
+
+	return new Intl.DateTimeFormat("default", {
+		hour: "numeric",
+		minute: "numeric",
+	}).format(dateObj);
 };
 </script>
+
+<style scoped>
+.event-container {
+border: 1px solid;
+height: 100%;
+width: 100%;
+text-align: left;
+}
+</style>

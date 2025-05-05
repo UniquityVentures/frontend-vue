@@ -106,6 +106,10 @@ const props = defineProps({
 		type: Array,
 		required: true,
 	},
+	templateData: {
+		type: Array,
+		required: true,
+	},
 });
 
 const preview = ref(null);
@@ -186,7 +190,12 @@ const downloadTemplate = () => {
 	const header = props.templateFields.join(",");
 
 	// Create an empty CSV with just the header
-	const csvContent = `${header}\n`;
+	let csvContent = `${header}\n`;
+
+	if (props.templateData) {
+		const csvData = props.templateData.map((v) => v.join(",")).join("\n");
+		csvContent += csvData;
+	}
 
 	// Create a Blob containing the CSV data
 	const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });

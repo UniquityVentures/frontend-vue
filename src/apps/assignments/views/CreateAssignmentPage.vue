@@ -5,6 +5,7 @@
 			actionName="Create"
 			title="Assignment"
 			subtitle="Create a new assignment"
+			:hideDelete="true"
 		/>
 	</v-container>
 </template>

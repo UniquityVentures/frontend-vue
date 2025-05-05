@@ -1,61 +1,69 @@
 <template>
-  <v-container>
-    <v-row v-if="announcement">
-      <v-col>
-        <v-row class="ma-2 flex justify-center">
-          <v-col lg="8">
-            <v-card>
-              <v-card-title>{{ announcement?.title }}</v-card-title>
+		<v-row v-if="announcement">
+			<v-col>
+				<v-row class="flex justify-center ma-4">
+					<v-col lg="8">
+						<v-card>
+							<v-card-title>{{ announcement?.title }}</v-card-title>
 
-              <v-card-text>
-                <p>{{ announcement?.description }}</p>
-              </v-card-text>
+							<v-card-text>
+								<h4 class="text-subtitle-1">Signed by:</h4>
+								<TeacherListItem :teacher="announcement?.signed_by_details" />
+							</v-card-text>
 
-              <v-card-text>
-                <h4 class="text-subtitle-1">Signed by:</h4>
-                <TeacherListItem :teacher="announcement?.signed_by_details" />
-              </v-card-text>
+							<v-card-text>
+								<h4 class="text-subtitle-1">Content:</h4>
+								<p>{{ announcement?.description }}</p>
+							</v-card-text>
 
-              <v-card-text>
-                <h4 class="text-subtitle-1">Dates:</h4>
-                <DateChip color="accent" label="Release" :date="announcement.release_at" />
-                <DateChip color="red" label="Expiry" :date="announcement.expriy_at" />
-              </v-card-text>
+							<v-card-text>
+								<h4 class="text-subtitle-1">Dates:</h4>
+								<DateChip color="accent" label="Release" :date="announcement.release_at" />
+								<DateChip color="red" label="Expiry" :date="announcement.expiry_at" />
+							</v-card-text>
 
-              <v-card-text>
-                <h4 class="text-subtitle-1">Assigned to:</h4>
-                <div v-if="announcement?.is_school_wide">
-                  <v-chip color="success">The whole school</v-chip>
-                </div>
-                <div v-else>
-                  <div v-if="announcement?.batches?.length > 0">
-                    <h5 class="text-subtitle-2 mt-2">Batches:</h5>
-                    <v-chip-group column>
-                      <BatchChip v-for="batch in batchDetails" :key="batch.id" :batch="batch" />
-                    </v-chip-group>
-                  </div>
-                  <div v-if="announcement?.courses?.length > 0">
-                    <h5 class="text-subtitle-2 mt-2">Courses:</h5>
-                    <v-chip-group column>
-                      <CourseChip v-for="course in courseDetails" :key="course.id" :course="course" />
-                    </v-chip-group>
-                  </div>
-                </div>
-              </v-card-text>
+							<v-card-text>
+								<h4 class="text-subtitle-1">Assigned to:</h4>
+								<div v-if="announcement?.is_school_wide">
+									<v-chip color="success">The whole school</v-chip>
+								</div>
+								<div v-else>
+									<div v-if="announcement?.batches?.length > 0">
+										<h5 class="text-subtitle-2 mt-2">Batches:</h5>
+										<v-chip-group column>
+											<BatchChip v-for="batch in batchDetails" :key="batch.id" :batch="batch" />
+										</v-chip-group>
+									</div>
+									<div v-if="announcement?.courses?.length > 0">
+										<h5 class="text-subtitle-2 mt-2">Courses:</h5>
+										<v-chip-group column>
+											<CourseChip v-for="course in courseDetails" :key="course.id" :course="course" />
+										</v-chip-group>
+									</div>
+								</div>
+							</v-card-text>
 
-              <v-card-actions>
-                <v-btn :to="{ name: 'EditAnnouncement', params: { announcementId: announcement.id } }"
-                  prepend-icon="mdi-pencil">
-                  Edit
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
-    <v-skeleton-loader v-else type="card, card-heading, card-text" />
-  </v-container>
+							<v-card-actions>
+								<ShareButton 
+									:title="'Announcement Object'"
+									:url="currentUrl"
+									:text="`Check out this announcement: ${announcement?.title}`"
+								/>
+							</v-card-actions>
+						</v-card>
+					</v-col>
+				</v-row>
+			</v-col>
+		</v-row>
+		<v-skeleton-loader v-else type="card, card-heading, card-text" />
+		
+		<!-- Snackbar for share notifications -->
+		<v-snackbar v-model="snackbar.show" :color="snackbar.color">
+			{{ snackbar.text }}
+			<template v-slot:actions>
+				<v-btn variant="text" @click="snackbar.show = false">Close</v-btn>
+			</template>
+		</v-snackbar>
 </template>
 
 <script setup>
@@ -65,6 +73,7 @@ import TeacherListItem from "@/apps/teachers/components/TeacherListItem.vue";
 import DateChip from "@/components/DateChip.vue";
 import BatchChip from "@/apps/batches/components/BatchChip.vue";
 import CourseChip from "@/apps/courses/components/CourseChip.vue";
+import ShareButton from "@/components/ShareButton.vue";
 import { onMounted, ref } from "vue";
 import { getAnnouncement } from "../api";
 
@@ -72,26 +81,34 @@ const announcement = ref({});
 const batchDetails = ref([]);
 const courseDetails = ref([]);
 const props = defineProps({
-  announcementId: Number,
+	announcementId: Number,
+});
+const currentUrl = ref();
+
+const snackbar = ref({
+	show: false,
+	text: '',
+	color: 'success'
 });
 
 const fetchDetails = async () => {
-  announcement.value = await getAnnouncement(props.announcementId);
-
-  // Fetch batch details
-  if (announcement.value.batches?.length > 0) {
-    batchDetails.value = await Promise.all(
-      announcement.value.batches.map((id) => getBatch(id)),
-    );
-  }
-
-  // Fetch course details
-  if (announcement.value.courses?.length > 0) {
-    courseDetails.value = await Promise.all(
-      announcement.value.courses.map((id) => getCourse(id)),
-    );
-  }
+	announcement.value = await getAnnouncement(props.announcementId);
+	// Fetch batch details
+	if (announcement.value.batches?.length > 0) {
+		batchDetails.value = await Promise.all(
+			announcement.value.batches.map((id) => getBatch(id)),
+		);
+	}
+	// Fetch course details
+	if (announcement.value.courses?.length > 0) {
+		courseDetails.value = await Promise.all(
+			announcement.value.courses.map((id) => getCourse(id)),
+		);
+	}
 };
 
-onMounted(fetchDetails);
+onMounted(async () => {
+	await fetchDetails();
+	currentUrl.value = window.location.href;
+});
 </script>

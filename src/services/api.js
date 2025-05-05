@@ -18,8 +18,12 @@ api.interceptors.request.use(
 	(config) => {
 		const authStore = useAuthStore();
 		const access = authStore.getAccess;
+		const account = authStore.getAccount;
 		if (access) {
 			config.headers.Authorization = `Bearer ${access}`;
+		}
+		if (account) {
+			config.headers["X-Account-Type"] = account.group_details.name;
 		}
 		return config;
 	},
@@ -68,7 +72,10 @@ api.interceptors.response.use(
 
 const itemsPerPage = 10;
 
-const getRandomImage = (images) =>
-	images[Math.floor(Math.random() * images.length)].default;
+const getRandomImage = (images) => {
+	const im = Object.entries(images);
+	const index = Math.floor(Math.random() * im.length);
+	return im[index][0]
+}
 
 export { api, itemsPerPage, getRandomImage };

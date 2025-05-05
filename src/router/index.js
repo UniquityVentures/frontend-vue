@@ -4,6 +4,7 @@ import EmptyLayout from "@/layouts/EmptyLayout.vue";
 // Routes in Apps
 import adminRoutes from "@/router/adminApps";
 import studentRoutes from "@/router/studentApps";
+import teacherRoutes from "@/router/teacherApps";
 import { useAuthStore } from "@/stores/auth";
 import AccessDeniedPage from "@/views/AccessDeniedPage.vue";
 import AccountsPage from "@/views/AccountsPage.vue";
@@ -63,7 +64,7 @@ const routes = [
 ];
 
 const router = createRouter({
-	history: createWebHistory("/"),
+	history: createWebHistory(),
 	routes,
 });
 
@@ -82,6 +83,8 @@ export function addAccountRoutes(accountType) {
 		routesToAdd = adminRoutes;
 	} else if (accountType === 'Student') {
 		routesToAdd = studentRoutes;
+	} else if (accountType === 'Teacher') {
+		routesToAdd = teacherRoutes;
 	}
 	// You can add more account types here as needed
 

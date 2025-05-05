@@ -5,6 +5,7 @@
       actionName="Create"
       title="Create Attendance Record"
       subtitle="Record a new attendance entry"
+      :hideDelete="true"
     />
   </v-container>
 </template>

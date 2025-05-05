@@ -4,6 +4,7 @@
 			:action="handleCreateCourse"
 			actionName="Create"
 			title="Course"
+			:hideDelete="true"
 		/>
 	</v-container>
 </template>

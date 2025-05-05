@@ -1,6 +1,6 @@
 <template>
 	<v-date-input
-		v-model="dateModel"
+		v-model="model"
 		:label="label"
 		:hint="hint"
 		persistent-hint
@@ -13,8 +13,6 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from "vue";
-import { toApiDate } from "@/services/utils";
 
 const props = defineProps({
 	label: {
@@ -38,17 +36,6 @@ const props = defineProps({
 	}
 });
 
-const dateModel = ref();
 
 const model = defineModel();
-
-watch(dateModel, (date) => {
-	model.value = toApiDate(date);
-});
-
-onMounted(() => {
-	if (model.value) {
-		dateModel.value = new Date(model.value);
-	}
-})
 </script>

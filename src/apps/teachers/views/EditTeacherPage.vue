@@ -1,14 +1,41 @@
 <template>
 	<v-container>
-		<TeacherForm
-			v-if="teacher && user"
-			:teacher="teacher"
-			:user="user"
-			:action="handleUpdate"
-			actionName="Update"
-			title="Teacher"
-			subtitle="Edit teacher details"
-		/>
+		<v-card class="mb-2">
+			<v-card-title>
+				Teacher
+			</v-card-title>
+			<v-card-subtitle>
+				Update User Info
+			</v-card-subtitle>
+			<v-card-text>
+				<UserForm
+					:action="handleUpdateUser"
+					v-model="user"
+					actionName="Update User"
+					title="Teacher User"
+					subtitle="Update the user account for the teacher"
+				/>
+			</v-card-text>
+		</v-card>
+		<v-card>
+			<v-card-title>
+				Teacher
+			</v-card-title>
+			<v-card-subtitle>
+				Update Other Details
+			</v-card-subtitle>
+			<v-card-text>
+				<TeacherForm
+					v-if="teacher && user"
+					:teacher="teacher"
+					:user="user"
+					:action="handleUpdateTeacher"
+					actionName="Update"
+					title="Teacher"
+					subtitle="Edit teacher details"
+				/>
+			</v-card-text>
+		</v-card>
 	</v-container>
 </template>
 
@@ -17,6 +44,7 @@ import { getUser, updateUser } from "@/apps/users/api";
 import { onMounted, ref } from "vue";
 import { getTeacher, updateTeacher } from "../api";
 import TeacherForm from "../components/TeacherForm.vue";
+import UserForm from "@/apps/users/components/UserForm.vue";
 
 const props = defineProps({
 	teacherId: {
@@ -28,31 +56,9 @@ const props = defineProps({
 const teacher = ref(null);
 const user = ref(null);
 
-const handleUpdate = async (formData) => {
+const handleUpdateTeacher = async (formData) => {
 	try {
-		// Extract user-specific fields
-		const userData = {
-			id: user.value.id,
-			username: user.value.username,
-			first_name: formData.first_name,
-			last_name: formData.last_name,
-			email: formData.email,
-			is_active: formData.is_active,
-			is_approved: formData.is_approved,
-		};
-
-		// Extract teacher-specific fields
-		const teacherData = {
-			id: teacher.value.id,
-			identifier: formData.identifier,
-			phone: formData.phone,
-			whatsapp: formData.whatsapp,
-			user: user.value.id,
-		};
-
-		// Update both user and teacher data
-		await updateUser(userData);
-		await updateTeacher(teacherData);
+		await updateTeacher(formData);
 		return { success: true };
 	} catch (error) {
 		console.error("Failed to update teacher:", error);
@@ -63,5 +69,17 @@ const handleUpdate = async (formData) => {
 onMounted(async () => {
 	teacher.value = await getTeacher(props.teacherId);
 	user.value = await getUser(teacher.value.user);
+	console.log(teacher.value);
+	console.log(user.value);
 });
+
+const handleUpdateUser = async (userData) => {
+	try {
+		user.value = await updateUser(userData);
+		return { success: true };
+	} catch (error) {
+		console.error("Failed to create user:", error);
+		return { success: false, error };
+	}
+};
 </script>
