@@ -63,5 +63,9 @@ const props = defineProps({
 });
 
 // Use a simple ref for filters like other components
-const filters = ref({});
+const filters = ref({
+	sort_by: "created_at",
+	sort_method: "difference",
+	value: new Date(),
+});
 </script>
