@@ -17,6 +17,14 @@
 				</v-col>
 
 				<v-col cols="12" md="6">
+					<v-text-field 
+						label="Roll No." 
+						v-model="formData.roll_no"
+						hint="Student Roll No"
+					></v-text-field>
+				</v-col>
+
+				<v-col cols="12">
 					<BatchSelect 
 						v-model="formData.batch" 
 						label="Batch"

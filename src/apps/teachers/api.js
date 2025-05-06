@@ -3,8 +3,11 @@ import { createViewset } from "@/services/viewset";
 const portraitImages = import.meta.glob("@/assets/teachers/teacher*.png");
 
 const getPortraitImage = () => {
-	const index = Math.floor(Math.random() * portraitImages.length);
-	return portraitImages[index];
+	const im = Object.entries(portraitImages);
+	const index = Math.floor(Math.random() * im.length);
+	if (im[index]) {
+		return [0]
+	}
 };
 
 const teacherViewset = createViewset("api/accounts/teachers");

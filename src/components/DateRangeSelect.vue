@@ -71,6 +71,9 @@ watch(dateModel, (dates) => {
 		// Update both date filters directly on the parent's filters object
 		start.value = sortedDates[0];
 		end.value = sortedDates[sortedDates.length - 1];
+	} else {
+		start.value = null;
+		end.value = null;
 	}
 });
 </script>

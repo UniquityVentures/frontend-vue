@@ -13,7 +13,7 @@
 
 							<v-card-text>
 								<h4 class="text-subtitle-1">Content:</h4>
-								<p>{{ announcement?.description }}</p>
+								<HyperlinkedSpan :content="announcement?.description ? announcement.description : ''" />
 							</v-card-text>
 
 							<v-card-text>
@@ -74,6 +74,8 @@ import DateChip from "@/components/DateChip.vue";
 import BatchChip from "@/apps/batches/components/BatchChip.vue";
 import CourseChip from "@/apps/courses/components/CourseChip.vue";
 import ShareButton from "@/components/ShareButton.vue";
+import HyperlinkedSpan from "@/components/HyperlinkedSpan.vue";
+
 import { onMounted, ref } from "vue";
 import { getAnnouncement } from "../api";
 

@@ -13,6 +13,7 @@
 					style="min-height: 500px;"
 					:selected-date="date"
 					hide-view-selector
+                    hide-title-bar
 					active-view="day"
 				>
 					<template #event="{ event }">
@@ -42,7 +43,7 @@
 								size="small"
 								fill-dot
 							>
-								<v-card>
+								<v-card :to="{ name: 'Event', params: { eventId: event.id } }">
 									<v-card-title class="text-subtitle-1">
 										{{ event.title }}
 									</v-card-title>
@@ -85,7 +86,7 @@ const fetchEvents = async () => {
 		selectedDate.setHours(0, 0, 0, 0);
 
 		const filter = {
-			date: selectedDate.toISOString().split('T')[0], // Send date as YYYY-MM-DD
+			date: selectedDate, // Send date as YYYY-MM-DD
 		};
 		const response = await getEvents(filter);
 		// Format events for vue-cal immediately after fetching
@@ -139,8 +140,8 @@ const formattedEvents = computed(() => events.value); // Already formatted in fe
 const getDateTime = (date) => {
 	if (!date) return "";
 	// Check if date is a Date object, if not, try to parse it
-	const dateObj = date instanceof Date ? date : new Date(date);
-	if (isNaN(dateObj)) return "Invalid Date"; // Handle invalid date strings
+	const dateObj =  new Date(date);
+	if (!dateObj) return "Invalid Date"; // Handle invalid date strings
 
 	return new Intl.DateTimeFormat("default", {
 		year: 'numeric', month: 'short', day: 'numeric',
@@ -151,8 +152,8 @@ const getDateTime = (date) => {
 // Format time only (used in vue-cal)
 const getTime = (date) => {
 	if (!date) return "";
-	const dateObj = date instanceof Date ? date : new Date(date);
-	if (isNaN(dateObj)) return "Invalid Date";
+	const dateObj =  new Date(date);
+	if (!dateObj) return "Invalid Date";
 
 	return new Intl.DateTimeFormat("default", {
 		hour: "numeric",
