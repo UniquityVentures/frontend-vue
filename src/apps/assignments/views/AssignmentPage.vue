@@ -28,18 +28,7 @@
 
 							<v-card-text>
 								<h4 class="text-subtitle-1">Course Teacher:</h4>
-								<v-list lines="2">
-									<v-list-item link
-										v-if="assignment?.course_details?.batch_details?.main_teacher_details"
-										:title="assignment?.course_details?.batch_details?.main_teacher_details?.user_details?.full_name"
-										:subtitle="assignment?.course_details?.batch_details?.main_teacher_details?.user_details?.email"
-										:to="{
-											name: 'Teacher',
-											params: {
-												teacherId: assignment?.course_details?.batch_details?.main_teacher_details?.id
-											}
-										}" />
-								</v-list>
+								<TeacherListItem :teacher="assignment?.course_details?.main_teacher_details" />
 							</v-card-text>
 
 							<v-card-text>
@@ -87,6 +76,7 @@
 
 <script setup>
 import DateChip from "@/components/DateChip.vue";
+import TeacherListItem from "@/apps/teachers/components/TeacherListItem.vue";
 import { useAuthStore } from "@/stores/auth";
 import { formatDateTime } from "@/services/utils";
 import { onMounted, ref } from "vue";
@@ -97,7 +87,7 @@ const authStore = useAuthStore();
 
 const props = defineProps({
 	assignmentId: {
-		type: Number,
+		type: [Number, String],
 		required: true,
 	},
 });
