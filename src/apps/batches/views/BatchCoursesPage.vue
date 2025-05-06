@@ -90,12 +90,13 @@ const props = defineProps({
 const newCourses = ref([]);
 const victimCourses = ref([]);
 const batch = ref(null);
+const filters = ref({ batches: props.batchId });
 
 const addCourses = async () => {
 	batch.value.courses = [...batch.value.courses, ...newCourses.value];
 	const response = await updateBatch(batch.value);
 	newCourses.value = [];
-	filters.value = {batch: props.batchId};
+	filters.value = {batches: props.batchId};
 	return response;
 };
 
@@ -104,14 +105,11 @@ const removeCourses = async () => {
 	batch.value.courses = batch.value.courses.filter(
 		(course) => !victimCourses.value.includes(course),
 	);
-	console.log(batch.value)
 	const response = await updateBatch(batch.value);
 	victimCourses.value = [];
-	filters.value = props.batchId;
+	filters.value = {batches: props.batchId};
 	return response;
 };
-
-const filters = ref({ batches: props.batchId });
 
 const getBatchCourses = async (filter) => {
 	return getCourses({ ...filter, batches: props.batchId });
