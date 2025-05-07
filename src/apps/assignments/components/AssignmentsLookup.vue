@@ -12,13 +12,20 @@
 					<CourseSelect v-model="filters.course" label="Filter by course" />
 				</v-col>
 				<v-col cols="12" sm="6" md="4" lg="3">
+					<v-select
+						label="Is Active" 
+						v-model="filters.is_active"
+						:items="is_active_options"
+					/>
+				</v-col>
+				<v-col cols="12" sm="6" md="4" lg="3" v-if="filters.is_active===null">
 					<DateRangeSelect
 						v-model:start="filters.release_start"
 						v-model:end="filters.release_end"
 						label="Release Date Range"
 					/>
 				</v-col>
-				<v-col cols="12" sm="6" md="4" lg="3">
+				<v-col cols="12" sm="6" md="4" lg="3" v-if="filters.is_active===null">
 					<DateRangeSelect
 						v-model:start="filters.due_start"
 						v-model:end="filters.due_end"
@@ -54,6 +61,22 @@ import DateChip from "@/components/DateChip.vue";
 
 import { ref } from "vue";
 import { getAssignments } from "../api";
+
+const is_active_options = [
+	{
+		value: true,
+		title: "Active",
+		color: "success"
+	},
+	{
+		value: false,
+		title: "Inactive",
+	},
+	{
+		value: null,
+		title: "Set Dates",
+	},
+];
 
 const filters = ref({
 	sort_by: "release_at",

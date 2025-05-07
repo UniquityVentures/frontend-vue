@@ -47,11 +47,18 @@
               required
             />
           </v-col>
+            <v-col cols="12" md="6">
+              <v-select
+                label="Is Active" 
+                v-model="formData.is_active"
+                :items="is_active_options"
+              />
+            </v-col>
         </v-row>
       </v-card-text>
     </v-card>
     
-    <v-card class="ma-2" variant="flat">
+    <v-card class="ma-2" variant="flat" v-if="formData.is_active === null">
       <v-card-title>Dates:</v-card-title>
       <v-card-text>
         <v-row>
@@ -127,6 +134,22 @@ import DateSelect from "@/components/DateSelect.vue";
 import { onMounted, ref } from "vue";
 import DeleteButton from "@/components/DeleteButton.vue";
 import { deleteAssignment } from "../api";
+
+const is_active_options = [
+	{
+		value: true,
+		title: "Active",
+		color: "success",
+	},
+	{
+		value: false,
+		title: "Inactive",
+	},
+	{
+		value: null,
+		title: "Set Dates",
+	},
+];
 
 const props = defineProps({
 	assignment: {

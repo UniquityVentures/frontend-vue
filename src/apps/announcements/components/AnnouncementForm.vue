@@ -42,7 +42,7 @@
       </v-card-text>
     </v-card>
     
-    <v-card class="ma-2" variant="flat"  v-if="formData.is_active === null">
+    <v-card class="ma-2" variant="flat" v-if="formData.is_active === null">
       <v-card-title>Dates:</v-card-title>
       <v-card-text>
         <v-row>
@@ -156,7 +156,7 @@ const is_active_options = [
 	{
 		value: true,
 		title: "Active",
-		color: "success"
+		color: "success",
 	},
 	{
 		value: false,
