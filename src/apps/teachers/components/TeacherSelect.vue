@@ -11,7 +11,6 @@
 
 <script setup>
 import { getTeacherInfoFromObj, getTeachers } from "@/apps/teachers/api";
-
 import ServerAutocomplete from "@/components/ServerAutocomplete.vue";
 
 const model = defineModel();
