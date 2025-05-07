@@ -42,6 +42,27 @@
       </v-card-text>
     </v-card>
     
+    <v-card class="ma-2" variant="flat">
+      <v-card-title>Settings:</v-card-title>
+      <v-card-text>
+        <v-row>
+          <v-col cols="12" md="6">
+            <v-text-field 
+              label="Priority" 
+              v-model="formData.priority"
+            ></v-text-field>
+          </v-col>
+            <v-col cols="12" md="6">
+              <v-select
+                label="Is Active" 
+                v-model="formData.is_active"
+                :items="is_active_options"
+              />
+            </v-col>
+        </v-row>
+      </v-card-text>
+    </v-card>
+        
     <v-card class="ma-2" variant="flat" v-if="formData.is_active === null">
       <v-card-title>Dates:</v-card-title>
       <v-card-text>
@@ -63,27 +84,6 @@
               required
             />
           </v-col>
-        </v-row>
-      </v-card-text>
-    </v-card>
-    
-    <v-card class="ma-2" variant="flat">
-      <v-card-title>Settings:</v-card-title>
-      <v-card-text>
-        <v-row>
-          <v-col cols="12" md="6">
-            <v-text-field 
-              label="Priority" 
-              v-model="formData.priority"
-            ></v-text-field>
-          </v-col>
-            <v-col cols="12" md="6">
-              <v-select
-                label="Is Active" 
-                v-model="formData.is_active"
-                :items="is_active_options"
-              />
-            </v-col>
         </v-row>
       </v-card-text>
     </v-card>
