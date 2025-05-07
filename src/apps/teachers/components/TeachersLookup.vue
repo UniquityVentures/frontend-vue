@@ -8,6 +8,9 @@
 				<v-col cols="12" sm="6" md="3" lg="2">
 					<v-text-field label="Search by name" v-model="filters.name" />
 				</v-col>
+				<v-col cols="12" sm="6" md="3" lg="2">
+					<v-text-field label="Search by Identifier" v-model="filters.identifier" />
+				</v-col>
 				<v-col cols="12" sm="6" md="3" lg="2" v-if="role == 'Admin'">
 					<BatchSelect v-model="filters.batches" label="Filter by batch" />
 				</v-col>
