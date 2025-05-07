@@ -54,6 +54,7 @@
                         <v-card-subtitle class="text-wrap">{{ item.description.slice(0, 100) }}...</v-card-subtitle>
                         <v-card-text>
                             <TeacherChip label="Signed by" :teacher="item.signed_by_details" v-if="item.signed_by_details" />
+                            <ActiveChip :isActive="item.is_active" />
                         </v-card-text>
                     </v-card>
                 </v-col>
@@ -86,6 +87,7 @@ import DateRangeSelect from "../../../components/DateRangeSelect.vue";
 import { exportAnnouncements, getAnnouncements } from "../api";
 import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
 import CheckBox from "@/components/CheckBox.vue";
+import ActiveChip from "@/components/ActiveChip.vue";
 
 const is_active_options = [
 	{

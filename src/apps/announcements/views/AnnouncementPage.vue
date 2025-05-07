@@ -28,7 +28,7 @@
 								<v-chip v-else color="error">Inactive</v-chip>
 							</v-card-text>
 
-							<v-card-text>
+							<v-card-text v-if="role === 'Admin' || role === 'Teacher'">
 								<h4 class="text-subtitle-1">Assigned to:</h4>
 								<div v-if="announcement?.is_school_wide">
 									<v-chip color="success">The whole school</v-chip>
@@ -81,9 +81,13 @@ import BatchChip from "@/apps/batches/components/BatchChip.vue";
 import CourseChip from "@/apps/courses/components/CourseChip.vue";
 import ShareButton from "@/components/ShareButton.vue";
 import HyperlinkedSpan from "@/components/HyperlinkedSpan.vue";
+import { useAuthStore } from "@/stores/auth";
 
 import { onMounted, ref } from "vue";
 import { getAnnouncement } from "../api";
+
+const authStore = useAuthStore();
+const role = authStore.role;
 
 const announcement = ref({});
 const batchDetails = ref([]);

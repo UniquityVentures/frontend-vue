@@ -1,7 +1,7 @@
 <template>
 	<v-container>
 		<ResponsiveDataTable :fetch="getAnnouncements" v-model:filters="filters"
-			title="Notice Board" subtitle="Announcements shown here" :templates="{ desktop: 'card', mobile: 'card' }"
+			:title="title" :subtitle="subtitle" :templates="{ desktop: 'card', mobile: 'card' }"
 			hideFilters>
 			<template #cards-slot="{ items }">
 				<Masonry v-if="items"
@@ -14,6 +14,7 @@
 							<v-card-title class="text-subtitle-1">{{ item.title }}</v-card-title>
 							<v-card-text class="text-wrap">
 								<TeacherChip label="Signed by" :teacher="item.signed_by_details" v-if="item.signed_by_details" />
+								<v-chip v-if="item.is_school_wide" color="success">School-Wide</v-chip>
 							</v-card-text>
 							<v-card-text>
 								{{ item.description }}
@@ -41,6 +42,7 @@ const props = defineProps({
 	subtitle: {
 		type: String,
 		required: false,
+		default: "Announcements shown here",
 	},
 	filters: {
 		type: Object,

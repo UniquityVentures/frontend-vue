@@ -33,7 +33,7 @@ export default [
 		},
 		children: [
 			{
-				path: "/notice",
+				path: "notice/",
 				component: NoticeBoardPage,
 				name: "NoticeBoard",
 			},
