@@ -8,7 +8,6 @@
 				<v-date-input
 					v-model="date"
 				></v-date-input>
-				<pre>{{ formattedEvents }}</pre>
 				<vue-cal
 					:events="formattedEvents"
 					style="min-height: 500px;"
@@ -44,13 +43,18 @@
 								size="small"
 								fill-dot
 							>
-								<v-card :to="{ name: 'Event', params: { eventId: event.id } }">
+								<v-card :to="{ name: 'Event', params: { eventId: event.id } }" variant="outlined" class="border">
 									<v-card-title class="text-subtitle-1">
 										{{ event.title }}
 									</v-card-title>
 									<v-card-subtitle class="text-caption">
-										{{ getDateTime(event.start) }} - {{ getDateTime(event.end) }}
+										{{ event.description.slice(0, 40) }}...
 									</v-card-subtitle>
+									<v-card-text class="text-caption">
+										<v-chip color="green">Start: {{ formatDateTime(event.start) }}</v-chip>
+										<v-chip color="red">End: {{ formatDateTime(event.end) }}</v-chip>
+										<TeacherChip label="Created By" :teacher="event.created_by_details" v-if="event.created_by_details" />
+									</v-card-text>
 								</v-card>
 							</v-timeline-item>
 							<v-timeline-item v-if="!upcomingEvents.length" dot-color="grey" size="small" fill-dot>
@@ -70,6 +74,8 @@
 import { computed, onMounted, ref, watch } from "vue";
 import { getEvents } from "../api";
 import VueCal from "vue-cal";
+import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
+import { formatDateTime } from "@/services/utils";
 
 // Calendar state for selected date
 const currentDate = ref(new Date());

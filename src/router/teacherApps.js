@@ -1,6 +1,6 @@
 import TeacherDashboardPage from "@/views/Dashboards/TeacherDashboardPage.vue";
 import announcementRoutes from "@/apps/announcements/routes/adminRoutes";
-import calendarRoutes from "@/apps/calendar/routes";
+import calendarRoutes from "@/apps/calendar/routes/adminRoutes";
 import teachersRoutes from "@/apps/teachers/routes/adminRoutes";
 import coursesRoutes from "@/apps/courses/routes/adminRoutes";
 

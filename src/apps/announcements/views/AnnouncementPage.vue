@@ -8,7 +8,7 @@
 
 							<v-card-text>
 								<h4 class="text-subtitle-1">Signed by:</h4>
-								<TeacherListItem :teacher="announcement?.signed_by_details" />
+								<TeacherChip v-if="announcement?.signed_by_details" :teacher="announcement?.signed_by_details" />
 							</v-card-text>
 
 							<v-card-text>
@@ -76,6 +76,7 @@
 import { getBatch } from "@/apps/batches/api";
 import { getCourse } from "@/apps/courses/api";
 import TeacherListItem from "@/apps/teachers/components/TeacherListItem.vue";
+import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 import DateChip from "@/components/DateChip.vue";
 import BatchChip from "@/apps/batches/components/BatchChip.vue";
 import CourseChip from "@/apps/courses/components/CourseChip.vue";

@@ -1,6 +1,6 @@
 <template>
     <ResponsiveDataTable :fetch="getAnnouncements" v-model:filters="filters"
-    title="Announcements" subtitle="Announcements Master List">
+    :hideFilters="hideFilters" title="Announcements" subtitle="Announcements Master List">
         <template #filters-slot>
             <v-row >
                 <v-col cols="12" sm="6" md="3" lg="2">
@@ -69,7 +69,7 @@
                 </v-list-item>
             </v-list>
         </template>
-        <template #actions-slot>
+        <template #actions-slot v-if="role === 'Admin' || role === 'Teacher'">
             <ExportButton :exportFunction="exportAnnouncements" title="Export Data in this Table" v-model:filters="filters" />
             <v-btn variant="text" color="accent" :to="{ name: 'CreateAnnouncement' }">Create New Announcement</v-btn>
         </template>
@@ -88,6 +88,10 @@ import { exportAnnouncements, getAnnouncements } from "../api";
 import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
 import CheckBox from "@/components/CheckBox.vue";
 import ActiveChip from "@/components/ActiveChip.vue";
+import { useAuthStore } from "@/stores/auth";
+
+const authStore = useAuthStore();
+const role = authStore.getRole;
 
 const is_active_options = [
 	{
@@ -109,6 +113,11 @@ const props = defineProps({
 		type: Object,
 		required: false,
 	},
+    hideFilters: {
+        type: Boolean,
+        required: false,
+        default: false,
+    }
 });
 
 const filters = ref({

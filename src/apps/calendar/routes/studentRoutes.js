@@ -1,7 +1,6 @@
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import StudentEventsPage from "../views/StudentEventsPage.vue";
-import CalendarPage2 from "../views/CalendarPage2.vue";
 import CalendarPage from "../views/CalendarPage.vue";
 import StudentEventPage from "../views/StudentEventPage.vue";
 import StudentCalendarPage2 from "../views/StudentCalendarPage2.vue";

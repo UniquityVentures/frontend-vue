@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 export const useRecentVisitStore = defineStore("recentVisits", {
 	state: () => ({
 		visits: [],
-		maxEntries: 10,
+		maxEntries: 5,
 	}),
 
 	getters: {

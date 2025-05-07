@@ -1,10 +1,14 @@
 <template>
-	<NoticeBoard :filters="filters" :title="title" :subtitle="subtitle"/>
+	<v-container>
+		<AnnouncementsLookup :filters="filters" :title="title" :subtitle="subtitle" :hideFilters="true"/>
+	</v-container>
+	<!-- <NoticeBoard :filters="filters" :title="title" :subtitle="subtitle"/> -->
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import NoticeBoard from "@/apps/announcements/components/NoticeBoard.vue";
+import AnnouncementsLookup from "@/apps/announcements/components/AnnouncementsLookup.vue";
 import { useAuthStore } from "@/stores/auth";
 
 const authStore = useAuthStore();

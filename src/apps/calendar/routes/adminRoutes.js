@@ -3,9 +3,10 @@ import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import CalendarPage from "../views/CalendarPage.vue";
 import EventPage from "../views/EventPage.vue";
 import EventsPage from "../views/EventsPage.vue";
-import CalendarPage2 from "../views/CalendarPage2.vue";
 import EditEventPage from "../views/EditEventPage.vue";
 import CreateEventPage from "../views/CreateEventPage.vue";
+import DailySchedulePage from "../views/DailySchedulePage.vue";
+
 export default [
 	{
 		path: "calendar/",
@@ -20,6 +21,10 @@ export default [
 					to: { name: "Calendar" },
 				},
 				{
+					title: "Daily Schedule",
+					to: { name: "DailySchedule" },
+				},
+				{
 					title: "Events",
 					to: { name: "Events" },
 				},
@@ -31,6 +36,11 @@ export default [
 				path: "calendar/",
 				component: CalendarPage,
 				name: "Calendar",
+			},
+			{
+				path: "daily-schedule/",
+				component: DailySchedulePage,
+				name: "DailySchedule",
 			},
 			{
 				path: "events/",
