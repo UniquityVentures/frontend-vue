@@ -6,6 +6,7 @@ import batchesRoutes from "@/apps/batches/routes";
 import calendarAdminRoutes from "@/apps/calendar/routes/adminRoutes";
 import coursesAdminRoutes from "@/apps/courses/routes/adminRoutes";
 import studentsRoutes from "@/apps/students/routes";
+import preferencesRoutes from "@/apps/preferences/routes";
 import teachersAdminRoutes from "@/apps/teachers/routes/adminRoutes";
 import AdminDashboardPage from "@/views/Dashboards/AdminDashboardPage.vue";
 
@@ -24,4 +25,5 @@ export default [
 	...attachmentRoutes,
 	...calendarAdminRoutes,
 	...attendanceRoutes,
+	...preferencesRoutes,
 ];
