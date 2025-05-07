@@ -18,8 +18,14 @@
 
 							<v-card-text>
 								<h4 class="text-subtitle-1">Dates:</h4>
-								<DateChip color="accent" label="Release" :date="announcement.release_at" />
-								<DateChip color="red" label="Expiry" :date="announcement.expiry_at" />
+								<DateChip v-if="announcement.release_at" color="accent" label="Release" :date="announcement.release_at" />
+								<DateChip v-if="announcement.expiry_at" color="red" label="Expiry" :date="announcement.expiry_at" />
+							</v-card-text>
+
+							<v-card-text>
+								<h4 class="text-subtitle-1">Status:</h4>
+								<v-chip v-if="announcement.is_active" color="success">Active</v-chip>
+								<v-chip v-else color="error">Inactive</v-chip>
 							</v-card-text>
 
 							<v-card-text>

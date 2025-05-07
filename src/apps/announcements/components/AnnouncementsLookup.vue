@@ -18,6 +18,14 @@
                 <v-col cols="12" sm="6" md="3" lg="2">
                     <CourseSelect v-model="filters.course" label="Course" />
                 </v-col>
+				<v-col cols="12" sm="6" md="4" lg="3">
+					<v-select
+						label="Is Active" 
+						v-model="filters.is_active"
+						:items="is_active_options"
+					/>
+				</v-col>
+
                 <v-col cols="12" sm="6" md="4" lg="3" v-if="filters.is_active===null">
                     <DateRangeSelect 
                         v-model:start="filters.release_start"
@@ -26,13 +34,6 @@
                     />
                 </v-col>
 
-				<v-col cols="12" sm="6" md="4" lg="3">
-					<v-select
-						label="Is Active" 
-						v-model="filters.is_active"
-						:items="is_active_options"
-					/>
-				</v-col>
 				<v-col cols="12" sm="6" md="4" lg="3" v-if="filters.is_active===null">
                     <DateRangeSelect 
                         v-model:start="filters.expiry_start"
