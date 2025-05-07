@@ -16,6 +16,7 @@ onMounted(async () => {
 	} else {
 		announcement.value = props.announcement;
 	}
+	console.log(announcement.value)
 });
 </script>
 

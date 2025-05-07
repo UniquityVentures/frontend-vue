@@ -2,6 +2,7 @@ import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.v
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 
 import AnnouncementPage from "@/apps/announcements/views/AnnouncementPage.vue";
+import NoticeBoardPage from "@/apps/announcements/views/NoticeBoardPage.vue";
 import AnnouncementsPage from "@/apps/announcements/views/AnnouncementsPage.vue";
 import CreateAnnouncementPage from "@/apps/announcements/views/CreateAnnouncementPage.vue";
 import EditAnnouncementPage from "@/apps/announcements/views/EditAnnouncementPage.vue";
@@ -12,9 +13,13 @@ export default [
 		component: AppSideBarBreadcrumbsLayout,
 		meta: {
 			getDisplayName: () => "Announcements",
-			defaultRoute: "Announcements",
+			defaultRoute: "NoticeBoard",
 			description: "View and manage announcements",
 			getMenu: () => [
+				{
+					title: "Notice Board",
+					to: { name: "NoticeBoard" },
+				},
 				{
 					title: "All Announcements",
 					to: { name: "Announcements" },
@@ -27,6 +32,11 @@ export default [
 			icon: "mdi-bullhorn",
 		},
 		children: [
+			{
+				path: "/notice",
+				component: NoticeBoardPage,
+				name: "NoticeBoard",
+			},
 			{
 				path: "all/",
 				component: AnnouncementsPage,
