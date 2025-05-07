@@ -1,5 +1,5 @@
 <template>
-	<NoticeBoard :filters="$route.query" />
+	<NoticeBoard :filters="$route.query" title="Notice Board" subtitle="School-Wide Announcements" />
 </template>
 
 <script setup>

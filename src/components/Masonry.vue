@@ -1,5 +1,5 @@
 <template>
-	<v-card variant="flat">
+	<v-card variant="text">
 		<v-card-title>
 			{{title}}
 		</v-card-title>
