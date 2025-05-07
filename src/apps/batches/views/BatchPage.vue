@@ -1,7 +1,6 @@
 <template> 
-	<v-container class="columns-container" v-if="batch">
-		<BatchCard class="column-item" :batchId="batch.id" />
-		
+	<v-container class="columns-container">
+		<BatchCard class="column-item" :batchId="batch.id" v-if="batch.id" />
 		<CoursesList 
 			v-if="batch.id"
 			class="column-item"
@@ -10,7 +9,6 @@
 			:viewAll="{ route: { name: 'BatchCourses' }, label: 'View All Courses' }"
 			:limit="10"
 		/>
-		
 		<AnnouncementsList 
 			v-if="batch.id || batch.id === 0"
 			class="column-item"

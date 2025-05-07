@@ -2,7 +2,8 @@
 	<v-container class="columns-container">
 		<StatsCard class="column-item" title="Students" :fetchStats="getStudentStats" />
 		<StatsCard class="column-item" title="Teachers" :fetchStats="getTeacherStats" />
-		<AnnouncementsList class="column-item" title="Announcements" subtitle="School-wide Announcements" />
+		<AnnouncementsList class="column-item" title="Notice Board" 
+		subtitle="Announcements for the whole school" :filter="{is_school_wide: true, is_active: true}" />
 	</v-container>
 </template>
 

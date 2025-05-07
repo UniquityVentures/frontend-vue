@@ -15,8 +15,9 @@
 			v-if="batch.id || batch.id === 0"
 			class="column-item"
 			:fetchFunction="getAnnouncements"
-			:filter="{ batch: batch.id }"
-			title="Announcements"
+			:filter="{ batch: batch.id, is_active: true }"
+			title="Notice Board"
+			subtitle="Announcements for you"
 			:viewAll="{ route: { name: 'Announcements' }, label: 'View All Announcements' }"
 		/>
 	</v-container>
