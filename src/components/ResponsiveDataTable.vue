@@ -10,36 +10,18 @@
 					</slot>
 				</v-card-text>
 			</v-card>
-			<!-- List template -->
-			<v-data-table-server v-if="template === 'list'" :items-length="itemsLen" :items="items"
+			<v-data-table-server :items-length="itemsLen" :items="items"
 				v-model:items-per-page="pageSize"
 				@update:options="fetchData" :loading="loading" 
 				:items-per-page-options="itemsPerPageOptions" :hide-default-footer="hideFooter">
 				<template #default>
-					<slot name="list-slot" :items="items">
+					<slot name="list-slot" :items="items" v-if="template === 'list'" >
 						<!-- list slot -->
 					</slot>
-				</template>
-			</v-data-table-server>
-
-			<!-- Card template -->
-			<v-data-table-server v-if="template === 'card'" :items-length="itemsLen" :items="items"
-				v-model:items-per-page="pageSize"
-				@update:options="fetchData" :loading="loading" 
-				:items-per-page-options="itemsPerPageOptions" :hide-default-footer="hideFooter">
-				<template #default>
-					<slot name="cards-slot" :items="items">
+					<slot name="cards-slot" :items="items" v-if="template === 'card'">
 						<!-- cards slot -->
 					</slot>
-				</template>
-			</v-data-table-server>
-			<!-- Table template -->
-			<v-data-table-server v-if="template === 'table'" :items-length="itemsLen" :items="items"
-				v-model:items-per-page="pageSize"
-				@update:options="fetchData" :loading="loading" 
-				:items-per-page-options="itemsPerPageOptions" :hide-default-footer="hideFooter">
-				<template #default>
-					<slot name="table-slot" :items="items">
+					<slot name="table-slot" :items="items" v-if="template === 'table'">
 						<!-- table slot -->
 					</slot>
 				</template>
