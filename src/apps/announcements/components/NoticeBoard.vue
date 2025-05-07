@@ -1,31 +1,37 @@
 <template>
 	<v-container>
-		<Masonry v-if="announcements"
-			title="Notice Board"
-			subtitle="Notice Board"
-			v-model="announcements"
-		>
-			<template #content="{item}">
-				<v-card v-if="item" :to="{ name: 'Announcement', params: { announcementId: item.id }}" variant="flat" class="border mb-2">
-					<v-card-title class="text-subtitle-1">{{ item.title }}</v-card-title>
-					<v-card-text class="text-wrap">
-						<TeacherChip label="Signed by" :teacher="item.signed_by_details" v-if="item.signed_by_details" />
-					</v-card-text>
-					<v-card-text>
-						{{ item.description }}
-					</v-card-text>
-				</v-card>
+		<ResponsiveDataTable :fetch="getAnnouncements" v-model:filters="filters"
+			title="Notice Board" subtitle="Announcements shown here" :templates="{ desktop: 'card', mobile: 'card' }"
+			hideFilters>
+			<template #cards-slot="{ items }">
+				<Masonry v-if="items"
+					title="Notice Board"
+					subtitle="Notice Board"
+					:items="items"
+				>
+					<template #content="{item}">
+						<v-card v-if="item" :to="{ name: 'Announcement', params: { announcementId: item.id }}" variant="flat" class="border mb-2">
+							<v-card-title class="text-subtitle-1">{{ item.title }}</v-card-title>
+							<v-card-text class="text-wrap">
+								<TeacherChip label="Signed by" :teacher="item.signed_by_details" v-if="item.signed_by_details" />
+							</v-card-text>
+							<v-card-text>
+								{{ item.description }}
+							</v-card-text>
+						</v-card>
+					</template>
+				</Masonry>
 			</template>
-		</Masonry>
+		</ResponsiveDataTable>
 	</v-container>
 </template>
 
 <script setup>
-import { computed, ref, onMounted } from "vue";
 import { getAnnouncements } from "@/apps/announcements/api";
 import AnnouncementSmallCard from "@/apps/announcements/components/AnnouncementSmallCard.vue";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 import Masonry from "@/components/Masonry.vue";
+import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 
 const props = defineProps({
 	title: {
@@ -42,10 +48,7 @@ const props = defineProps({
 	},
 });
 
-const announcements = ref([]);
+const filters = props.filters;
 
-onMounted(async () => {
-	const temp = (await getAnnouncements(props.filters)).results;
-	announcements.value = temp;
-});
+
 </script>
