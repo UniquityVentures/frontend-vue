@@ -8,20 +8,8 @@
 		</v-card-subtitle>
 		<v-card-text>
 			<v-row>
-				<v-col sm="12" lg="4">
-					<template v-for="item in items1" :key="item.id">
-						<slot name="content" :item="item">
-						</slot>
-					</template>
-				</v-col>
-				<v-col sm="12" lg="4">
-					<template v-for="item in items2" :key="item.id">
-						<slot name="content" :item="item">
-						</slot>
-					</template>
-				</v-col>
-				<v-col sm="12" lg="4">
-					<template v-for="item in items3" :key="item.id">
+				<v-col sm="12" :lg="12 / columns.length" v-for="column in columns" :key='column'>
+					<template v-for="item in column" :key="item.id">
 						<slot name="content" :item="item">
 						</slot>
 					</template>
@@ -43,18 +31,19 @@ const props = defineProps({
 		type: String,
 		required: false,
 	},
+	columnsNumber : {
+		type: Number,
+		default: 3
+	}
 });
 
 const items = defineModel();
 
-const items1 = computed(() =>
-	items.value.filter((item, index) => index % 3 === 0),
-);
-
-const items2 = computed(() =>
-	items.value.filter((item, index) => index % 3 === 1),
-);
-const items3 = computed(() =>
-	items.value.filter((item, index) => index % 3 === 2),
-);
+const columns = computed(() => {
+	const c = [];
+	for (let i = 0; i < props.columnsNumber; i++) {
+		c.push(items.value.filter((item, index) => index % props.columnsNumber === i))
+	}
+	return c;
+})
 </script>
