@@ -18,14 +18,22 @@
                 <v-col cols="12" sm="6" md="3" lg="2">
                     <CourseSelect v-model="filters.course" label="Course" />
                 </v-col>
-                <v-col cols="12" sm="6" md="4" lg="3">
+                <v-col cols="12" sm="6" md="4" lg="3" v-if="filters.is_active===null">
                     <DateRangeSelect 
                         v-model:start="filters.release_start"
                         v-model:end="filters.release_end"
                         label="Release Date Range" 
                     />
                 </v-col>
-                <v-col cols="12" sm="6" md="4" lg="3">
+
+				<v-col cols="12" sm="6" md="4" lg="3">
+					<v-select
+						label="Is Active" 
+						v-model="filters.is_active"
+						:items="is_active_options"
+					/>
+				</v-col>
+				<v-col cols="12" sm="6" md="4" lg="3" v-if="filters.is_active===null">
                     <DateRangeSelect 
                         v-model:start="filters.expiry_start"
                         v-model:end="filters.expiry_end"
@@ -78,6 +86,21 @@ import { exportAnnouncements, getAnnouncements } from "../api";
 import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
 import CheckBox from "@/components/CheckBox.vue";
 
+const is_active_options = [
+	{
+		value: true,
+		title: "Active",
+		color: "success"
+	},
+	{
+		value: false,
+		title: "Inactive",
+	},
+	{
+		value: null,
+		title: "Set Dates",
+	},
+];
 const props = defineProps({
 	defaultFilters: {
 		type: Object,
@@ -96,5 +119,5 @@ onMounted(() => {
 		filters.value = { ...filters.value, ...props.defaultFilters };
 		console.log(filters.value);
 	}
-})
+});
 </script>

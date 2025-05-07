@@ -42,7 +42,7 @@
       </v-card-text>
     </v-card>
     
-    <v-card class="ma-2" variant="flat">
+    <v-card class="ma-2" variant="flat"  v-if="formData.is_active === null">
       <v-card-title>Dates:</v-card-title>
       <v-card-text>
         <v-row>
@@ -60,6 +60,7 @@
               v-model="formData.expiry_at"
               label="Expiry Date"
               :rules="[v => !!v || 'Expiry Date is required']"
+              required
             />
           </v-col>
         </v-row>
@@ -76,13 +77,13 @@
               v-model="formData.priority"
             ></v-text-field>
           </v-col>
-          
-          <v-col cols="6" md="6">
-            <v-checkbox 
-              label="Is Active" 
-              v-model="formData.is_active"
-            ></v-checkbox>
-          </v-col>
+            <v-col cols="12" md="6">
+              <v-select
+                label="Is Active" 
+                v-model="formData.is_active"
+                :items="is_active_options"
+              />
+            </v-col>
         </v-row>
       </v-card-text>
     </v-card>
@@ -141,15 +142,31 @@
 
 <script setup>
 import AttachmentsForm from "@/apps/attachments/components/AttachmentsForm.vue";
-import TeacherSelect from "@/apps/teachers/components/TeacherSelect"
-import CourseSelect from "@/apps/courses/components/CourseSelect"
-import BatchSelect from "@/apps/batches/components/BatchSelect"
+import TeacherSelect from "@/apps/teachers/components/TeacherSelect";
+import CourseSelect from "@/apps/courses/components/CourseSelect";
+import BatchSelect from "@/apps/batches/components/BatchSelect";
 import SubmitButton from "@/components/SubmitButton.vue";
 import DateSelect from "@/components/DateSelect.vue";
 import AttachmentsInput from "@/apps/attachments/components/AttachmentsInput.vue";
 import { onMounted, ref } from "vue";
 import DeleteButton from "@/components/DeleteButton.vue";
 import { deleteAnnouncement } from "../api";
+
+const is_active_options = [
+	{
+		value: true,
+		title: "Active",
+		color: "success"
+	},
+	{
+		value: false,
+		title: "Inactive",
+	},
+	{
+		value: null,
+		title: "Set Dates",
+	},
+];
 
 const props = defineProps({
 	announcement: {
