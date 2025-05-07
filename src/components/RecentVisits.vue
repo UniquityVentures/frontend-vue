@@ -15,7 +15,7 @@
                     <template #opposite>
                         {{ new Date(visit.timestamp).toLocaleTimeString() }}
                     </template>
-                    <v-card elevation="2" class="pa-2">
+                    <v-card variant="tonal" class="pa-2">
                         <div class="font-weight-bold">{{ visit.name }}</div>
                         <div class="text--secondary text-caption">{{ visit.path }}</div>
                     </v-card>
