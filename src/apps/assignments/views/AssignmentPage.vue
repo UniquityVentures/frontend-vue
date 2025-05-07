@@ -31,11 +31,18 @@
 								<TeacherListItem :teacher="assignment?.course_details?.main_teacher_details" />
 							</v-card-text>
 
-							<v-card-text>
+							<v-card-text v-if="assignment.is_active == null">
 								<h4 class="text-subtitle-1">Dates:</h4>
-								<DateChip color="accent" label="Release" :date="assignment?.release_at" />
-								<DateChip color="red" label="Due" :date="assignment?.due_at" />
+								<DateChip v-if="assignment.release_at" color="accent" label="Release" :date="assignment?.release_at" />
+								<DateChip v-if="assignment.due_at" color="red" label="Due" :date="assignment?.due_at" />
 							</v-card-text>
+
+							<v-card-text v-else>
+								<h4 class="text-subtitle-1">Status:</h4>
+								<v-chip v-if="assignment.is_active" color="success">Active</v-chip>
+								<v-chip v-else color="error">Inactive</v-chip>
+							</v-card-text>
+
 
 							<v-card-text>
 								<h4 class="text-subtitle-1">Submissions:</h4>
