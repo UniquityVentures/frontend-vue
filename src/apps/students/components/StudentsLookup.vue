@@ -7,6 +7,9 @@
 					<v-text-field label="Search by name" v-model="filters.name" />
 				</v-col>
 				<v-col cols="12" sm="6" md="3" lg="2">
+					<v-text-field label="Search by Student Number" v-model="filters.student_no" />
+				</v-col>
+				<v-col cols="12" sm="6" md="3" lg="2">
 					<BatchSelect v-model="filters.batch" label="Assigned Batch" />
 				</v-col>
 			</v-row>
