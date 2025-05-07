@@ -2,12 +2,8 @@ import { getRandomImage } from "@/services/api";
 import { createViewset } from "@/services/viewset";
 import { api } from "@/services/api";
 
-// Static imports work better for this use case
-import batch1 from "@/assets/batches/batch1.png";
-import batch2 from "@/assets/batches/batch2.png";
-import batch3 from "@/assets/batches/batch3.png";
+const images = import.meta.glob("@/assets/batches/batch*.png");
 
-const images = [batch1, batch2, batch3];
 
 const baseUrl = "api/allocation/batches"
 
