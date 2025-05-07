@@ -8,6 +8,7 @@
 				<v-date-input
 					v-model="date"
 				></v-date-input>
+				<pre>{{ formattedEvents }}</pre>
 				<vue-cal
 					:events="formattedEvents"
 					style="min-height: 500px;"

@@ -20,6 +20,8 @@
 			subtitle="Announcements for you"
 			:viewAll="{ route: { name: 'Announcements' }, label: 'View All Announcements' }"
 		/>
+
+		<RecentVisits />
 	</v-container>
 </template>
 
@@ -31,6 +33,7 @@ import BatchCard from "@/apps/batches/components/BatchCard.vue";
 import { getCourses } from "@/apps/courses/api";
 import CoursesList from "@/apps/courses/components/CoursesList.vue";
 import { useAuthStore } from "@/stores/auth";
+import RecentVisits from "@/components/RecentVisits.vue";
 
 const authStore = useAuthStore();
 const account = authStore.getAccount;

@@ -42,9 +42,7 @@
 						<v-card-subtitle>{{ item.description.slice(0, 100) }}...</v-card-subtitle>
 						<v-card-text>
 							<DateChip color="blue" label="Start"  :date="item.start" />
-							<DateChip color="red" label="End" :date="item.end" />
-						</v-card-text>
-						<v-card-text>
+							<DateChip color="red" label="End" :date="item.end" /><br>
 							<TeacherChip label="Created by" :teacher="item.created_by_details" v-if="item.created_by_details" />
 						</v-card-text>
 					</v-card>

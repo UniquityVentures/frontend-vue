@@ -4,6 +4,7 @@
 		<StatsCard class="column-item" title="Teachers" :fetchStats="getTeacherStats" />
 		<AnnouncementsList class="column-item" title="Notice Board" 
 		subtitle="Announcements for the whole school" :filter="{is_school_wide: true, is_active: true}" />
+		<RecentVisits />
 	</v-container>
 </template>
 
@@ -12,4 +13,5 @@ import AnnouncementsList from "@/apps/announcements/components/AnnouncementsList
 import { getStudentStats } from "@/apps/students/api";
 import { getTeacherStats } from "@/apps/teachers/api";
 import StatsCard from "@/components/StatsCard.vue";
+import RecentVisits from "@/components/RecentVisits.vue";
 </script>

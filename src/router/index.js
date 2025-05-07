@@ -15,6 +15,8 @@ import LoginPage from "@/views/LoginPage.vue";
 import TestPage from "@/views/TestPage.vue";
 import { createRouter, createWebHistory } from "vue-router";
 
+import { useRecentVisitStore } from "@/stores/recentVisits";
+
 const routes = [
 	{
 		path: "/",
@@ -136,5 +138,11 @@ router.beforeEach((to, from, next) => {
 	
 	next();
 });
+
+router.afterEach((to) => {
+  const store = useRecentVisitStore();
+  store.addVisit(to);
+});
+
 
 export default router;
