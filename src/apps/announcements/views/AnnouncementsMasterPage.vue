@@ -2,6 +2,8 @@
   <v-container>
 		<AnnouncementsLookup
 			:defaultFilters = "$route.query"
+			title="Announcements Master"
+			subtitle="Announcements Master List"
 		/>
 	</v-container>
 </template>

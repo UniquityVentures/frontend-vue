@@ -2,7 +2,7 @@ import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.v
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import CalendarPage from "../views/CalendarPage.vue";
 import EventPage from "../views/EventPage.vue";
-import EventsPage from "../views/EventsPage.vue";
+import EventsMasterPage from "../views/EventsMasterPage.vue";
 import EditEventPage from "../views/EditEventPage.vue";
 import CreateEventPage from "../views/CreateEventPage.vue";
 import DailySchedulePage from "../views/DailySchedulePage.vue";
@@ -28,10 +28,23 @@ export default [
 					title: "Events",
 					to: { name: "Events" },
 				},
+				{
+					title: "Events Master",
+					to: { name: "EventsMaster" },
+				},
+				{
+					title: "Create New Event",
+					to: { name: "CreateEvent" },
+				},
 			],
 			icon: "mdi-calendar",
 		},
 		children: [
+			{
+				path: "events/",
+				component: EmptyLayout,
+				name: "Events",
+			},
 			{
 				path: "calendar/",
 				component: CalendarPage,
@@ -43,65 +56,45 @@ export default [
 				name: "DailySchedule",
 			},
 			{
-				path: "events/",
+				path: "master/",
+				component: EventsMasterPage,
+				name: "EventsMaster",
+			},
+			{
+				path: "create/",
+				component: CreateEventPage,
+				name: "CreateEvent",
+			},
+			{
+				path: ":eventId/",
 				component: EmptyLayout,
+				props: true,
 				meta: {
-					defaultRoute: "Events",
-					getDisplayName: () => "Events",
-					getMenu: () => [
+					defaultRoute: "Event",
+					getDisplayName: () => "Event",
+					getMenu: (params) => [
 						{
-							title: "Events",
-							to: { name: "Events" },
+							title: "View Event",
+							to: { name: "Event", params },
 						},
 						{
-							title: "Create New Event",
-							to: { name: "CreateEvent" },
+							title: "Edit Event",
+							to: { name: "EditEvent", params },
 						},
 					],
 				},
 				children: [
 					{
-						path: "",
-						component: EventsPage,
-						name: "Events",
-					},
-					{
-						path: "create/",
-						component: CreateEventPage,
-						name: "CreateEvent",
-					},
-					{
-						path: ":eventId/",
-						component: EmptyLayout,
+						path: "all/",
+						component: EventPage,
+						name: "Event",
 						props: true,
-						meta: {
-							defaultRoute: "Event",
-							getDisplayName: () => "Event",
-							getMenu: (params) => [
-								{
-									title: "View Event",
-									to: { name: "Event", params },
-								},
-								{
-									title: "Edit Event",
-									to: { name: "EditEvent", params },
-								},
-							],
-						},
-						children: [
-							{
-								path: "all/",
-								component: EventPage,
-								name: "Event",
-								props: true,
-							},
-							{
-								path: "edit/",
-								component: EditEventPage,
-								name: "EditEvent",
-								props: true,
-							},
-						],
+					},
+					{
+						path: "edit/",
+						component: EditEventPage,
+						name: "EditEvent",
+						props: true,
 					},
 				],
 			},

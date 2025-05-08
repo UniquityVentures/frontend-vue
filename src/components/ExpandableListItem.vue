@@ -20,9 +20,9 @@
 				</div>
 			</v-list-item-title>
 		</v-list-item>
-
+		
 		<v-expand-transition>
-			<div v-show="isOpen" class="pl-4">
+			<div v-show="isOpen" class="pl-2">
 				<slot></slot>
 			</div>
 		</v-expand-transition>

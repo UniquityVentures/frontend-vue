@@ -4,7 +4,7 @@ import { api } from "@/services/api";
 import CreateStudentPage from "./views/CreateStudentPage.vue";
 import EditStudentPage from "./views/EditStudentPage.vue";
 import StudentPage from "./views/StudentPage.vue";
-import StudentsPage from "./views/StudentsPage.vue";
+import StudentsMasterPage from "./views/StudentsMasterPage.vue";
 
 export default [
 	{
@@ -13,13 +13,13 @@ export default [
 		meta: {
 			requiresAuth: true,
 			getDisplayName: () => "Students",
-			defaultRoute: "Students",
+			defaultRoute: "StudentsMaster",
 			description: "View and manage students",
 			icon: "mdi-account-school",
 			getMenu: (props) => [
 				{
-					title: "View Students",
-					to: { name: "Students", params: props },
+					title: "Students Master",
+					to: { name: "StudentsMaster", params: props },
 				},
 				{
 					title: "Create Student",
@@ -29,9 +29,9 @@ export default [
 		},
 		children: [
 			{
-				path: "all/",
-				component: StudentsPage,
-				name: "Students",
+				path: "master/",
+				component: StudentsMasterPage,
+				name: "StudentsMaster",
 			},
 			{
 				path: "create/",

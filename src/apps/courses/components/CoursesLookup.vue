@@ -1,6 +1,6 @@
 <template>
     <ResponsiveDataTable :fetch="getCourses" v-model:filters="filters"
-        title="Courses" subtitle="Courses Master List" :templates="{ desktop: 'card', mobile: 'card' }">
+        :title="title" :subtitle="subtitle" :templates="{ desktop: 'card', mobile: 'card' }">
         <template #filters-slot>
             <v-row>
                 <v-col cols="12" sm="6" md="3" lg="2">
@@ -41,4 +41,17 @@ import { ref } from "vue";
 import { getCourses } from "../api";
 
 const filters = ref({});
+
+const props = defineProps({
+    title: {
+        type: String,
+        required: false,
+        default: "Courses",
+    },
+    subtitle: {
+        type: String,
+        required: false,
+        default: "Courses",
+    },
+});
 </script>

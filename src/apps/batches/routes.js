@@ -9,7 +9,7 @@ import BatchStudentsPage from "@/apps/batches/views/BatchStudentsPage.vue";
 import BatchTeachersPage from "@/apps/batches/views/BatchTeachersPage.vue";
 import BatchesExportPage from "@/apps/batches/views/BatchesExportPage.vue";
 import BatchesImportPage from "@/apps/batches/views/BatchesImportPage.vue";
-import BatchesPage from "@/apps/batches/views/BatchesPage.vue";
+import BatchesMasterPage from "@/apps/batches/views/BatchesMasterPage.vue";
 import CreateBatchPage from "@/apps/batches/views/CreateBatchPage.vue";
 import EditBatchPage from "@/apps/batches/views/EditBatchPage.vue";
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
@@ -22,15 +22,15 @@ export default [
 		meta: {
 			requiresAuth: true,
 			getDisplayName: () => "Batches",
-			defaultRoute: "Batches",
+			defaultRoute: "BatchesMaster",
 			description: "View and manage batches",
 			getMenu: () => [
 				{
-					title: "All Batches",
-					to: { name: "Batches" },
+					title: "Batches Master",
+					to: { name: "BatchesMaster" },
 				},
 				{
-					title: "Create Batches",
+					title: "Create Batch",
 					to: { name: "CreateBatch" },
 				},
 				{
@@ -56,8 +56,8 @@ export default [
 			},
 			{
 				path: "all/",
-				name: "Batches",
-				component: BatchesPage,
+				name: "BatchesMaster",
+				component: BatchesMasterPage,
 			},
 			{
 				path: "export/",

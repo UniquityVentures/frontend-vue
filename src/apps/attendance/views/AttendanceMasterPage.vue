@@ -2,12 +2,12 @@
 	<v-container>
 		<v-row justify="center" align-content="center">
 			<v-col lg="3">
-				<v-date-picker
-					v-model="date"
-				></v-date-picker>
-			</v-col>
-			<v-col lg="5">
+				<!-- <v-card  class="mb-2">
+					<v-date-picker v-model="date" />
+				</v-card> -->
 				<StatsCard :key="filters" class="column-item" title="Attendance" :fetchStats="attendanceStats" />
+			</v-col>
+			<v-col lg="9">
 				<AttendanceLookup v-model:filters="filters" />
 			</v-col>
 		</v-row>

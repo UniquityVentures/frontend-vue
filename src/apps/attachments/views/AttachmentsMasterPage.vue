@@ -1,6 +1,6 @@
 <template>
 	<v-container>
-		<AttachmentsLookup />
+		<AttachmentsLookup title="Attachments" subtitle="Media" />
 	</v-container>
 </template>
 

@@ -1,15 +1,16 @@
 <template>
 	<Suspense>
 		<v-app>
-			<v-navigation-drawer app location="end" v-model="rightDrawer" color="secondary" :temporary="mobile">
-				<v-btn :to="{ name: 'All Apps' }" class="ma-4 d-flex justify-center">
+			<v-navigation-drawer app location="end" v-model="rightDrawer" 
+			color="secondary" :temporary="mobile" width="300">
+				<v-btn :to="{ name: 'All Apps' }" class="ma-2 d-flex justify-center">
 					<template v-slot:default>
 						Go to All Apps
 					</template>
 				</v-btn>
 
 				<template v-for="(route, index) in reversedRoutes" :key="index">
-					<v-card v-if="route.meta.displayName" class="mb-4 ma-4">
+					<v-card v-if="route.meta.displayName" class="mb-2 ma-2 border" variant="flat">
 						<v-card-title>{{ route.meta.displayName }}</v-card-title>
 					<v-card-text>
 						<RecursiveList v-for="item in route.meta.menu" :key="item.id" :item="item" />

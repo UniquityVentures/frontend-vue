@@ -58,7 +58,7 @@ const props = defineProps({
 	},
 	subtitle: {
 		type: String,
-		default: "Click on any tile to view or delete",
+		default: "Media",
 	},
 });
 

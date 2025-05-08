@@ -10,7 +10,7 @@
 
         <v-card-text>
             <v-timeline dense>
-                <v-timeline-item v-for="(visit, index) in visitStore.getVisits" :key="visit.path" color="primary"
+                <v-timeline-item v-for="(visit, index) in visitStore.getVisits" :key="visit.path" dot-color="accent"
                     style="cursor: pointer" @click="navigate(visit.path)">
                     <template #opposite>
                         {{ new Date(visit.timestamp).toLocaleTimeString() }}

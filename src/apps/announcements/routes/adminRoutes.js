@@ -1,9 +1,8 @@
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
-
 import AnnouncementPage from "@/apps/announcements/views/AnnouncementPage.vue";
 import NoticeBoardPage from "@/apps/announcements/views/NoticeBoardPage.vue";
-import AnnouncementsPage from "@/apps/announcements/views/AnnouncementsPage.vue";
+import AnnouncementsMasterPage from "@/apps/announcements/views/AnnouncementsMasterPage.vue";
 import CreateAnnouncementPage from "@/apps/announcements/views/CreateAnnouncementPage.vue";
 import EditAnnouncementPage from "@/apps/announcements/views/EditAnnouncementPage.vue";
 
@@ -17,12 +16,12 @@ export default [
 			description: "View and manage announcements",
 			getMenu: () => [
 				{
-					title: "Notice Board",
-					to: { name: "NoticeBoard" },
+					title: "Announcements Master",
+					to: { name: "AnnouncementsMaster" },
 				},
 				{
-					title: "All Announcements",
-					to: { name: "Announcements" },
+					title: "Notice Board",
+					to: { name: "NoticeBoard" },
 				},
 				{
 					title: "Create Announcement",
@@ -33,14 +32,14 @@ export default [
 		},
 		children: [
 			{
+				path: "master/",
+				component: AnnouncementsMasterPage,
+				name: "AnnouncementsMaster",
+			},
+			{
 				path: "notice/",
 				component: NoticeBoardPage,
 				name: "NoticeBoard",
-			},
-			{
-				path: "all/",
-				component: AnnouncementsPage,
-				name: "Announcements",
 			},
 			{
 				path: "create/",

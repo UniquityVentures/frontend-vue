@@ -17,7 +17,7 @@
         </template>
         <template #cards-slot="{ items }">
             <v-row>
-                <v-col cols="12" sm="6" v-for="item in items" :key="item.id">
+                <v-col cols="12" sm="6" md="4" lg="3" v-for="item in items" :key="item.id">
                     <v-card variant="flat" class="border" height="100%"
                     :to="{ name: 'AttendanceRecord', params: { recordId: item.id } }"
                     >
@@ -29,11 +29,8 @@
                         </v-card-subtitle>
                         <v-card-text>
                             <BatchChip :batch="item.student_details?.batch_details" />
-                            <v-chip>Roll No: {{ item.student_details?.roll_no }}</v-chip>
-                        </v-card-text>
-                        <v-card-text>
-							<DateChip v-if="item.datetime" label="Date" color="info" :date="item.datetime" />
-
+                            <v-chip>Roll No: {{ item.student_details?.roll_no }}</v-chip><br>
+							<DateChip v-if="item.datetime" color="info" :date="item.datetime" />
                             <v-chip :color="getStatusColor(item.status)" class="ml-auto">
                                 {{ item.status }}
                             </v-chip>

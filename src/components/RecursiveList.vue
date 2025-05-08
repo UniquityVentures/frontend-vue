@@ -8,7 +8,7 @@
 		</v-list>
 	</ExpandableListItem>
 	<v-list-item v-else :to="item.to">
-		<v-list-item-title>{{item.title}}</v-list-item-title>
+		<v-list-item-title class="text-body-1">{{item.title}}</v-list-item-title>
 	</v-list-item>
 </template>
 

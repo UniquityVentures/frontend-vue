@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <CoursesLookup />
+    <CoursesLookup title="Courses" subtitle="Export Courses to CSV" />
   </v-container>
 </template>
 

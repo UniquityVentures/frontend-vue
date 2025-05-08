@@ -1,6 +1,6 @@
 <template>
     <ResponsiveDataTable :fetch="getAnnouncements" v-model:filters="filters"
-    :hideFilters="hideFilters" title="Announcements" subtitle="Announcements Master List">
+    :hideFilters="hideFilters" :title="title" :subtitle="subtitle">
         <template #filters-slot>
             <v-row >
                 <v-col cols="12" sm="6" md="3" lg="2">
@@ -117,7 +117,17 @@ const props = defineProps({
         type: Boolean,
         required: false,
         default: false,
-    }
+    },
+    title: {
+        type: String,
+        required: false,
+        default: "Announcements",
+    },
+    subtitle: {
+        type: String,
+        required: false,
+        default: "Announcements",
+    },
 });
 
 const filters = ref({

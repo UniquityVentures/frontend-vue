@@ -4,7 +4,7 @@ import { api } from "@/services/api";
 import CreateTeacherPage from "@/apps/teachers/views/CreateTeacherPage.vue";
 import EditTeacherPage from "@/apps/teachers/views/EditTeacherPage.vue";
 import TeacherPage from "@/apps/teachers/views/TeacherPage.vue";
-import TeachersPage from "@/apps/teachers/views/TeachersPage.vue";
+import TeachersMasterPage from "@/apps/teachers/views/TeachersMasterPage.vue";
 
 export default [
 	{
@@ -13,12 +13,12 @@ export default [
 		meta: {
 			requiresAuth: true,
 			getDisplayName: () => "Teachers",
-			defaultRoute: "Teachers",
+			defaultRoute: "TeachersMaster",
 			description: "View and manage teachers",
 			getMenu: (props) => [
 				{
-					title: "View Teachers",
-					to: { name: "Teachers", params: props },
+					title: "Teachers Master",
+					to: { name: "TeachersMaster", params: props },
 				},
 				{
 					title: "Create Teacher",
@@ -29,9 +29,9 @@ export default [
 		},
 		children: [
 			{
-				path: "all/",
-				component: TeachersPage,
-				name: "Teachers",
+				path: "master/",
+				component: TeachersMasterPage,
+				name: "TeachersMaster",
 			},
 			{
 				path: "create/",

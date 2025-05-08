@@ -4,7 +4,7 @@ import { getCourse } from "../api";
 import CoursePage from "../views/CoursePage.vue";
 import CoursesExportPage from "../views/CoursesExportPage.vue";
 import CoursesImportPage from "../views/CoursesImportPage.vue";
-import CoursesPage from "../views/CoursesPage.vue";
+import CoursesMasterPage from "../views/CoursesMasterPage.vue";
 import CreateCoursePage from "../views/CreateCoursePage.vue";
 import EditCoursePage from "../views/EditCoursePage.vue";
 import CourseAnnouncementsPage from "../views/CourseAnnouncementsPage.vue";
@@ -17,12 +17,12 @@ export default [
 		component: AppSideBarBreadcrumbsLayout,
 		meta: {
 			getDisplayName: () => "Courses",
-			defaultRoute: "Courses",
+			defaultRoute: "CoursesMaster",
 			description: "View and manage courses",
 			getMenu: () => [
 				{
-					title: "All Courses",
-					to: { name: "Courses" },
+					title: "Courses Master",
+					to: { name: "CoursesMaster" },
 				},
 				{
 					title: "Create Course",
@@ -41,9 +41,9 @@ export default [
 		},
 		children: [
 			{
-				path: "all/",
-				component: CoursesPage,
-				name: "Courses",
+				path: "master/",
+				component: CoursesMasterPage,
+				name: "CoursesMaster",
 			},
 			{
 				path: "create/",

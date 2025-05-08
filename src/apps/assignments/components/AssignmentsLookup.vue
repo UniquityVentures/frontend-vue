@@ -1,8 +1,7 @@
 <template>
 	<ResponsiveDataTable :fetch="getAssignments" 
 	:templates="{ desktop: 'card', mobile: 'card' }" v-model:filters="filters"
-	title="Assignments"
-	subtitle="View all assignments">
+	:title="title" :subtitle="subtitle">
 		<template #filters-slot>
 			<v-row>
 				<v-col cols="12" sm="6" md="3" lg="2">
@@ -83,5 +82,18 @@ const filters = ref({
 	sort_method: "difference",
 	value: new Date(),
 	is_active: null,
+});
+
+const props = defineProps({
+	title: {
+		type: String,
+		required: false,
+		default: "Assignments",
+	},
+	subtitle: {
+		type: String,
+		required: false,
+		default: "Assignments",
+	},
 });
 </script>

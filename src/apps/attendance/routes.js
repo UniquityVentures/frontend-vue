@@ -1,7 +1,7 @@
 import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.vue";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import { api } from "@/services/api";
-import AttendanceHomePage from "./views/AttendanceHomePage.vue";
+import AttendanceMasterPage from "./views/AttendanceMasterPage.vue";
 import AttendanceRecordPage from "./views/AttendanceRecordPage.vue";
 import CreateAttendanceRecordPage from "./views/CreateAttendanceRecord.vue";
 import EditAttendanceRecordPage from "./views/EditAttendanceRecord.vue";
@@ -13,13 +13,13 @@ export default [
 		meta: {
 			requiresAuth: true,
 			getDisplayName: () => "Attendance",
-			defaultRoute: "AttendanceRecords",
+			defaultRoute: "AttendanceMaster",
 			description: "Manage student attendance",
 			icon: "mdi-calendar-check",
 			getMenu: (props) => [
 				{
-					title: "Attendance Records",
-					to: { name: "AttendanceRecords", params: props },
+					title: "Attendance Master",
+					to: { name: "AttendanceMaster", params: props },
 				},
 				{
 					title: "Create Record",
@@ -29,9 +29,9 @@ export default [
 		},
 		children: [
 			{
-				path: "all/",
-				component: AttendanceHomePage,
-				name: "AttendanceRecords",
+				path: "master/",
+				component: AttendanceMasterPage,
+				name: "AttendanceMaster",
 			},
 			{
 				path: "create/",

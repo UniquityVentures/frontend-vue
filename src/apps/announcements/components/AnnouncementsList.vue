@@ -25,7 +25,7 @@ const props = defineProps({
 	filter: { type: Object, default: () => ({}) },
 	viewAll: {
 		type: Object,
-		default: () => ({ route: { name: "Announcements" }, label: "View All" }),
+		default: () => ({ route: { name: "NoticeBoard" }, label: "View All" }),
 	},
 	limit: { type: Number, default: 5 },
 });

@@ -1,6 +1,6 @@
 <template>
 	<ResponsiveDataTable :fetch="getEvents" v-model:filters="filters"
-		title="Events" subtitle="Events Master List">
+		:title="title" :subtitle="subtitle">
 		<template #filters-slot>
 			<v-row>
 				<v-col cols="12" sm="6" md="3" lg="2">
@@ -67,4 +67,17 @@ const authStore = useAuthStore();
 const role = authStore.getRole;
 
 const filters = ref({});
+
+const props = defineProps({
+	title: {
+		type: String,
+		required: false,
+		default: "Events",
+	},
+	subtitle: {
+		type: String,
+		required: false,
+		default: "Events",
+	},
+});
 </script>

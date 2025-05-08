@@ -2,7 +2,7 @@ import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.v
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import { api } from "@/services/api";
 import AttachmentPage from "./views/AttachmentPage.vue";
-import AttachmentsPage from "./views/AttachmentsPage.vue";
+import AttachmentsMasterPage from "./views/AttachmentsMasterPage.vue";
 
 export default [
 	{
@@ -11,21 +11,21 @@ export default [
 		meta: {
 			requiresAuth: true,
 			getDisplayName: () => "Attachments",
-			defaultRoute: "Attachments",
+			defaultRoute: "AttachmentsMaster",
 			description: "View and manage attachments",
 			getMenu: (props) => [
 				{
-					title: "View Attachments",
-					to: { name: "Attachments", params: props },
+					title: "Attachments Master",
+					to: { name: "AttachmentsMaster", params: props },
 				},
 			],
 			icon: "mdi-paperclip",
 		},
 		children: [
 			{
-				path: "all/",
-				component: AttachmentsPage,
-				name: "Attachments",
+				path: "master/",
+				component: AttachmentsMasterPage,
+				name: "AttachmentsMaster",
 			},
 			{
 				path: ":attachmentId",

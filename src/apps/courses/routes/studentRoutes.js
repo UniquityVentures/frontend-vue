@@ -2,7 +2,6 @@ import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.v
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import { getCourse } from "../api";
 import CoursePage from "../views/CoursePage.vue";
-import CoursesPage from "../views/CoursesPage.vue";
 import CourseAnnouncementsPage from "../views/CourseAnnouncementsPage.vue";
 import CourseAssignmentsPage from "../views/CourseAssignmentsPage.vue";
 import CourseSyllabusPage from "../views/CourseSyllabusPage.vue";
@@ -24,11 +23,11 @@ export default [
 			icon: "mdi-book-open-variant",
 		},
 		children: [
-			{
-				path: "all/",
-				component: CoursesPage,
-				name: "Courses",
-			},
+			// {
+			// 	path: "all/",
+			// 	component: CoursesPage,
+			// 	name: "Courses",
+			// },
 			{
 				path: ":courseId/",
 				component: EmptyLayout,
