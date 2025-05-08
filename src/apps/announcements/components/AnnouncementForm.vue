@@ -20,7 +20,13 @@
             ></v-text-field>
           </v-col>
           
-          <v-col cols="12" md="6">
+          <v-col cols="12" md="3">
+            <TeacherSelect
+              label="Created By"
+              v-model="formData.created_by"
+            />
+          </v-col>
+          <v-col cols="12" md="3">
             <TeacherSelect
               label="Signed By"
               v-model="formData.signed_by"
@@ -151,6 +157,9 @@ import AttachmentsInput from "@/apps/attachments/components/AttachmentsInput.vue
 import { onMounted, ref } from "vue";
 import DeleteButton from "@/components/DeleteButton.vue";
 import { deleteAnnouncement } from "../api";
+import { useAuthStore } from "@/stores/auth";
+
+const authStore = useAuthStore();
 
 const is_active_options = [
 	{
@@ -203,6 +212,9 @@ const formData = ref({});
 onMounted(async () => {
 	if (props.announcement) {
 		formData.value = props.announcement;
+	}
+	if (!formData.value.created_by) {
+		formData.value = {...formData.value, created_by: authStore.getAccount.id}
 	}
 });
 </script> 
