@@ -125,79 +125,87 @@
 </template>
 
 <script setup>
-import TeacherSelect from "@/apps/teachers/components/TeacherSelect"
-import CourseSelect from "@/apps/courses/components/CourseSelect"
-import BatchSelect from "@/apps/batches/components/BatchSelect"
+import TeacherSelect from "@/apps/teachers/components/TeacherSelect";
+import CourseSelect from "@/apps/courses/components/CourseSelect";
+import BatchSelect from "@/apps/batches/components/BatchSelect";
 import SubmitButton from "@/components/SubmitButton.vue";
 import AttachmentInput from "@/apps/attachments/components/AttachmentInput.vue";
 import DeleteButton from "@/components/DeleteButton.vue";
 import { onMounted, ref, watch } from "vue";
 import { deleteEvent } from "../api";
+import { useAuthStore } from "@/stores/auth";
+
+const authStore = useAuthStore();
 
 const props = defineProps({
-  event: {
-    type: Object,
-    default: null,
-  },
-  action: {
-    type: Function,
-    required: true,
-  },
-  actionName: {
-    type: String,
-    default: "Save",
-  },
-  title: {
-    type: String,
-    default: "",
-  },
-  subtitle: {
-    type: String,
-    default: "",
-  },
-  hideDelete: {
-    type: Boolean,
-    default: false,
-  },
+	event: {
+		type: Object,
+		default: null,
+	},
+	action: {
+		type: Function,
+		required: true,
+	},
+	actionName: {
+		type: String,
+		default: "Save",
+	},
+	title: {
+		type: String,
+		default: "",
+	},
+	subtitle: {
+		type: String,
+		default: "",
+	},
+	hideDelete: {
+		type: Boolean,
+		default: false,
+	},
 });
 
 const batchesOrCourses = ref("batches");
 
 // Initialize form data with default values
 const formData = ref({
-  title: "",
-  description: "",
-  start: null,
-  end: null,
-  is_universal: true,
-  batches: [],
-  courses: [],
-  created_by: null,
-  attachment: null,
+	title: "",
+	description: "",
+	start: null,
+	end: null,
+	is_universal: true,
+	batches: [],
+	courses: [],
+	attachment: null,
 });
 
 // Watch for changes in is_universal
-watch(() => formData.value.is_universal, (newValue) => {
-  if (newValue) {
-    formData.value.batches = [];
-    formData.value.courses = [];
-  }
-});
+watch(
+	() => formData.value.is_universal,
+	(newValue) => {
+		if (newValue) {
+			formData.value.batches = [];
+			formData.value.courses = [];
+		}
+	},
+);
 
 onMounted(async () => {
-  if (props.event) {
-    for (const [key, value] of Object.entries(formData.value)) {
-      if (props.event[key] !== undefined) {
-        formData.value[key] = value.constructor(props.event[key]);
-      }
-    }
-    
-    // Determine which radio option to select based on existing data
-    if (props.event.batches && props.event.batches.length > 0) {
-      batchesOrCourses.value = "batches";
-    } else if (props.event.courses && props.event.courses.length > 0) {
-      batchesOrCourses.value = "courses";
-    }
-  }
+	if (props.event) {
+		for (const [key, value] of Object.entries(formData.value)) {
+			if (props.event[key] !== undefined) {
+				formData.value[key] = value.constructor(props.event[key]);
+			}
+		}
+
+		// Determine which radio option to select based on existing data
+		if (props.event.batches && props.event.batches.length > 0) {
+			batchesOrCourses.value = "batches";
+		} else if (props.event.courses && props.event.courses.length > 0) {
+			batchesOrCourses.value = "courses";
+		}
+	}
+	if (!formData.value.created_by) {
+		formData.value = {...formData.value, created_by: authStore.getAccount.id}
+	}
 });
 </script> 

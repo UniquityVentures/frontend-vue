@@ -6,9 +6,14 @@
 						<v-card>
 							<v-card-title>{{ announcement?.title }}</v-card-title>
 
-							<v-card-text>
+							<v-card-text v-if="announcement?.created_by_details">
+								<h4 class="text-subtitle-1">Created by:</h4>
+								<TeacherChip v-if="announcement?.created_by_details" :teacher="announcement?.created_by_details" />
+							</v-card-text>
+						
+							<v-card-text v-if="announcement?.signed_by_details">
 								<h4 class="text-subtitle-1">Signed by:</h4>
-								<TeacherChip v-if="announcement?.signed_by_details" :teacher="announcement?.signed_by_details" />
+								<TeacherChip :teacher="announcement?.signed_by_details" />
 							</v-card-text>
 
 							<v-card-text>
