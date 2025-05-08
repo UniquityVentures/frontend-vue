@@ -2,6 +2,7 @@ import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.v
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import { api } from "@/services/api";
 import PreferencesPage from "./views/PreferencesPage.vue";
+import ReplacementsPage from "./views/ReplacementsPage.vue";
 
 export default [
 	{
@@ -17,14 +18,23 @@ export default [
 					title: "View Preferences",
 					to: { name: "Preferences", params: props },
 				},
+				{
+					title: "View Replacements",
+					to: { name: "Replacements", params: props },
+				},
 			],
 			icon: "mdi-paperclip",
 		},
 		children: [
 			{
-				path: "all/",
+				path: "preferences/",
 				component: PreferencesPage,
 				name: "Preferences",
+			},
+			{
+				path: "replacements/",
+				component: ReplacementsPage,
+				name: "Replacements",
 			},
 		],
 	},
