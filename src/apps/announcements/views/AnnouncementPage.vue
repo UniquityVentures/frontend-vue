@@ -34,7 +34,6 @@
 						</v-card-text>
 
 						<v-card-text v-if="role === 'Admin' || role === 'Teacher'">
-							<h4 class="text-subtitle-1">Assigned to:</h4>
 							<div v-if="announcement?.is_universal">
 								<v-chip color="success">The whole school</v-chip>
 							</div>
@@ -55,6 +54,7 @@
 						</v-card-text>
 
 						<v-card-text v-if="announcement?.attachments">
+							<h4 class="text-subtitle-1">Attachments:</h4>
 							<AttachmentsCard v-model="announcement.attachments" />
 						</v-card-text>
 

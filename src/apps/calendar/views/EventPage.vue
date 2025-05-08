@@ -50,6 +50,7 @@
 							</v-card-text>
 
 							<v-card-text v-if="event?.attachments">
+								<h4 class="text-subtitle-1">Attachments:</h4>
 								<AttachmentsCard v-model="event.attachments" />
 							</v-card-text>
 
