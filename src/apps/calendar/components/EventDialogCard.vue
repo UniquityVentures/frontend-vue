@@ -38,8 +38,8 @@
         <!-- Scope of Event -->
         <div class="mt-4">
             <div class="text-subtitle-2 mb-2">Event Scope</div>
-            <div v-if="event.is_school_wide">
-                <v-chip color="success" size="small">School Wide</v-chip>
+            <div v-if="event.is_universal">
+                <v-chip color="success" size="small">Universal</v-chip>
             </div>
             <div v-else class="d-flex flex-wrap gap-2">
                 <v-chip color="accent" size="small">

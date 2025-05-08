@@ -24,7 +24,7 @@
 
               <v-card-text>
                 <h4 class="text-subtitle-1">Assigned to:</h4>
-                <div v-if="event?.is_school_wide">
+                <div v-if="event?.is_universal">
                   <v-chip color="success">The whole school</v-chip>
                 </div>
                 <div v-else>

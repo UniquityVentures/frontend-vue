@@ -42,7 +42,7 @@
                     />
                 </v-col>
                 <v-col cols="12" sm="6" md="3" lg="2">
-                    <CheckBox v-model="filters.is_school_wide" label="Is School Wide" />
+                    <CheckBox v-model="filters.is_universal" label="Is Universal" />
                 </v-col>
             </v-row>
         </template>

@@ -62,13 +62,13 @@
           <v-row>
             <v-col cols="12">
               <v-checkbox 
-                label="Is School Wide" 
-                v-model="formData.is_school_wide"
+                label="Is Universal" 
+                v-model="formData.is_universal"
               ></v-checkbox>
             </v-col>
           </v-row>
           
-          <v-row v-if="!formData.is_school_wide">
+          <v-row v-if="!formData.is_universal">
             <v-col cols="12">
               <v-radio-group v-model="batchesOrCourses" label="Event for Batches or Courses?" inline class="border rounded-lg pt-2">
                 <v-radio label="Batches" value="batches"></v-radio>
@@ -169,15 +169,15 @@ const formData = ref({
   description: "",
   start: null,
   end: null,
-  is_school_wide: true,
+  is_universal: true,
   batches: [],
   courses: [],
   created_by: null,
   attachment: null,
 });
 
-// Watch for changes in is_school_wide
-watch(() => formData.value.is_school_wide, (newValue) => {
+// Watch for changes in is_universal
+watch(() => formData.value.is_universal, (newValue) => {
   if (newValue) {
     formData.value.batches = [];
     formData.value.courses = [];

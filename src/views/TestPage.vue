@@ -18,7 +18,7 @@ const formData = ref({
 	description: "",
 	priority: "low",
 	is_active: true,
-	is_school_wide: false,
+	is_universal: false,
 	signed_by: null,
 	release_at: null,
 	expiry_at: null,

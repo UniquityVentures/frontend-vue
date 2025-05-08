@@ -17,14 +17,14 @@ export const eventDefaultFilterFields = [
 		value: null,
 	},
 	{
-		label: "Is School Wide",
+		label: "Is Universal",
 		type: "n_nary",
-		key: "is_school_wide",
+		key: "is_universal",
 		value: null,
 		fetchOptions: () => [
 			{ title: "All Events", value: null },
-			{ title: "School Wide Only", value: "True" },
-			{ title: "Non-School Wide Only", value: "False" },
+			{ title: "Universal Only", value: "True" },
+			{ title: "Non-Universal Only", value: "False" },
 		],
 	},
 	{ label: "Date Range", type: "dates", key: ["start", "end"], value: null },

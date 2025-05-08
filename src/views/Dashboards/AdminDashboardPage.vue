@@ -3,7 +3,7 @@
 		<StatsCard class="column-item" title="Students" :fetchStats="getStudentStats" />
 		<StatsCard class="column-item" title="Teachers" :fetchStats="getTeacherStats" />
 		<AnnouncementsList class="column-item" title="Notice Board" 
-		subtitle="Announcements for the whole school" :filter="{is_school_wide: true, is_active: true}" />
+		subtitle="All Announcements" :filter="{is_universal: true, is_active: true}" />
 		<RecentVisits class="column-item"/>
 		<StatsCard :key="filters" class="column-item" title="Attendance" :fetchStats="getAttendanceStats" />
 	</v-container>

@@ -14,7 +14,7 @@
 							<v-card-title class="text-subtitle-1">{{ item.title }}</v-card-title>
 							<v-card-text class="text-wrap">
 								<TeacherChip label="Signed by" :teacher="item.signed_by_details" v-if="item.signed_by_details" />
-								<v-chip v-if="item.is_school_wide" color="success">School-Wide</v-chip>
+								<v-chip v-if="item.is_universal" color="success">Universal</v-chip>
 							</v-card-text>
 							<v-card-text>
 								{{ item.description }}

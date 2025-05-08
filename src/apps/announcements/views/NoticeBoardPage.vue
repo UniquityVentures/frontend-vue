@@ -17,8 +17,8 @@ const title = ref("Notice Board");
 const subtitle = ref("");
 const role = authStore.getRole;
 if (role === "Admin") {
-	filters.value = { is_active: true, is_school_wide: true };
-	subtitle.value = "School-Wide Announcements";
+	filters.value = { is_active: true, is_universal: true };
+	subtitle.value = "Universal Announcements";
 } else {
 	filters.value = { is_active: true };
 	subtitle.value = "Announcements shown here";
