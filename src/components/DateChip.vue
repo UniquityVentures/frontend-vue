@@ -25,7 +25,7 @@ const formatter = Intl.DateTimeFormat("en-US", {
 
 const isValidDate = (date) => {
 	const d = new Date(date);
-	return d instanceof Date && !isNaN(d);
+	return d instanceof Date && !Number.isNaN(d.getTime());
 };
 
 const displayDate = (date) => {

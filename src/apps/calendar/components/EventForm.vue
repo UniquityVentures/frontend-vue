@@ -110,7 +110,7 @@
         <v-card-text>
           <v-row>
             <v-col cols="12">
-              <AttachmentInput v-model="formData.attachment" />
+              <AttachmentsInput v-model="formData.attachments" />
             </v-col>
           </v-row>
         </v-card-text>
@@ -129,7 +129,7 @@ import TeacherSelect from "@/apps/teachers/components/TeacherSelect";
 import CourseSelect from "@/apps/courses/components/CourseSelect";
 import BatchSelect from "@/apps/batches/components/BatchSelect";
 import SubmitButton from "@/components/SubmitButton.vue";
-import AttachmentInput from "@/apps/attachments/components/AttachmentInput.vue";
+import AttachmentsInput from "@/apps/attachments/components/AttachmentsInput.vue";
 import DeleteButton from "@/components/DeleteButton.vue";
 import { onMounted, ref, watch } from "vue";
 import { deleteEvent } from "../api";
@@ -175,7 +175,7 @@ const formData = ref({
 	is_universal: true,
 	batches: [],
 	courses: [],
-	attachment: null,
+	attachments: null,
 });
 
 // Watch for changes in is_universal
@@ -191,11 +191,7 @@ watch(
 
 onMounted(async () => {
 	if (props.event) {
-		for (const [key, value] of Object.entries(formData.value)) {
-			if (props.event[key] !== undefined) {
-				formData.value[key] = value.constructor(props.event[key]);
-			}
-		}
+		formData.value = {...props.event}
 
 		// Determine which radio option to select based on existing data
 		if (props.event.batches && props.event.batches.length > 0) {

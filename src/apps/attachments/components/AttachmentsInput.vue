@@ -65,7 +65,9 @@ watch(attachments, (v) => {
 
 function attachmentAdded(attachment) {
 	// Add to existing attachments
+	console.log(attachment)
 	attachments.value = [...attachments.value, attachment];
+	console.log(attachments.value)
 }
 
 function removeAttachment(item) {

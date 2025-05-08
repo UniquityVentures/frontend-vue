@@ -9,7 +9,7 @@ const createAttachment = async (formObj) => {
 		data.append(key, value);
 	}
 	return (
-		await api.post("api/attachments/create/", data, {
+		await api.post("api/attachments/", data, {
 			headers: { "Content-Type": "multipart/form-data" },
 		})
 	).data;
