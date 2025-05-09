@@ -6,7 +6,7 @@
 			class="column-item"
 			:filter="{ batches: batch.id || batch.id === 0 }"
 			title="Courses"
-			:viewAll="{ route: { name: 'BatchCourses' }, label: 'View All Courses' }"
+			:viewAll="{ route: { name: 'BatchCourses' }, label: `View All ${localisationStore.localise('Courses')}` }"
 			:limit="10"
 		/>
 		<AnnouncementsList 
@@ -15,7 +15,7 @@
 			:fetchFunction="getAnnouncements"
 			:filter="{ batch: batch.id }"
 			title="Announcements"
-			:viewAll="{ route: { name: 'BatchAnnouncements' }, label: 'View All Announcements' }"
+			:viewAll="{ route: { name: 'BatchAnnouncements' }, label: `View All ${localisationStore.localise('Announcements')}` }"
 		/>
 	</v-container>
 </template>
@@ -28,6 +28,9 @@ import BatchCard from "@/apps/batches/components/BatchCard.vue";
 import { getCourses } from "@/apps/courses/api";
 import CoursesList from "@/apps/courses/components/CoursesList.vue";
 import { onMounted, ref } from "vue";
+import { useLocalisationStore } from "@/apps/preferences/api";
+
+const localisationStore = useLocalisationStore();
 
 const props = defineProps({
 	batchId: String,
@@ -38,5 +41,7 @@ const batch = ref({});
 // Fetch batch data
 onMounted(async () => {
 	batch.value = await getBatch(props.batchId);
+	console.log()
+
 });
 </script>
