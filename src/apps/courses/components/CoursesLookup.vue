@@ -42,13 +42,14 @@ import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { getCourses, courseFields } from "../api";
 import { useAuthStore } from "@/stores/auth";
 import SortingInput from "@/components/SortingInput.vue";
 
 const authStore = useAuthStore();
-const filters = defineModel('filters', { required: false, default: () => ({}) });
+
+const filters = ref({});
 
 const props = defineProps({
     title: {
@@ -61,5 +62,13 @@ const props = defineProps({
         required: false,
         default: "Courses",
     },
+	defaultFilters: {
+		type: Object,
+		required: false,
+		default: () => ({}),
+	},
+});
+onMounted(() => {
+	filters.value = props.defaultFilters;
 });
 </script>
