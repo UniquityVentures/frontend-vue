@@ -9,12 +9,12 @@ export default [
         component: AppSideBarBreadcrumbsLayout,
         meta: {
             getDisplayName: () => "Announcements",
-            defaultRoute: "Announcements",
+            defaultRoute: "NoticeBoard",
             description: "View and manage announcements",
             getMenu: () => [
                 {
-                    title: "All Announcements",
-                    to: { name: "Announcements" },
+                    title: "Notice Board",
+                    to: { name: "NoticeBoard" },
                 },
             ],
             icon: "mdi-bullhorn",
@@ -23,7 +23,7 @@ export default [
             {
                 path: "all/",
                 component: NoticeBoardPage,
-                name: "Announcements",
+                name: "NoticeBoard",
             },
             {
                 path: ":announcementId/",

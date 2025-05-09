@@ -28,14 +28,12 @@ export default [
 				name: "AttachmentsMaster",
 			},
 			{
-				path: ":attachmentId",
+				path: ":attachmentId/",
 				props: true,
 				component: AttachmentPage,
 				meta: {
 					defaultRoute: "Attachment",
-					getDisplayName: async (params) =>
-						(await api.get(`api/attachments/${params.attachmentId}/`)).data
-							.name,
+					getDisplayName: "Attachment Object",
 					getMenu: (props) => [
 						{
 							title: "View Attachment",

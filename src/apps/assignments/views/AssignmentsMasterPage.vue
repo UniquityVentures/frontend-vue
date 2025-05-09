@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <AssignmentsLookup />
+    <AssignmentsLookup title="Assignments" subtitle="Assignments Master" />
   </v-container>
 </template>
 
