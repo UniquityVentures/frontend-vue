@@ -48,7 +48,6 @@ import { useAuthStore } from "@/stores/auth";
 import SortingInput from "@/components/SortingInput.vue";
 
 const authStore = useAuthStore();
-
 const filters = defineModel('filters', { required: false, default: () => ({}) });
 
 const props = defineProps({
