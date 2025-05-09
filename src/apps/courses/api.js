@@ -1,13 +1,16 @@
 import { createViewset } from "@/services/viewset";
 const images = import.meta.glob("@/assets/courses/course*.png");
+import { api } from "@/services/api";
 
 const getCourseImage = () => {
 	const im = Object.entries(images);
 	const index = Math.floor(Math.random() * im.length);
-	return im[index][0]
+	return im[index][0];
 };
 
-const courseViewset = createViewset("api/allocation/courses", "courses");
+const baseUrl = "api/allocation/courses";
+
+const courseViewset = createViewset(baseUrl, "courses");
 
 // Get base methods
 const getCourses = courseViewset.list;
@@ -28,6 +31,9 @@ const updateCourse = async (course) => courseViewset.update(course);
 const exportCourses = courseViewset.export;
 const importCourses = courseViewset.import;
 
+const joinCourse = async (joinCode) =>
+	(await api.patch(`${baseUrl}/join/${joinCode}`)).data;
+
 export {
 	getCourses,
 	getCourse,
@@ -38,4 +44,5 @@ export {
 	createCourse,
 	exportCourses,
 	importCourses,
+	joinCourse,
 };

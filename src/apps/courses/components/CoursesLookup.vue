@@ -20,8 +20,10 @@
                     <v-card link :to="{ name: 'Course', params: { courseId: item.id }}" variant="flat" class="border">
                         <v-card-title class="text-subtitle-1">{{ item.name }}</v-card-title>
                         <v-card-subtitle>{{ item.code }}</v-card-subtitle>
-                        <v-card-text>
-                            <BatchChip v-for="batchId in item.batches" v-bind:key="batchId" :batchId="batchId" />
+						<v-card-text>
+							<template v-if="authStore.getRole !== 'Student'" >
+								<BatchChip v-for="batchId in item.batches" v-bind:key="batchId" :batchId="batchId" />
+							</template>
                             <TeacherChip :teacherId="item.main_teacher" />
                         </v-card-text>
 					</v-card>
@@ -39,6 +41,9 @@ import TeacherSelect from "@/apps/teachers/components/TeacherSelect.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { ref } from "vue";
 import { getCourses } from "../api";
+import { useAuthStore } from "@/stores/auth";
+
+const authStore = useAuthStore();
 
 const filters = defineModel('filters', { required: false, default: () => ({}) });
 
