@@ -1,5 +1,4 @@
 <template>
-	{{console.log(filters)}}
 	<ResponsiveDataTable :fetch="getTeachers" v-model:filters="filters"
 		:title="title"
 		:subtitle="subtitle"
