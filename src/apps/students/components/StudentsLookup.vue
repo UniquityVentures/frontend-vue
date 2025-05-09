@@ -12,6 +12,12 @@
 				<v-col cols="12" sm="6" md="3" lg="2">
 					<BatchSelect v-model="filters.batch" label="Assigned Batch" />
 				</v-col>
+				<v-col cols="12" sm="6" md="3" lg="2">
+					<CourseSelect 
+						v-model="filters.courses" 
+						label="Assigned Courses"
+					/>
+				</v-col>
 			</v-row>
 		</template>
 		<template #cards-slot="{ items }">
@@ -30,6 +36,7 @@ import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { ref } from "vue";
 import { getStudents } from "../api";
 import StudentSmallCard from "./StudentSmallCard.vue";
+import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
 
 const filters = ref({sort_by: "student_no"});
 

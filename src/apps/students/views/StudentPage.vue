@@ -12,8 +12,8 @@
             
             <!-- Courses Section (if applicable) -->
             <CoursesCard 
-              v-if="student?.batch" 
-              :filters="{ batches: student.batch }" 
+              v-if="student?.id" 
+              :filters="{ student: student.id }" 
               :title="`Courses taken`"
               :subtitle="`Courses in ${batch?.name || 'Current Batch'}`"
             />
