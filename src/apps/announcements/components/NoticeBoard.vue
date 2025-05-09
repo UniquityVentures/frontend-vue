@@ -17,7 +17,7 @@
 								<v-chip v-if="item.is_universal" color="success">Universal</v-chip>
 							</v-card-text>
 							<v-card-text>
-								{{ item.description }}
+								{{ item.description.slice(0, 200) }}...
 							</v-card-text>
 						</v-card>
 					</template>
