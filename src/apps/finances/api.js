@@ -11,6 +11,8 @@ const getTransactionPurposes = purposeViewset.list;
 const getPayees = payeeViewset.list;
 const createTransaction = transactionViewset.create;
 
+const transactionFields = transactionViewset.fields;
+
 const exportTransactions = transactionViewset.export;
 
 // Info formatters
@@ -36,6 +38,7 @@ export {
 	getTransactions,
 	getTransactionPurposes,
 	getTransaction,
+	transactionFields,
 	getTransactionPurposeInfoFromObj,
 	getTransactionInfoFromObj,
 	getPayees,

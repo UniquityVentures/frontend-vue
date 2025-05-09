@@ -13,6 +13,9 @@
                 <v-col cols="12" sm="6">
                     <BatchSelect v-model="filters.batch" label="Select Batch" required />
                 </v-col>
+                <v-col cols="12" sm="6" md="3" >
+					<SortingInput v-model:order="filters.ordering" v-model:field="filters.sort_by" :get-sortable-fields="attendanceFields" />
+                </v-col>
             </v-row>
         </template>
         <template #cards-slot="{ items }">
@@ -62,8 +65,9 @@
 </template>
 
 <script setup>
+import SortingInput from "@/components/SortingInput.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
-import { getAttendanceRecords } from "../api";
+import { getAttendanceRecords, attendanceFields } from "../api";
 import DateSelect from "@/components/DateSelect.vue";
 import DateChip from "@/components/DateChip.vue";
 import BatchSelect from "@/apps/batches/components/BatchSelect.vue";

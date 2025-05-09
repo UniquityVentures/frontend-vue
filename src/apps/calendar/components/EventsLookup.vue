@@ -22,6 +22,9 @@
 				<v-col cols="12" sm="6" md="3" lg="2" v-if="role === 'Admin'">
 					<TeacherSelect v-model="filters.created_by" label="Created By" />
 				</v-col> 
+                <v-col cols="12" sm="6" md="3" lg="2">
+					<SortingInput v-model:order="filters.ordering" v-model:field="filters.sort_by" :get-sortable-fields="eventFields" />
+                </v-col>
 			</v-row>
 		</template>
 		<template #list-slot="{ items }">
@@ -59,9 +62,10 @@ import DateRangeSelect from "@/components/DateRangeSelect.vue";
 import DateChip from "@/components/DateChip.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { ref } from "vue";
-import { getEvents } from "../api";
+import { getEvents, eventFields } from "../api";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 import { useAuthStore } from "@/stores/auth";
+import SortingInput from "@/components/SortingInput.vue";
 
 const authStore = useAuthStore();
 const role = authStore.getRole;

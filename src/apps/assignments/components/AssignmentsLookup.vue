@@ -31,6 +31,9 @@
 						label="Due Date Range"
 					/>
 				</v-col>
+                <v-col cols="12" sm="3">
+					<SortingInput v-model:order="filters.ordering" v-model:field="filters.sort_by" :get-sortable-fields="assignmentFields" />
+                </v-col>
 			</v-row>
 		</template>
 		
@@ -57,9 +60,10 @@ import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import DateChip from "@/components/DateChip.vue";
+import SortingInput from "@/components/SortingInput.vue";
 
 import { ref } from "vue";
-import { getAssignments } from "../api";
+import { getAssignments, assignmentFields } from "../api";
 
 const is_active_options = [
 	{
@@ -79,8 +83,6 @@ const is_active_options = [
 
 const filters = ref({
 	sort_by: "release_at",
-	sort_method: "difference",
-	value: new Date(),
 	is_active: null,
 });
 

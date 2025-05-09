@@ -30,6 +30,7 @@ const updateCourse = async (course) => courseViewset.update(course);
 // Add export and import functionality
 const exportCourses = courseViewset.export;
 const importCourses = courseViewset.import;
+const courseFields = courseViewset.fields;
 
 const joinCourse = async (joinCode) =>
 	(await api.patch(`${baseUrl}/join/${joinCode}`)).data;
@@ -45,4 +46,5 @@ export {
 	exportCourses,
 	importCourses,
 	joinCourse,
+	courseFields,
 };

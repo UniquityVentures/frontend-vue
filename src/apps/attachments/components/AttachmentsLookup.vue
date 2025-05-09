@@ -21,6 +21,9 @@
 						label="Created Date Range"
 					/>
 				</v-col>
+                <v-col cols="12" md="3">
+					<SortingInput v-model:order="filters.ordering" v-model:field="filters.sort_by" :get-sortable-fields="attachmentFields"  />
+                </v-col>
 			</v-row>
 		</template>
 		
@@ -47,9 +50,10 @@
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import DateChip from "@/components/DateChip.vue";
+import SortingInput from "@/components/SortingInput.vue";
 
 import { ref } from "vue";
-import { getAttachments } from "../api";
+import { getAttachments, attachmentFields } from "../api";
 
 const props = defineProps({
 	title: {

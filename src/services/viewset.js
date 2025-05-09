@@ -21,6 +21,8 @@ export const createViewset = (baseUrl, filename = "export") => ({
 	// Update existing record
 	update: async (data) => (await api.put(`${baseUrl}/${data.id}/`, data)).data,
 
+	fields: async () => (await api.get(`${baseUrl}/fields`)).data,
+
 	// Export records (if supported)
 	export: async (filter = {}) => {
 		const response = await api.get(`${baseUrl}/export`, {

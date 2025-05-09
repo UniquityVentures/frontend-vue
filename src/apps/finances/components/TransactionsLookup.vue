@@ -29,6 +29,9 @@
                         clearable
                     />
                 </v-col>
+                <v-col cols="12" sm="6" md="3" lg="2">
+					<SortingInput v-model:order="filters.ordering" v-model:field="filters.sort_by" :get-sortable-fields="transactionFields" />
+                </v-col>
             </v-row>
         </template>
         <template #list-slot="{ items }">
@@ -67,9 +70,10 @@
 import StudentSelect from "@/apps/students/components/StudentSelect.vue";
 import DateRangeSelect from "@/components/DateRangeSelect.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
+import SortingInput from "@/components/SortingInput.vue";
 import { formatDate } from "@/services/utils";
 import { ref } from "vue";
-import { getTransactions } from "../api";
+import { getTransactions, transactionFields } from "../api";
 
 const filters = ref({});
 const transactionTypes = [

@@ -2,6 +2,7 @@ import { api } from "@/services/api";
 import { createViewset } from "@/services/viewset";
 
 const attachmentViewset = createViewset("api/attachments");
+const attachmentFields = attachmentViewset.fields;
 
 const createAttachment = async (formObj) => {
 	const data = new FormData();
@@ -21,6 +22,7 @@ const getAttachmentStats = attachmentViewset.stats;
 const deleteAttachment = attachmentViewset.delete;
 
 export {
+	attachmentFields,
 	createAttachment,
 	getAttachments,
 	getAttachment,

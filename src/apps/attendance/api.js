@@ -10,6 +10,7 @@ const updateAttendanceRecord = attendanceRecordViewset.update;
 const createAttendanceRecord = attendanceRecordViewset.create;
 const exportAttendanceRecords = attendanceRecordViewset.export;
 const getAttendanceStats = attendanceRecordViewset.stats;
+const attendanceFields = attendanceRecordViewset.fields;
 const importAttendanceRecords = {
 	dryRun: attendanceRecordViewset.import.dryRun,
 	finalize: attendanceRecordViewset.import.finalize,
@@ -41,5 +42,6 @@ export {
 	exportAttendanceRecords,
 	importAttendanceRecords,
 	getAttendanceStats,
+	attendanceFields,
 	bulkUpdateAttendance,
 };

@@ -18,6 +18,9 @@
 						label="Assigned Courses"
 					/>
 				</v-col>
+                <v-col cols="12" sm="6" md="3" lg="2">
+					<SortingInput v-model:order="filters.ordering" v-model:field="filters.sort_by" :get-sortable-fields="studentFields" />
+                </v-col>
 			</v-row>
 		</template>
 		<template #cards-slot="{ items }">
@@ -34,9 +37,10 @@
 import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { ref } from "vue";
-import { getStudents } from "../api";
+import { getStudents, studentFields } from "../api";
 import StudentSmallCard from "./StudentSmallCard.vue";
 import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
+import SortingInput from "@/components/SortingInput.vue";
 
 const filters = ref({sort_by: "student_no"});
 

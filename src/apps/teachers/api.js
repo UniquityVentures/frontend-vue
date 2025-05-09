@@ -23,6 +23,8 @@ const importTeachers = {
 	finalize: teacherViewset.import.finalize,
 };
 
+const teacherFields = teacherViewset.fields;
+
 const getTeacherInfoFromObj = (item) => ({
 	title: `${item.user_details?.full_name}`,
 	subtitle: item.identifier,
@@ -38,6 +40,7 @@ export {
 	exportTeachers,
 	importTeachers,
 	getTeacherStats,
+	teacherFields,
 	getTeacherInfoFromObj,
 	getPortraitImage,
 };

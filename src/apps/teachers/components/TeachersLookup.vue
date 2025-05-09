@@ -18,6 +18,9 @@
 				<v-col cols="12" sm="6" md="3" lg="2" v-if="role == 'Admin'">
 					<CourseSelect v-model="filters.courses" label="Filter by course" />
 				</v-col>
+                <v-col cols="12" sm="6" md="3" lg="2">
+					<SortingInput v-model:order="filters.ordering" v-model:field="filters.sort_by" :get-sortable-fields="teacherFields" />
+                </v-col>
 			</v-row>
 		</template>
 		<template #cards-slot="{ items }">
@@ -34,8 +37,9 @@
 import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
 import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
+import SortingInput from "@/components/SortingInput.vue";
 import { ref, onMounted } from "vue";
-import { getTeachers } from "../api";
+import { getTeachers, teacherFields } from "../api";
 import TeacherSmallCard from "./TeacherSmallCard.vue";
 import { useAuthStore } from "@/stores/auth";
 

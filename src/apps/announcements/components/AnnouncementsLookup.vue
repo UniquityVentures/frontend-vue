@@ -44,6 +44,10 @@
                 <v-col cols="12" sm="6" md="3" lg="2">
                     <CheckBox v-model="filters.is_universal" label="Is Universal" />
                 </v-col>
+
+                <v-col cols="12" sm="3" >
+					<SortingInput v-model:order="filters.ordering" v-model:field="filters.sort_by" :get-sortable-fields="announcementFields" />
+                </v-col>
             </v-row>
         </template>
         <template #cards-slot="{ items }">
@@ -84,10 +88,15 @@ import ExportButton from "@/components/ExportButton.vue";
 import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { ref, computed, onMounted } from "vue";
 import DateRangeSelect from "../../../components/DateRangeSelect.vue";
-import { exportAnnouncements, getAnnouncements } from "../api";
+import {
+	exportAnnouncements,
+	getAnnouncements,
+	announcementFields,
+} from "../api";
 import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
 import CheckBox from "@/components/CheckBox.vue";
 import ActiveChip from "@/components/ActiveChip.vue";
+import SortingInput from "@/components/SortingInput.vue";
 import { useAuthStore } from "@/stores/auth";
 
 const authStore = useAuthStore();
@@ -97,7 +106,7 @@ const is_active_options = [
 	{
 		value: true,
 		title: "Active",
-		color: "success"
+		color: "success",
 	},
 	{
 		value: false,
@@ -113,26 +122,24 @@ const props = defineProps({
 		type: Object,
 		required: false,
 	},
-    hideFilters: {
-        type: Boolean,
-        required: false,
-        default: false,
-    },
-    title: {
-        type: String,
-        required: false,
-        default: "Announcements",
-    },
-    subtitle: {
-        type: String,
-        required: false,
-        default: "Announcements",
-    },
+	hideFilters: {
+		type: Boolean,
+		required: false,
+		default: false,
+	},
+	title: {
+		type: String,
+		required: false,
+		default: "Announcements",
+	},
+	subtitle: {
+		type: String,
+		required: false,
+		default: "Announcements",
+	},
 });
 
 const filters = ref({
-	sort_by: "release_at",
-	sort_method: "difference",
 	value: new Date(),
 	is_active: null,
 });
@@ -140,7 +147,6 @@ const filters = ref({
 onMounted(() => {
 	if (props.defaultFilters) {
 		filters.value = { ...filters.value, ...props.defaultFilters };
-		console.log(filters.value);
 	}
 });
 </script>

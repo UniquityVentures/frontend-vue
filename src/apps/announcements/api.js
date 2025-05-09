@@ -9,6 +9,7 @@ const updateAnnouncement = announcementViewset.update;
 const createAnnouncement = announcementViewset.create;
 const deleteAnnouncement = announcementViewset.delete;
 const exportAnnouncements = announcementViewset.export;
+const announcementFields = announcementViewset.fields;
 const importAnnouncements = {
 	dryRun: announcementViewset.import.dryRun,
 	finalize: announcementViewset.import.finalize,
@@ -22,4 +23,5 @@ export {
 	deleteAnnouncement,
 	exportAnnouncements,
 	importAnnouncements,
+	announcementFields,
 };

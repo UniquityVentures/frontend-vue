@@ -13,6 +13,7 @@ const importAssignments = {
 	dryRun: assignmentsViewset.import.dryRun,
 	finalize: assignmentsViewset.import.finalize,
 };
+const assignmentFields = assignmentsViewset.fields;
 
 export {
 	getAssignments,
@@ -22,4 +23,5 @@ export {
 	deleteAssignment,
 	exportAssignments,
 	importAssignments,
+	assignmentFields,
 };

@@ -10,6 +10,7 @@ const createStudent = studentViewset.create;
 const deleteStudent = studentViewset.delete;
 const exportStudents = studentViewset.export;
 const getStudentStats = studentViewset.stats;
+const studentFields = studentViewset.fields;
 const importStudents = {
 	dryRun: studentViewset.import.dryRun,
 	finalize: studentViewset.import.finalize,
@@ -30,5 +31,6 @@ export {
 	exportStudents,
 	importStudents,
 	getStudentStats,
+	studentFields,
 	getStudentInfoFromObj,
 };

@@ -10,6 +10,9 @@
         <v-col cols="12" sm="6" md="3" lg="2">
           <v-text-field v-model="filters.name" label="Student Name" />
         </v-col>
+                <v-col cols="12" sm="6" md="3" lg="2">
+					<SortingInput v-model="filters.ordering" />
+                </v-col>
       </v-row>
     </template>
     <template #cards-slot="{ items }">
@@ -59,6 +62,7 @@ import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { ref } from "vue";
 import { getAttendanceRecords } from "../../attendance/api";
 import DateSelect from "@/components/DateSelect.vue";
+import SortingInput from "@/components/SortingInput.vue";
 
 const props = defineProps({
   batch: {

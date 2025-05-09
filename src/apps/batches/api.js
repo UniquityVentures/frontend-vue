@@ -20,6 +20,7 @@ const updateBatch = batchViewset.update;
 const deleteBatch = batchViewset.delete;
 const createBatch = batchViewset.create;
 const exportBatches = batchViewset.export;
+const batchFields = batchViewset.fields;
 const importBatches = {
 	dryRun: batchViewset.import.dryRun,
 	finalize: batchViewset.import.finalize,
@@ -58,6 +59,7 @@ export const promoteStudents = {
 export {
 	getBatches,
 	getBatch,
+	batchFields,
 	deleteBatch,
 	updateBatch,
 	getBatchImage,

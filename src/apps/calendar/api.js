@@ -6,6 +6,7 @@ const eventViewset = createViewset("api/events");
 // Get base methods
 const getEvents = eventViewset.list;
 const getEvent = eventViewset.retrieve;
+const eventFields = eventViewset.fields;
 const updateEvent = eventViewset.update;
 const createEvent = eventViewset.create;
 const deleteEvent = eventViewset.delete;
@@ -28,4 +29,5 @@ export {
 	exportEvents,
 	importEvents,
 	getCalendar,
+	eventFields
 };
