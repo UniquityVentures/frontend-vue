@@ -1,4 +1,5 @@
 <template>
+	{{console.log(filters)}}
 	<ResponsiveDataTable :fetch="getTeachers" v-model:filters="filters"
 		:title="title"
 		:subtitle="subtitle"
@@ -45,7 +46,7 @@ import { useAuthStore } from "@/stores/auth";
 
 const authStore = useAuthStore();
 const role = authStore.getRole;
-const filters = defineModel('filters', { required: false, default: () => ({}) });
+const filters = ref({});
 
 const props = defineProps({
 	title: {
@@ -56,5 +57,14 @@ const props = defineProps({
 		type: String,
 		required: true,
 	},
+	defaultFilters: {
+		type: Object,
+		required: false,
+		default: () => ({}),
+	},
+});
+
+onMounted(() => {
+	filters.value = props.defaultFilters;
 });
 </script>

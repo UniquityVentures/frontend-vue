@@ -1,6 +1,6 @@
 <template>
 	<v-container>
-		<TeachersLookup title="Teachers" subtitle="Teachers Master List" />
+		<TeachersLookup title="Teachers" subtitle="Teachers Master List"/>
 	</v-container>
 </template>
 
