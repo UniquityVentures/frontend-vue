@@ -4,6 +4,7 @@ import { api } from "@/services/api";
 import CreateStudentPage from "./views/CreateStudentPage.vue";
 import EditStudentPage from "./views/EditStudentPage.vue";
 import StudentPage from "./views/StudentPage.vue";
+import StudentNoticeBoardPage from "./views/StudentNoticeBoardPage.vue";
 import StudentsMasterPage from "./views/StudentsMasterPage.vue";
 
 export default [
@@ -56,6 +57,10 @@ export default [
 							title: "Edit Student",
 							to: { name: "EditStudent", params: props },
 						},
+						{
+							title: "Notice Board",
+							to: { name: "StudentNoticeBoard", params: props },
+						},
 					],
 				},
 				children: [
@@ -69,6 +74,12 @@ export default [
 						path: "edit/",
 						component: EditStudentPage,
 						name: "EditStudent",
+						props: true,
+					},
+					{
+						path: "announcements/",
+						component: StudentNoticeBoardPage,
+						name: "StudentNoticeBoard",
 						props: true,
 					},
 				],

@@ -4,6 +4,7 @@ import { api } from "@/services/api";
 import CreateTeacherPage from "@/apps/teachers/views/CreateTeacherPage.vue";
 import EditTeacherPage from "@/apps/teachers/views/EditTeacherPage.vue";
 import TeacherPage from "@/apps/teachers/views/TeacherPage.vue";
+import TeacherNoticeBoardPage from "@/apps/teachers/views/TeacherNoticeBoardPage.vue";
 import TeachersMasterPage from "@/apps/teachers/views/TeachersMasterPage.vue";
 import TeachersPage from "@/apps/teachers/views/TeachersPage.vue";
 export default [
@@ -65,6 +66,10 @@ export default [
 							title: "Edit Teacher",
 							to: { name: "EditTeacher", params: props },
 						},
+						{
+							title: "Notice Board",
+							to: { name: "TeacherNoticeBoard", params: props },
+						},
 					],
 					icon: "mdi-account-tie",
 				},
@@ -80,6 +85,12 @@ export default [
 						path: "edit/",
 						component: EditTeacherPage,
 						name: "EditTeacher",
+						props: true,
+					},
+					{
+						path: "announcements/",
+						component: TeacherNoticeBoardPage,
+						name: "TeacherNoticeBoard",
 						props: true,
 					},
 				],
