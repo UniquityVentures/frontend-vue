@@ -114,7 +114,7 @@ const fetchUpcomingEvents = async () => {
 		// Assuming getEvents without filters returns all future events
 		// Or modify getEvents API to accept sorting/limiting parameters
 		// e.g., getEvents({ sort: 'start:asc', limit: 5, futureOnly: true })
-		const response = await getEvents(); // Fetch all events for now
+		const response = await getEvents({start_date: new Date(), sort_by: "start"}); // Fetch all events for now
 		const now = new Date();
 		// Filter for future events, sort by start date, take top 5
 		upcomingEvents.value = response.results
