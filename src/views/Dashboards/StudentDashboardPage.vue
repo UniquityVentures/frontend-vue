@@ -5,9 +5,9 @@
 		<CoursesList 
 			v-if="batch.id"
 			class="column-item"
-			:filter="{ batches: batch.id || batch.id === 0 }"
 			title="Courses"
-			:viewAll="{ route: { name: 'Courses' }, label: 'View All Courses' }"
+			subtitle="Courses you are enrolled in"
+			:viewAll="{ route: { name: 'Courses' }, label: 'View All' }"
 			:limit="10"
 		/>
 		
@@ -15,7 +15,6 @@
 			v-if="batch.id || batch.id === 0"
 			class="column-item"
 			:fetchFunction="getAnnouncements"
-			:filter="{ batch: batch.id, is_active: true }"
 			title="Notice Board"
 			subtitle="Announcements for you"
 			:viewAll="{ route: { name: 'NoticeBoard' }, label: 'View All' }"
