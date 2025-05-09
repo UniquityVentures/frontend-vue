@@ -5,6 +5,7 @@ import CoursePage from "../views/CoursePage.vue";
 import CourseAnnouncementsPage from "../views/CourseAnnouncementsPage.vue";
 import CourseAssignmentsPage from "../views/CourseAssignmentsPage.vue";
 import CourseSyllabusPage from "../views/CourseSyllabusPage.vue";
+import CoursesPage from "../views/CoursesPage.vue";
 
 export default [
 	{
@@ -23,11 +24,11 @@ export default [
 			icon: "mdi-book-open-variant",
 		},
 		children: [
-			// {
-			// 	path: "all/",
-			// 	component: CoursesPage,
-			// 	name: "Courses",
-			// },
+			{
+				path: "all/",
+				component: CoursesPage,
+				name: "Courses",
+			},
 			{
 				path: ":courseId/",
 				component: EmptyLayout,

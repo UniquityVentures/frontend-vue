@@ -40,7 +40,7 @@ import ResponsiveDataTable from "@/components/ResponsiveDataTable.vue";
 import { ref } from "vue";
 import { getCourses } from "../api";
 
-const filters = ref({});
+const filters = defineModel('filters', { required: false, default: () => ({}) });
 
 const props = defineProps({
     title: {

@@ -2,7 +2,7 @@ import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.v
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import { api } from "@/services/api";
 import TeacherPage from "../views/TeacherPage.vue";
-// import TeachersPage from "../views/TeachersPage.vue";
+import TeachersPage from "../views/TeachersPage.vue";
 
 export default [
 	{
@@ -22,11 +22,11 @@ export default [
 			icon: "mdi-account-tie",
 		},
 		children: [
-			// {
-			// 	path: "all/",
-			// 	component: TeachersPage,
-			// 	name: "Teachers",
-			// },
+			{
+				path: "all/",
+				component: TeachersPage,
+				name: "Teachers",
+			},
 			{
 				path: ":teacherId",
 				props: true,

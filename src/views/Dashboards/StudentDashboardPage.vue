@@ -18,7 +18,7 @@
 			:filter="{ batch: batch.id, is_active: true }"
 			title="Notice Board"
 			subtitle="Announcements for you"
-			:viewAll="{ route: { name: 'Announcements' }, label: 'View All Announcements' }"
+			:viewAll="{ route: { name: 'NoticeBoard' }, label: 'View All' }"
 		/>
 
 		<RecentVisits />

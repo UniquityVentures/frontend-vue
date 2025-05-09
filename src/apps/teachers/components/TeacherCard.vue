@@ -35,8 +35,8 @@
 
     <v-card-text>
       <!-- Status Chips -->
-      <v-chip :color="teacher.user_details.is_approved ? 'success' : 'warning'">
-        {{ teacher.user_details.is_approved ? 'Approved' : 'Pending Approval' }}
+      <v-chip :color="teacher.user_details.is_approved ? 'success' : 'error'">
+        {{ teacher.user_details.is_approved ? 'Approved' : 'Not Approved' }}
       </v-chip>
       
       <v-chip :color="teacher.user_details.is_active ? 'success' : 'error'">

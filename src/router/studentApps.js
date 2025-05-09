@@ -11,6 +11,6 @@ export default [
 	},
 	...announcementStudentRoutes,
 	...teachersStudentRoutes,
-	...calendarStudentRoutes,
+	// ...calendarStudentRoutes,
 	...coursesStudentRoutes,
 ];

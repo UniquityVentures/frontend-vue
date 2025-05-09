@@ -5,7 +5,7 @@ import CreateTeacherPage from "@/apps/teachers/views/CreateTeacherPage.vue";
 import EditTeacherPage from "@/apps/teachers/views/EditTeacherPage.vue";
 import TeacherPage from "@/apps/teachers/views/TeacherPage.vue";
 import TeachersMasterPage from "@/apps/teachers/views/TeachersMasterPage.vue";
-
+import TeachersPage from "@/apps/teachers/views/TeachersPage.vue";
 export default [
 	{
 		path: "teachers/",
@@ -21,6 +21,10 @@ export default [
 					to: { name: "TeachersMaster", params: props },
 				},
 				{
+					title: "All Teachers",
+					to: { name: "Teachers", params: props },
+				},
+				{
 					title: "Create Teacher",
 					to: { name: "CreateTeacher", params: props },
 				},
@@ -34,12 +38,17 @@ export default [
 				name: "TeachersMaster",
 			},
 			{
+				path: "all/",
+				component: TeachersPage,
+				name: "Teachers",
+			},
+			{
 				path: "create/",
 				component: CreateTeacherPage,
 				name: "CreateTeacher",
 			},
 			{
-				path: ":teacherId",
+				path: ":teacherId/",
 				props: true,
 				component: EmptyLayout,
 				meta: {
