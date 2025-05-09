@@ -30,6 +30,13 @@
 						label="Batch"
 					/>
 				</v-col>
+				<v-col cols="12">
+					<CourseSelect 
+						v-model="formData.additional_courses" 
+						label="Additional Courses"
+						multiple
+					/>
+				</v-col>
 			</v-row>
 
 			<v-row>
@@ -98,6 +105,7 @@
 import BatchSelect from "@/apps/batches/components/BatchSelect.vue";
 import SubmitButton from "@/components/SubmitButton.vue";
 import DeleteButton from "@/components/DeleteButton.vue";
+import CourseSelect from "@/apps/courses/components/CourseSelect.vue";
 import { computed, onMounted, ref } from "vue";
 import { deleteStudent } from "../api";
 
