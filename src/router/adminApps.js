@@ -2,7 +2,7 @@ import announcementsAdminRoutes from "@/apps/announcements/routes/adminRoutes";
 import assignmentsRoutes from "@/apps/assignments/routes";
 import attachmentRoutes from "@/apps/attachments/routes";
 import attendanceRoutes from "@/apps/attendance/routes";
-import batchesRoutes from "@/apps/batches/routes";
+import batchesRoutes from "@/apps/batches/routes/adminRoutes";
 import calendarAdminRoutes from "@/apps/calendar/routes/adminRoutes";
 import coursesAdminRoutes from "@/apps/courses/routes/adminRoutes";
 import studentsRoutes from "@/apps/students/routes";

@@ -34,6 +34,7 @@
 						</v-card-text>
 
 						<v-card-text v-if="role === 'Admin' || role === 'Teacher'">
+							<h4 class="text-subtitle-1">Shown To:</h4>
 							<div v-if="announcement?.is_universal">
 								<v-chip color="success">The whole school</v-chip>
 							</div>
@@ -99,15 +100,14 @@ import { getAnnouncement } from "../api";
 
 const authStore = useAuthStore();
 
+const role = authStore.getRole;
 const announcement = ref({});
 const batchDetails = ref([]);
 const courseDetails = ref([]);
 const props = defineProps({
-	announcementId: Number,
+	announcementId: [ Number, String ],
 });
 const currentUrl = ref();
-
-const role = ref();
 
 const snackbar = ref({
 	show: false,
@@ -134,7 +134,5 @@ const fetchDetails = async () => {
 onMounted(async () => {
 	await fetchDetails();
 	currentUrl.value = window.location.href;
-	role.value = authStore.getRole;
-	console.log(role.value);
 });
 </script>

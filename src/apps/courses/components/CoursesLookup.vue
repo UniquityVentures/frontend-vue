@@ -55,12 +55,12 @@ const props = defineProps({
     title: {
         type: String,
         required: false,
-        default: "Courses",
+        default: "CoursesMaster",
     },
     subtitle: {
         type: String,
         required: false,
-        default: "Courses",
+        default: "CoursesMaster",
     },
 	defaultFilters: {
 		type: Object,

@@ -32,7 +32,7 @@ const props = defineProps({
 	viewAll: {
 		type: Object,
 		default: () => ({
-			route: { name: "Courses" },
+			route: { name: "CoursesMaster" },
 			label: "View All Courses",
 		}),
 	},

@@ -2,10 +2,11 @@ import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.v
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import { getCourse } from "../api";
 import CoursePage from "../views/CoursePage.vue";
+import CoursesExportPage from "../views/CoursesExportPage.vue";
+import CoursesMasterPage from "../views/CoursesMasterPage.vue";
 import CourseAnnouncementsPage from "../views/CourseAnnouncementsPage.vue";
 import CourseAssignmentsPage from "../views/CourseAssignmentsPage.vue";
 import CourseSyllabusPage from "../views/CourseSyllabusPage.vue";
-import CoursesPage from "../views/CoursesPage.vue";
 
 export default [
 	{
@@ -14,20 +15,29 @@ export default [
 		meta: {
 			getDisplayName: () => "Courses",
 			defaultRoute: "CoursesMaster",
-			description: "View your courses",
+			description: "View and manage courses",
 			getMenu: () => [
 				{
-					title: "My Courses",
+					title: "Courses Master",
 					to: { name: "CoursesMaster" },
+				},
+				{
+					title: "Export Courses",
+					to: { name: "ExportCourses" },
 				},
 			],
 			icon: "mdi-book-open-variant",
 		},
 		children: [
 			{
-				path: "all/",
-				component: CoursesPage,
+				path: "master/",
+				component: CoursesMasterPage,
 				name: "CoursesMaster",
+			},
+			{
+				path: "export/",
+				component: CoursesExportPage,
+				name: "ExportCourses",
 			},
 			{
 				path: ":courseId/",
@@ -56,6 +66,10 @@ export default [
 							title: "Syllabus",
 							to: { name: "CourseSyllabus", params },
 						},
+						{
+							title: "Time Table",
+							to: { name: "ViewTimeTable", params },
+						},
 					],
 					icon: "mdi-book-open-variant",
 				},
@@ -80,9 +94,61 @@ export default [
 					},
 					{
 						path: "syllabus/",
-						component: CourseSyllabusPage,
-						name: "CourseSyllabus",
 						props: true,
+						component: EmptyLayout,
+						meta: {
+							getDisplayName: () => "Syllabus",
+							defaultRoute: "CourseSyllabus",
+							getMenu: (props) => [
+								{
+									title: "All Syllabus Page",
+									to: { name: "CourseSyllabus", props },
+								},
+							],
+						},
+						children: [
+							{
+								path: "",
+								name: "CourseSyllabus",
+								props: true,
+								component: CourseSyllabusPage,
+							},
+
+						]
+					},
+					{
+						path: "timetable/",
+						props: true,
+						component: EmptyLayout,
+						meta: {
+							getDisplayName: () => "Time Table",
+							defaultRoute: "ViewTimeTable",
+							getMenu: (props) => [
+								{
+									title: "View Time Table",
+									to: { name: "ViewTimeTable", props },
+								},
+								{
+									title: "Edit Time Table",
+									to: { name: "EditTimeTable", props },
+								},
+							],
+						},
+						children: [
+							{
+								path: "",
+								name: "ViewTimeTable",
+								props: true,
+								component: EmptyLayout,
+							},
+							{
+								path: "edit/",
+								name: "EditTimeTable",
+								props: true,
+								component: EmptyLayout,
+							},
+
+						]
 					},
 				],
 			},

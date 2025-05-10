@@ -51,6 +51,7 @@ import { useRouter } from "vue-router";
 import RecursiveList from "@/components/RecursiveList.vue";
 import adminRoutes from "@/router/adminApps";
 import studentRoutes from "@/router/studentApps";
+import teacherRoutes from "@/router/teacherApps";
 import { getAppsMeta } from "@/router/menu";
 
 const { mdAndUp } = useDisplay();
@@ -65,41 +66,45 @@ const account = computed(() => authStore.account);
 
 // Initialize theme from localStorage if available
 onMounted(() => {
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme) {
-    theme.global.name.value = savedTheme;
-    isDarkMode.value = savedTheme === 'dark';
-  }
+	const savedTheme = localStorage.getItem("theme");
+	if (savedTheme) {
+		theme.global.name.value = savedTheme;
+		isDarkMode.value = savedTheme === "dark";
+	}
+	// Choose routes based on account type
+	let routesToUse = studentRoutes; // Default to student routes
+
+	// Check account type and select appropriate routes
+	if (account.value?.group_details?.name === "Admin") {
+		routesToUse = adminRoutes;
+	}
+
+	// Check account type and select appropriate routes
+	if (account.value?.group_details?.name === "Teacher") {
+		routesToUse = teacherRoutes;
+	}
+	getAppsMeta(routesToUse).then((menu) => {
+		appsMenu.value = menu;
+	});
 });
 
 function toggleTheme() {
-  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark';
-  isDarkMode.value = theme.global.current.value.dark;
-  // Save preference to localStorage
-  localStorage.setItem('theme', theme.global.name.value);
+	theme.global.name.value = theme.global.current.value.dark ? "light" : "dark";
+	isDarkMode.value = theme.global.current.value.dark;
+	// Save preference to localStorage
+	localStorage.setItem("theme", theme.global.name.value);
 }
 
 function logoutHandler() {
 	router
-	.push({ name: "Login" })
-	.then(() => {
-		authStore.logout();
-	})
-	.catch((error) => {
-		console.error("Navigation failed:", error);
-		authStore.logout(); 
-	});
+		.push({ name: "Login" })
+		.then(() => {
+			authStore.logout();
+		})
+		.catch((error) => {
+			console.error("Navigation failed:", error);
+			authStore.logout();
+		});
 }
 
-// Choose routes based on account type
-let routesToUse = studentRoutes; // Default to student routes
-
-// Check account type and select appropriate routes
-if (account.value?.group_details?.name === "Admin") {
-	routesToUse = adminRoutes;
-}
-
-getAppsMeta(routesToUse).then((menu) => {
-	appsMenu.value = menu;
-});
 </script>

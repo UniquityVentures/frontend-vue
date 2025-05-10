@@ -53,6 +53,7 @@
     url: {
       type: String,
       required: true,
+      default: '',
     },
     text: {
       type: String,
