@@ -81,6 +81,12 @@
               color="accent"
             />
           </v-col>
+          <v-col cols="12" md="3">
+            <TeacherSelect
+              label="Created By"
+              v-model="formData.created_by"
+            />
+          </v-col>
         </v-row>
       </v-card-text>
     </v-card>
@@ -134,6 +140,9 @@ import DateSelect from "@/components/DateSelect.vue";
 import { onMounted, ref } from "vue";
 import DeleteButton from "@/components/DeleteButton.vue";
 import { deleteAssignment } from "../api";
+import { useAuthStore } from "@/stores/auth";
+
+const authStore = useAuthStore();
 
 const is_active_options = [
 	{
@@ -207,6 +216,9 @@ onMounted(() => {
 		// Copy assignment data to form data
 		formData.value = { ...props.assignment };
 		console.log(formData.value);
+	}
+	if (!formData.value.created_by) {
+		formData.value = {...formData.value, created_by: authStore.getAccount.id}
 	}
 });
 </script>

@@ -26,6 +26,11 @@
 								</div>
 							</v-card-text>
 
+							<v-card-text v-if="assignment?.created_by">
+								<h4 class="text-subtitle-1">Created By:</h4>
+								<TeacherChip :teacher-id="assignment?.created_by" />
+							</v-card-text>
+
 							<v-card-text v-if="assignment?.course_details?.teachers_details">
 								<h4 class="text-subtitle-1">Course Teachers:</h4>
 								<TeacherChip :teacher="assignment?.course_details?.teachers_details" />
