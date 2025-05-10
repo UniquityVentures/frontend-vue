@@ -1,7 +1,7 @@
 <template>
 	<v-btn @click="handleSubmit" :loading="isSubmitting" :disabled="isSubmitting"
 		:append-icon="isSuccess ? 'mdi-check' : (error ? 'mdi-alert' : '')" :color="error ? 'error' : color">
-		{{ isSuccess ? 'Updated!' : (error ? 'Failed!' : submitText) }}
+		{{ isSuccess ? successText : (error ? 'Failed!' : submitText) }}
 	</v-btn>
 	<v-alert v-if="error" type="error" class="align-center" density="compact">
 		<span v-if="typeof error === 'string'">
@@ -32,6 +32,10 @@ const props = defineProps({
 		type: String,
 		default: "primary",
 	},
+	successText: {
+		type: String,
+		default: "Updated!"
+	}
 });
 
 const isSubmitting = ref(false);
