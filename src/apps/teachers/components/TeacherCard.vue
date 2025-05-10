@@ -1,11 +1,7 @@
 <template>
   <v-card v-if="teacher">
     <!-- Teacher Avatar/Image -->
-    <v-img class="teacher-avatar-container" height="180" cover>
-      <v-avatar size="120" color="accent" class="ma-4">
-        <v-img :src="getPortraitImage()" />
-      </v-avatar>
-    </v-img>
+    <AttachmentImage :id="teacher?.profile_photo" class="student-avatar-container" height="180" cover />
 
     <!-- Teacher Name -->
     <v-card-title>
@@ -59,6 +55,7 @@
 </template>
 
 <script setup>
+import AttachmentImage from "@/apps/attachments/components/AttachmentImage.vue";
 import { getPortraitImage } from "@/apps/teachers/api";
 
 const props = defineProps({

@@ -21,6 +21,12 @@
 				<v-col cols="12" md="6">
 					<v-text-field label="Whatsapp" v-model="formData.whatsapp"></v-text-field>
 				</v-col>
+				<v-col cols="12">
+					<AttachmentInput 
+						v-model="formData.profile_photo" 
+						title="Profile Photo"
+					/>
+				</v-col>
 			</v-row>
 		</v-card-text>
 		<v-card-text>
@@ -36,6 +42,7 @@
 <script setup>
 import SubmitButton from "@/components/SubmitButton.vue";
 import DeleteButton from "@/components/DeleteButton.vue";
+import AttachmentInput from "@/apps/attachments/components/AttachmentInput.vue";
 import { onMounted, ref } from "vue";
 import { deleteTeacher } from "../api";
 
