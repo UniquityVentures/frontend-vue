@@ -26,7 +26,7 @@ onMounted(async () => {
 <template>
     <v-card v-if="batch" link :to="{ name: 'Batch', params: { batchId: batch.id }}" variant="flat" class="border">
         <v-card-title class="text-subtitle-1">{{ batch.name }}</v-card-title>
-        <v-card-subtitle v-if="batch.main_teacher_details">{{ batch.main_teacher_details?.user_details?.full_name }}</v-card-subtitle>
+        <v-card-subtitle v-if="batch.teachers">{{ batch.code }}</v-card-subtitle>
         <v-card-text>
             <v-chip prepend-icon="mdi-account-group" color="accent">
                 No of Students: {{ batch.students.length }}

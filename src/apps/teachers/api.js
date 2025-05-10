@@ -27,7 +27,7 @@ const teacherFields = teacherViewset.fields;
 
 const getTeacherInfoFromObj = (item) => ({
 	title: `${item.user_details?.full_name}`,
-	subtitle: item.identifier,
+	subtitle: item.code,
 	value: item.id,
 });
 

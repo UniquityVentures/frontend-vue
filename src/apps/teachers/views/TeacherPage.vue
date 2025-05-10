@@ -12,14 +12,14 @@
                 v-if="teacher?.batches_leading?.length > 0"
                 class="mb-4" 
                 title="Leading Batches" 
-                :filters="{ main_teacher: props.teacherId }" 
+                :filters="{ teachers: props.teacherId }" 
               />
 
               <!-- Assisting Batches Card (if applicable) -->
               <BatchesCard 
                 v-if="teacher?.batches_assisting?.length > 0"
                 title="Assisting Batches" 
-                :filters="{ teacher: props.teacherId }" 
+                :filters="{ teachers: props.teacherId }" 
                 class="mb-4" 
               />
             </template>
@@ -29,7 +29,7 @@
 
               <CoursesCard 
                 v-if="teacher?.courses_leading?.length" 
-                :filters="{ main_teacher: props.teacherId }" 
+                :filters="{ teachers: props.teacherId }" 
                 title="Leading Courses"
                 class="mb-4" 
               />

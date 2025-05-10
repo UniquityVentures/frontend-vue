@@ -13,7 +13,7 @@
                         <v-card-title class="text-subtitle-1">{{ item.name }}</v-card-title>
                         <v-card-subtitle>{{ item.code }}</v-card-subtitle>
                         <v-card-text>
-                            <TeacherChip :teacherId="item.main_teacher" v-if="item.main_teacher_details" />
+                            <TeacherChip :teacher="item.teachers" />
                         </v-card-text>
                     </v-card>
                 </v-col>
@@ -24,7 +24,7 @@
                 <v-list-item v-for="item in items" :key="item.id" class="border">
                     <v-list-item-title>{{ item.name }}</v-list-item-title>
                     <v-list-item-subtitle class="text-wrap">{{ item.code }}</v-list-item-subtitle>
-                    <TeacherChip label="Main Teacher" :teacher="item.main_teacher_details" v-if="item.main_teacher_details" />
+                    <TeacherChip label="Teachers" :teacher="item.teachers" />
                 </v-list-item>
             </v-list>
         </template>

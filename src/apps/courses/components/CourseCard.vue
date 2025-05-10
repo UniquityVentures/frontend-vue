@@ -10,13 +10,8 @@
 		</v-card-subtitle>
 
 		<v-card-text>
-			<span class="text-accent">Teacher:</span><br>
-			<TeacherChip v-if="course.main_teacher_details" :teacher="course.main_teacher_details" />
-		</v-card-text>
-
-		<v-card-text v-if="course?.other_teachers?.length">
-			<span class="text-accent">Other Teachers:</span><br>
-			<TeacherChip v-for="teacher in teachers" :key="teacher.id" :teacher="teacher"/>
+			<span class="text-accent">Teachers:</span><br>
+			<TeacherChip v-if="course.teachers_details" :teacher="course.teachers_details" />
 		</v-card-text>
 
 		<v-card-text>
@@ -41,16 +36,6 @@ const props = defineProps({
 		required: true,
 	},
 });
-
-const teachers = ref([]);
-
-watch(
-	props,
-	async ({ course }) => {
-		teachers.value = await Promise.all(course.other_teachers.map(getTeacher));
-	},
-	true,
-);
 </script>
 
 <style scoped>

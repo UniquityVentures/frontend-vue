@@ -43,7 +43,7 @@
           <v-list-item-title>{{ student.batch_details?.name }}</v-list-item-title>
           <v-list-item-subtitle>Roll Number: {{ student.roll_no }}</v-list-item-subtitle>
 
-				<TeacherChip v-if="student.batch_details?.main_teacher_details" :teacher="student.batch_details?.main_teacher_details" :label="`Teacher`"/>
+				<TeacherChip v-if="student.batch_details?.teachers" :teacher="student.batch_details?.teachers" :label="`Teacher`"/>
 
         </v-list-item>
     </v-card-text>

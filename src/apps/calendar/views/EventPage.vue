@@ -11,9 +11,9 @@
 								<p>{{ event?.description }}</p>
 							</v-card-text>
 
-							<v-card-text>
+							<v-card-text v-if="event?.created_by_details">
 								<h4 class="text-subtitle-1">Created by:</h4>
-								<TeacherListItem :teacher="event?.created_by_details" />
+								<TeacherChip :teacher="event?.created_by_details" />
 							</v-card-text>
 
 							<v-card-text >
@@ -74,7 +74,7 @@ import { onMounted, ref } from "vue";
 import { getEvent } from "../api";
 import DateChip from "@/components/DateChip.vue";
 import DeleteButton from "@/components/DeleteButton.vue";
-import TeacherListItem from "@/apps/teachers/components/TeacherListItem.vue";
+import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 import { deleteEvent } from "../api";
 import AttachmentsCard from "@/apps/attachments/components/AttachmentsCard.vue";
 

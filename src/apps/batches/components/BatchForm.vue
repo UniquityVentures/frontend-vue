@@ -30,17 +30,9 @@
       <v-row>
         <v-col cols="12" md="6">
           <TeacherSelect
-            searchField="name"
-            label="Class Teacher"
-            v-model="formData.main_teacher"
-          />
-        </v-col>
-        
-        <v-col cols="12" md="6">
-          <TeacherSelect
 			      :multiple="true"
-            label="Other Teacher"
-            v-model="formData.other_teachers"
+            label="Teachers"
+            v-model="formData.teachers"
           />
         </v-col>
       </v-row>
@@ -112,8 +104,7 @@ const props = defineProps({
 const formData = ref({
 	name: "",
 	standard: "",
-	main_teacher: null,
-	other_teachers: [],
+	teachers: [],
 	courses: [],
 	is_active: true,
 });

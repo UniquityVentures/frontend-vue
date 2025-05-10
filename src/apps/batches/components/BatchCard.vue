@@ -5,12 +5,8 @@
             {{ batch.name }}
         </v-card-title>
         <v-card-text>
-            <span class="text-accent">Head Teacher:</span><br>
-            <TeacherChip :teacher="batch.main_teacher_details" />
-        </v-card-text>
-        <v-card-text v-if="otherTeachers.length">
-            <span class="text-accent">Other Teachers:</span><br>
-            <TeacherChip v-for="teacher in otherTeachers" :key="teacher.id" :teacher="teacher"/>
+            <span class="text-accent">Teachers:</span><br>
+            <TeacherChip :teacher="batch.teachers_details" />
         </v-card-text>
         <v-card-text>
             <v-chip color="accent" >Grade: {{ batch.standard }}</v-chip>
@@ -23,23 +19,10 @@
 
 <script setup>
 import { getBatch, getBatchImage } from "@/apps/batches/api";
-import { getTeacher } from "@/apps/teachers/api";
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 import { onMounted, ref } from "vue";
 
 const props = defineProps({ batchId: [Number, String], batch: Object });
-const otherTeachers = ref([]);
-
-const fetchOtherTeachers = async () => {
-	if (!batch.value) {
-		return
-	}
-	for (const teacherId of batch.value.other_teachers) {
-		const teacher = await getTeacher(teacherId);
-		otherTeachers.value.push(teacher);
-	}
-};
-
 const batch = ref(null);
 
 onMounted(async () => {

@@ -36,20 +36,11 @@
       </v-row>
 
       <v-row>
-        
-        <v-col cols="12" md="6">
-          <TeacherSelect
-            searchField="name"
-            label="Main Teacher"
-            v-model="formData.main_teacher"
-          />
-        </v-col>
-        
         <v-col cols="12" md="6">
           <TeacherSelect
 			      :multiple="true"
-            label="Other Teachers"
-            v-model="formData.other_teachers"
+            label="Teachers"
+            v-model="formData.teachers"
           />
         </v-col>
       </v-row>
@@ -121,8 +112,7 @@ const formData = ref({
 	name: "",
 	code: "",
 	description: "",
-	main_teacher: null,
-	other_teachers: [],
+	teachers: [],
 	batches: [],
 	is_active: true,
 });

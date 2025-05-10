@@ -7,7 +7,7 @@
                 <v-list-item v-for="course in limitedItems" :key="course.id"
                     :to="{ name: 'Course', params: { courseId: course.id } }" link class="border">
                     <v-list-item-title>{{ course.name }}</v-list-item-title>
-                    <v-list-item-subtitle v-if="course.main_teacher_details">{{ course.main_teacher_details?.user_details?.full_name || "Loading..." }}</v-list-item-subtitle>
+                    <v-list-item-subtitle v-if="course.code">{{ course.code }}</v-list-item-subtitle>
                 </v-list-item>
             </v-list>
             <v-skeleton-loader v-if="loading" type="list-item-two-line" v-for="i in limit" :key="i" />

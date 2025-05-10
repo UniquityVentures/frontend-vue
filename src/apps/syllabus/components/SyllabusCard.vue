@@ -11,11 +11,11 @@
             {{ syllabus.overview }}
         </v-card-text>
         <v-card-text>
-            <p class="text-subtitle-1">Main Teacher:</p>
+            <p class="text-subtitle-1">Teachers:</p>
             <TeacherChip 
-                v-if="syllabus.course_details?.main_teacher" 
-                    :teacherId="syllabus.course_details.main_teacher" 
-                />
+                v-if="syllabus.course_details?.teachers" 
+                :teacher="syllabus.course_details.teachers" 
+            />
         </v-card-text>
         <v-card-text>
             <div>

@@ -26,9 +26,9 @@
 								</div>
 							</v-card-text>
 
-							<v-card-text>
-								<h4 class="text-subtitle-1">Course Teacher:</h4>
-								<TeacherListItem :teacher="assignment?.course_details?.main_teacher_details" />
+							<v-card-text v-if="assignment?.course_details?.teachers_details">
+								<h4 class="text-subtitle-1">Course Teachers:</h4>
+								<TeacherChip :teacher="assignment?.course_details?.teachers_details" />
 							</v-card-text>
 
 							<v-card-text v-if="assignment.is_active == null">
@@ -83,7 +83,7 @@
 
 <script setup>
 import DateChip from "@/components/DateChip.vue";
-import TeacherListItem from "@/apps/teachers/components/TeacherListItem.vue";
+import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
 import { useAuthStore } from "@/stores/auth";
 import { formatDateTime } from "@/services/utils";
 import { onMounted, ref } from "vue";

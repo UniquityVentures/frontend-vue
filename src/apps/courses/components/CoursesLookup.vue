@@ -7,7 +7,7 @@
                     <v-text-field label="Search by name" v-model="filters.name" />
                 </v-col>
                 <v-col cols="12" sm="6" md="3" lg="2">
-                    <TeacherSelect v-model="filters.main_teacher" label="Main Teacher" />
+                    <TeacherSelect v-model="filters.teachers" label="Teachers" />
                 </v-col>
                 <v-col cols="12" sm="6" md="3" lg="2">
                     <BatchSelect v-model="filters.batches" label="Batch" />
@@ -27,7 +27,7 @@
 							<template v-if="authStore.getRole !== 'Student'" >
 								<BatchChip v-for="batchId in item.batches" v-bind:key="batchId" :batchId="batchId" />
 							</template>
-                            <TeacherChip :teacherId="item.main_teacher" />
+                            <TeacherChip :teacher="item.teachers_details" />
                         </v-card-text>
 					</v-card>
                 </v-col>
