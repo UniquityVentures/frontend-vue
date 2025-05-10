@@ -6,7 +6,7 @@
         <ImportForm
           entityName="Courses"
           :import="importCourses"
-          :templateFields="['name', 'subject', 'description', 'teachers', 'batches', 'is_active']"
+          :templateFields="['name', 'code', 'subject', 'description', 'teachers', 'batches', 'is_active']"
         />
       </v-card-text>
     </v-card>

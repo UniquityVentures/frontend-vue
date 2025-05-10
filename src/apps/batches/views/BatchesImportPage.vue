@@ -7,7 +7,7 @@
         <ImportForm
           entityName="Batches"
           :import="importBatches"
-          :templateFields="['name', 'standard', 'section', 'teachers', 'is_active']"
+          :templateFields="['name', 'code', 'standard', 'section', 'teachers', 'is_active']"
         />
       </v-card-text>
     </v-card>
