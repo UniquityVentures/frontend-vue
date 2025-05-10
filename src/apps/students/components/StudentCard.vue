@@ -1,7 +1,12 @@
 <template>
-  <v-card v-if="student">
-    <!-- Student Avatar/Image -->
-		<AttachmentImage :id="student?.profile_photo" class="student-avatar-container" height="180" cover />
+	<v-card v-if="student">
+		<!-- Student Avatar/Image -->
+		<v-img class="student-avatar-container" height="180" cover>
+			<v-avatar size="120" color="accent" class="ma-4">
+				<AttachmentImage v-if="student?.profile_photo" :id="student?.profile_photo" class="student-avatar-container" height="180" cover />
+				<v-img v-else :src="getPortraitImage()" />
+			</v-avatar>
+		</v-img>
 
     <!-- Student Name -->
     <v-card-title>

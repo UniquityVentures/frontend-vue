@@ -3,6 +3,7 @@ import { onMounted, ref } from "vue";
 import { getTeacher} from "../api";
 import { getPortraitImage } from "../api";
 import { useAuthStore } from "@/stores/auth";
+import AttachmentImage from "@/apps/attachments/components/AttachmentImage.vue";
 
 const authStore = useAuthStore();
 const role = authStore.getRole;
@@ -32,7 +33,8 @@ onMounted(async () => {
     height="100%" link :to="{ name: 'Teacher', params: { teacherId: teacher.id }}" variant="flat" class="border">
 		<template #prepend>
 			<v-avatar size="48">
-				<v-img :src="getPortraitImage()" />
+				<AttachmentImage v-if="teacher?.profile_photo" :id="teacher?.profile_photo" class="student-avatar-container" height="180" cover />
+				<v-img v-else :src="getPortraitImage()" />
 			</v-avatar>
 		</template>
         <v-card-title class="text-subtitle-1">{{ teacher.user_details.full_name }}</v-card-title>
