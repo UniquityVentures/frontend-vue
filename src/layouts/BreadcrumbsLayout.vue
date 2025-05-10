@@ -53,6 +53,7 @@ const updateBreadcrumbs = async (route) => {
 		lastBreadcrumb.active = true;
 		lastBreadcrumb.disabled = false;
 	}
+	console.log(breadcrumbItems.value);
 };
 
 watch(currentRoute, updateBreadcrumbs);

@@ -81,7 +81,7 @@ export default [
 						}
 						return "Batches";
 					},
-					defaultRoute: "Batches",
+					defaultRoute: "Batch",
 					getMenu: (props) => [
 						{
 							title: "View Batch",

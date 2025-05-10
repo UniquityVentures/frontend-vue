@@ -33,7 +33,7 @@ export default [
 				component: AttachmentPage,
 				meta: {
 					defaultRoute: "Attachment",
-					getDisplayName: "Attachment Object",
+					getDisplayName: () => "Attachment Object",
 					getMenu: (props) => [
 						{
 							title: "View Attachment",
