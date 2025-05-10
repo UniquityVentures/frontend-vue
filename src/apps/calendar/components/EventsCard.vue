@@ -11,16 +11,7 @@
 			<v-row class="ml-4">
 				<v-col lg="6" sm="12">
 					<v-row>
-						<v-text-field label="Search by Title" v-model="filters.title" />
-					</v-row>
-					<v-row>
-						<v-text-field label="Search by Description" v-model="filters.description" />
-					</v-row>
-					<v-row>
 						<DateSelect v-model="filters.start_date" label="Select Start Date" required />
-					</v-row>
-					<v-row>
-						<DateSelect v-model="filters.end_date" label="Select End Date" required />
 					</v-row>
 					<v-row>
 						<BatchSelect v-model="filters.batch" label="Batch" />
@@ -35,11 +26,6 @@
 							class="mb-4"
 						></v-checkbox>
 					</v-row>
-
-					<v-row>
-						<TeacherSelect v-model="filters.created_by" label="Created By" />
-					</v-row>
-
 				</v-col>
 				<v-col lg="6" sm="12">
 					<ResponsiveDataTable :fetch="getEvents" v-model:filters="filters"
