@@ -2,6 +2,7 @@ import AppSideBarBreadcrumbsLayout from "@/layouts/AppSideBarBreadcrumbsLayout.v
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import CalendarPage from "../views/CalendarPage.vue";
 import EventPage from "../views/EventPage.vue";
+import EventsPage from "../views/EventsPage.vue";
 import EventsMasterPage from "../views/EventsMasterPage.vue";
 import EditEventPage from "../views/EditEventPage.vue";
 import CreateEventPage from "../views/CreateEventPage.vue";
@@ -42,7 +43,7 @@ export default [
 		children: [
 			{
 				path: "events/",
-				component: EmptyLayout,
+				component: EventsPage,
 				name: "Events",
 			},
 			{
