@@ -4,7 +4,6 @@
 		<v-img class="student-avatar-container" height="180" cover>
 			<v-avatar size="120" color="accent" class="ma-4">
 				<AttachmentImage v-if="student?.profile_photo" :id="student?.profile_photo" class="student-avatar-container" height="180" cover />
-				<v-img v-else :src="getPortraitImage()" />
 			</v-avatar>
 		</v-img>
 

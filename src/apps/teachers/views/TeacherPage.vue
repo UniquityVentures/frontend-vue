@@ -3,41 +3,23 @@
     <v-row v-if="teacher?.user_details">
       <v-col>
         <v-row class="ma-2 flex justify-center">
-          <v-col lg="6" sm="12">
+          <v-col lg="8" sm="12">
             <!-- Teacher Details Card -->
             <TeacherCard :teacher="teacher" class="mb-4" />
             <template v-if="role == 'Admin'">
-              <!-- Leading Batches Card (if applicable) -->
               <BatchesCard 
-                v-if="teacher?.batches_leading?.length > 0"
                 class="mb-4" 
-                title="Leading Batches" 
+                title="Batches" 
+                subtitle="Batches"
                 :filters="{ teachers: props.teacherId }" 
-              />
-
-              <!-- Assisting Batches Card (if applicable) -->
-              <BatchesCard 
-                v-if="teacher?.batches_assisting?.length > 0"
-                title="Assisting Batches" 
-                :filters="{ teachers: props.teacherId }" 
-                class="mb-4" 
               />
             </template>
-          </v-col>
-          <v-col lg="6" sm="12">
             <template v-if="role == 'Admin'">
-
               <CoursesCard 
-                v-if="teacher?.courses_leading?.length" 
                 :filters="{ teachers: props.teacherId }" 
-                title="Leading Courses"
+                title="Courses"
+                subtitle="Courses"
                 class="mb-4" 
-              />
-
-              <CoursesCard 
-                v-if="teacher?.courses_assisting?.length" 
-                :filters="{ teacher: props.teacherId }" 
-                title="Assisting Courses"
               />
             </template>
           </v-col>
