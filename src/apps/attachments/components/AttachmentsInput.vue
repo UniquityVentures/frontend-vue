@@ -5,6 +5,7 @@
     <v-card-text>
       <AttachmentInput 
         :title="title" 
+		v-model:file="currentFile"
         @update:attachment="attachmentAdded" 
       />
     </v-card-text>
@@ -59,6 +60,8 @@ const attachmentIds = defineModel({
 	default: []
 })
 
+const currentFile = ref();
+
 watch(attachments, (v) => {
 	attachmentIds.value = v.map((e) => e.id)
 })
@@ -67,6 +70,7 @@ function attachmentAdded(attachment) {
 	// Add to existing attachments
 	console.log(attachment)
 	attachments.value = [...attachments.value, attachment];
+	currentFile.value = null;
 	console.log(attachments.value)
 }
 

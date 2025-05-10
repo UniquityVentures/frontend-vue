@@ -1,11 +1,7 @@
 <template>
   <v-card v-if="student">
     <!-- Student Avatar/Image -->
-    <v-img class="student-avatar-container" height="180" cover>
-      <v-avatar size="120" color="accent" class="ma-4">
-        <v-icon size="64">mdi-account-circle</v-icon>
-      </v-avatar>
-    </v-img>
+		<AttachmentImage :id="student?.profile_photo" class="student-avatar-container" height="180" cover />
 
     <!-- Student Name -->
     <v-card-title>
@@ -64,6 +60,7 @@
 
 <script setup>
 import TeacherChip from "@/apps/teachers/components/TeacherChip.vue";
+import AttachmentImage from "@/apps/attachments/components/AttachmentImage.vue";
 
 const props = defineProps({
 	student: {

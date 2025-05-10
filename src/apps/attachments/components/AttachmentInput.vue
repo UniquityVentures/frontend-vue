@@ -41,9 +41,9 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["update:attachment"]);
-const fileInput = ref(null);
 
 const attachment = defineModel()
+const fileInput = defineModel("file")
 
 async function handleFileUpload() {
 	if (!fileInput.value) {
@@ -56,7 +56,6 @@ async function handleFileUpload() {
 		});
 		emit("update:attachment", uploadedAttachment);
 		attachment.value = uploadedAttachment.id;
-		fileInput.value = null;
 		return { success: true };
 	} catch (error) {
 		console.error("Failed to upload attachment:", error);
