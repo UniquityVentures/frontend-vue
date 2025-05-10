@@ -10,7 +10,7 @@
 
     <!-- Teacher Info with Chips -->
     <v-card-subtitle>
-      ID: {{ teacher.identifier }}
+      {{ teacher.code }}
     </v-card-subtitle>
 
     <v-card-text>

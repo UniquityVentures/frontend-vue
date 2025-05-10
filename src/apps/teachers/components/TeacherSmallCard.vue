@@ -36,7 +36,7 @@ onMounted(async () => {
 			</v-avatar>
 		</template>
         <v-card-title class="text-subtitle-1">{{ teacher.user_details.full_name }}</v-card-title>
-        <v-card-subtitle>{{ teacher.identifier }}</v-card-subtitle>
+        <v-card-subtitle>{{ teacher.code }}</v-card-subtitle>
 		<v-card-text v-if="role == 'Admin'">
 			<v-chip label :color="teacher.user_details.is_active ? 'success' : 'error'">{{ teacher.user_details.is_active ? 'Active' : 'Inactive' }}</v-chip>
 			<v-chip label :color="teacher.user_details.is_approved ? 'success' : 'error'">{{ teacher.user_details.is_approved ? 'Approved' : 'Not Approved' }}</v-chip>

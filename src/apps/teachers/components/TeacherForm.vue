@@ -9,7 +9,7 @@
 		<v-card-text>
 			<v-row>
 				<v-col cols="12" md="6">
-					<v-text-field label="Identifier Number" v-model="formData.identifier" type="number"></v-text-field>
+					<v-text-field label="Teacher Code" v-model="formData.code" type="number"></v-text-field>
 				</v-col>
 			</v-row>
 
